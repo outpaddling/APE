@@ -1,0 +1,198 @@
+.TH "APE KEYS" 1
+.SH NAME
+.PP
+APE \- Another Programmer's Editor
+.SH SYNOPSIS
+.PP
+.nf
+ape -h[elp]
+ape [file1] [file2] ... [fileN]
+xape [-m] [file1] [file2] ... [fileN]
+.fi
+
+.SH "Conventions"
+
+<key1>-<key2> means press and release key1, then press and release key2.
+
+<key1>+<key2> means press key2 while holding down key1.
+
+.SH "Pop-down Menus"
+
+Display a pop-down menu:
+.B "<Alt>+<hilighted letter>"
+or
+"<Esc>-<highlighted letter>"
+
+Next menu:
+.B "<right arrow>"
+
+Previous menu:
+.B "<left arrow>"
+
+.SH "Menu hot-keys"
+
+Save file:
+.B "<Ctrl>+s"
+or
+.B "<Esc>-<Esc>"
+
+Toggle displayed file:
+.B "<Ctrl>+t"
+
+Find word:
+.B "<Ctrl>+f"
+or
+.B "<Esc>-/"
+
+Repeat last find:
+.B "<Ctrl>+n"
+or
+.B <F3>
+
+Compile to object:
+.B <F6>
+
+Build and run:
+.B "<Esc>-r"
+or
+.B <F5>
+
+Goto next error:
+.B "<Esc>-n"
+
+Help on word under cursor:
+.B <F1>
+
+.SH "Cursor motion"
+
+Move Left:
+.B "<Left arrow>"
+
+Move Right:
+.B "<Right arrow>"
+
+Move Up:
+.B "<Up arrow>"
+
+Move Down:
+.B "<Down arrow>"
+
+Beginning of next line:
+.B "<Enter>"
+(works only in replace mode)
+
+Next word:
+.B "<Ctrl>+w"
+
+Previous word:
+.B "<Ctrl>+p"
+
+End of line:
+.B <Ctrl>+e
+or
+.B <End>
+
+Beginning of line:
+.B <Ctrl>+b
+or
+.B <Home>
+
+Next page:
+.B "<Page Down>"
+or
+.B "<Ctrl>+y"
+
+Previous page:
+.B "<Page Up>"
+or
+.B "<Ctrl>+u"
+
+Top line of file:
+.B "<Esc>-t"
+
+Last line of file:
+.B "<Esc>-l"
+
+Goto a line #:
+.B "<Ctrl>+g"
+
+.SH "Inserting and deleting"
+
+Toggle insert/replace mode:
+.B <Insert>
+or
+.B <Ctrl>+r
+
+Delete character at cursor position:
+.B <Delete>
+or
+.B "<Ctrl>+d"
+
+Delete character left of cursor:
+.B <Backspace>
+or
+.B "<Ctrl>+h"
+( Note: Check your terminal emulator settings if backspace acts like Del.  Many terminal
+emulators can be configured to send either BS or DEL, and it must be set to match the
+terminfo entry for your terminal. )
+
+Cut to end of word:
+.B <Ctrl>+o
+
+Cut to end of line:
+.B <Ctrl>+k
+
+Cut a line:
+.B <Ctrl>+x
+
+Undo last undoable operation:
+.B <Ctrl>+z
+
+.SH "Cutting and pasting"
+
+Begin marking area:
+
+Move to beginning or area and type
+.B <F4>
+or
+.B <Ctrl>+a
+
+End marking area:
+
+Move to end of area and type
+.B <F4>
+or
+.B <Ctrl>+a
+again.
+
+Cut marked area:
+.B <Ctrl>+x
+
+Paste marked area:
+.B <Ctrl>+v
+
+Cancel marked area:
+.B <F4>
+or
+.B <Ctrl>+a
+
+Invoke an edit macro:
+.B <F9>
+or
+.B "<Esc>-Enter"
+
+Join next line to current:
+.B "<Ctrl>+e
+or
+.B <Home>
+followed by 
+.B <del>
+
+.SH Miscellaneous
+
+Scroll so that current line is at top of window:
+.B "<Esc>-a"
+
+Redraw screen:
+.B <Ctrl>+l
+

@@ -1,0 +1,4 @@
+#!/bin/csh
+
+matlab -nosplash -nodesktop -r "`basename $1`; quit"
+

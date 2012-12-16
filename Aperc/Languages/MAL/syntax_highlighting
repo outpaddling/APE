@@ -1,0 +1,16 @@
+3 -1 8
+#.*$
+2 -1 8
+abs.d|abs.s|add.d|add.s|bc1t|bc1f|c.eq.d|c.eq.s|c.le.d|c.le.s|c.lt.d|c.lt.s|cvt.d.s|cvt.d.w|cvt.s.d|cvt.s.w|cvt.w.d|cvt.w.s|div.d|div.s|lwc1|mov.d|mov.s|mfc1|mfc1.d|mtc1|mtc1.d|mul.d|mul.s|neg.d|neg.s|swc1|sub.d|sub.s|add|addi|addiu|addu|and|andi|beq|bgez|bgezal|bgtz|blez|bltzal|bltz|bne|div|divu|j|jal|jalr|jr|lb|lbu|lh|lhu|lui|lw|lwl|lwr|mfc0|mfhi|mflo|mtc0|mthi|mtlo|mult|multu|nor|or|ori|rfe|sb|sh|sll|sllv|slt|slti|sltiu|sltu|sra|srav|srl|srlv|sub|subu|sw|swl|swr|syscall|xor|xori
+5 -1 8
+\.macro|\.end_macro|\.include|\.globl|\.eq|\.ktext|\.kdata|\.text|\.set|\.data|\.byte|\.word|\.float|\.double|\.ascii|\.asciiz|\.space|\.align
+6 -1 8
+li.d|l.d|l.s|s.d|s.s|abs|beqz|bge|bgeu|bgt|bgtu|ble|bleu|blt|bltu|bnez|b|div|divu|la|li|move|mul|mulo|mulou|neg|negu|nop|not|rem|remu|rol|ror|seq|sge|sgeu|sgt|sgtu|sle|sleu|sne|ulh|ulhu|ulw|ush|usw
+6 -1 8
+".*["$]|'.*['$]
+7 -1 8
+\$[a-z]*[0-9]*
+1 -1 4
+0x[0-9A-Fa-f]+|[0-9]+
+-2 0 0
+end

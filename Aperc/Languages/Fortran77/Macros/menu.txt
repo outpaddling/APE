@@ -1,0 +1,9 @@
+.Print
+.Write
+.If-then
+If-.Else
+.New Program
+.Do loop
+.Block comment
+.Function
+.Subroutine

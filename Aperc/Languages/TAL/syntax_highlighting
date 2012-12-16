@@ -1,0 +1,14 @@
+3 -1 8
+#.*$
+5 -1 8
+\.globl|\.eq|\.ktext|\.kdata|\.text|\.data|\.byte|\.word|\.float|\.double|\.ascii|\.asciiz|\.space|syscall
+6 -1 8
+".*["$]|'.*['$]
+2 -1 8
+add|addu|sub|subu|addi|addiu|mult|div|divu|ld|lw|lh|lhu|lb|lbu|sd|sw|sh|sb|lui|mfhi|mflo|mfcZ|mtcZ|and|andi|or|ori|xor|nor|slt|slti|sll|srl|sra|beq|bne|bltz|bgtz|blez|bgez|j|jr|jal|add.s|sub.s|mul.s|div.s|add.d|sub.d|mul.d|div.d|lwcZ|swcZ|c.lt.s|c.lt.d|bc1t|bc1f
+6 -1 4
+\$[a-z]?[0-9]*
+1 -1 8
+[0-9]+
+-2 0 0
+end

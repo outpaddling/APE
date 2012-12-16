@@ -1,0 +1,21 @@
+name                    Pascal
+name_spec               *.p *.pas
+id_comment              
+compiler                fpc
+compile_flags           
+compile_output_flag     -o
+syntax_check_flag       
+compile_only_flag       
+compile_to_asm_flag     
+preprocess_only_flag    
+link_flags              
+debugger                gdb
+debugger_flags          
+debugger_backtrace_cmd  where
+run_prefix              time
+upload_prefix           
+executable_name         \st
+executable_source       Command Line Flag
+error_msg_format        
+auto_wrap               0
+end_language

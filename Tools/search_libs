@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# Get quasi-unique temp filename using PID if this process
+tempfile=/tmp/searchlibs.$$
+little=/tmp/onelib.$$
+
+# Usage is search_libs reg-exp dir
+if [ $# -eq 2 -o $# -eq 1 ]; then
+    # Check static libraries
+    echo 'Searching static libraries: One moment please...'
+    for lib in /usr/lib/*.a /lib/*.a /usr/X11R6/lib/*.a $2/*.a $LIB_PATH
+    do
+	ar vt $lib 2> /dev/null | egrep -i $1 > $little
+	if [ -s $little ]
+	then
+	    echo '--------------------------------------------------------------------' >> $tempfile
+	    echo In $lib: >> $tempfile
+	    cat $little >> $tempfile
+	    rm -f $little
+	fi
+    done
+
+    # Check chared object libraries
+    echo 'Searching dynamic libraries: One more moment please...'
+    for lib in /usr/lib/*.so* /lib/*.so* /usr/X11R6/lib/*.so* $2/*.so* $LIB_PATH
+    do
+	nm $lib 2> /dev/null | egrep -i $1 > $little
+	if [ -s $little ]
+	then
+	    echo '--------------------------------------------------------------------' >> $tempfile
+	    echo In $lib: >> $tempfile
+	    cat $little >> $tempfile 2>> $tempfile
+	    rm -f $little
+	fi
+    done
+    if [ -s $tempfile ]; then
+	more $tempfile
+	rm $tempfile
+    else
+	echo "No matches found."
+    fi
+else
+    echo 'Usage: search_libs <string> [directory]'
+fi
+

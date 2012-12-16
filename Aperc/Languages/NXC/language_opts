@@ -1,0 +1,21 @@
+name                    NXC
+name_spec               *.nxc
+id_comment              
+compiler                nbc
+compile_flags           
+compile_output_flag     -O=
+syntax_check_flag       
+compile_only_flag       
+compile_to_asm_flag     
+preprocess_only_flag    
+link_flags              
+debugger                
+debugger_flags          
+debugger_backtrace_cmd  
+run_prefix              legoctl start
+upload_prefix           legoctl --overwrite upload
+executable_name         \st.rxe
+executable_source       Command Line Flag
+error_msg_format        File "\fn" ; line \ln
+auto_wrap               0
+end_language

@@ -1,0 +1,124 @@
+i 1 0 11 0 0 0 0 0 11 0:
+/*
+ *
+ */
+
+if ()
+{
+}
+else
+{
+}
+w 1 0 8 0 0 0 0 0 8 0:
+/*
+ *
+ */
+
+while ()
+{
+}
+d 1 0 8 0 0 0 0 0 8 0:
+/*
+ *
+ */
+
+do
+{
+}   while ();
+s 1 0 11 0 0 0 0 0 11 2:/*
+ *
+ */
+
+switch()
+{
+    case    :
+        break;
+    default:
+        break;
+}
+f 1 0 8 0 0 0 0 0 8 0:
+/*
+ *
+ */
+
+for ( ; ; )
+{
+}
+n 1 0 1 0 0 0 0 0 1 11:#include <>
+l 0 10 23 0 0 4 4 0 13 5:class
+{
+    public:
+        ()
+        {
+        }
+        ~()
+        {
+        }
+    
+    private:
+        
+};
+b 1 7 10 0 0 0 0 0 3 2:/*
+ *
+ */
+g 0 15 20 0 0 5 5 0 5 3:/**
+ * \defgroup name description
+ *  @{
+ */
+/** @} */
+e 1 16 24 0 0 4 4 0 8 3:try
+{
+    if ()
+        throw
+}
+catch()
+{
+}
+a 0 15 19 0 0 4 4 0 4 3:/**
+ *
+ *  \param
+ */
+m 0 0 27 0 0 0 7 0 27 76:/***************************************************************************
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  \date(12)\gecos(12)Begin
+ ***************************************************************************/
+
+#include <iostream>     // cin, cout, cerr
+#include <sysexits.h>   // Standardized exit codes EX_OK, EX_USAGE, etc.
+
+using namespace std;
+
+int     main(int argc,char *argv[])
+
+{
+    switch(argc)
+    {
+        default:
+            break;
+    }
+    return EX_OK;
+}
+u 0 0 16 0 0 0 0 0 16 76:/***************************************************************************
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  \date(12)\gecos(12)Begin
+ ***************************************************************************/
+
+()
+
+{
+}
+

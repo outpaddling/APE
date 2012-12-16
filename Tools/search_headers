@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ $# -lt 2 ]; then
+    echo "Usage: $0 pattern dir"
+    exit 1
+fi
+
+echo ''
+echo '======' $2 '======'
+echo ''
+cd $2
+egrep -i "$1" *
+

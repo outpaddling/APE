@@ -1,0 +1,591 @@
+.TH APE
+.SH NAME
+.PP
+ 
+APE \- Another Programmers Editor
+
+\" Convention:
+\" Underline anything that is typed verbatim - commands, etc.
+.SH SYNOPSIS
+.PP
+.nf 
+.na 
+ape -h[elp]
+ape [file1] [file2] ... [fileN]
+.ad
+.fi
+
+.SH "GETTING STARTED"
+
+.B APE
+is a terminal-based application, which means it runs on an ASCII terminal or in a terminal
+emulator window such as xterm, rxvt, konsole, etc.
+
+In order for
+.B APE
+to function properly, your terminal type must be properly specified in the
+environment.
+.B APE
+(as well as other twintk-based applications)
+looks at the variables TWINTERM, COLORTERM, and TERM, in that order.
+
+The vt100/xterm terminal series has some historical weirdness with the
+backspace key. The original vt100 had a Del key in the upper right of the
+keyboard, which sends the Del character (ASCII 127), but many terminal
+emulators send a BS (ASCII 8) instead, in order to behave more like
+a PC keyboard. If you have trouble with the
+backspace key, check your terminal emulator settings.  Most modern
+terminal emulators (e.g. konsole, gnome-terminal, Mac Terminal, etc.)
+allow you to change key mappings.  You may also need
+to use stty at the shell prompt and in your startup script to configure
+the shell environment to match the terminal emulator settings.
+
+.SH "HOW TO READ THIS MANUAL"
+This manual is available in both
+.B nroff
+and
+.B HTML (Hyper-Text Markup Language)
+forms.  HTML is the preferred form, since it allows you to navigate
+to and from various sections more easily than the nroff-based
+man command.
+
+APE can be configured through the options/misc menu to
+use the HTML version, provided you have an HTML browser such
+as
+.B lynx
+or
+.B firefox
+installed on your system.  By default, APE uses the standard
+.B man
+command to display nroff-formatted pages.
+
+Key mappings stated in this manual and in the editor have the
+following meanings:
+
+Keys to be pressed in sequence are shown separated by a `-'.  Keys to be
+pressed together are separated by a `+'.  For example,
+.cu
+Esc-b
+means first press Esc, then `b', and
+.cu
+ctrl+f
+means press `f' while holding down the 
+.cu
+ctrl
+key.
+
+\" Overview of the major sections
+.SH "ORGANIZATION"
+.nf
+.B "I. Overview"
+.fi
+Describes the general features and hardware requirements of
+.B APE.
+
+.nf
+.B "II. General use"
+.fi
+The
+.B how\-to
+section for common editing tasks.
+
+.nf
+.B "III. Pop\-down menus"
+.fi
+Guide to using the pop-down menu system.
+
+.ce 2
+.B "Section I"
+.B "APE Overview"
+
+.SH "WHY GO APE?"
+.B APE 
+is a programmer's editor, designed to function as a complete
+programming environment for Unix.
+APE 
+users can easily code, compile and test from within
+the editor, rather than repeatedly typing complicated Unix 
+commands at the shell prompt.
+APE
+provides a convenient interface to many of the standard programming tools, 
+including compilers, debuggers, on-line manuals, etc.  This interface can be
+customized to suit each programmer's particular needs.
+APE
+is capable of interfacing with
+.B any
+programming language, as well as other file processing commands such as
+.B nroff
+and
+.B LaTeX,
+so you can use the same environment for both code and
+documentation development.
+
+APE
+is designed to get the most out of your existing hardware.  The first
+time you run APE, you'll probably be surprised to see what an ASCII terminal
+can do!
+
+APE's resource requirements are generally less
+than popular text editors, and far less than graphical editors.
+
+Because APE is character based, not graphical, it works very well over
+slow connections and on non X11 displays.  For example, APE is ideal for
+editing on a remote Unix machine using a PuTTY connection from Windows,
+or working over a slow dial-up, DSL, or home cable connection.
+
+Most importantly, APE is easy to learn, and it's menu-driven interface
+will even help you learn to program under Unix. All major functions are
+implemented via pop down menus so beginners won't have to memorize any
+cryptic commands.  Hot keys are also provided, so more experienced users
+can bypass the menus.
+
+.SH "LANGUAGE SUPPORT"
+APE comes already configured for many common languages, including those
+listed below.  For an up-to-date list, see install-prefix/share/ape/Languages.
+
+New languages configurations can easily be added, and
+existing ones changed to suit your preferences.
+
+Language support includes compiler and interpreter configuration, compiler
+error message parsing, word wrap, edit macros, and syntax highlighting.  See
+.B "options menu"
+below for details on configuring languages.
+
+Language recognition is based on the filename and/or the magic
+sequence on the first line.  ( e.g. #!/bin/sh, #!/usr/bin/perl, ...)
+
+.nf
+.na
+    Language        Filename patterns           Magic sequence
+    ----------------------------------------------------------
+    Awk             *.awk
+    BASH            *, *.bash                   #!/bin/bash
+    Bc calculator   *.bc
+    Bourne-shell    *, *.sh, *.profile          #!/bin/sh
+    C               *.c
+    C++             *.cc *.C *.cxx *.cpp
+    C-shell         *, *.csh, *.cshrc           #!/bin/csh
+    Fortran 77*     *.f
+    Fortran 90      *.f90
+    HTML            *.html
+    JAVA            *.java
+    Korn shell      *, *.ksh                    #!/usr/bin/ksh
+    LaTeX           *.tex
+    Lex             *.l
+    Nroff           *.r *.n *.1 *.2 *.3 *.4 *.5 *.6 *.7 *.8 *.9
+    Pascal          *.p
+    Perl            *.pl                        #!/usr/bin/perl
+    Python          *.py
+    Sed             *.sed
+    T-shell         *, *.tcsh                   #!/bin/tcsh
+    TCL             *.tcl
+    Terminfo        *.ti
+    Yacc            *.y
+.ad
+.fi
+
+* For FORTRAN 77 programs, APE enforces a 72-column limit and
+sets the first TAB stop to column 7.
+
+When APE believes a file is a shell script, it will automatically
+make the file executable to anyone who has permission to read it.
+
+Source files that do not contain an ID string in the first line
+are recognized by the filename extension listed in the table above.
+To add a new filename extension for an existing language, (e.g. .10
+for nroff), first load a file with one the old extensions (e.g. .1 for
+nroff), and then go to the language options panel and add the new
+extension to the existing ones.
+
+.SH "TERMINAL INDEPENDENCE"
+APE will work with any ASCII terminal described in the
+.B terminfo
+database.
+For best results, use a DEC vtxxx,
+xterm, rxvt, or similar terminal.
+These terminals have a rich set of capabilities to maximize
+performance and appearance.  The vt220 and higher terminals
+also provide all the function keys used by APE, whereas the
+vt100 offers only F1 through F4.
+
+APE looks for the terminal name first in the
+.B TWINTERM
+environment variable, followed by
+.B COLORTERM
+and finally
+.B TERM.  This allows the use of separate terminfo/termcap
+entries by APE and other programs, particularly termcap-based programs.
+This is especially useful when
+using one of the enhanced entries described below.  For instance,
+you may want to set TWINTERM or COLORTERM to "xterm86" or "rxvt",
+while setting TERM to "xterm" or "vt100" for termcap-based programs.
+
+Additional terminfo directories may be specified via the
+.B TWINPATH
+environment variable.
+Unlike the curses TERMINFO variable, TWINPATH allows multiple
+colon-separated directories to be specified.
+
+Note that terminfo entries are stored in
+.B subdirectories
+of the directories specified by TWINPATH.
+
+For example, to instruct APE to search for terminfo
+binaries first under ~/Terminfo/*, then ~bob/Terminfo/*, and lastly
+/usr/lib/terminfo/*, use the following:
+
+    setenv TWINPATH ~/Terminfo:~bob/Terminfo
+    
+    or
+    
+    export TWINPATH=~/Terminfo:~bob/Terminfo
+
+If the terminal type is set to 'vt102', APE will first look
+for ~/Terminfo/v/vt102, then ~bob/Terminfo/v/vt102, and finally
+/usr/lib/terminfo/v/vt102.
+
+The default directory install-prefix/share/twintk/terminfo is
+always searched and need
+not be included in TWINPATH.
+
+APE has been tested on a wide variety of terminals.
+(A few restrictions exist for
+terminals with the "magic cookie glitch", which creates aesthetic
+problems with screen attributes, but does not inhibit the
+functionality of APE.)
+
+If you have trouble running APE on any particular
+type of terminal, first try running other full-screen programs
+on the same terminal.
+
+The most likely reason for a terminal not to work properly
+is an incorrect TERM variable setting, or an
+inaccurate terminfo entry.  Fortunately, these problems are easy
+to correct.  The TERM variable can be set using
+.cu
+setenv
+or
+.cu
+export.
+Terminfo entries can be checked against your terminal's documentation
+using infocmp or tconv.
+
+.SH "RUNNING UNDER X WINDOWS OR OTHER VARIABLE SIZE SCREENS"
+
+APE will check the following to determine
+window/screen size, overriding the fixed values given by terminfo:
+
+First, the pty driver is polled directly using
+.cu
+ioctl().
+
+If the ioctl() call fails, APE will check the environment variables
+.cu
+LINES
+and
+.cu
+COLS.
+These variables can be set using the 
+.cu
+resize
+command.
+
+If the first two window size checks fail, APE will check the variable
+.cu
+TERMCAP
+and scan for the
+.B li
+and
+.B co
+fields.
+
+.B "Resizing a window:"
+
+APE will automatically adjust when a window is resized.
+APE requires at least a 24x80 window, due to size minimums of
+some dialog boxes.
+If the window is resized to less than 24 lines 
+.B or
+less than 80 columns, APE will display a message and 
+sleep until it is resized to at least 24x80.  
+
+.B NOTE:
+Some SCO installations may contain a bug in
+.cu
+xterm
+and
+.cu
+scoterm,
+preventing the delivery of the SIGWINCH signal to APE.
+If APE does not automatically
+resize when its window is resized, you will need to exit APE, use the
+.cu
+resize
+command, and run APE again.
+
+.SH "SYNTAX HIGHLIGHTING"
+\"HTML <a href=#syntax>See OPTIONS MENU</a>
+
+.SH "USING MAKE"
+After loading files specified on the command line, APE will look for
+a file called "makefile" or "Makefile" in the current directory.
+If present, APE will ask you if you want to use the makefile.
+
+You can also select a makefile after startup via the Build menu.
+See
+.B "BUILD MENU"
+below for details.
+
+APE extracts variable assignments and targets from the Makefile.  The project
+executable is taken from the variable BIN if it exists.  If it does not, APE
+looks for BIN1, LIB, and LIB1.
+
+.ce 2
+.B "Section II"
+.B "General Use"
+
+Pop-down menus allow you to begin to use
+APE
+with minimal knowledge.  To display a menu, type the
+.cu
+Esc
+key followed by a highlighted letter in the menu
+bar shown at the top of the screen.  For example, to display the
+.B File
+menu, type
+.cu
+Esc-f.
+( first press the Esc key, then the 'f' key )
+
+.B Alt
+key combinations also work on many terminals such as the COHERENT
+console, and most versions of xterm.  For example, Alt+f can be used
+to invoke the file menu, provided the terminal has a functional
+Alt key.
+
+Once a menu is displayed, you can select an item by typing
+the highlighted character in the menu text.  For example, to quit
+the editor, type 
+.cu
+Esc-f
+to display the
+.B File
+menu, and then press 'q' to select the
+.B Quit
+menu item.
+
+.B Note:
+If your terminal has no highlighting capability, the key to press
+is generally the
+.B last
+capitalized letter in the menu item.
+
+Menu items may also be selected using the up and down arrow keys, or
+using the mouse.
+
+You may notice that some menu items are followed by additional text
+enclosed in parenthesis.  The text in parenthesis denotes the
+.B "hot key"
+for that menu item.  This is a keystroke or sequence of keystrokes
+which invokes that item without displaying the menu first.  Hot\-keys
+are provided for commonly used functions to save time.  For example,
+to compile and run a program without first displaying the
+.B Build
+menu, simply press 
+.cu
+Esc-r,
+or 
+.cu
+F5
+if your terminal
+has an F5 key.
+
+.SH "CURSOR MOTION"
+A quick-reference to cursor\-motion keys is provided in the
+.B apekeys
+man page, which can be referenced via the
+.B Help/Keyboard
+menu.
+
+.SH "INSERTING AND REPLACING TEXT"
+
+The normal mode of
+APE
+is 
+.B insert 
+mode.  The word
+.B <insert>
+will appear on the
+status line
+at the bottom of the screen when in insert mode.
+
+All characters typed in this mode will be inserted at the cursor position.
+
+Typing
+.cu
+enter
+while in insert mode
+will split the current line at the cursor, and begin a new 
+line below.
+
+.B Replace
+mode is selected by typing the
+.cu
+insert
+key or
+.cu
+ctrl+r.
+To go back to
+.B insert
+mode, press
+.cu
+insert
+or
+.cu 
+ctrl+r
+again.
+
+In replace mode, characters typed will
+.B replace
+the character at the cursor position, rather than being inserted before it.
+
+The
+.B TAB
+and
+.B BACKSPACE
+keys behave slightly differently in replace mode.  The TAB key
+always acts as if insert mode is on.
+The backspace key behaves as if insert mode is on when only spaces exist
+to the left of the cursor.  This allows the indentation of a line
+to be adjusted even while in replace mode.
+
+By default, normal tab stops occur every fourth column, except in Fortran 77
+mode, which sets the first tab stop to column 7.
+Tab stops can be changed in options menu, described below.
+
+.SH "EDIT MACROS"
+APE also provides a simple edit macro facility, which can be invoked using the
+edit menu, or by pressing F9 or Esc-Enter.
+\"HTML <a href=#macros>See EDIT MENU</a>
+
+A macro is defined by highlighting text with the Edit menu's Begin area
+and End area actions, and then selecting New macro from the Edit menu.
+
+Macros can contain plain text, and the following markup, where
+.B width
+is an integer specifying the number of columns the expansion should
+occupy.  This is a required argument which allows the user to control
+alignment of text surrounding the markup.
+If the expanded text is longer than width, the full text
+is inserted anyway, and the alignment will be off.
+
+.B \(rsdate(width)
+expands to today's date in the form YYYY-MM-DD.
+
+.B \(rsusername(width)
+expands to the username of the person running APE.
+
+.B \(rsgecos(width)
+expands to the gecos (comment) field from the password entry for
+the user running APE.  The gecos field normally contains the user's
+full name, but may contain arbitrary text.  If can be set with
+the chfn command on many systems, and can only be set by the systems
+manager on some.
+
+.B Block
+deletions are possible using the
+.B "cut and paste"
+features.  See
+.B "EDIT MENU"
+below.
+
+.SH QUICK\ SAVE
+The quick save
+feature is designed to encourage frequent saving of a file while it
+is being edited.  The simplest possible sequences,
+.cu
+Esc\-Esc
+and
+.cu
+Ctrl+s,
+were chosen 
+so that saving can be done without interrupting the thought process.
+
+.SH SCREEN\ REDRAW
+Typing
+.B ctrl+L
+will cause the screen to be redrawn.  This is useful
+following line noise or background process incidents which
+may mess up the screen.
+
+.SH "BLOCK INDENT"
+APE supports block-mode indenting, i.e. changing the indentation of
+multiple lines simultaneously.  To alter a block, first mark the area
+using the
+.cu
+begin area
+and
+.cu
+end area
+features via the edit menu, or hot keys (F4 or Esc-m).  You may then
+increase the indentation level of the entire block using the SPACE
+or TAB keys, and decrease the indentation using BACK-SPACE or BACK-TAB.
+All of these keys will have roughly the same effect on the block that
+they would have on individual lines when no area is marked.
+
+Note that the BACK-TAB key is not functional on many terminals.
+
+.SH FILES
+.nf
+.na
+    $home/.ape-version
+.ad
+.fi
+
+.SH ENVIRONMENT
+.nf
+.na
+    TWINPATH    - Lists directories containing terminfo databases.
+    TERM        - Default terminal type.
+    COLORTERM   - Default color terminal type - overrides TERM.
+    TWINTERM    - Enhanced terminal type for TWIN applications.
+		  Overrides TERM and COLORTERM.
+.ad
+.fi
+
+.SH "SEE ALSO"
+apekeys, apeascii
+
+.B Compilers, etc.:
+as, ld, cc, gcc, c++, g++, f77, f90, pc, p2c, f2c, lex, yacc,
+flex, byacc, bison, nroff, latex, javac
+
+.B Interpreters:
+bc, clisp, lynx, mosaic, netscape, perl, prolog, tforth
+
+.B Shells:
+bash, clam, csh, ksh, tcl, tcsh, sh, vsh
+
+.B Libraries:
+libc, libm, libX11, libterminfo, libtwin, libcurses
+
+.SH BUGS
+SCO OpenServer 5.0.4, and possibly other versions, contains a collision
+in the ansi terminfo entry between key_f1 and key_mouse, with both
+sending ^[[M under SCOTERM.  As a result, APE cannot distinguish between
+an F1 key press and a mouse button event, and always assumes a mouse event.
+Thus, the F1 key will not
+function under SCOTERM until this SCOTERM bug is repaired.
+
+Syntax highlighting in some versions may occasionally get confused.
+This can usually be corrected by simply typing Ctrl+L to redraw the
+screen.
+
+.SH AUTHOR
+.nf
+.na
+    Jason W. Bacon
+    Acadix Software Systems
+    http://www.acadix.biz
+
+

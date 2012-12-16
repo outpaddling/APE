@@ -1,0 +1,48 @@
+n 2 0 47 0 0 0 27 0 47 63:## Choose which universe you want your program is running with 
+## Available options are 
+## - standard: defaults to transfer executables and files 
+## - vanilla: explicitly enable file transfer mechanism 
+## - grid: explicitly enable file transfer mechanism 
+## - java: explicitly enable file transfer mechanism. Used for java jobs. 
+## - scheduler 
+## - local 
+## - parallel: explicitly enable file transfer mechanism. Used for MPI jobs. 
+## - vm 
+## Refer http://research.cs.wisc.edu/condor/manual/v7.6/2_4Road_map_Running.html for detailes. 
+universe = vanilla 
+
+## Specify the executable path and name 
+## NOTE: the POVB currently supports 32-bit executable only 
+executable = \filename_stem(0)
+arguments = 
+
+## Where the standard outputs go 
+## $(Process) is current jobs index 
+output = $(Process).out 
+
+## Where the standard error go 
+error = $(Process).err 
+
+## Logs for job on the condor 
+log = \filename_stem(0).log 
+
+## Customed job requirements 
+## Condor assumes job requirements from the node submitting job. 
+## For example, if the jobs is submitted from peregrine, the architecture is "X86_64", 
+## operating system is "FREEBSD8", which are currently not supported by POVB. 
+## Change them to "INTEL" and "LINUX" like this. 
+## You can query if your submitting node is accepted by command: condor_q -analyze 
+requirements = target.arch == "INTEL" && target.opsys == "LINUX" 
+
+## Explicitly enable executable transfer mechanism 
+transfer_executable = false
+
+should_transfer_files = yes 
+transfer_input_files = 
+transfer_output_files = 
+when_to_transfer_output = on_exit 
+
+## Specify how many jobs you would like to submit at a time and put them in the queue. 
+## You can query your jobs by command: condor_q 
+queue 1
+

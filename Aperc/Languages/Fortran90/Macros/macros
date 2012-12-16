@@ -1,0 +1,178 @@
+p 1 9 10 0 0 0 0 0 1 8:print *,
+w 1 10 11 0 0 0 0 0 1 11:write (*,*)
+i 1 9 11 0 0 0 0 0 2 10:if () then
+end if
+e 1 9 12 0 0 0 0 0 3 10:if () then
+else
+end if
+s 1 9 13 0 0 0 0 0 4 14:select case ()
+    case    ()
+    case    ()
+end select
+d 1 9 11 0 0 0 0 0 2 8:do = , ,
+end do
+o 1 67 86 0 0 66 66 0 19 19:! Open file '' for 
+open(unit = _file_unit, &
+    file = _filename, &
+    status = 'old', &
+    iostat = open_status, &
+    action = '', &
+    position = '')
+if ( open_status /= 0 ) then
+    write(ERROR_UNIT, *) 'Error: Could not open file "', &
+        trim(_filename), '" for ing.'
+    stop
+endif
+
+! Close file
+close(_file_unit, iostat = close_status)
+if ( close_status /= 0 ) then
+    write(ERROR_UNIT, *) 'Error closing file!'
+    stop
+endif
+r 1 60 65 0 0 45 45 0 5 42:read (_file_unit, *, iostat = read_status)
+if ( read_status /= 0 ) then
+    write(ERROR_UNIT, *) 'Error read from file unit ', _file_unit
+    stop
+endif
+a 1 61 66 0 0 46 46 0 5 43:allocate((1:_size), stat = allocate_status)
+if ( allocate_status /= 0 ) then
+    write(ERROR_UNIT, *) 'Error allocating memory.'
+    stop
+endif
+
+ 0 69 105 0 0 62 85 0 36 72:m 0 0 33 0 0 0 13 0 33 72:!-----------------------------------------------------------------------
+!   Program description:
+!
+!-----------------------------------------------------------------------
+
+!-----------------------------------------------------------------------
+!   Modification history:
+!   Date        Name        Modification
+!   \date(12)\gecos(12)Begin
+!-----------------------------------------------------------------------
+
+module constants
+    ! Global Constants
+    double precision, parameter :: &
+        PI = 3.1415926535897932d0, &
+        E = 2.7182818284590452d0, &
+        TOLERANCE = 0.00000000001d0, &  ! For numerical methods
+        AVOGADRO = 6.0221415d23         ! Not known to more digits than this
+end module constants
+
+! Main program body
+program replace_me_with_name
+    use constants           ! Constants defined above
+    use ISO_FORTRAN_ENV     ! INPUT_UNIT, OUTPUT_UNIT, ERROR_UNIT, etc.
+    
+    ! Disable implicit declarations (i-n rule)
+    implicit none
+    
+    ! Variable defintions
+    
+    ! Statements
+
+end program
+u 0 0 30 0 0 0 10 0 30 72:!-----------------------------------------------------------------------
+!   Description:
+!
+!   Arguments:
+!
+!   Returns:
+!
+!-----------------------------------------------------------------------
+
+!-----------------------------------------------------------------------
+!   Modification history:
+!   Date        Name        Modification
+!   \date(12)\gecos(12)Begin
+!-----------------------------------------------------------------------
+
+subroutine ()
+    ! Import stuff from constants module
+    use constants
+    use ISO_FORTRAN_ENV     ! INPUT_UNIT, OUTPUT_UNIT, ERROR_UNIT, etc.
+    
+    ! Disable implicit declarations (i-n rule)
+    implicit none
+    
+    ! Dummy variables
+    , intent() :: 
+
+    ! Local variables
+     :: 
+
+end subroutine
+f 0 0 33 0 0 0 13 0 33 72:!-----------------------------------------------------------------------
+!   Description:
+!
+!   Arguments:
+!
+!   Returns:
+!
+!-----------------------------------------------------------------------
+
+!-----------------------------------------------------------------------
+!   Modification history:
+!   Date        Name        Modification
+!   \date(12)\gecos(12)Begin
+!-----------------------------------------------------------------------
+
+function ()
+    ! Import stuff from constants module
+    use constants
+    use ISO_FORTRAN_ENV     ! INPUT_UNIT, OUTPUT_UNIT, ERROR_UNIT, etc.
+    
+    ! Disable implicit declarations (i-n rule)
+    implicit none
+    
+    ! Function type
+     :: 
+    
+    ! Dummy variables
+    , intent(in) :: 
+    
+    ! Local variables
+     :: 
+    
+end function
+n 1 68 73 0 0 58 58 0 5 9:interface
+    ()
+        , intent() :: 
+    end
+end interface
+m 0 0 33 0 0 0 13 0 33 72:!-----------------------------------------------------------------------
+!   Program description:
+!
+!-----------------------------------------------------------------------
+
+!-----------------------------------------------------------------------
+!   Modification history:
+!   Date        Name        Modification
+!   \date(12)\gecos(12)Created
+!-----------------------------------------------------------------------
+
+module constants
+    ! Define ONLY constants here (use the 'parameter' keyword)
+    double precision, parameter :: &
+        PI = 3.1415926535897932d0, &
+        E = 2.7182818284590452d0, &
+        TOLERANCE = 0.00000000001d0, &  ! For numerical methods
+        AVOGADRO = 6.0221415d23         ! Not known to more digits than this
+end module constants
+
+! Main program body
+program \filename_stem(0)
+    use constants           ! Constants defined above
+    use ISO_FORTRAN_ENV     ! INPUT_UNIT, OUTPUT_UNIT, ERROR_UNIT, etc.
+    
+    ! Disable implicit declarations (i-n rule)
+    implicit none
+    
+    ! Variable defintions
+    
+    ! Statements
+
+end program
+

@@ -1,0 +1,9 @@
+Put N.Umber
+Put .Character
+.Get number
+Get C.Haracter
+Put .String
+.Block comment
+.Macro
+.New program
+.Procedure

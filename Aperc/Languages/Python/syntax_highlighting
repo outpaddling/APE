@@ -1,0 +1,8 @@
+3 0 8
+#.*$
+6 0 8
+'.*'|".*"
+2 0 8
+if|else|elif|while|for|in|def|import
+-2 0 0
+end

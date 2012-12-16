@@ -1,0 +1,157 @@
+ape.o: ape.c /usr/local/include/twintk.h /usr/local/include/twintk_term.h \
+  /usr/local/include/twintk_image.h /usr/local/include/twintk_mouse.h \
+  /usr/local/include/bacon.h edit.h /usr/local/include/pare.h macros.h \
+  synhigh.h language.h undo_stack.h undo_item.h make.h custom.h machdep.h \
+  protos.h
+	${CC} -c ${CFLAGS} ape.c
+build_m.o: build_m.c /usr/local/include/bacon.h \
+  /usr/local/include/twintk.h /usr/local/include/twintk_term.h \
+  /usr/local/include/twintk_image.h /usr/local/include/twintk_mouse.h \
+  edit.h /usr/local/include/pare.h macros.h synhigh.h language.h \
+  undo_stack.h undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} build_m.c
+build_opts.o: build_opts.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} build_opts.c
+cursor.o: cursor.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} cursor.c
+custom.o: custom.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} custom.c
+edit_m.o: edit_m.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} edit_m.c
+editbuff.o: editbuff.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} editbuff.c
+error.o: error.c /usr/local/include/bacon.h edit.h \
+  /usr/local/include/twintk.h /usr/local/include/twintk_term.h \
+  /usr/local/include/twintk_image.h /usr/local/include/twintk_mouse.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} error.c
+file_wins.o: file_wins.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} file_wins.c
+files.o: files.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} files.c
+help_m.o: help_m.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} help_m.c
+init.o: init.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} init.c
+init_opts.o: init_opts.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} init_opts.c
+macros.o: macros.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} macros.c
+match.o: match.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h edit.h /usr/local/include/pare.h \
+  macros.h synhigh.h language.h undo_stack.h undo_item.h make.h custom.h \
+  machdep.h protos.h
+	${CC} -c ${CFLAGS} match.c
+messages.o: messages.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} messages.c
+mouse.o: mouse.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h edit.h /usr/local/include/pare.h \
+  macros.h synhigh.h language.h undo_stack.h undo_item.h make.h custom.h \
+  machdep.h protos.h
+	${CC} -c ${CFLAGS} mouse.c
+options.o: options.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} options.c
+reg.o: reg.c /usr/local/include/twintk.h /usr/local/include/twintk_term.h \
+  /usr/local/include/twintk_image.h /usr/local/include/twintk_mouse.h \
+  edit.h /usr/local/include/pare.h macros.h synhigh.h language.h \
+  undo_stack.h undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} reg.c
+resize.o: resize.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} resize.c
+search_m.o: search_m.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} search_m.c
+signal.o: signal.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h edit.h /usr/local/include/pare.h \
+  macros.h synhigh.h language.h undo_stack.h undo_item.h make.h custom.h \
+  machdep.h protos.h
+	${CC} -c ${CFLAGS} signal.c
+subproc.o: subproc.c /usr/local/include/bacon.h edit.h \
+  /usr/local/include/twintk.h /usr/local/include/twintk_term.h \
+  /usr/local/include/twintk_image.h /usr/local/include/twintk_mouse.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} subproc.c
+synhigh.o: synhigh.c /usr/local/include/pare.h /usr/local/include/bacon.h \
+  edit.h /usr/local/include/twintk.h /usr/local/include/twintk_term.h \
+  /usr/local/include/twintk_image.h /usr/local/include/twintk_mouse.h \
+  macros.h synhigh.h language.h undo_stack.h undo_item.h make.h custom.h \
+  machdep.h protos.h
+	${CC} -c ${CFLAGS} synhigh.c
+undo_item.o: undo_item.c undo_item.h
+	${CC} -c ${CFLAGS} undo_item.c
+undo_stack.o: undo_stack.c edit.h /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/pare.h macros.h \
+  synhigh.h language.h undo_stack.h undo_item.h make.h custom.h machdep.h \
+  protos.h
+	${CC} -c ${CFLAGS} undo_stack.c
+wins.o: wins.c /usr/local/include/twintk.h \
+  /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
+  /usr/local/include/twintk_mouse.h /usr/local/include/bacon.h edit.h \
+  /usr/local/include/pare.h macros.h synhigh.h language.h undo_stack.h \
+  undo_item.h make.h custom.h machdep.h protos.h
+	${CC} -c ${CFLAGS} wins.c

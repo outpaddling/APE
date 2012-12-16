@@ -1,0 +1,12 @@
+3 -1 8
+(/*).*(*/)|//.*$
+6 -1 8
+".*["$]|'.*['$]
+2 -1 8
+assert|at|break|case|catch|continue|default|do|else|extends|finally|for|goto|here|if|implements|import|instanceof|interface|native|new|package|return|strictfp|super|switch|throw|try|while
+5 -1 16
+abstract|boolean|byte|char|class|const|def|double|final|float|int|long|private|protected|public|short|static|synchronized|transient|void|volatile
+1 -1 8
+false|null|this|true|0x[0-9A-Fa-f]+|[0-9]+
+-2 0 0
+end

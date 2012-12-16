@@ -1,0 +1,5 @@
+.Input character
+.Output character
+.Subprogram
+Print .Long
+New .Main

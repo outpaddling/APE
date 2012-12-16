@@ -1,0 +1,7 @@
+.Section header
+.Verbatim text
+.Comment
+.TP
+Command-line .Flag
+.Paragraph
+.New man page

@@ -1,0 +1,11 @@
+.Foreach loop
+.If-then
+.While loop
+.Read string
+Block .Comment
+Pause .Alias
+.Switch
+.Usage
+.Exit codes
+.New script
+.PBS template

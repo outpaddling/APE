@@ -1,0 +1,15 @@
+New .Main
+.If-then statement
+.Do loop
+.While loop
+Init .Touch sensor
+Init .Light sensor
+Motors .Off
+.Coast motors
+Play .Sound
+Timer .0
+W.Ait
+Random .Number
+On .Forward
+On .Reverse
+For loo.P

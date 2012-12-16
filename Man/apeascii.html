@@ -1,0 +1,142 @@
+<HTML>
+<TITLE>ASCII</TITLE>
+<BODY><BLOCKQUOTE>
+<HR><BR>
+<H1>Table of Contents</H1><BR>
+<A HREF=#_section0> NAME </A><BR>
+<A HREF=#_section1> DESCRIPTION </A><BR>
+<A HREF=#_section2> ASCII Table </A><BR>
+<BR><HR>
+
+<A NAME=_section0>
+<H2>NAME</H2>
+<P>
+ASCII - American Standard Code for Information Interchange
+
+<P>
+
+<A NAME=_section1>
+<H2>DESCRIPTION</H2>
+<P>
+
+<P>
+ASCII is a  standard binary code used to represent character
+data  on  computers.   Most  existing  computers,  printers,
+terminals, etc.  use the ASCII code to communicate with each
+other.   Older IBM systems such as 360 family mainframes use
+another code called
+<B>EBCDIC</B>
+(Extended Binary Coded Decimal Interchange Code).
+
+<P>
+The  standard  ASCII  code uses  7  bits  to represent  each
+character.  This provides codes from 0000000 to 1111111 (0 to
+127  decimal).    Modern  computers  use  an   8  bit  ASCII
+character, although  the latter codes,  10000000 to 11111111
+(128 to 255 decimal) are not standardized.
+
+<P>
+Codes 00000000 to 00011111 (0 to 31 decimal) are the
+<B>control characters.</B>
+These characters has various
+effects on printers and terminals.  For example,
+sending a  line-feed (LF) character to  a printer causes the
+paper  to scroll.   Sending the same  character to  an ASCII
+terminal will cause the cursor to move down, the analog to a
+paper scroll on a printer.   If the cursor is already at the
+bottom of  the screen, then the screen  will scroll up.  The
+following is a list of the control characters and their purpose:
+
+<P>
+<PRE>
+Name    Decimal code    Function
+NUL     0               No effect - marker or delay
+SOH     1               Start of header
+STX     2               Start of text
+ETX     3               End of text flag
+EOT     4               End of transmission flag
+ENQ     5               Enquiry
+ACK     6               Positive acknowledgement
+BEL     7               Ring printer or terminal bell
+BS      8               Backspace - move left
+HT      9               Horizontal TAB - Move right to next tab stop
+LF      10              Line feed
+VT      11              Vertical TAB
+FF      12              Form feed (new page)
+CR      13              Carriage return - go to left margin
+SO      14              Shift out
+SI      15              Shift in
+DLE     16              Data link escape
+DC1     17              Device control 1
+DC2     18              Device control 2
+DC3     19              Device control 3
+DC4     20              Device control 4
+NAK     21              Negative acknowledgement
+SYN     22              Syncronize
+ETB     23              End of transmission block
+CAN     24              Cancel
+EM      25              End of medium
+SUB     26              Substitute
+ESC     27              Escape - start of special sequence
+FS      28              Form separator
+GS      29              Group separator
+RS      30              Record separator
+US      31              Unit separator
+</PRE>
+
+<P>
+Codes  00100000  to  01111110 (32  to  126  decimal are  the
+printable characters.
+
+<P>
+The printable characters are grouped in several sections.
+
+<P>
+Code 00100000 (32 decimal) is the space character.
+
+<P>
+Codes 00110000 to 00111001  (48 to 57 decimal) are the digit
+characters '0' to '9'.  The
+<B>character</B>
+'0' has ASCII code 48
+When you type '0'  on your keyboard, the computer receives a
+binary  00110000  (48 decimal)  from  your  terminal, not  a
+binary 0.
+
+<P>
+Codes  01000001  to  01011011 (65  to  71  decimal) are  the
+capital letters.
+
+<P>
+Codes 01100001 to 01111011 (97 to 123 decimal) are the lower
+case letters.   Note that the  code for a  lower case letter
+differs by only 1 bit from  the code for the same upper case
+letter.   This  feature  is  intended  to  make it  easy  to
+capitalize or decapitalize text.
+
+<P>
+Code 01111111 (127 decimal) is the delete character.
+
+<P>
+All remaining codes  between the digits and letters are used
+for various punctuation symbols.
+
+<P>
+
+<A NAME=_section2>
+<H2>ASCII Table</H2>
+<P>
+
+<P>
+The following  is a table of all 256 characters.  The
+appearance  of non-standard  characters 128 to 255
+(third and fourth columns) will  depend  on the
+type of terminal you are viewing this on.  If your terminal
+supports an alternate character set, it will be shown
+following the standard character set.
+
+<P>
+
+<P>
+</BLOCKQUOTE></BODY>
+</HTML>

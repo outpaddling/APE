@@ -1,0 +1,215 @@
+i 1 2 6 0 0 0 0 0 4 1:#
+if []; then
+fi
+
+w 1 10 15 0 0 0 0 0 5 2:# 
+while 
+do
+done
+
+f 1 15 20 0 0 5 5 0 5 2:# 
+for in
+do
+done
+
+b 1 2 6 0 0 0 0 0 4 74:##########################################################################
+#
+##########################################################################
+
+c 1 6 14 0 0 0 0 0 8 2:# 
+case in
+pattern)
+    ;;
+*)
+    ;;
+esac
+
+u 0 2 18 0 0 0 0 0 16 74:##########################################################################
+#   Function description:
+#       
+#   Arguments:
+#       
+#   Returns:
+#       
+#   History:
+#   Date        Name        Modification
+#   \date(12)\gecos(12)Begin
+##########################################################################
+
+()
+{
+    return 0
+}
+h 0 941 944 0 0 924 924 0 3 10:cat << EOM
+
+EOM
+n 2 0 18 0 0 0 0 0 18 19:#!/usr/bin/env bash
+
+##########################################################################
+#   Script description:
+#       
+#   Arguments:
+#       
+#   Returns:
+#       
+#   History:
+#   Date        Name        Modification
+#   \date(12)\gecos(12)Begin
+##########################################################################
+
+##########################################################################
+#   Main
+##########################################################################
+
+p 0 2 153 0 0 0 135 0 151 74:##########################################################################
+#   Torque (PBS) job submission script template
+#   "#PBS" denotes PBS command-line flags
+#   "##PBS" is ignored by torque/PBS
+##########################################################################
+
+###########################################################################
+# Job name that will be displayed by qstat, used in output filenames, etc.
+
+#PBS -N \filename_stem(0)
+
+##########################################################################
+# Where to send stdout and stderr from the job.  The default is to create
+# a new file containing the job name and job id for each run.  This can
+# cause output files to pile up.
+
+#PBS -o \filename_stem(0).stdout
+#PBS -e \filename_stem(0).stderr
+
+##########################################################################
+# Job arrays run the same program independently on multiple cores.
+# Each process is viewed as a separate job by PBS.
+# Each job has the name \filename_stem(0)[index], where index is
+# one of the integer values following -t.  The entire job array can
+# also be treated as a single job with the name "\filename_stem(0)[]".  This is especially
+# useful for killing an entire array of jobs.
+
+##PBS -t 1-10       # 10 jobs with consecutive indexes
+##PBS -t 2,4,5,6    # Explicitly list arbitrary indexes
+
+#################################################
+# Specifying cores and distribution across nodes
+
+# Arbitrary cores: the most flexible method.  Use this for all jobs with
+# no extraordinary requirements (e.g. high memory/process).  It gives the
+# scheduler the maximum flexibility in dispatching the job, which might
+# allow it to start sooner.
+
+##PBS -l procs=6
+
+# Specific number of cores/node.  Use this for high-memory processes, or
+# any other time there is a reason to control distribution of processes
+# across multiple nodes.
+#
+# For multicore jobs (e.g. MPI), this requirement is applied once to the
+# entire job.  To spread an MPI job out so that there is only one process
+# per node, use:
+
+##PBS nodes=8:ppn=1
+
+# For job arrays, it is applied to each job in the array individually.
+# E.g. 
+#
+# To spread a job array across multiple nodes, so that there is only 1
+# process per node, use:
+
+##PBS nodes=1:ppn=N
+
+# where N is the total number of cores on a node.  This reserves an entire
+# node for each job in the array, i.e. other jobs will not be able to use
+# any cores on that node.  Useful for high-memory jobs that need all the
+# memory on each node.
+
+# Note: Some jobs, particularly MPI jobs may see reduced performance when
+# using many cores per node, due to memory and other resource contention.
+
+##PBS -l nodes=3:ppn=1
+
+# OpenMP jobs must run all threads on a single node.  N can be anywhere
+# from 2 to the total number of cores on a node.
+
+##PBS -l nodes=1:ppn=N
+
+###########################################################################
+# Specifying virtual memory requirements for each process within the job.
+# This should be done for all jobs in order to maximize utilization of
+# cluster resources.  The scheduler will assume a small memory limit
+# unless told otherwise.
+#
+# Specfying too little memory will cause jobs to be terminated when they
+# exceed the limit.
+#
+# Specifying too much memory will prevent other jobs from utilizing available
+# resources.  It will also cause delays in starting this job when the actual
+# required memory is available, but the requested memory is not.
+
+##PBS -l pvmem=250mb
+
+######################################################################
+# CPU time and wall time.  These should be specified for all jobs.
+# Estimate how long your job should take, and specify 1.5 to 2 times
+# as much CPU and wall time as a limit.  This is only to prevent
+# programs with bugs from occupying resources longer than they should.
+# The scheduler will assume small cpu time limits unless told otherwise.
+#
+# cput refers to total CPU time used by all processes in the job.
+# walltime is actual elapsed time.
+# Hence, cput ~= walltime * processes
+
+##PBS -l cput=seconds or [[HH:]MM:]SS
+##PBS -l walltime=seconds or [[HH:]MM:]SS
+
+##########################################################################
+# Common environment variables set by by the scheduler.  Use these in the
+# commands below to set parameters for array jobs, control the names
+# of output files, etc.
+#
+# See PBS documentation for a complete listing of variables.
+#
+# PBS_O_HOST    Name of the host where the qsub command was run
+# PBS_JOBID     Job identifier assigned to the job by the batch system
+# PBS_JOBNAME   Job name supplied by the user.
+# PBS_ARRAYID   Integer ID of a job (process) in an array.  Often used
+#               to make jobs in an array use separate input or output
+#               files.
+# PBS_O_WORKDIR Absolute path of the current working directory of the
+#               qsub command
+# PBS_NODEFILE  Name of file containing list of compute nodes
+
+##########################################################################
+# Shell commands
+##########################################################################
+
+# Torque starts from the home directory on each node by default, so we
+# must manually cd to the working directory to ensure that output files
+# end up in the project directory, etc.
+
+cd $PBS_O_WORKDIR
+
+# Optional: Remove old files, etc. before starting the program
+# If this is a job array, remember that these commands are run by every
+# process in the array, so take care that they don't conflict with each other.
+
+# rm output*.txt
+
+# Optional: Set PATH or other environment variables before executing
+# programs.  If you're compiling the programs yourself, it's a good idea
+# to do environment settings in a separate script, and source it from
+# both the build and run submit scripts.  This will ensure that the
+# run environment matches the build environment.
+
+# . env.sh
+
+# MPI job example:
+# mpirun ./\filename_stem(0)
+
+# Serial job example:
+# ./\filename_stem(0) > output-$PBS_JOBID.txt
+
+# Array job example:
+# ./\filename_stem(0) < input-$PBS_ARRAYID.txt > output-$PBS_ARRAYID.txt
+

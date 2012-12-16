@@ -1,0 +1,21 @@
+name                    M4HTML
+name_spec               *.m4html
+id_comment              
+compiler                m4
+compile_flags           
+compile_output_flag     
+syntax_check_flag       
+compile_only_flag       
+compile_to_asm_flag     
+preprocess_only_flag    
+link_flags              
+debugger                
+debugger_flags          
+debugger_backtrace_cmd  
+run_prefix              runsomebrowser
+upload_prefix           
+executable_name         \st.html
+executable_source       Standard Output
+error_msg_format        
+auto_wrap               0
+end_language

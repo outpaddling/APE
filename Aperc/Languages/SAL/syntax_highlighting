@@ -1,0 +1,12 @@
+3 -1 8
+#.*$
+5 -1 8
+\.macro|\.end_macro|\.text|\.data|\.byte|\.word|\.float|\.double|\.ascii|\.asciiz|\.space|\.align|put|get|puts|gets|putc|getc|done
+6 -1 8
+".*["$]|'.*['$]
+2 -1 8
+move|add|sub|mul|mul|div|divu|rem|remu|cvt|not|and|or|nand|nor|xor|xnor|sll|srl|sra|rol|ror|b|j|beq|bne|blt|bltu|bgt|bgtu|bge|bgeu|ble|bleu|beqz|bnez|bltz|bgtz|blez|bgez|la|nop
+1 -1 4
+0x[0-9A-Fa-f]+|[0-9]+
+-2 0 0
+end

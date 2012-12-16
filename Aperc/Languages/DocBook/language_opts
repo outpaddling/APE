@@ -1,0 +1,21 @@
+name                    DocBook
+name_spec               *.dbk
+id_comment              
+compiler                dblatex
+compile_flags           -I . -P doc.collab.show=0 -P doc.section.depth=2 -P latex.output.revhistory=0
+compile_output_flag     -o 
+syntax_check_flag       
+compile_only_flag       
+compile_to_asm_flag     
+preprocess_only_flag    
+link_flags              
+debugger                
+debugger_flags          
+debugger_backtrace_cmd  
+run_prefix              docviewer
+upload_prefix           
+executable_name         \st.pdf
+executable_source       Command Line Flag
+error_msg_format        
+auto_wrap               0
+end_language

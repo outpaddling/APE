@@ -1,0 +1,208 @@
+
+Linux Caldera 3.1:
+    crashes after clipping the last line and trying to right cursor
+    past the end (while scrolled left, with no line below)
+
+Catch window close signal
+
+Indent after : as well as {
+    
+Hangs on IRIX when ctrl+c hit in macro menu
+
+Have install script remove old programs like xape
+
+Check for termination signal from xterm, rxvt, etc.
+
+Error window if cannot save!
+
+Filename completion
+
+Put highlighted area in search string
+
+Fix console mouse problem
+
+Add option to email support or connect to WEB site
+
+Automatically close file if opened by next_error()
+
+Add cursor position info to macros
+
+Syntax highlight:
+    Tag only first line of a multiline token?
+    (Then search backward for it to redraw)
+    
+Find files in subdirectories when error message doesn't give full path.
+
+Rebuild if language option compile flags changed.
+
+Fix build script to avoid reinstalling.
+
+Top priority: REGEX search and replace.
+
+Make tmouse work with Xlib instead of using vt mouse, which
+    doesn't work with all X terminal emulators, and has no motion
+    reporting
+
+View header: Load in read-only mode
+
+Opening a file that is already open:
+    Just toggle to it
+
+Allow two ID strings for scripts
+    e.g. /usr/bin/ksh and /bin/ksh
+
+Option to trim trailing space on save
+
+Prompt to spell check before closing doc files.
+
+Allow macros to surround highlighted text
+    e.g. {\bf --- }
+
+Add grab and release capability for scroll bars.
+
+Add "don't display" mask for open-files.
+
+Add version number to .aperc
+
+From paulf@quillandmouse.com  Sat Oct 10 16:32:37 1998
+
+1) Will APE, out of the box, recall what files you were editing and
+where you were in them if you start it up again?
+
+2) Can the keyboard be configured with different keys for major
+functions-- in other words, if I want to change the keys bound to block
+copy, delete and paste, for instance, can I do that?
+
+Thanks
+
+Paul M. Foster
+
+Later...
+--------
+Auto-sense XWindow environment and use dbXtra and netscape
+
+Menu of tags to place around marked area.
+
+Make build menu adjust according to language options, e.g. don't
+
+    display translate to assembly option for scripts, etc.
+
+Have F1 put string in static buffer.
+
+Search and replace: allow user to enter replacement string
+
+Unlimited undo - save each position and edit command to file
+
+Emacs-style macros
+
+Auto-detect mice
+
+Add \ex tag to represent executable name in custom items
+
+Custom menu items should be language specific or global
+
+Smarter mouse driver to avoid problems if mouse is misconfigured.
+
+If first extension is changed in language options, rename the corresponding
+macros directory.
+
+Options:
+    Put everything under $home/.Ape
+
+Docs:
+    run nroff2html on the fly for all man pages
+
+Debug:
+    Add -g and -DDEBUG to compile commands if set in debug options menu
+    Add compile-time and run-time debug options to language options
+    Also interface with easymake
+
+Get COPTS from makefile when loading project
+
+Interface easymake with APE
+    Pick up compiler options from .aperc
+    Generate makefile or Imakefile
+
+Save project option
+    Include everything in set makefile panel
+
+Smart filespec generator for open file.
+    Look for common patterns, not including .o
+    
+Macros:
+    Strip leading spaces from new macros so they auto-indent properly.
+    Tags to be used in macros:
+	Tag                 Insert
+	----------------------------------------------------------
+	\date               Today's date and time
+	\user               User's full name
+	\system(command)    Output of command (check ownership for security)
+
+Emacs-style keystroke macros
+    Create:     ^X ( macro ^X )
+    Execute:    ^X E
+
+Ability to make a function from a marked area
+    Macro?
+
+View header and search header should check ~/C/Include and
+    search libs should check ~/C/Lib
+
+Create SCCS/RCS interface.  Automatically look for SCCS files first,
+and use "get"-"ape"-"delta" in sequence.
+
+Export function to library automatically
+    1. Dump source in ~/C/Lib/(user choice)
+    2. Run cproto
+    3. Regenerate makefile
+    4. build
+
+Error box instead of Swin
+    Options for:
+	next error
+	previous error
+	close error window (to return to editing)
+    Temp file->text with fewer lines, or permanent alternate file->text
+
+Block column editing
+
+Allow entering hex characters
+    Hex mode
+
+Loadable key bindings?
+
+F1 for help in screen_input()
+    Simple message: Press F1 for help.
+    Popup window with keys
+
+URL editing: BIG possibilities - watch for security holes
+    ape ftp://ftp.uwm.edu/.login
+    Get on open, cache, and put on close.
+    Use interactive ftp login, then invoke ftp script
+    or... have ape get login and password. bad idea. security hole.
+
+Have resize force window to at least 24x80 if user attempts to
+resize too small.
+    Set minsize for xterm?
+    getenv("WINDOWID")
+    X calls to resize window
+    
+Update currently loaded files when new build options are
+created for a given extension.
+
+Repeat functions:
+    Repeat key strokes between last two cursor moves.
+    Repeat last command key
+    Repeat last text insert
+    
+Repeat command:
+    Esc-#
+
+Auto-save to temp file
+
+Detect core dumps & save to /tmp.
+
+Create sed interface for non-interactive changes
+
+Approximate search capability.
+

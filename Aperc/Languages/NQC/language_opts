@@ -1,0 +1,21 @@
+name                    NQC
+name_spec               *.nqc
+id_comment              
+compiler                nqc
+compile_flags           
+compile_output_flag     
+syntax_check_flag       
+compile_only_flag       
+compile_to_asm_flag     
+preprocess_only_flag    
+link_flags              
+debugger                
+debugger_flags          
+debugger_backtrace_cmd  
+run_prefix              nqc -run
+upload_prefix           nqc -d
+executable_name         \st.rcx
+executable_source       Fixed
+error_msg_format        File "\fn" ; line \ln
+auto_wrap               0
+end_language
