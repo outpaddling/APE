@@ -1,0 +1,21 @@
+name                    Fortran90
+name_spec               *.f90 *.F90
+id_comment              
+compiler                gfortran46 -fopenmp
+compile_flags           -g
+compile_output_flag     -o 
+syntax_check_flag       -c
+compile_only_flag       -c
+compile_to_asm_flag     
+preprocess_only_flag    
+link_flags              
+debugger                gdb
+debugger_flags          
+debugger_backtrace_cmd  where
+run_prefix              time
+upload_prefix           
+executable_name         \st
+executable_source       Command Line Flag
+error_msg_format        \fn:\ln.\te:
+auto_wrap               0
+end_language

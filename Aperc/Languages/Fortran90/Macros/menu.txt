@@ -1,0 +1,13 @@
+.Print
+.Write
+.If-then
+If-.Else
+.Select
+.Do loop
+.Open file
+.Read from file
+.Allocate memory
+S.Ubroutine
+.Function
+I.Nterface
+New .Main

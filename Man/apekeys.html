@@ -1,0 +1,294 @@
+<HTML>
+<TITLE>APE KEYS</TITLE> 1
+<BODY><BLOCKQUOTE>
+<HR><BR>
+<H1>Table of Contents</H1><BR>
+<A HREF=#_section0> NAME </A><BR>
+<A HREF=#_section1> SYNOPSIS </A><BR>
+<A HREF=#_section2> Conventions </A><BR>
+<A HREF=#_section3> Pop-down Menus </A><BR>
+<A HREF=#_section4> Menu hot-keys </A><BR>
+<A HREF=#_section5> Cursor motion </A><BR>
+<A HREF=#_section6> Inserting and deleting </A><BR>
+<A HREF=#_section7> Cutting and pasting </A><BR>
+<A HREF=#_section8> Miscellaneous </A><BR>
+<BR><HR>
+
+<A NAME=_section0>
+<H2>NAME</H2>
+<P>
+<P>
+APE - Another Programmer's Editor
+
+<A NAME=_section1>
+<H2>SYNOPSIS</H2>
+<P>
+<P>
+<PRE>
+ape -h[elp]
+ape [file1] [file2] ... [fileN]
+xape [-m] [file1] [file2] ... [fileN]
+</PRE>
+
+<P>
+
+<A NAME=_section2>
+<H2>Conventions</H2>
+<P>
+
+<P>
+&lt;key1&gt;-&lt;key2&gt; means press and release key1, then press and release key2.
+
+<P>
+&lt;key1&gt;+&lt;key2&gt; means press key2 while holding down key1.
+
+<P>
+
+<A NAME=_section3>
+<H2>Pop-down Menus</H2>
+<P>
+
+<P>
+Display a pop-down menu:
+<B>&lt;Alt&gt;+&lt;hilighted letter&gt;</B>
+or
+"&lt;Esc&gt;-&lt;highlighted letter&gt;"
+
+<P>
+Next menu:
+<B>&lt;right arrow&gt;</B>
+
+<P>
+Previous menu:
+<B>&lt;left arrow&gt;</B>
+
+<P>
+
+<A NAME=_section4>
+<H2>Menu hot-keys</H2>
+<P>
+
+<P>
+Save file:
+<B>&lt;Ctrl+s&gt;</B>
+or
+<B>&lt;Esc&gt;-&lt;Esc&gt;</B>
+
+<P>
+Toggle displayed file:
+<B>&lt;Ctrl&gt;+t</B>
+
+<P>
+Find word:
+<B>&lt;Ctrl&gt;+f</B>
+or
+<B>&lt;Esc&gt;-/</B>
+
+<P>
+Repeat last find:
+<B>&lt;Ctrl&gt;+n</B>
+or
+<B>&lt;F3&gt;</B>
+
+<P>
+Compile to object:
+<B>&lt;F6&gt;</B>
+
+<P>
+Build and run:
+<B>&lt;Esc&gt;-r</B>
+or
+<B>&lt;F5&gt;</B>
+
+<P>
+Goto next error:
+<B>&lt;Esc&gt;-n</B>
+
+<P>
+Help on word under cursor:
+<B>&lt;F1&gt;</B>
+
+<P>
+
+<A NAME=_section5>
+<H2>Cursor motion</H2>
+<P>
+
+<P>
+Move Left:
+<B>&lt;Left arrow&gt;</B>
+
+<P>
+Move Right:
+<B>&lt;Right arrow&gt;</B>
+
+<P>
+Move Up:
+<B>&lt;Up arrow&gt;</B>
+
+<P>
+Move Down:
+<B>&lt;Down arrow&gt;</B>
+
+<P>
+Beginning of next line:
+<B>&lt;Enter&gt;</B>
+(works only in replace mode)
+
+<P>
+Next word:
+<B>&lt;Ctrl&gt;+w</B>
+
+<P>
+Previous word:
+<B>&lt;Ctrl&gt;+p</B>
+
+<P>
+End of line:
+<B>&lt;Ctrl&gt;+e</B>
+or
+<B>&lt;End&gt;</B>
+
+<P>
+Beginning of line:
+<B>&lt;Ctrl&gt;+b</B>
+or
+<B>&lt;Home&gt;</B>
+
+<P>
+Next page:
+<B>&lt;Page Down&gt;</B>
+or
+<B>&lt;Ctrl&gt;+y</B>
+
+<P>
+Previous page:
+<B>&lt;Page Up&gt;</B>
+or
+<B>&lt;Ctrl&gt;+u</B>
+
+<P>
+Top line of file:
+<B>&lt;Esc&gt;-t</B>
+
+<P>
+Last line of file:
+<B>&lt;Esc&gt;-l</B>
+
+<P>
+Goto a line #:
+<B>&lt;Ctrl&gt;+g</B>
+
+<P>
+
+<A NAME=_section6>
+<H2>Inserting and deleting</H2>
+<P>
+
+<P>
+Toggle insert/replace mode:
+<B>&lt;Insert&gt;</B>
+or
+<B>&lt;Ctrl&gt;+r</B>
+
+<P>
+Delete character at cursor position:
+<B>&lt;Delete&gt;</B>
+or
+<B>&lt;Ctrl&gt;+d</B>
+
+<P>
+Delete character left of cursor:
+<B>&lt;Backspace&gt;</B>
+or
+<B>&lt;Ctrl&gt;+h</B>
+( Note: Check your terminal emulator settings if backspace acts like Del.  Many terminal
+emulators can be configured to send either BS or DEL, and it must be set to match the
+terminfo entry for your terminal. )
+
+<P>
+Delelete to end of word:
+<B>&lt;Ctrl&gt;+o</B>
+
+<P>
+Delete to end of line:
+<B>&lt;Ctrl&gt;+k</B>
+
+<P>
+Delete a line:
+<B>&lt;Ctrl&gt;+x</B>
+
+<P>
+Undelete line:
+<B>&lt;Ctrl&gt;+z</B>
+
+<P>
+
+<A NAME=_section7>
+<H2>Cutting and pasting</H2>
+<P>
+
+<P>
+Begin marking area:
+
+<P>
+Move to beginning or area and type
+<B>&lt;F4&gt;</B>
+or
+<B>&lt;Esc&gt;-m</B>
+
+<P>
+End marking area:
+
+<P>
+Move to end of area and type
+<B>&lt;F4&gt;</B>
+or
+<B>&lt;Esc&gt;-m</B>
+again.
+
+<P>
+Delete marked area:
+<B>&lt;Ctrl&gt;+x</B>
+
+<P>
+Paste marked area:
+<B>&lt;Ctrl&gt;+v</B>
+
+<P>
+Cancel marked area:
+<B>&lt;F4&gt;</B>
+or
+<B>&lt;Esc&gt;-m</B>
+
+<P>
+Invoke an edit macro:
+<B>&lt;F9&gt;</B>
+or
+<B>&lt;Esc&gt;-Enter</B>
+
+<P>
+Join next line to current:
+<B>&lt;ctrl&gt;+e
+</B>or
+<B>&lt;Home&gt;</B>
+followed by 
+<B>&lt;del&gt;</B>
+
+<P>
+
+<A NAME=_section8>
+<H2>Miscellaneous</H2>
+<P>
+
+<P>
+Scroll so that current line is at top of window:
+<B>&lt;Esc&gt;-a</B>
+
+<P>
+Redraw screen:
+<B>&lt;Ctrl&gt;+l</B>
+
+<P>
+</BLOCKQUOTE></BODY>
+</HTML>

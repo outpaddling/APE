@@ -1,0 +1,14 @@
+6 -1 16
+'.*['$]|".*["$]
+3 -1 8
+{.*}
+2 -1 8
+program|label|const|type|var|procedure|function|forward|begin|end|if|then|else|case|of|while|for|to|downto|with|do|repeat|until
+1 -1 16
+integer|real|boolean|string|set|array|record|file|packed
+5 -1 16
+writeln|write|readln|read|rewrite|reset|put|get|page|new|dispose|pack|unpack|eoln|eof|abs|sqrt|sqr|sin|cos|arctan|ln|exp|trunc|round|ord|chr|succ|pred|odd
+1 -1 16
+[0-9]+
+-2 0 0
+end

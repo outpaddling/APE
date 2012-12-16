@@ -1,0 +1,800 @@
+<HTML>
+<TITLE>APE</TITLE>
+<BODY><BLOCKQUOTE>
+<HR><BR>
+<H1>Table of Contents</H1><BR>
+<A HREF=#_section0> NAME </A><BR>
+<A HREF=#_section1> SYNOPSIS </A><BR>
+<A HREF=#_section2> GETTING STARTED </A><BR>
+<A HREF=#_section3> HOW TO READ THIS MANUAL </A><BR>
+<A HREF=#_section4> ORGANIZATION </A><BR>
+<A HREF=#_section5> WHY GO APE? </A><BR>
+<A HREF=#_section6> LANGUAGE SUPPORT </A><BR>
+<A HREF=#_section7> TERMINAL INDEPENDENCE </A><BR>
+<A HREF=#_section8> RUNNING UNDER X WINDOWS OR OTHER VARIABLE SIZE SCREENS </A><BR>
+<A HREF=#_section9> SYNTAX HIGHLIGHTING </A><BR>
+<A HREF=#_section10> USING MAKE </A><BR>
+<A HREF=#_section11> CURSOR MOTION </A><BR>
+<A HREF=#_section12> INSERTING AND REPLACING TEXT </A><BR>
+<A HREF=#_section13> EDIT MACROS </A><BR>
+<A HREF=#_section14> QUICK SAVE </A><BR>
+<A HREF=#_section15> SCREEN REDRAW </A><BR>
+<A HREF=#_section16> BLOCK INDENT </A><BR>
+<A HREF=#_section17> FILES </A><BR>
+<A HREF=#_section18> ENVIRONMENT </A><BR>
+<A HREF=#_section19> SEE ALSO </A><BR>
+<A HREF=#_section20> BUGS </A><BR>
+<A HREF=#_section21> AUTHOR </A><BR>
+<BR><HR>
+
+<A NAME=_section0>
+<H2>NAME</H2>
+<P>
+<P>
+
+<P>
+APE - Another Programmers Editor
+
+<P>
+<! Convention:
+>
+<! Underline anything that is typed verbatim - commands, etc.
+>
+
+<A NAME=_section1>
+<H2>SYNOPSIS</H2>
+<P>
+<P>
+<PRE>
+ape -h[elp]
+ape [file1] [file2] ... [fileN]
+</PRE>
+
+<P>
+
+<A NAME=_section2>
+<H2>GETTING STARTED</H2>
+<P>
+
+<P>
+<B>APE</B>
+is a terminal-based application, which means it runs on an ASCII terminal or in a terminal
+emulator window such as xterm, rxvt, konsole, etc.
+
+<P>
+In order for
+<B>APE</B>
+to function properly, your terminal type must be properly specified in the
+environment.
+<B>APE</B>
+(as well as other twintk-based applications)
+looks at the variables TWINTERM, COLORTERM, and TERM, in that order.
+
+<P>
+The vt100/xterm terminal series has some historical weirdness with the
+backspace key. The original vt100 had a Del key in the upper right of the
+keyboard, which sends the Del character (ASCII 127), but many terminal
+emulators send a BS (ASCII 8) instead, in order to behave more like
+a PC keyboard. If you have trouble with the
+backspace key, check your terminal emulator settings.  Most modern
+terminal emulators (e.g. konsole, gnome-terminal, Mac Terminal, etc.)
+allow you to change key mappings.  You may also need
+to use stty at the shell prompt and in your startup script to configure
+the shell environment to match the terminal emulator settings.
+
+<P>
+
+<A NAME=_section3>
+<H2>HOW TO READ THIS MANUAL</H2>
+<P>
+This manual is available in both
+<B>nroff</B>
+and
+<B>HTML (Hyper-Text Markup Language)</B>
+forms.  HTML is the preferred form, since it allows you to navigate
+to and from various sections more easily than the nroff-based
+man command.
+
+<P>
+APE can be configured through the options/misc menu to
+use the HTML version, provided you have an HTML browser such
+as
+<B>lynx</B>
+or
+<B>firefox</B>
+installed on your system.  By default, APE uses the standard
+<B>man</B>
+command to display nroff-formatted pages.
+
+<P>
+Key mappings stated in this manual and in the editor have the
+following meanings:
+
+<P>
+Keys to be pressed in sequence are shown separated by a `-'.  Keys to be
+pressed together are separated by a `+'.  For example,
+<STRONG>
+Esc-b
+</STRONG>
+means first press Esc, then `b', and
+<STRONG>
+ctrl+f
+</STRONG>
+means press `f' while holding down the 
+<STRONG>
+ctrl
+</STRONG>
+key.
+
+<P>
+<! Overview of the major sections
+>
+
+<A NAME=_section4>
+<H2>ORGANIZATION</H2>
+<P>
+<PRE>
+<B>I. Overview</B>
+</PRE>
+Describes the general features and hardware requirements of
+<B>APE.</B>
+
+<P>
+<PRE>
+<B>II. General use</B>
+</PRE>
+The
+<B>how-to</B>
+section for common editing tasks.
+
+<P>
+<PRE>
+<B>III. Pop-down menus</B>
+</PRE>
+Guide to using the pop-down menu system.
+
+<P>
+<center>
+<B>Section I</B>
+<BR>
+<B>APE Overview</B>
+<BR>
+</center>
+
+<P>
+
+<A NAME=_section5>
+<H2>WHY GO APE?</H2>
+<P>
+<B>APE </B>
+is a programmer's editor, designed to function as a complete
+programming environment for Unix.
+APE 
+users can easily code, compile and test from within
+the editor, rather than repeatedly typing complicated Unix 
+commands at the shell prompt.
+APE
+provides a convenient interface to many of the standard programming tools, 
+including compilers, debuggers, on-line manuals, etc.  This interface can be
+customized to suit each programmer's particular needs.
+APE
+is capable of interfacing with
+<B>any</B>
+programming language, as well as other file processing commands such as
+<B>nroff</B>
+and
+<B>LaTeX,</B>
+so you can use the same environment for both code and
+documentation development.
+
+<P>
+APE
+is designed to get the most out of your existing hardware.  The first
+time you run APE, you'll probably be surprised to see what an ASCII terminal
+can do!
+
+<P>
+APE's resource requirements are generally less
+than popular text editors, and far less than graphical editors.
+
+<P>
+Because APE is character based, not graphical, it works very well over
+slow connections and on non X11 displays.  For example, APE is ideal for
+editing on a remote Unix machine using a PuTTY connection from Windows,
+or working over a slow dial-up, DSL, or home cable connection.
+
+<P>
+Most importantly, APE is easy to learn, and it's menu-driven interface
+will even help you learn to program under Unix. All major functions are
+implemented via pop down menus so beginners won't have to memorize any
+cryptic commands.  Hot keys are also provided, so more experienced users
+can bypass the menus.
+
+<P>
+
+<A NAME=_section6>
+<H2>LANGUAGE SUPPORT</H2>
+<P>
+APE comes already configured for many common languages, including those
+listed below.  For an up-to-date list, see install-prefix/share/ape/Languages.
+
+<P>
+New languages configurations can easily be added, and
+existing ones changed to suit your preferences.
+
+<P>
+Language support includes compiler and interpreter configuration, compiler
+error message parsing, word wrap, edit macros, and syntax highlighting.  See
+<B>options menu</B>
+below for details on configuring languages.
+
+<P>
+Language recognition is based on the filename and/or the magic
+sequence on the first line.  ( e.g. #!/bin/sh, #!/usr/bin/perl, ...)
+
+<P>
+<PRE>
+    Language        Filename patterns           Magic sequence
+    ----------------------------------------------------------
+    Awk             *.awk
+    BASH            *, *.bash                   #!/bin/bash
+    Bc calculator   *.bc
+    Bourne-shell    *, *.sh, *.profile          #!/bin/sh
+    C               *.c
+    C++             *.cc *.C *.cxx *.cpp
+    C-shell         *, *.csh, *.cshrc           #!/bin/csh
+    Fortran 77*     *.f
+    Fortran 90      *.f90
+    HTML            *.html
+    JAVA            *.java
+    Korn shell      *, *.ksh                    #!/usr/bin/ksh
+    LaTeX           *.tex
+    Lex             *.l
+    Nroff           *.r *.n *.1 *.2 *.3 *.4 *.5 *.6 *.7 *.8 *.9
+    Pascal          *.p
+    Perl            *.pl                        #!/usr/bin/perl
+    Python          *.py
+    Sed             *.sed
+    T-shell         *, *.tcsh                   #!/bin/tcsh
+    TCL             *.tcl
+    Terminfo        *.ti
+    Yacc            *.y
+</PRE>
+
+<P>
+* For FORTRAN 77 programs, APE enforces a 72-column limit and
+sets the first TAB stop to column 7.
+
+<P>
+When APE believes a file is a shell script, it will automatically
+make the file executable to anyone who has permission to read it.
+
+<P>
+Source files that do not contain an ID string in the first line
+are recognized by the filename extension listed in the table above.
+To add a new filename extension for an existing language, (e.g. .10
+for nroff), first load a file with one the old extensions (e.g. .1 for
+nroff), and then go to the language options panel and add the new
+extension to the existing ones.
+
+<P>
+
+<A NAME=_section7>
+<H2>TERMINAL INDEPENDENCE</H2>
+<P>
+APE will work with any ASCII terminal described in the
+<B>terminfo</B>
+database.
+For best results, use a DEC vtxxx,
+xterm, rxvt, or similar terminal.
+These terminals have a rich set of capabilities to maximize
+performance and appearance.  The vt220 and higher terminals
+also provide all the function keys used by APE, whereas the
+vt100 offers only F1 through F4.
+
+<P>
+APE looks for the terminal name first in the
+<B>TWINTERM</B>
+environment variable, followed by
+<B>COLORTERM</B>
+and finally
+<B>TERM.  This allows the use of separate terminfo/termcap</B>
+entries by APE and other programs, particularly termcap-based programs.
+This is especially useful when
+using one of the enhanced entries described below.  For instance,
+you may want to set TWINTERM or COLORTERM to "xterm86" or "rxvt",
+while setting TERM to "xterm" or "vt100" for termcap-based programs.
+
+<P>
+Additional terminfo directories may be specified via the
+<B>TWINPATH</B>
+environment variable.
+Unlike the curses TERMINFO variable, TWINPATH allows multiple
+colon-separated directories to be specified.
+
+<P>
+Note that terminfo entries are stored in
+<B>subdirectories</B>
+of the directories specified by TWINPATH.
+
+<P>
+For example, to instruct APE to search for terminfo
+binaries first under ~/Terminfo/*, then ~bob/Terminfo/*, and lastly
+/usr/lib/terminfo/*, use the following:
+
+<P>
+    setenv TWINPATH ~/Terminfo:~bob/Terminfo
+
+<P>
+    or
+
+<P>
+    export TWINPATH=~/Terminfo:~bob/Terminfo
+
+<P>
+If the terminal type is set to 'vt102', APE will first look
+for ~/Terminfo/v/vt102, then ~bob/Terminfo/v/vt102, and finally
+/usr/lib/terminfo/v/vt102.
+
+<P>
+The default directory install-prefix/share/twintk/terminfo is
+always searched and need
+not be included in TWINPATH.
+
+<P>
+APE has been tested on a wide variety of terminals.
+(A few restrictions exist for
+terminals with the "magic cookie glitch", which creates aesthetic
+problems with screen attributes, but does not inhibit the
+functionality of APE.)
+
+<P>
+If you have trouble running APE on any particular
+type of terminal, first try running other full-screen programs
+on the same terminal.
+
+<P>
+The most likely reason for a terminal not to work properly
+is an incorrect TERM variable setting, or an
+inaccurate terminfo entry.  Fortunately, these problems are easy
+to correct.  The TERM variable can be set using
+<STRONG>
+setenv
+</STRONG>
+or
+<STRONG>
+export.
+</STRONG>
+Terminfo entries can be checked against your terminal's documentation
+using infocmp or tconv.
+
+<P>
+
+<A NAME=_section8>
+<H2>RUNNING UNDER X WINDOWS OR OTHER VARIABLE SIZE SCREENS</H2>
+<P>
+
+<P>
+APE will check the following to determine
+window/screen size, overriding the fixed values given by terminfo:
+
+<P>
+First, the pty driver is polled directly using
+<STRONG>
+ioctl().
+</STRONG>
+
+<P>
+If the ioctl() call fails, APE will check the environment variables
+<STRONG>
+LINES
+</STRONG>
+and
+<STRONG>
+COLS.
+</STRONG>
+These variables can be set using the 
+<STRONG>
+resize
+</STRONG>
+command.
+
+<P>
+If the first two window size checks fail, APE will check the variable
+<STRONG>
+TERMCAP
+</STRONG>
+and scan for the
+<B>li</B>
+and
+<B>co</B>
+fields.
+
+<P>
+<B>Resizing a window:</B>
+
+<P>
+APE will automatically adjust when a window is resized.
+APE requires at least a 24x80 window, due to size minimums of
+some dialog boxes.
+If the window is resized to less than 24 lines 
+<B>or</B>
+less than 80 columns, APE will display a message and 
+sleep until it is resized to at least 24x80.  
+
+<P>
+<B>NOTE:</B>
+Some SCO installations may contain a bug in
+<STRONG>
+xterm
+</STRONG>
+and
+<STRONG>
+scoterm,
+</STRONG>
+preventing the delivery of the SIGWINCH signal to APE.
+If APE does not automatically
+resize when its window is resized, you will need to exit APE, use the
+<STRONG>
+resize
+</STRONG>
+command, and run APE again.
+
+<P>
+
+<A NAME=_section9>
+<H2>SYNTAX HIGHLIGHTING</H2>
+<P>
+ <a href=#syntax>See OPTIONS MENU</a>
+
+
+<P>
+
+<A NAME=_section10>
+<H2>USING MAKE</H2>
+<P>
+After loading files specified on the command line, APE will look for
+a file called "makefile" or "Makefile" in the current directory.
+If present, APE will ask you if you want to use the makefile.
+
+<P>
+You can also select a makefile after startup via the Build menu.
+See
+<B>BUILD MENU</B>
+below for details.
+
+<P>
+APE extracts variable assignments and targets from the Makefile.  The project
+executable is taken from the variable BIN if it exists.  If it does not, APE
+looks for BIN1, LIB, and LIB1.
+
+<P>
+<center>
+<B>Section II</B>
+<BR>
+<B>General Use</B>
+<BR>
+</center>
+
+<P>
+Pop-down menus allow you to begin to use
+APE
+with minimal knowledge.  To display a menu, type the
+<STRONG>
+Esc
+</STRONG>
+key followed by a highlighted letter in the menu
+bar shown at the top of the screen.  For example, to display the
+<B>File</B>
+menu, type
+<STRONG>
+Esc-f.
+</STRONG>
+( first press the Esc key, then the 'f' key )
+
+<P>
+<B>Alt</B>
+key combinations also work on many terminals such as the COHERENT
+console, and most versions of xterm.  For example, Alt+f can be used
+to invoke the file menu, provided the terminal has a functional
+Alt key.
+
+<P>
+Once a menu is displayed, you can select an item by typing
+the highlighted character in the menu text.  For example, to quit
+the editor, type 
+<STRONG>
+Esc-f
+</STRONG>
+to display the
+<B>File</B>
+menu, and then press 'q' to select the
+<B>Quit</B>
+menu item.
+
+<P>
+<B>Note:</B>
+If your terminal has no highlighting capability, the key to press
+is generally the
+<B>last</B>
+capitalized letter in the menu item.
+
+<P>
+Menu items may also be selected using the up and down arrow keys, or
+using the mouse.
+
+<P>
+You may notice that some menu items are followed by additional text
+enclosed in parenthesis.  The text in parenthesis denotes the
+<B>hot key</B>
+for that menu item.  This is a keystroke or sequence of keystrokes
+which invokes that item without displaying the menu first.  Hot-keys
+are provided for commonly used functions to save time.  For example,
+to compile and run a program without first displaying the
+<B>Build</B>
+menu, simply press 
+<STRONG>
+Esc-r,
+</STRONG>
+or 
+<STRONG>
+F5
+</STRONG>
+if your terminal
+has an F5 key.
+
+<P>
+
+<A NAME=_section11>
+<H2>CURSOR MOTION</H2>
+<P>
+A quick-reference to cursor-motion keys is provided in the
+<B>apekeys</B>
+man page, which can be referenced via the
+<B>Help/Keyboard</B>
+menu.
+
+<P>
+
+<A NAME=_section12>
+<H2>INSERTING AND REPLACING TEXT</H2>
+<P>
+
+<P>
+The normal mode of
+APE
+is 
+<B>insert </B>
+mode.  The word
+<B>&lt;insert&gt;</B>
+will appear on the
+status line
+at the bottom of the screen when in insert mode.
+
+<P>
+All characters typed in this mode will be inserted at the cursor position.
+
+<P>
+Typing
+<STRONG>
+enter
+</STRONG>
+while in insert mode
+will split the current line at the cursor, and begin a new 
+line below.
+
+<P>
+<B>Replace</B>
+mode is selected by typing the
+<STRONG>
+insert
+</STRONG>
+key or
+<STRONG>
+ctrl+r.
+</STRONG>
+To go back to
+<B>insert</B>
+mode, press
+<STRONG>
+insert
+</STRONG>
+or
+<STRONG>
+ctrl+r
+</STRONG>
+again.
+
+<P>
+In replace mode, characters typed will
+<B>replace</B>
+the character at the cursor position, rather than being inserted before it.
+
+<P>
+The
+<B>TAB</B>
+and
+<B>BACKSPACE</B>
+keys behave slightly differently in replace mode.  The TAB key
+always acts as if insert mode is on.
+The backspace key behaves as if insert mode is on when only spaces exist
+to the left of the cursor.  This allows the indentation of a line
+to be adjusted even while in replace mode.
+
+<P>
+By default, normal tab stops occur every fourth column, except in Fortran 77
+mode, which sets the first tab stop to column 7.
+Tab stops can be changed in options menu, described below.
+
+<P>
+
+<A NAME=_section13>
+<H2>EDIT MACROS</H2>
+<P>
+APE also provides a simple edit macro facility, which can be invoked using the
+edit menu, or by pressing F9 or Esc-Enter.
+ <a href=#macros>See EDIT MENU</a>
+
+
+<P>
+A macro is defined by highlighting text with the Edit menu's Begin area
+and End area actions, and then selecting New macro from the Edit menu.
+
+<P>
+Macros can contain plain text, and the following markup:
+
+<P>
+<B>date(width)</B>
+expands to today's date in the form YYYY-MM-DD.
+
+<P>
+<B>username</B>
+expands to the username of the person running APE.
+
+<P>
+<B>gecos</B>
+expands to the gecos (comment) field from the password entry for
+the user running APE.  The gecos field normally contains the user's
+full name, but may contain arbitrary text.  If can be set with
+the chfn command on many systems, and can only be set by the systems
+manager on some.
+
+<P>
+<B>Block</B>
+deletions are possible using the
+<B>cut and paste</B>
+features.  See
+<B>EDIT MENU</B>
+below.
+
+<P>
+
+<A NAME=_section14>
+<H2>QUICK SAVE</H2>
+<P>
+The quick save
+feature is designed to encourage frequent saving of a file while it
+is being edited.  The simplest possible sequences,
+<STRONG>
+Esc-Esc
+</STRONG>
+and
+<STRONG>
+Ctrl+s,
+</STRONG>
+were chosen 
+so that saving can be done without interrupting the thought process.
+
+<P>
+
+<A NAME=_section15>
+<H2>SCREEN REDRAW</H2>
+<P>
+Typing
+<B>ctrl+L</B>
+will cause the screen to be redrawn.  This is useful
+following line noise or background process incidents which
+may mess up the screen.
+
+<P>
+
+<A NAME=_section16>
+<H2>BLOCK INDENT</H2>
+<P>
+APE supports block-mode indenting, i.e. changing the indentation of
+multiple lines simultaneously.  To alter a block, first mark the area
+using the
+<STRONG>
+begin area
+</STRONG>
+and
+<STRONG>
+end area
+</STRONG>
+features via the edit menu, or hot keys (F4 or Esc-m).  You may then
+increase the indentation level of the entire block using the SPACE
+or TAB keys, and decrease the indentation using BACK-SPACE or BACK-TAB.
+All of these keys will have roughly the same effect on the block that
+they would have on individual lines when no area is marked.
+
+<P>
+Note that the BACK-TAB key is not functional on many terminals.
+
+<P>
+
+<A NAME=_section17>
+<H2>FILES</H2>
+<P>
+<PRE>
+    $home/.ape-version
+</PRE>
+
+<P>
+
+<A NAME=_section18>
+<H2>ENVIRONMENT</H2>
+<P>
+<PRE>
+    TWINPATH    - Lists directories containing terminfo databases.
+    TERM        - Default terminal type.
+    COLORTERM   - Default color terminal type - overrides TERM.
+    TWINTERM    - Enhanced terminal type for TWIN applications.
+		  Overrides TERM and COLORTERM.
+</PRE>
+
+<P>
+
+<A NAME=_section19>
+<H2>SEE ALSO</H2>
+<P>
+apekeys, apeascii
+
+<P>
+<B>Compilers, etc.:</B>
+as, ld, cc, gcc, c++, g++, f77, f90, pc, p2c, f2c, lex, yacc,
+flex, byacc, bison, nroff, latex, javac
+
+<P>
+<B>Interpreters:</B>
+bc, clisp, lynx, mosaic, netscape, perl, prolog, tforth
+
+<P>
+<B>Shells:</B>
+bash, clam, csh, ksh, tcl, tcsh, sh, vsh
+
+<P>
+<B>Libraries:</B>
+libc, libm, libX11, libterminfo, libtwin, libcurses
+
+<P>
+
+<A NAME=_section20>
+<H2>BUGS</H2>
+<P>
+SCO OpenServer 5.0.4, and possibly other versions, contains a collision
+in the ansi terminfo entry between key_f1 and key_mouse, with both
+sending ^[[M under SCOTERM.  As a result, APE cannot distinguish between
+an F1 key press and a mouse button event, and always assumes a mouse event.
+Thus, the F1 key will not
+function under SCOTERM until this SCOTERM bug is repaired.
+
+<P>
+Syntax highlighting in some versions may occasionally get confused.
+This can usually be corrected by simply typing Ctrl+L to redraw the
+screen.
+
+<P>
+
+<A NAME=_section21>
+<H2>AUTHOR</H2>
+<P>
+<PRE>
+    Jason W. Bacon
+    Acadix Software Systems
+    http://www.acadix.biz
+
+<P>
+
+<P>
+</BLOCKQUOTE></BODY>
+</HTML>

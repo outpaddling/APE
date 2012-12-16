@@ -1,0 +1,82 @@
+v 1 301 304 0 0 287 287 0 3 16:\begin{verbatim}
+
+\end{verbatim} 
+t 1 13 16 0 0 0 0 0 3 24:\begin{tabular}{|l|c|r|}
+
+\end{tabular}
+h 1 14 14 12 24 0 0 0 0 12:\hspace{1in}r 1 16 17 0 0 0 0 0 1 12:\vspace{1em}
+l 0 0 27 0 0 0 8 0 27 0:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Author:
+% Title:    
+
+\documentstyle{letter}
+
+\begin{document}
+
+% Recipient
+\begin{letter}{name\\ title}
+
+% Return address
+\address{Name\\ Address\\ City, etc.}
+
+% Your name
+\signature{}
+
+\opening{Dear }
+
+\closing{Sincerely,}
+\cc{}
+\encl{}
+\end{letter}
+\makelabels{}
+
+\end{document}
+s 0 10 15 0 0 0 0 0 5 36:\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-0.5in}
+\addtolength{\textheight}{1in}
+
+n 0 14 15 0 0 2 2 0 1 17:\pagestyle{empty}
+p 0 10 12 0 0 0 0 0 2 27:\setlength{\parindent}{0in}
+\setlength{\parskip}{1ex}
+e 1 16 20 0 0 5 5 0 4 17:\begin{enumerate}
+\item
+\item
+\end{enumerate}
+i 1 21 25 0 0 6 6 0 4 15:\begin{itemize}
+\item
+\item
+\end{itemize}
+o 1 20 25 0 0 6 6 0 5 0:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+\section{}
+q 1 21 24 0 0 6 6 0 3 13:\begin{quote}
+
+\end{quote}
+m 1 20 20 6 33 7 7 0 0 27:\hrulefill\mbox{}\linebreakd 1 5 9 0 0 0 0 0 4 19:\begin{description}
+\item
+\item
+\end{description}
+c 1 4 7 0 0 0 0 0 3 14:\begin{center}
+
+\end{center}
+w 1 258 261 0 0 247 247 0 3 6:\ans{}
+{
+}
+a 0 0 13 0 0 0 0 0 13 0:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Author:   \gecos(12)
+% Date:     \date(12)
+% Title:
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt]{article}
+
+\begin{document}
+\end{document}
+

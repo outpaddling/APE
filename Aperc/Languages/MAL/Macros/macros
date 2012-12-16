@@ -1,0 +1,320 @@
+b 0 5 8 0 0 0 0 0 3 73:#########################################################################
+#
+#########################################################################
+e 0 0 31 0 0 0 11 0 31 73:#########################################################################
+# Exception handling
+#########################################################################
+
+# Status register bits
+EXC_ENABLE_MASK         =   0x00000001
+
+# Cause register bits
+EXC_CODE_MASK           =   0x0000003c  # Exception code bits
+
+EXC_CODE_INTERRUPT      =   0   # External interrupt
+EXC_CODE_ADDR_LOAD      =   4   # Address error on load
+EXC_CODE_ADDR_STORE     =   5   # Address error on store
+EXC_CODE_IBUS           =   6   # Bus error instruction fetch
+EXC_CODE_DBUS           =   7   # Bus error on load or store
+EXC_CODE_SYSCALL        =   8   # System call
+EXC_CODE_BREAKPOINT     =   9   # Break point
+EXC_CODE_RESERVED       =   10  # Reserved instruction code
+EXC_CODE_OVERFLOW       =   12  # Arithmetic overflow
+
+# Status and cause register bits
+EXC_INT_ALL_MASK        =   0x0000ff00  # Interrupt level enable bits
+
+EXC_INT0_MASK           =   0x00000100  # Software
+EXC_INT1_MASK           =   0x00000200  # Software
+EXC_INT2_MASK           =   0x00000400  # Display
+EXC_INT3_MASK           =   0x00000800  # Keyboard
+EXC_INT4_MASK           =   0x00001000
+EXC_INT5_MASK           =   0x00002000  # Timer
+EXC_INT6_MASK           =   0x00004000
+EXC_INT7_MASK           =   0x00008000
+l 0 0 36 0 0 0 16 0 36 73:#########################################################################
+# Memory mapped I/O
+# Do not mix with I/O syscalls!
+# Run spim with -mapped_io
+#########################################################################
+
+#########################################################################
+# Receiver control.  1 in bit 0 means new char has arrived.  This bit
+# is read-only, and resets to 0 when CONS_RECEIVER_DATA is read.
+# 1 in bit 1 enables hardware interrupt at interrupt level 1.
+# Interrupts must also be enabled in the coprocessor 0 status register.
+
+CONS_RECEIVER_CONTROL           =   0xffff0000
+CONS_RECEIVER_READY_MASK        =   0x00000001
+CONS_RECEIVER_INT_ENABLE_MASK   =   0x00000002
+
+CONS_RECEIVER_DATA              =   0xffff0004
+CONS_RECEIVER_DATA_MASK         =   0x000000ff
+CONS_RECEIVER_INT_LEVEL         =   1
+
+#########################################################################
+# Transmitter control.  1 in bit 0 means ready for next char.  This bit
+# is read-only, and is set to 0 when data is written to 
+# CONS_TRANSMIT_DATA.  It resets to one after the console finishes
+# displaying the character.  CONS_TRANSMIT_DATA should not be written
+# to when this bit is 0.
+# A 1 in bit 1 enables hardware interrupt at interrupt level 1.
+# Interrupts must also be enabled in the coprocessor 0 status register.
+
+CONS_TRANSMIT_CONTROL           =   0xffff0008
+CONS_TRANSMIT_READY_MASK        =   0x00000001
+CONS_TRANSMIT_INT_ENABLE_MASK   =   0x00000002
+
+CONS_TRANSMIT_DATA              =   0xffff000c
+CONS_TRANSMIT_DATA_MASK         =   0x000000ff
+CONS_TRANSMIT_INT_LEVEL         =   0
+f 0 0 35 0 0 0 15 0 35 74:######################################################################### 
+#   Subprogram Description:
+#
+#   Arguments:
+#       $a0 = 
+#
+#   Returns:
+#       $v0 = 
+#       $v1 = 
+#
+#########################################################################
+
+#########################################################################
+#   Modification history:
+#   Date        Name        Modification
+#   \date(12)\gecos(21)Begin
+#########################################################################
+
+# Local variables
+        .data 
+        .align 2
+
+# Subprogram body
+        .text
+:
+        # Push stack frame
+        sw      $ra, 0($sp)
+        addi    $sp, $sp, -4
+        
+        # Pop stack frame
+        addi    $sp, $sp, 4
+        lw      $ra, 0($sp)
+        
+        # Return to caller
+        jr      $ra
+s 0 0 35 0 0 0 15 0 35 74:######################################################################### 
+#   Subprogram Description:
+#
+#   Arguments:
+#       $a0 = 
+#       $f12 = 
+#
+#   Returns:
+#       $v0 = 
+#       $v1 = 
+#       $f0 = 
+#
+#########################################################################
+
+#########################################################################
+#   Modification history:
+#   Date        Name        Modification
+#   \date(12)\gecos(12)Begin
+#########################################################################
+
+# Local variables
+        .data 
+        .align 2
+
+# Subprogram body
+        .text
+:
+        # Save registers used in this subprogram
+        pushw($ra)
+        
+        # Restore registers used in this subprogram
+        popw($ra)
+        
+        # Return to caller
+        jr      $ra
+m 0 0 59 0 0 0 39 0 59 73:#########################################################################
+#   Description:
+#
+#   Modification history:
+#   Date        Name        Modification
+#   \date(12)\gecos(12)Begin
+#########################################################################
+
+#########################################################################
+#   Global constants (do not use global variables!)
+#   By convention, constant names use all capital letters.
+#########################################################################
+
+# Common ASCII/ISO control characters
+
+ISO_EOT             =   4   # End of transmission (Ctrl+D)
+ISO_BEL             =   7   # Bell
+ISO_BS              =   8   # Backspace
+ISO_TAB             =   9   # Tab
+ISO_LF              =   10  # Line feed (newline)
+ISO_FF              =   12  # Form feed
+ISO_CR              =   13  # Carriage return
+
+# System call function codes for $v0
+
+SYS_PRINT_INT       =   1   # Print integer in $a0
+SYS_PRINT_FLOAT     =   2   # Print float in $f12
+SYS_PRINT_DOUBLE    =   3   # Print double in $f12/$f13
+SYS_PRINT_STRING    =   4   # Print string pointed to by $a0
+SYS_READ_INT        =   5   # Read integer into $v0
+SYS_READ_FLOAT      =   6   # Read float into $f0
+SYS_READ_DOUBLE     =   7   # Read double into $f0/$f1
+SYS_READ_STRING     =   8   # Read string to address in $a0, $a1 = max len
+SYS_SBRK            =   9   # Allocate $a0 bytes, address returned in $v0
+SYS_EXIT            =   10  # Terminate program
+SYS_PRINT_CHAR      =   11  # Print ASCII/ISO char in low byte of $a0
+SYS_READ_CHAR       =   12  # Read char into low byte of $v0
+
+
+#########################################################################
+#   Main program
+#########################################################################
+
+# Variables for main
+        .data
+        .align 2    # Put next label on a word boundary
+        
+main_hello: .asciiz "Hello, world!\n"
+
+# Main body
+        .text
+main:
+        # Example syscall
+        li      $v0, SYS_PRINT_STRING
+        la      $a0, main_hello
+        syscall
+        
+        # Return to calling program
+        jr      $ra
+a 0 0 120 0 0 0 100 0 120 73:#########################################################################
+#   Example assembler macros
+#
+#   The I/O macros provided here are for use with memory addresses
+#   (labels) and will not work with registers.  This is intended to
+#   encourage the use of variables in MAL code, which makes the code
+#   more readable than the same code using only registers.
+#   
+#   You can also use these as models to create others that use registers,
+#   such as print_word_reg, read_word_reg, etc.
+#########################################################################
+
+        # Save contents of an integer register on the stack
+        .macro  pushw($register)
+        addi    $sp, $sp, -4
+        sw      $register, ($sp)
+        .end_macro
+        
+        # Retrieve top of stack to an integer register
+        .macro  popw($register)
+        lw      $register, ($sp)
+        addi    $sp, $sp, 4
+        .end_macro
+        
+        # Save contents of a double register on the stack
+        # Must be an even-numberd floating point reg, e.g. $f0, $f2, ...
+        .macro  pushd($register)
+        addi    $sp, $sp, -8
+        s.d     $register, ($sp)
+        .end_macro
+        
+        # Retrieve top of stack to a double register
+        # Must be an even-numberd floating point reg, e.g. $f0, $f2, ...
+        .macro  popd($register)
+        l.d     $register, ($sp)
+        addi    $sp, $sp, 8
+        .end_macro
+        
+        # Print the character in $const
+        # $const must be an immediate value
+        # Example: print_char_const(ISO_LF)
+        .macro  print_char_const($const)
+        pushw($a0)
+        pushw($v0)
+        
+        li      $a0, $const
+        li      $v0, SYS_PRINT_CHAR
+        syscall
+        
+        popw($v0)
+        popw($a0)
+        .end_macro
+        
+        # Print the string at address $var
+        # $var must be a label
+        .macro  print_string_var($var)
+        pushw($a0)
+        pushw($v0)
+        
+        la      $a0, $var
+        li      $v0, SYS_PRINT_STRING
+        syscall
+        
+        popw($v0)
+        popw($a0)
+        .end_macro
+        
+        # Print the integer in $var
+        # $var must be a label
+        .macro  print_word_var($var)
+        pushw($a0)
+        pushw($v0)
+        
+        lw      $a0, $var
+        li      $v0, SYS_PRINT_INT
+        syscall
+        
+        popw($v0)
+        popw($a0)
+        .end_macro
+        
+        # Read an integer and store in $var
+        # $var must be a label
+        .macro  read_word_var($var)
+        pushw($v0)
+        
+        li      $v0, SYS_READ_INT
+        syscall
+        sw      $v0, $var
+        
+        popw($v0)
+        .end_macro
+
+        # Print the double in $var
+        # $var must be a label
+        .macro  print_double_var($var)
+        pushd($f12)
+        pushw($v0)
+        
+        l.d     $f12, $var
+        li      $v0, SYS_PRINT_DOUBLE
+        syscall
+        
+        popw($v0)
+        popd($f12)
+        .end_macro
+        
+        # Read a double and store in $var
+        # $var must be a label
+        .macro  read_double_var($var)
+        pushd($f0)
+        pushw($v0)
+        
+        li      $v0, SYS_READ_DOUBLE
+        syscall
+        s.d     $f0, $var
+        
+        popw($v0)
+        popd($f0)
+        .end_macro
+

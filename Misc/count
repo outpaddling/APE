@@ -1,0 +1,4 @@
+#!/bin/csh
+
+wc *.c *.h */*.[ch] ../Lib/*/*.[ch] ../Lib/Twin/*/*.[ch]
+

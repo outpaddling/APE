@@ -1,0 +1,17 @@
+.Verbatim text
+.Table
+.Horizontal space
+Ve.Rtical space
+New .Letter
+.Shrink margins
+No page .Numbers
+.Paragraph style
+.Enumerated list
+.Itemized list
+Secti.On
+Brief .Quote
+Line to right .Margin
+.Descriptive list
+.Centered text
+Ans.Wer
+New .Article

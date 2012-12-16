@@ -1,0 +1,2 @@
+xmlto --skip-validation html --stringparam profile.condition=nosolutions --stringparam section.autolabel=1 --stringparam section.autolabel.max.depth=2 --stringparam section.label.includes.component.label=1 --stringparam toc.max.depth=2 -o HTML
+

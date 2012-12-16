@@ -1,0 +1,125 @@
+APE KEYS(1)                                                        APE KEYS(1)
+
+
+
+NNAAMMEE
+       APE - Another Programmer's Editor
+
+SSYYNNOOPPSSIISS
+       ape -h[elp]
+       ape [file1] [file2] ... [fileN]
+       xape [-m] [file1] [file2] ... [fileN]
+
+
+CCoonnvveennttiioonnss
+       <key1>-<key2>  means  press  and  release  key1, then press and release
+       key2.
+
+       <key1>+<key2> means press key2 while holding down key1.
+
+
+PPoopp--ddoowwnn MMeennuuss
+       Display a pop-down  menu:  <<AAlltt>>++<<hhiilliigghhtteedd  lleetttteerr>>  or  "<Esc>-<high-
+       lighted letter>"
+
+       Next menu: <<rriigghhtt aarrrrooww>>
+
+       Previous menu: <<lleefftt aarrrrooww>>
+
+
+MMeennuu hhoott--kkeeyyss
+       Save file: <<CCttrrll++ss>> or <<EEsscc>>--<<EEsscc>>
+
+       Toggle displayed file: <<CCttrrll>>++tt
+
+       Find word: <<CCttrrll>>++ff or <<EEsscc>>--//
+
+       Repeat last find: <<CCttrrll>>++nn or <<FF33>>
+
+       Compile to object: <<FF66>>
+
+       Build and run: <<EEsscc>>--rr or <<FF55>>
+
+       Goto next error: <<EEsscc>>--nn
+
+       Help on word under cursor: <<FF11>>
+
+
+CCuurrssoorr mmoottiioonn
+       Move Left: <<LLeefftt aarrrrooww>>
+
+       Move Right: <<RRiigghhtt aarrrrooww>>
+
+       Move Up: <<UUpp aarrrrooww>>
+
+       Move Down: <<DDoowwnn aarrrrooww>>
+
+       Beginning of next line: <<EEnntteerr>> (works only in replace mode)
+
+       Next word: <<CCttrrll>>++ww
+
+       Previous word: <<CCttrrll>>++pp
+
+       End of line: <<CCttrrll>>++ee or <<EEnndd>>
+
+       Beginning of line: <<CCttrrll>>++bb or <<HHoommee>>
+
+       Next page: <<PPaaggee DDoowwnn>> or <<CCttrrll>>++yy
+
+       Previous page: <<PPaaggee UUpp>> or <<CCttrrll>>++uu
+
+       Top line of file: <<EEsscc>>--tt
+
+       Last line of file: <<EEsscc>>--ll
+
+       Goto a line #: <<CCttrrll>>++gg
+
+
+IInnsseerrttiinngg aanndd ddeelleettiinngg
+       Toggle insert/replace mode: <<IInnsseerrtt>> or <<CCttrrll>>++rr
+
+       Delete character at cursor position: <<DDeelleettee>> or <<CCttrrll>>++dd
+
+       Delete  character left of cursor: <<BBaacckkssppaaccee>> or <<CCttrrll>>++hh ( Note: Check
+       your terminal emulator settings if backspace acts like Del.  Many  ter-
+       minal emulators can be configured to send either BS or DEL, and it must
+       be set to match the terminfo entry for your terminal. )
+
+       Delelete to end of word: <<CCttrrll>>++oo
+
+       Delete to end of line: <<CCttrrll>>++kk
+
+       Delete a line: <<CCttrrll>>++xx
+
+       Undelete line: <<CCttrrll>>++zz
+
+
+CCuuttttiinngg aanndd ppaassttiinngg
+       Begin marking area:
+
+       Move to beginning or area and type <<FF44>> or <<EEsscc>>--mm
+
+       End marking area:
+
+       Move to end of area and type <<FF44>> or <<EEsscc>>--mm again.
+
+       Delete marked area: <<CCttrrll>>++xx
+
+       Paste marked area: <<CCttrrll>>++vv
+
+       Cancel marked area: <<FF44>> or <<EEsscc>>--mm
+
+       Invoke an edit macro: <<FF99>> or <<EEsscc>>--EEnntteerr
+
+       Join next line to current: <<ccttrrll>>++ee or <<HHoommee>> followed by <<ddeell>>
+
+
+MMiisscceellllaanneeoouuss
+       Scroll so that current line is at top of window: <<EEsscc>>--aa
+
+       Redraw screen: <<CCttrrll>>++ll
+
+
+
+
+                                                                   APE KEYS(1)

@@ -1,0 +1,179 @@
+#!/bin/csh -f
+
+###########################################################################
+# Xwindows APE script
+# Invokes APE running under xterm, dtterm, or scoterm
+# This script may be freely modified and distributed among registered
+# APE users, so long as the original credits are not removed.
+#
+# Author:   Acadix Software Systems
+#           www.execpc.com/~acadix
+#           acadix@execpc.com
+
+set remote_display=0
+set ostype = `uname`
+
+if ( $?DISPLAY ) then
+    # Workaround for rxvt/IRIX quirk
+    if ( ($ostype == "IRIX" || $ostype == "IRIX64") && \
+	 ("$DISPLAY" == ":0" || "$DISPLAY" == ":0.0") ) then
+	setenv DISPLAY `hostname`:0.0
+    endif
+
+    # If not X envirnoment, run in current tty
+    if ( $?REMOTEHOST ) then
+	set displayhost = `echo $DISPLAY | cut -f 1 -d ':'`
+	if ( "$REMOTEHOST" == "$displayhost" ) then
+	    set remote_display = 1
+	else
+	    set remote_display = 0
+	endif
+    endif
+endif
+
+set termtype=`echo $TERM | cut -b1-4`
+switch($termtype)
+case    xter:
+case    rxvt:
+    set is_xterm=1
+    breaksw
+default:
+    set is_xterm=0
+endsw
+
+if ( ! $?WINDOWID && ! $remote_display && ! $is_xterm ) then
+    ape $argv[1-$#argv]
+    exit 0
+endif
+
+set debug=0
+set files=''
+
+# Use rxvt if present
+which rxvt >& /dev/null
+if ( $status == 0 ) then
+    set xterm = rxvt
+    set opts='-cr green -tn rxvt -fg #D0D0D0 -bg #000000 -color1 #C02020 -color2 #20C020 -color3 #B0B020 -color4 #2020C0 -color5 #802040 -color6 #20C0C0 --backspacekey \b'
+else
+    echo "rxvt is not in your path.  Using xterm."
+    echo "If your xterm does not support color, you may want to install"
+    echo "rxvt for better functionality with xape."
+    set xterm = xterm
+    set opts='-fg white -bg black -tn xtermc'
+endif
+set opts="+sb ${opts} -geometry 80x30 -fn 10x20 -title APE -n APE"
+
+# Default options
+set c=1
+if ( "$1" == "-m" ) then
+    set command=$xterm
+    set c=2
+else
+    set command=$xterm
+endif
+
+while ( $c <= $#argv )
+    if ( $debug ) then
+	echo $c $argv[$c]
+    endif
+
+    switch($argv[$c])
+    
+    # Boolean options
+    case    '-help':
+    case    '-132':
+    case    '-ah':
+    case    '+ah':
+    case    '-cb':
+    case    '+cb':
+    case    '-cn':
+    case    '+cn':
+    case    '-cu':
+    case    '+cu':
+    case    '-im':
+    case    '+im':
+    case    '-j':
+    case    '+j':
+    case    '-ls':
+    case    '+ls':
+    case    '-mb':
+    case    '+mb':
+    case    '-rw':
+    case    '+rw':
+    case    '-aw':
+    case    '+aw':
+    case    '-s':
+    case    '+s':
+    case    '-sb':
+    case    '+sb':
+    case    '-sf':
+    case    '+sf':
+    case    '-si':
+    case    '+si':
+    case    '-sk':
+    case    '+sk':
+    case    '-t':
+    case    '+t':
+    case    '-ut':
+    case    '+ut':
+    case    '-vb':
+    case    '+vb':
+    case    '-wf':
+    case    '+wf':
+    case    '-C':
+    case    '-Sccn':
+    case    '%geom':
+    case    '-rv':
+    case    '-r':
+	if ( $debug ) then
+	    echo 'Adding '$argv[$c]' to opts.'
+	endif
+	set opts="$opts"' '"$argv[$c]"
+	@ c++
+	breaksw
+
+    # Numeric and string options
+    case    '-b':     # border width
+    case    '-cc':    # charclass
+    case    '-cr':    # color
+    case    '-e':     # prog '- ignore
+    case    '-fb':    # font
+    case    '-mc':    # milliseconds
+    case    '-ms':    # color
+    case    '-nb':    # number
+    case    '-sl':    # number
+    case    '-tm':    # string
+    case    '-tn':    # name
+    case    '-T':     # string
+    case    '-n':     # string
+    case    '-w':     # number
+    case    '-bg':    # color
+    case    '-bd':    # color
+    case    '-bw':    # number
+    case    '-fg':    # color
+    case    '-fn':    # font
+    case    '-name':  # name
+    case    '-title': # title
+    case    '-geometry':  # geom
+    case    '-display':   # display
+    case    '-xrm':       # resource string
+	if ( $debug ) then
+	    @ d=$c + 1
+	    echo 'Adding '$argv[$c]' '$argv[$d]' to opts...'
+	endif
+	set opts="$opts"' '"$argv[$c]"
+	@ c++
+	set opts="$opts"' '"$argv[$c]"
+	@ c++
+	breaksw
+	
+    default:
+	set files="$files"' '"$argv[$c]"
+	@ c++
+	breaksw
+    endsw
+end
+
+# Run xterm or scoterm
+# echo $command $opts -e ape $files
+exec $command $opts -e ape $files

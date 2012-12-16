@@ -1,0 +1,50 @@
+m 2 0 21 0 0 0 2 0 21 33:#define LEFT_MOTOR_PORT     OUT_A
+#define RIGHT_MOTOR_PORT    OUT_C
+#define BOTH_MOTOR_PORTS    (OUT_A|OUT_C)
+#define TOUCH_SENSOR_PORT   SENSOR_1
+
+task main()
+{
+#ifdef __RCX
+    // RCX needs to be told what kind of sensor is used
+    SetSensor(TOUCH_SENSOR_PORT, SENSOR_TOUCH);
+#endif
+
+    OnFwd(BOTH_MOTOR_PORTS);
+    
+    do
+    {
+    }   until(TOUCH_SENSOR_PORT == 1);
+
+    PlaySound(SOUND_CLICK);
+    Off(BOTH_MOTOR_PORTS);     
+}
+i 1 18 24 0 0 5 5 0 6 5:if ()
+{
+}
+else
+{
+}
+d 1 14 17 0 0 9 9 0 3 2:do
+{
+}   until();
+w 1 14 17 0 0 3 3 0 3 7:while()
+{
+}
+t 1 9 10 0 0 3 3 0 1 43:SetSensor(TOUCH_SENSOR_PORT, SENSOR_TOUCH);
+l 1 10 11 0 0 3 3 0 1 43:SetSensor(TOUCH_SENSOR_PORT, SENSOR_LIGHT);
+o 1 19 20 0 0 2 2 0 1 27:Off(BOTH_MOTOR_PORTS);     
+c 1 12 13 0 0 0 0 0 1 24:Float(BOTH_MOTOR_PORTS);
+s 1 20 21 0 0 4 4 0 1 23:PlaySound(SOUND_CLICK);
+0 1 20 24 0 0 5 5 0 4 14:ClearTimer(0);
+while ( Timer(0) < 100 )
+{
+}
+a 1 20 21 0 0 5 5 0 1 10:Wait(100);
+n 1 20 21 0 0 5 5 0 1 15:x = Random(10);
+f 1 25 26 0 0 8 8 0 1 24:OnFwd(BOTH_MOTOR_PORTS);
+r 1 26 27 0 0 8 8 0 1 24:OnRev(BOTH_MOTOR_PORTS);
+p 1 25 28 0 0 11 11 0 3 20:for (c=0; c<10; ++c)
+{
+}
+

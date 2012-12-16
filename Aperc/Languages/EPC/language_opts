@@ -1,0 +1,21 @@
+name                    EPC
+name_spec               *.epc
+id_comment              
+compiler                asepc
+compile_flags           
+compile_output_flag     
+syntax_check_flag       
+compile_only_flag       
+compile_to_asm_flag     
+preprocess_only_flag    
+link_flags              
+debugger                
+debugger_flags          
+debugger_backtrace_cmd  
+run_prefix              time epc
+upload_prefix           
+executable_name         \st.bin
+executable_source       Fixed
+error_msg_format        
+auto_wrap               0
+end_language

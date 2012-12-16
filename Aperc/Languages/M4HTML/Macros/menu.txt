@@ -1,0 +1,17 @@
+.Comment
+.Table
+.Unordered list
+.Emphasis
+.Href anchor
+.Ordered list
+.Preformatted text
+Block .Quote
+H.3 Header
+H.1 Header
+H.2 Header
+.Image
+PHP .Script
+H.4 Header
+.Java script
+.Form
+.New page

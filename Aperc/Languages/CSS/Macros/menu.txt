@@ -1,0 +1,2 @@
+.New Style Sheet
+.Rule

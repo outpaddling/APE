@@ -1,0 +1,73 @@
+
+permission denied popup
+
+ape-fortran wrapper script for BSD, Debian, etc.
+
+\cursor and \surround tags for macros
+
+#0  0x000000080099c3b5 in memmove () from /lib/libc.so.7
+(gdb) where
+#0  0x000000080099c3b5 in memmove () from /lib/libc.so.7
+#1  0x000000000040de23 in unindent_area (file=0x800e95000, 
+    options=0x7fffffffce80, cut_buff=0x7fffffffce20, cols=4) at editbuff.c:843
+#2  0x0000000000404c72 in main (argc=3, argv=0x7fffffffd688) at ape.c:490
+
+Screws up document if ispell not installed
+
+Install doesn't prompt_save
+
+Solaris deleting characters when ape window is resized
+
+next error not going to correct directory for arcade_drive.c
+
+Disable resize signal while shelled out
+
+crashes inserting new line after merge
+
+Add macro/Use whole file doesn't capture last line if no newline at EOF.
+
+Function to setenv LOCALBASE according to platform and presence of
+directories.  Use $LOCALBASE in default language options.
+
+Capture program output with tee and add an option to review
+
+Most of this code is very old, and not up to my current standards.
+There is a lot to do, including replacing all the K&R function headers,
+ensuring all return values are checked, commenting, and organizing the
+source files better.
+
+Crashes when opening macro menu with too many items
+    Make scrollable?
+    Swin does not redraw after being obliterated by shadow
+
+Crashing at synhigh.c while (*p != '\0') while merging a .c file
+
+Next error messes up CWD when switching to a file in another dir
+
+Inserting at right margin causing wrap is screwy
+
+Save as does not prompt properly if new name is the same as another open file
+
+Should not attempt to match parens, etc. inside strings
+
+Check if build needed before running debugger
+
+Can't set stderr to /dev/null in view_header()
+
+Remove /usr/local from default options
+
+Remove misuses of L_tmpnam.  Solaris sets it to 25, which is too small
+for many ape uses.
+
+Add Makefile targets submenu to Build menu
+
+read_line cannot expand temp buffer
+
+Accept quotes in Make arguments, like "LFLAGS1=-L. -Lgamepad"
+
+Set terminal emulator to refuse to close
+
+Show full compiler error in a window
+
+See libtwin todo about graphical terminal emulator.
+

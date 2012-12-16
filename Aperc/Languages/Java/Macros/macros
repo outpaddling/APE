@@ -1,0 +1,133 @@
+j 1 1 6 0 0 0 0 0 5 3:/**
+ *  Description:
+ *  Author:
+ *  History:
+ */
+b 1 7 10 0 0 0 0 0 3 2:/*
+ *
+ */
+o 1 16 19 0 0 0 0 0 3 2://
+BufferedReader infile = new BufferedReader(new FileReader(filename));
+infile.close();
+c 0 0 24 0 0 0 4 0 24 3:/**
+ *  Description:
+ *  Author:
+ *  History:
+ *  \date(12)\gecos(12)Begin
+ */
+
+class Name
+{
+    private long    x;
+    private int     y;
+    
+    public Name()
+    {
+    }
+    
+    public void print()
+    {
+    }
+    
+    public void read()
+    {
+    }
+}
+i 0 0 11 0 0 0 0 0 11 3:/**
+ *  Description:
+ *  Author:
+ *  History:
+ *  \date(12)\gecos(12)Begin
+ */
+
+public ()
+{
+    return;
+}
+a 0 78 124 0 0 72 104 0 46 3:/**
+ *  Description:
+ *  Author:
+ *  History:
+ *  2011-03-18  Jason Bacon Begin
+ */
+
+/*
+ *  By convention, use your domain name reversed, e.g. com.sun,
+ *  net.sourceforge, etc. as your package name.
+ */
+ 
+// package ext.domain;
+
+import java.io.*;
+
+/*
+ *  Note:   Root class must have same name as filename stem
+ *          e.g. main.java must contain "class main"
+ */
+class change_me_to_the_filename_stem
+{
+    public static void main(String args[])
+    {
+        String name = null;
+        // Create standard input stream
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        // Attempt to input name
+        try
+        {
+            System.out.print("What is your name? ");
+            name = br.readLine();
+        }
+        // Handle input error
+        catch (IOException ioe)
+        {
+            System.err.println("Error reading name.");
+            System.exit(1);
+        }
+        
+        // Output name if input was successful
+        System.out.println("Hello, " + name + "!");
+        return;
+    }
+}
+s 1 26 28 0 0 24 24 0 2 27:// New scanner class object
+Scanner sc = new Scanner(System.in);
+l 1 0 10 0 0 0 0 0 10 3:/**
+ *  Description:
+ *  History:
+ *  \date(12)\gecos(12)Begin
+ */
+
+public static ()
+{
+    return;
+}
+t 1 33 35 0 0 14 14 0 2 31:// Create standard input stream
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+m 2 0 26 0 0 0 6 0 26 3:/**
+ *  Description:
+ *
+ */
+ 
+/*
+ *  History:
+ *  \date(12)\gecos(12)Begin
+ */
+
+import java.io.*;
+import java.util.Scanner;
+
+/*
+ *  Note:   Root class must have same name as filename stem
+ *          e.g. main.java must contain "class main"
+ */
+
+class \filename_stem(0)
+{
+    public static void main(String args[])
+    {
+        System.out.println("Hello, world!");
+        return;
+    }
+}
+p 1 27 27 0 24 7 7 0 0 24:System.out.printf("", );

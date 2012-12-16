@@ -1,0 +1,14 @@
+3 -1 8
+#.*$
+2 -1 8
+mov[bslqfda]|movfd|movdf|movlf|movfl|add[bslqfda]|j|jl|beq|bne|blt|ble|bleu|bgt|bge|bgtu|boc|bnc|bov|bnv|cmpb|cmps|cmpl|cmpq|cmpf|cmpd|notb|nots|notl|notq|andb|ands|andl|andq|orb|ors|orl|orq|xorb|xors|xorl|xorq|sllb|slls|slll|sllq|srlb|srls|srll|srlq|srab|sras|sral|sraq|rolb|rols|roll|rolq|subb|subs|subl|subq|subf|subd|mulb|muls|mull|mulq|mulf|muld|divb|divs|divl|divq|divf|divd|remb|rems|reml|remq|inputb|inputs|inputl|outputb|outputs|outputl|halt
+5 -1 8
+r[0-9][0-5]?
+5 -1 8
+ret|bltu|bgeu|\.string|\.byte|\.short|\.long|\.quad|\.float|\.double|\.address|\.macro|\.end_macro|\.include
+6 -1 8
+\".*\"
+1 -1 8
+0x[0-9a-fA-F]+|[0-9]*\.[0-9]+e?[0-9]+|[0-9]+
+-2 0 0
+end

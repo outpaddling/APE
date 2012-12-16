@@ -1,0 +1,8 @@
+Command-line .Flag
+.Comment
+.Literal text
+.Bullet list
+.Enumerated list
+.Indented literal block
+Double .Quotes
+.New man page

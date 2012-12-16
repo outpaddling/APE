@@ -1,0 +1,64 @@
+c 0 1 1 0 5 0 0 0 0 5:<!  >t 1 0 15 0 0 0 0 0 15 29:<! Simple, two-section table>
+<table border=1 cellpadding=10 cellspacing=5>
+
+<! Table row>
+<tr>
+
+<! Table column 1>
+<td width="20%" bgcolor="#ffb080">
+<h2></h2>
+
+<! Table column 2>
+<td>
+<h2></h2>
+
+</table>
+u 1 0 3 0 0 0 0 0 3 4:<ul>
+<li>
+</ul>
+e 1 0 1 0 0 0 0 0 1 9:<em></em>
+h 1 0 1 0 0 0 0 0 1 15:<a href=""></a>
+o 1 0 3 0 0 0 0 0 3 4:<ol>
+<li>
+</ol>
+q 1 0 2 0 0 0 0 0 2 12:<blockquote>
+</blockquote>
+3 1 19 20 0 0 5 5 0 1 9:<h3></h3>
+1 1 19 20 0 0 5 5 0 1 9:<h1></h1>
+2 1 20 21 0 0 5 5 0 1 9:<h2></h2>
+i 1 11 12 0 0 0 0 0 1 36:<img src="" alt="[]" width= border=>
+s 1 4 4 0 8 0 0 0 0 8:<?php ?>4 1 14 15 0 0 2 2 0 1 9:<h4></h4>
+j 0 3 8 0 0 0 0 0 5 31:<script type="text/javascript">
+function ()
+{
+}
+</script>
+f 0 96 111 0 0 92 92 0 15 57:<! Input form with text fields, menus, and radio buttons>
+<form method="post" action="http://somedir/cgi/something.cgi">
+
+<input name="" type=text maxlength=50 size=50>
+
+<input name="" type=radio value="">
+
+<select name="" size=1>
+<option>
+</select>
+
+<input type="submit" value="Submit">
+<input type="reset" value="Reset Form">
+
+</form>
+n 2 0 9 0 0 0 0 0 9 30:<html xml:lang="en" lang="en">
+<head> 
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title></title>
+</head>
+
+<body>
+</body>
+</html>
+p 1 30 34 0 0 20 20 0 4 3:<p>
+<pre>
+</pre>
+</p>
+
