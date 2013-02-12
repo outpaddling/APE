@@ -5,5 +5,5 @@
 .Case
 F.Unction
 .Heredoc
-.New script
 .PBS template
+New .Main

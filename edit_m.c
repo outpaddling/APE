@@ -59,7 +59,7 @@ event_t *event;
 	"C.Ancel area (Ctrl+c or F4)",
 	TWC_HLINE,
 	".New macro",
-	"New macro .Submenu",
+	/* "New macro .Submenu", */
 	/*".Modify macro",*/
 	".Replace macro",
 	"Remo.ve macro",

@@ -3,5 +3,5 @@
 .For loop
 .Block Comment
 .Case
-.New script
 .PBS template
+New .Main
