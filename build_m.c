@@ -1153,16 +1153,20 @@ void    add_make_var(proj_t *project, char *ident, char *p)
     project->make_var_names[project->make_vars] = strdup(ident);
     project->make_var_values[project->make_vars] = strdup(val);
     ++project->make_vars;
-    
-    /* Attempt to identify the main target of the Makefile */
-    if ( strcmp(ident, "LIB1") == 0 )
-	strlcpy(project->executable, val, TWC_FILENAME_LEN);
-    if ( strcmp(ident, "LIB") == 0 )
-	strlcpy(project->executable, val, TWC_FILENAME_LEN);
-    if ( strcmp(ident, "BIN1") == 0 )
-	strlcpy(project->executable, val, TWC_FILENAME_LEN);
-    if ( strcmp(ident, "BIN") == 0 )
-	strlcpy(project->executable, val, TWC_FILENAME_LEN);
+
+    /* First qualifying var is used as the executable */
+    if ( *project->executable == '\0' )
+    {
+	/* Attempt to identify the main target of the Makefile */
+	if ( strcmp(ident, "LIB1") == 0 )
+	    strlcpy(project->executable, val, TWC_FILENAME_LEN);
+	if ( strcmp(ident, "LIB") == 0 )
+	    strlcpy(project->executable, val, TWC_FILENAME_LEN);
+	if ( strcmp(ident, "BIN1") == 0 )
+	    strlcpy(project->executable, val, TWC_FILENAME_LEN);
+	if ( strcmp(ident, "BIN") == 0 )
+	    strlcpy(project->executable, val, TWC_FILENAME_LEN);
+    }
 }
 
 
