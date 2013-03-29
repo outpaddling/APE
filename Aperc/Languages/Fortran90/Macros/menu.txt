@@ -11,3 +11,4 @@ S.Ubroutine
 .Function
 I.Nterface
 New .Main
+.Block comment

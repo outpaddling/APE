@@ -1,2 +1,13 @@
+.If-then-else
+.Switch
+f.Or loop
+.While loop
 .Function
-New .Program
+New .Main program
+f.Printf
+Plo.T
+.Loglog plot
+Semilog.X plot
+Semilog.Y plot
+Mesh.Grid plot
+M.Esh plot

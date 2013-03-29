@@ -144,7 +144,7 @@ char    *word;
 {
     char    *ptr = file->curchar, *start = file->line[file->curline].buff;
     
-    while ( (ISIDENT(*ptr)) && (ptr>=start) )
+    while ( ISIDENT(*ptr) && (ptr>=start) )
 	--ptr;
     ++ptr;
     while ( ISIDENT(*ptr) )

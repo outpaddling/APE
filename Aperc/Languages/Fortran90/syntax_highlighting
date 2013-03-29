@@ -7,7 +7,7 @@ interface|use|module|do|while|enddo|end|if|then|else|elseif|endif|select|case|co
 1 -1 16
 integer|real|double +complex|double +precision|character|logical|complex|common|equivalence|external|intrinsic|save
 1 -1 8
-[0-9]+d[0-9]+|[0-9]+e[0-9]+|[0-9]+(_8)?
+[0-9]+d[0-9]+|[0-9]+e[0-9]+|[0-9]+(_8)?|.true.|.TRUE.|.false.|.FALSE.
 5 -1 8
 #define|#undef|#include|#ifdef|#ifndef|#if|defined|#else|#elif|#endif|#error
 -2 0 0

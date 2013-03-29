@@ -1,4 +1,25 @@
 
+Enable '-' in F1 help targets
+
+Crash
+    new file, save as, save as w/different name, close file
+    Program terminated with signal 11, Segmentation fault.
+    Reading symbols from /lib/libc.so.7...done.
+    Loaded symbols for /lib/libc.so.7
+    Reading symbols from /libexec/ld-elf.so.1...done.
+    Loaded symbols for /libexec/ld-elf.so.1
+    #0  0x28152928 in free () from /lib/libc.so.7
+    (gdb) where
+    #0  0x28152928 in free () from /lib/libc.so.7
+    #1  0x080733cb in tw_del_win (win=0x2836cfa4) at del_win.c:33
+    #2  0x0804ea65 in close_file (files=0x2836c000, af=1, options=0xbfbfe1fc, 
+	prompt=1) at files.c:629
+    #3  0x0804cea0 in file_menu (files=0x2836c000, af_ptr=0xbfbfe1c8, 
+	options=0xbfbfe1fc, cut_buff=0xbfbfe1cc, event=0xbfbfe178) at files.c:113
+    #4  0x0804acfa in main (argc=2, argv=0xbfbfe9e4) at ape.c:372
+
+ape bus error backspace with line above longer than screen width
+
 permission denied popup
 
 ape-fortran wrapper script for BSD, Debian, etc.

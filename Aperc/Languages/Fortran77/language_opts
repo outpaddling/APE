@@ -1,8 +1,8 @@
 name                    Fortran77
 name_spec               *.f *.F
 id_comment              
-compiler                f77
-compile_flags           
+compiler                gfortran46
+compile_flags           -o \st
 compile_output_flag     -o 
 syntax_check_flag       -c
 compile_only_flag       -c
