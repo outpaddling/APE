@@ -1,4 +1,9 @@
 
+Cannot replace in fortran77 due to max line len
+    Warning about insert although not in insert mode
+
+Infinite loop at end of search and replace
+
 Enable '-' in F1 help targets
 
 Crash
