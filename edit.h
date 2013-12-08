@@ -75,7 +75,7 @@
 
 #define OPTION_LEN          1024
 #define EXT_LEN             40
-#define SPEC_LEN            40
+#define SPEC_LEN            80
 #define TWC_SHORT_NAME_LEN  14
 #define SEARCH_STR_LEN      80
 #define SEARCH_WIN_LEN      30

@@ -95,7 +95,7 @@ opt_t  *options;
 		   "Language name:   ",
 		   " Common name of the language. (Case sensitive) ",
 		   file->lang->name);
-    tw_init_string(&panel, 2, 35, EXT_LEN, 23,
+    tw_init_string(&panel, 2, 35, SPEC_LEN, 23,
 		    TWC_VERBATIM, "File spec(s): ",
 	    " Filespec matching source file name, e.g. '*.c', 'Makefile'. ",
 		   file->lang->name_spec);
