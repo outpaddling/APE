@@ -1,7 +1,7 @@
 name                    Fortran90
 name_spec               *.f90 *.F90
 id_comment              
-compiler                gfortran46 -fopenmp
+compiler                gfortran
 compile_flags           -g -O -I/usr/local/include
 compile_output_flag     -o 
 syntax_check_flag       -c

@@ -1,5 +1,5 @@
 name                    Nroff
-name_spec               *.r *.n *.1 *.2 *.3 *.4 *.5 *.6 *.7 *.8
+name_spec               *.r *.n
 id_comment              
 compiler                
 compile_flags           

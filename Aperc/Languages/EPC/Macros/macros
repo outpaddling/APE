@@ -2,31 +2,6 @@ i 1 4 6 0 0 0 0 0 2 16:# Input one byte
 inputb  0x02, r0
 o 1 6 8 0 0 0 0 0 2 27:# Output one byte to screen
 outputb r0, 0x02
-s 0 0 25 0 0 0 5 0 25 76:############################################################################
-#   Description:
-#
-#   Arguments:
-#
-#   History:
-#   \date(12)\gecos(12)Begin
-############################################################################
-
-# Local variables (prefix names with subprogram name)
-
-# Body
-
-:
-        # Get arguments from stack
-        
-        # Save registers to stack
-        
-        # Restore registers from stack
-        
-        # Return a value if not void
-        movl    , r0
-        
-        # Return to caller
-        ret
 l 1 15 19 0 0 9 9 0 4 54:# Output a long to the screen.  Push base, then value.
 pushl()
 pushl()
@@ -48,4 +23,31 @@ jl      print_long
 main:
         # Stop CPU
         halt
+s 0 19 46 0 0 16 26 0 27 76:############################################################################
+#   Description:
+#
+#   Arguments:
+#
+#   History:
+#   \date(12)\gecos(12)Begin
+############################################################################
+
+# Local variables (prefix names with subprogram name)
+
+# Body
+
+:
+        # Get arguments from stack
+        
+        # Save registers to stack
+        
+        # Subprogram body
+        
+        # Restore registers from stack
+        
+        # Return a value if not void
+        movl    , r0
+        
+        # Return to caller
+        ret
 
