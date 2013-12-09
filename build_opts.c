@@ -49,8 +49,8 @@ lang_t *old_lang, *new_lang;
     char    old_ext[EXT_LEN + 1], new_ext[EXT_LEN + 1], config_dir[PATH_LEN + 1],
 	    from[PATH_LEN + 1], to[PATH_LEN + 1];
 
-    strlcpy(old_ext, old_lang->name_spec, EXT_LEN);
-    strlcpy(new_ext, new_lang->name_spec, EXT_LEN);
+    strlcpy(old_ext, old_lang->name_spec, SPEC_LEN);
+    strlcpy(new_ext, new_lang->name_spec, SPEC_LEN);
     strtok(old_ext, " ");
     strtok(new_ext, " ");
     if (strcmp(old_ext, new_ext) != 0)
@@ -184,7 +184,7 @@ opt_t  *options;
     /* Remove leading whitespace from name_spec */
     for (p = file->lang->name_spec; isspace(*p); ++p)
 	;
-    strlcpy(file->lang->name_spec, p, EXT_LEN);
+    strlcpy(file->lang->name_spec, p, SPEC_LEN);
 
     /*
      * Macros directory is named after first extension.  See if it changed.
@@ -271,7 +271,7 @@ int     read_lang(char *lang_file, lang_t *lang)
 	if (strcmp(name, "name") == 0)
 	    strlcpy(lang->name, p, LANG_NAME_LEN);
 	else if (strcmp(name, "name_spec") == 0)
-	    strlcpy(lang->name_spec, p, EXT_LEN);
+	    strlcpy(lang->name_spec, p, SPEC_LEN);
 	else if (strcmp(name, "id_comment") == 0)
 	    strlcpy(lang->id_comment, p, LANG_ID_LEN);
 	else if (strcmp(name, "compiler") == 0)
@@ -555,7 +555,7 @@ lang_t *
     if (temp != NULL)
     {
 	strlcpy(temp->name, name, LANG_NAME_LEN);
-	strlcpy(temp->name_spec, name_spec, EXT_LEN);
+	strlcpy(temp->name_spec, name_spec, SPEC_LEN);
 	strlcpy(temp->id_comment, id_comment, LANG_ID_LEN);
 	strlcpy(temp->compiler, compiler, OPTION_LEN);
 	strlcpy(temp->compile_only_flag, compile_only_flag,
