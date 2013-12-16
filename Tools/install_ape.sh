@@ -1,17 +1,13 @@
-#!/bin/sh
+#!/bin/sh -e
 
 # Wherever possible, software should be installed via a ports system
 # that handles downloading, patching, dependencies, etc. and have a clean
 # uninstall mechanism.  Examples include BSD ports, MacPorts, 
-# Debian (source) packages, Gentoo Portage, Fink, etc.
+# Debian packages, Gentoo Portage, Fink, etc.
 #
 # This script will install APE on systems that do not have a port for it.
-# Before using this script, see if you can install APE via ports.  If there
-# is no APE port for your system, consider creating one rather than using
-# this script.
-
-# Some example overrides
-# Edit these variables to your liking
+# Before using this script.  If there is no APE port/package for your system,
+# consider creating one rather than using this script. 
 
 if [ `uname` = SunOS ]; then
     MAKE=gmake
@@ -19,7 +15,7 @@ if [ `uname` = SunOS ]; then
     PATH=${PATH}:/usr/lib
     export PATH
     if [ ! -f /usr/ucb/install ]; then
-	echo "Missing /usr/ucb/install.  Install the SUNSWscp package."
+	printf "Missing /usr/ucb/install.  Install the SUNSWscp package.\n"
 	exit 1
     fi
 else
@@ -27,11 +23,17 @@ else
     INSTALL=install
 fi
 
+# APE Makefile must be in '..'
+if [ $0 != ./install_ape.sh ]; then
+    printf "Error: $0 must be run as ./install_ape.sh from the Tools directory.\n"
+    exit 1
+fi
+
 if [ $# = 1 ]; then
     PREFIX=$1
 else
     default_prefix="/usr/local"
-    echo "Install PREFIX? [default=${default_prefix}]"
+    printf "Install PREFIX? [default=${default_prefix}]"
     read PREFIX
     if [ '0'${PREFIX} = '0' ]; then 
 	PREFIX=${default_prefix}
@@ -42,21 +44,11 @@ export PREFIX
 LOCALBASE=${PREFIX}
 export LOCALBASE
 
-INSTALL_PROGRAM="cp -r"
+INSTALL_PROGRAM="cp"
 export INSTALL
 
 INSTALL_DATA="cp -r"
 export INSTALL_DATA
-
-case `uname` in
-    SunOS|Linux)
-	ECHO_CMD="echo"
-	;;
-    *)
-	ECHO_CMD="echo -e"
-	;;
-esac
-export ECHO_CMD
 
 CFLAGS="-g -Wall"
 export CFLAGS
@@ -64,45 +56,49 @@ export CFLAGS
 CC="gcc"
 export CC
 
-master_site=http://personalpages.tds.net/~jwbacon/Ports/distfiles
+# master_site=http://personalpages.tds.net/~jwbacon/Ports/distfiles
+master_site=http://acadix.biz/Ports/distfiles
 
 # Currently supported versions of dependencies
-libbacon=libbacon-1.2.1
+libbacon=libbacon-1.2.2
 libpare=libpare-1.1.1
-libtwin=twintk-0.9.3
-ape=ape-3.5.0
+libtwin=twintk-0.9.4
 
 # Get latest distfiles
-for archive in  ${libbacon}.tar.gz \
-		${libpare}.tar.gz \
-		${libtwin}.tar.gz \
-		${ape}.tar.gz ; do
+for archive in  ${libbacon}.tar.xz \
+		${libpare}.tar.xz \
+		${libtwin}.tar.xz
+do
     if [ ! -f ${archive} ]; then
-	wget ${master_site}/${archive}
+	curl -O ${master_site}/${archive}
     else
-	echo "${archive} already exists.  Skipping..."
-	echo "If this is not what you want, remove it and run $0 again."
+	printf "${archive} already exists.  Skipping...\n"
+	printf "If this is not what you want, remove it and run $0 again.\n"
     fi
 done
 
 # Unpack, build, and install in the proper order
 # Lippare and libtwin depend on libbacon
-# Ape depends on all libs
-for dir in ${libbacon} ${libpare} ${libtwin} ${ape}; do
-    echo ""
-    echo "*** ${dir} ***"
+for dir in ${libbacon} ${libpare} ${libtwin}; do
+    printf "\n${dir}:\n\n"
     if [ ! -d ${dir} ]; then
-	echo "Unpacking..."
-	gunzip -c ${dir}.tar.gz | tar xf -
+	printf "Unpacking...\n"
+	xz -dc ${dir}.tar.xz | tar xf -
     else
-	echo "${dir} already exists.  Skipping..."
-	echo "If this is not what you want, remove it and run $0 again."
+	printf "${dir} already exists.  Skipping...\n"
     fi
     cd ${dir}
 
     # Some default compilers don't support -MM, so use gcc
-    ${MAKE} ECHO=${ECHO} CC=${CC} LOCALBASE=${LOCALBASE} PREFIX=${PREFIX} depend
+    ${MAKE} CC=${CC} LOCALBASE=${LOCALBASE} PREFIX=${PREFIX} depend
     ${MAKE} LOCALBASE=${LOCALBASE} PREFIX=${PREFIX} INSTALL=${INSTALL} install
     cd ..
 done
+
+# Build APE
+cd ..
+
+# Some default compilers don't support -MM, so use gcc
+${MAKE} CC=${CC} LOCALBASE=${LOCALBASE} PREFIX=${PREFIX} depend
+${MAKE} LOCALBASE=${LOCALBASE} PREFIX=${PREFIX} INSTALL=${INSTALL} install
 
