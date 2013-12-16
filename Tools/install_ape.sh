@@ -1,13 +1,19 @@
 #!/bin/sh -e
 
-# Wherever possible, software should be installed via a ports system
-# that handles downloading, patching, dependencies, etc. and have a clean
-# uninstall mechanism.  Examples include BSD ports, MacPorts, 
-# Debian packages, Gentoo Portage, Fink, etc.
-#
-# This script will install APE on systems that do not have a port for it.
-# Before using this script.  If there is no APE port/package for your system,
-# consider creating one rather than using this script. 
+
+##########################################################################
+#   Function description:
+#       Pause until user presses return
+##########################################################################
+
+pause()
+{
+    local junk
+    
+    printf "Press return to continue..."
+    read junk
+}
+
 
 if [ `uname` = SunOS ]; then
     MAKE=gmake
@@ -28,6 +34,22 @@ if [ $0 != ./install_ape.sh ]; then
     printf "Error: $0 must be run as ./install_ape.sh from the Tools directory.\n"
     exit 1
 fi
+
+cat << EOM
+
+Wherever possible, software should be installed via a ports/packages system
+that handles downloading, patching, dependencies, etc. and has a clean
+uninstall mechanism.  Examples include BSD ports, MacPorts, 
+Debian packages, Gentoo Portage, Fink, etc.
+
+This script will install APE on systems that do not have such a port/package.
+
+Before using this script, see if APE can be installed via a ports/packages
+system on your operating system.  If there is no APE port/package for your
+system, consider creating one rather than using this script. 
+
+EOM
+pause
 
 if [ $# = 1 ]; then
     PREFIX=$1

@@ -1,14 +1,14 @@
 name                    Fortran77
 name_spec               *.f *.F
 id_comment              
-compiler                gfortran46
-compile_flags           -o \st
+compiler                gfortran
+compile_flags           -g -O -I$LOCALBASE/include
 compile_output_flag     -o 
 syntax_check_flag       -c
 compile_only_flag       -c
 compile_to_asm_flag     
 preprocess_only_flag    
-link_flags              
+link_flags              -L$LOCALBASE/lib
 debugger                gdb
 debugger_flags          
 debugger_backtrace_cmd  where
