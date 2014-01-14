@@ -80,12 +80,12 @@ int     help_menu(file_t *file, opt_t *options, event_t *event)
 	    break;
 	case 'u':
 	    panel_get_string(file, options, CMD_LEN, 
-			    "Command or function? ", "", cmd);
+			    "Command or function? ", "", TWC_VERBATIM, cmd);
 	    man(cmd, NULL);
 	    break;
 	case 's':
 	    panel_get_string(file, options, CMD_LEN, 
-			    "Topic? ", "", topic);
+			    "Topic? ", "", TWC_VERBATIM, topic);
 	    apropos(topic);
 	    break;
 	case 'b':

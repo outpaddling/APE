@@ -122,15 +122,15 @@ opt_t  *options;
 	    if (*argv[arg] != '-')
 	    {
 		chdir(startup_dir);     /* Open file may do a chdir() */
-		if ((a = open_file(files, argv[arg], options)) != CANT_OPEN)
+		if ((a = open_file(files, argv[arg], options, OPEN_FLAG_NORMAL)) != CANT_OPEN)
 		    aw = a;
 	    }
 	}
 	if (aw == NO_FILES)
-	    aw = open_file(files, "untitled", options);
+	    aw = open_file(files, "untitled", options, OPEN_FLAG_NORMAL);
     }
     else
-	aw = open_file(files, "untitled", options);
+	aw = open_file(files, "untitled", options, OPEN_FLAG_NORMAL);
     return aw;
 }
 

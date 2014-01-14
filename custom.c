@@ -171,7 +171,8 @@ int     run_unix(file_t files[], int aw, opt_t *options)
     static char    cmd[CMD_LEN+1] = "";
     int     status;
     
-    status = panel_get_string(files + aw, options, CMD_LEN, "Command? ", "", cmd);
+    status = panel_get_string(files + aw, options, CMD_LEN, "Command? ", "",
+	TWC_VERBATIM, cmd);
 
     if ( (cmd[0] != '\0') && (status != TWC_INPUT_CANCEL) )
     {
@@ -221,7 +222,7 @@ int     run_custom_item(file_t files[],
 		    {
 			strlcpy(temp, files[c].source, TWC_FILENAME_LEN);
 			close_file(files, c, options, PROMPT_BEFORE_CLOSE);
-			*af_ptr = open_file(files, temp, options);
+			*af_ptr = open_file(files, temp, options, OPEN_FLAG_NORMAL);
 			sprintw(2,TWC_ST_LEN,"Reloaded %s.",files[*af_ptr].source);
 		    }
 		}

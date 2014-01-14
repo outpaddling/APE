@@ -325,7 +325,7 @@ buff_t  *cut_buff;
     /* If no open files, open untitled - can this happen? */
     if (file[af].window == NULL)
     {
-	af = open_file(file,"untitled",options);
+	af = open_file(file,"untitled",options, OPEN_FLAG_NORMAL);
     }
 
     /* Update screen */
@@ -346,6 +346,21 @@ buff_t  *cut_buff;
 }
 
 
+/* FIXME: Move this to a library */
+
+const char    *find_ext(const char *filename)
+
+{
+    const char    *ext;
+    
+    /* Get extension, or end of string */
+    if ( ((ext = strrchr(filename, '.')) == NULL) ||
+	 (ext == filename) )
+	ext = filename + strlen(filename);
+    return ext;
+}
+
+
 /***********************************************
  * Set up compiler and options for an open file
  ***********************************************/
@@ -355,12 +370,9 @@ file_t *file;
 opt_t *options;
 
 {
-    char   *ext;
+    const char   *ext;
     
-    /* Get extension, or end of string */
-    if ( ((ext = strrchr(file->source, '.')) == NULL) ||
-	 (ext == file->source) )
-	ext = file->source + strlen(file->source);
+    ext = find_ext(file->source);
     
     /* Check for Fortran 77 */
     if (strcmp(ext,".f") == 0)
@@ -368,6 +380,7 @@ opt_t *options;
     else
 	file->max_line_len = MAX_LINE_LEN;
     
+    /* FIXME: Don't hard-code this, do it with language options */
     file->notabs =  (strcmp(ext,".tex") == 0) ||
 			(strcmp(file->source,"Portfile") == 0) ||
 			(strcmp(ext,".py") == 0);

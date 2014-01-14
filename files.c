@@ -57,8 +57,8 @@ event_t *event;
     char    path_name[PATH_LEN + 1] = "";
     int     ch, af, cancel, start_row = 1;
     win_t  *file_pop;
-    static char *file_text[] = {".New",".Open file",/*".List files",*/".Close",
-				".Merge", ".Save (Ctrl+s)",
+    static char *file_text[] = {".New",".Open file","Open .Encrypted file",
+				".Close", ".Merge", ".Save (Ctrl+s)",
 				"Save .As",
 				TWC_HLINE,
 				".Toggle file (Ctrl+t)",
@@ -82,7 +82,7 @@ event_t *event;
 	    new_blank_file(files, af_ptr, options);
 	    break;
 	case 'o':
-	    if ((af = load_new_file('l', files, options)) != CANT_LOAD)
+	    if ((af = load_new_file('l', files, options, OPEN_FLAG_NORMAL)) != CANT_LOAD)
 		*af_ptr = af;
 	    break;
 #if 0
@@ -100,6 +100,8 @@ event_t *event;
 	    break;
 #endif
 	case 'e':
+	    if ((af = load_new_file('l', files, options, OPEN_FLAG_CRYPT)) != CANT_LOAD)
+		*af_ptr = af;
 	    break;
 	case 'c':
 	    /* Add filename to reopen list */
@@ -162,10 +164,7 @@ event_t *event;
  * Prompt for a filename and open file
  **************************************/
 
-int     load_new_file(ch, files, options)
-int     ch;
-file_t  files[];
-opt_t  *options;
+int     load_new_file(int ch, file_t files[], opt_t *options, unsigned int flags)
 
 {
     extern win_t    *File_list;
@@ -194,7 +193,7 @@ opt_t  *options;
 	pn = strtok(path_name," \t");
 	while ( pn != NULL )
 	{
-	    af = open_file(files, pn, options);
+	    af = open_file(files, pn, options, flags);
 	    pn = strtok(NULL," \t");
 	}
 	return af;
@@ -219,7 +218,8 @@ opt_t  *options;
     int     remove;
 
     /* Get new filename */
-    panel_get_string(files + af, options, PATH_LEN, "Save as? ", "", temp);
+    panel_get_string(files + af, options, PATH_LEN, "Save as? ", "",
+	TWC_VERBATIM, temp);
     if (*temp == '\0')
     {
 	stat_mesg("File not saved.");
@@ -306,7 +306,8 @@ void    view_header(file_t *file, opt_t *options)
     char    cmd[CMD_LEN + 1] = "", *ext, *argv[MAX_ARGS],
 	    *x11_include = X11_INCLUDE;
 
-    panel_get_string(file, options, PATH_LEN, "Header? ", "", path_name);
+    panel_get_string(file, options, PATH_LEN, "Header? ", "",
+	TWC_VERBATIM, path_name);
     
     sprintw(2, 50, "path_name = %s", path_name);
     if ( *path_name == '\0' )
@@ -389,18 +390,18 @@ opt_t   *options;
  * Open a new file and create an edit window for it.
  ****************************************************/
 
-int     open_file(files, path_name, options)
-file_t  files[];
-char   *path_name;
-opt_t  *options;
+int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int flags)
 
 {
     FILE   *fp;
     int     af,
-	    ftype;
+	    ftype,
+	    status;
     char    dir_name[PATH_LEN + 1], base_name[PATH_LEN + 1],
 	    temp[PATH_LEN + 1], home[PATH_LEN + 1],
-	    *button[2] = OK_BUTTON;
+	    *button[2] = OK_BUTTON,
+	    cmd[CMD_LEN+1],
+	    key[MCRYPT_KEY_LEN+1];
     
     /* Expand ~ to home dir if necessary */
     if (*path_name == '~')
@@ -457,8 +458,36 @@ opt_t  *options;
 	return CANT_OPEN;
     }
     
-    if ((fp = fopen(base_name, "r")) != NULL)
+    /* FIXME: Support other encryption programs */
+    if ( flags & OPEN_FLAG_CRYPT )
+    {
+	// tunset_tty(Terminal,C_LFLAG,ECHO);
+	*key = '\0';
+	status = panel_get_string(files+af, options, MCRYPT_KEY_LEN,
+			    "Key? ", "", TWC_SECURE, key);
+	snprintf(cmd, CMD_LEN, "mcrypt -F -d -a blowfish -m stream -k %s < %s",
+	    key, files[af].source);
+	fp = popen(cmd, "r");
+	
+	/* Erase key from memory for security */
+	memset(key, 0, MCRYPT_KEY_LEN);
+	memset(cmd, 0, CMD_LEN);
+	files[af].crypt = 1;
+    }
+    else
+    {
+	fp = fopen(base_name, "r");
+	files[af].crypt = 0;
+    }
+	
+    if (fp != NULL)
+    {
 	load_file(files + af, fp,options);
+	if ( files[af].crypt )
+	    pclose(fp);
+	else
+	    fclose(fp);
+    }
     else if (new_file(files + af) == NOMEM) /* Must come after init_file() */
 	return CANT_OPEN;
     
@@ -786,10 +815,22 @@ int     read_line(char string[], FILE *fp, file_t *file, opt_t *options)
 int     save_file(file_t *file, opt_t   *options)
 
 {
-    int     l = 0, nbytes = 0, lines;
+    win_t   *win = NULL;
+    tw_panel_t panel = TWC_PANEL_INIT;
+    int     l = 0, nbytes = 0, lines, status, match;
     FILE   *fp;
     char   *filename, pipe[PATH_LEN + 1],
-	    *ok_button[2] = OK_BUTTON;
+	    *ok_button[2] = OK_BUTTON,
+	    key[MCRYPT_KEY_LEN+1] = "",
+	    key2[MCRYPT_KEY_LEN+1] = "",
+	    algo[MCRYPT_ALGO_LEN+1],
+	    *encryption_algorithms[] = { \
+		"cast-128", "gost", "rijndael-128", "twofish", "arcfour",
+		"cast-256", "loki97", "rijndael-192", "saferplus",
+		"wake", "blowfish-compat", "des", "rijndael-256",
+		"serpent", "xtea", "blowfish", "enigma", 
+		"rc2", "tripledes", NULL },
+	    cmd[CMD_LEN+1];
 
     if (file->read_only)
     {
@@ -824,16 +865,39 @@ int     save_file(file_t *file, opt_t   *options)
 
     if (file->crypt)
     {
-	snprintf(pipe, PATH_LEN, ".ape_save_pipe.%lu",(unsigned long)getpid());
-	mkfifo(pipe, 0600);
-	spawnlp(P_NOWAIT, P_NOECHO, "pipe", NULL, file->source, "crypt",
-		"yogurt", NULL);
-	filename = pipe;
+	for (match = 0; !match; )
+	{
+	    *key = *key2 = '\0';
+	    win = centered_panel_win(10, 65, options);
+	    tw_init_enum(&panel, 2, 3, MCRYPT_ALGO_LEN, encryption_algorithms,
+			"Algorithm?  ",
+			" mcrypt -a algorithm?  Hit <space> to toggle. ",algo);
+	    tw_init_string(&panel, 3, 3, MCRYPT_KEY_LEN, 40, TWC_SECURE,
+			"Key?        "," Encryption Key ", key);
+	    tw_init_string(&panel, 4, 3, MCRYPT_KEY_LEN, 40, TWC_SECURE,
+			"Verify Key: "," Encryption Key ", key2);
+	    status = tw_input_panel(win, &panel, TW_LINES(win) - 3);
+	    match = (strcmp(key, key2) == 0);
+	    if ( ! match )
+		popup_mesg("Keys do not match.  Please try again.",
+		    ok_button,options);
+	    tw_del_win(&win);
+	}
+	
+	if (TW_EXIT_KEY(status) != TWC_INPUT_DONE)
+	    return OK;
+	snprintf(cmd, CMD_LEN, "mcrypt -F -a blowfish -m stream -k %s > %s",
+	    key, file->source);
+	fp = popen(cmd, "w");
+	
+	/* Erase key from memory for security */
+	memset(key, 0, MCRYPT_KEY_LEN);
+	memset(cmd, 0, CMD_LEN);
     }
     else
-	filename = file->source;
-
-    if ((fp = fopen(filename, "w")) == NULL)
+	fp = fopen(filename, "w");
+	
+    if (fp == NULL)
     {
 	popup_mesg("Cannot save file",ok_button,options);
 	TW_RESTORE_WIN(file->window);
@@ -848,7 +912,10 @@ int     save_file(file_t *file, opt_t   *options)
     }
     fflush(fp);
     fsync(fileno(fp));
-    fclose(fp);
+    if (file->crypt)
+	pclose(fp);
+    else
+	fclose(fp);
     time(&file->save_time);
 
     /* Script or other interpreted language */
@@ -956,7 +1023,7 @@ void    new_blank_file(file_t files[], int *af_ptr, opt_t *options)
 {
     int     af;
     
-    if ((af = open_file(files, "untitled", options)) != CANT_OPEN)
+    if ((af = open_file(files, "untitled", options, OPEN_FLAG_NORMAL)) != CANT_OPEN)
 	*af_ptr = af;
 }
 

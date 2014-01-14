@@ -95,7 +95,7 @@ event_t *event;
 		    strlcpy(out_filename, files[*af_ptr].source, PATH_LEN);
 		    if ( (p=strrchr(out_filename, '.')) != NULL )
 			strbasecpy(p, ".s", out_filename, PATH_LEN);
-		    if ( (c = open_file(files+*af_ptr, out_filename, options)) >= 0 )
+		    if ( (c = open_file(files+*af_ptr, out_filename, options, OPEN_FLAG_NORMAL)) >= 0 )
 			*af_ptr = c;
 		}
 	    }
@@ -140,7 +140,7 @@ event_t *event;
 		set_makefile(project, "makefile", files+*af_ptr, options);
 	    else
 		panel_get_string(files+*af_ptr, options, CMD_LEN,
-		    "Command? ", "", files[*af_ptr].run_cmd);
+		    "Command? ", "", TWC_VERBATIM, files[*af_ptr].run_cmd);
 	    break;
 	case 'm':
 	    if ( stat("makefile", &mkst) == 0 )

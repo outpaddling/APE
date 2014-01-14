@@ -157,7 +157,7 @@ void    next_error(file_t *files,int *aw,err_t *errfile,
 		 */
 		if ( found )
 		{
-		    c = open_file(files,raw_file,options);
+		    c = open_file(files,raw_file,options, OPEN_FLAG_NORMAL);
 		    if ( c >= 0 )
 		    {
 			*aw = c;

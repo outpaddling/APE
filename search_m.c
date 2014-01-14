@@ -212,7 +212,7 @@ void    find_string(file_t *file, char *string, opt_t *options, buff_t *cut_buff
 
     /* Get string to search for */
     status = panel_get_string(file, options, SEARCH_STR_LEN,
-			    "Search for? ", "", string);
+			    "Search for? ", "", TWC_VERBATIM, string);
     
     if (TW_EXIT_KEY(status) == TWC_INPUT_DONE)
     {
@@ -600,7 +600,7 @@ void    grep_headers(file_t *file, opt_t *options)
     int     status;
 
     status = panel_get_string(file, options, TWC_SPEC_LEN,
-	"Enter egrep pattern: ", "", grep_str);
+	"Enter egrep pattern: ", "", TWC_VERBATIM, grep_str);
     if ( (status != TWC_INPUT_CANCEL) && (grep_str[0] != '\0') )
     {
 	/* Don't search /usr/include twice */
@@ -623,7 +623,7 @@ void    search_libs(file_t *file, opt_t *options)
     int     status;
 
     status = panel_get_string(file, options, SEARCH_STR_LEN,
-			    "Enter egrep pattern: ", "", symbol);
+			    "Enter egrep pattern: ", "", TWC_VERBATIM, symbol);
     if ( (status != TWC_INPUT_CANCEL) && (symbol[0] != '\0') )
     {
 	if (strblank(options->lib_path))
