@@ -465,7 +465,7 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
 	*key = '\0';
 	status = panel_get_string(files+af, options, MCRYPT_KEY_LEN,
 			    "Key? ", "", TWC_SECURE, key);
-	snprintf(cmd, CMD_LEN, "mcrypt -F -d -a blowfish -m stream -k %s < %s",
+	snprintf(cmd, CMD_LEN, "mcrypt -F -d -m stream -k %s < %s",
 	    key, files[af].source);
 	fp = popen(cmd, "r");
 	
@@ -887,8 +887,9 @@ int     save_file(file_t *file, opt_t   *options)
 	
 	if (TW_EXIT_KEY(status) != TWC_INPUT_DONE)
 	    return OK;
-	snprintf(cmd, CMD_LEN, "mcrypt -F -a blowfish -m stream -k %s > %s",
-	    key, file->source);
+	snprintf(cmd, CMD_LEN,
+	    "mcrypt -F -a %s -m stream -k %s > %s 2> /dev/null",
+	    algo, key, file->source);
 	fp = popen(cmd, "w");
 	
 	/* Erase key from memory for security */
