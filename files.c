@@ -819,7 +819,7 @@ int     save_file(file_t *file, opt_t   *options)
     tw_panel_t panel = TWC_PANEL_INIT;
     int     l = 0, nbytes = 0, lines, status, match;
     FILE   *fp;
-    char   *filename, pipe[PATH_LEN + 1],
+    char    pipe[PATH_LEN + 1],
 	    *ok_button[2] = OK_BUTTON,
 	    key[MCRYPT_KEY_LEN+1] = "",
 	    key2[MCRYPT_KEY_LEN+1] = "",
@@ -882,6 +882,7 @@ int     save_file(file_t *file, opt_t   *options)
 		popup_mesg("Keys do not match.  Please try again.",
 		    ok_button,options);
 	    tw_del_win(&win);
+	    TW_RESTORE_WIN(file->window);
 	}
 	
 	if (TW_EXIT_KEY(status) != TWC_INPUT_DONE)
@@ -895,7 +896,7 @@ int     save_file(file_t *file, opt_t   *options)
 	memset(cmd, 0, CMD_LEN);
     }
     else
-	fp = fopen(filename, "w");
+	fp = fopen(file->source, "w");
 	
     if (fp == NULL)
     {
