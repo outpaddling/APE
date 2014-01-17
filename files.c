@@ -59,7 +59,7 @@ event_t *event;
     win_t  *file_pop;
     static char *file_text[] = {".New",".Open file","Open .Encrypted file",
 				".Close", ".Merge", ".Save (Ctrl+s)",
-				"Save .As",
+				"Save .As", "Save Encr.Ypted",
 				TWC_HLINE,
 				".Toggle file (Ctrl+t)",
 				TWC_HLINE, ".View header file",
@@ -130,6 +130,8 @@ event_t *event;
 	    merge_file(files + af, path_name, options, cut_buff);
 	    chdir(files[af].cwd);
 	    break;
+	case 'y':
+	    files[af].crypt = 1;
 	case 's':
 	    synhigh_update(files+af,files[af].curline,options,cut_buff);
 	    if (strcmp(files[af].source, "untitled") == 0)
