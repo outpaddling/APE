@@ -42,13 +42,16 @@ OBJS    = ${OBJS1} ${OBJS2}
 # Compile, link, and install options
 
 PREFIX  ?= /usr/local
+MANPREFIX  ?= ${PREFIX}
 LOCALBASE ?= /usr/local
+DATADIR	?= ${PREFIX}/share/ape
+DOCSDIR	?= ${PREFIX}/share/doc/ape
 
 # APE depends on signed chars.  Some compilers treat chars as unsigned
 # by default, so adjust compiler flags as needed. (e.g. gcc -fsigned-char)
 CPP     ?= cpp
 CC      ?= cc
-CFLAGS  ?= -g -Wall
+CFLAGS  ?= -g -Wall -fsigned-char
 INCLUDES = -I${LOCALBASE}/include
 CFLAGS  += ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\""
 
@@ -92,14 +95,17 @@ realclean: clean
 	rm -f .*.bak *.bak *.BAK *.core
 
 install: all
-	mkdir -p ${PREFIX}/bin ${PREFIX}/man/man1 \
-	${PREFIX}/share/ape ${PREFIX}/share/doc/ape
-	${INSTALL_PROGRAM} ${BINS} ${PREFIX}/bin
-	${INSTALL_PROGRAM} ${SCRIPTS} ${PREFIX}/bin
-	${INSTALL_DATA} ${MANS} ${PREFIX}/man/man1
-	${INSTALL_DATA} ${HTML} ${PREFIX}/share/doc/ape
-	cp -Rp Aperc/Languages Aperc/options.rc Aperc/custom_menu ${PREFIX}/share/ape
-	${CHMOD} -R u+rwX,go-w+rX ${PREFIX}/share/ape
+	mkdir -p ${STAGEDIR}${PREFIX}/bin \
+		${STAGEDIR}${MANPREFIX}/man/man1 \
+		${STAGEDIR}${DATADIR} \
+		${STAGEDIR}${DOCSDIR}
+	${INSTALL_PROGRAM} ${BINS} ${STAGEDIR}${PREFIX}/bin
+	${INSTALL_PROGRAM} ${SCRIPTS} ${STAGEDIR}${PREFIX}/bin
+	${INSTALL_DATA} ${MANS} ${STAGEDIR}${MANPREFIX}/man/man1
+	${INSTALL_DATA} ${HTML} ${STAGEDIR}${DOCSDIR}
+	cp -Rp Aperc/Languages Aperc/options.rc Aperc/custom_menu \
+		${STAGEDIR}${DATADIR}
+	${CHMOD} -R u+rwX,go-w+rX ${STAGEDIR}${DATADIR}
 
 protos:
 	(cproto ${INCLUDES} *.c > temp_protos.h && mv -f temp_protos.h protos.h)
