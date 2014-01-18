@@ -42,7 +42,7 @@
 #include "pare.h"
 #endif
 
-#define APE_VERSION     "3.5.1"
+#define APE_VERSION     "3.5.2"
 
 #define EMPTY_FILE(f) (((f)->total_lines == 1) && ((f)->line[0].length == 0))
 
