@@ -890,7 +890,7 @@ int     save_file(file_t *file, opt_t   *options)
 	if (TW_EXIT_KEY(status) != TWC_INPUT_DONE)
 	    return OK;
 	snprintf(cmd, CMD_LEN,
-	    "sh -c 'mcrypt -F -a %s -k %s > %s 2> /dev/null'",
+	    "mcrypt -F -a %s -k %s > %s 2> /dev/null",
 	    algo, key, file->source);
 	fp = popen(cmd, "w");
 	
