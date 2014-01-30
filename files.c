@@ -467,7 +467,7 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
 	*key = '\0';
 	status = panel_get_string(files+af, options, MCRYPT_KEY_LEN,
 			    "Key? ", "", TWC_SECURE, key);
-	snprintf(cmd, CMD_LEN, "mcrypt -F -d -k %s < %s",
+	snprintf(cmd, CMD_LEN, "mcrypt --flush -q -F -d -k %s < %s",
 	    key, files[af].source);
 	fp = popen(cmd, "r");
 	
@@ -889,14 +889,9 @@ int     save_file(file_t *file, opt_t   *options)
 	
 	if (TW_EXIT_KEY(status) != TWC_INPUT_DONE)
 	    return OK;
-	snprintf(cmd, CMD_LEN,
-	    "mcrypt -F -a %s -k %s > %s 2> /dev/null",
+	snprintf(cmd, CMD_LEN, "mcrypt --flush -q -F -a %s -k %s > %s 2> mcrypt.stderr",
 	    algo, key, file->source);
 	fp = popen(cmd, "w");
-	
-	/* Erase key from memory for security */
-	memset(key, 0, MCRYPT_KEY_LEN);
-	memset(cmd, 0, CMD_LEN);
     }
     else
 	fp = fopen(file->source, "w");
@@ -917,7 +912,13 @@ int     save_file(file_t *file, opt_t   *options)
     fflush(fp);
     fsync(fileno(fp));
     if (file->crypt)
+    {
 	pclose(fp);
+	
+	/* Erase key from memory for security */
+	memset(key, 0, MCRYPT_KEY_LEN);
+	memset(cmd, 0, CMD_LEN);
+    }
     else
 	fclose(fp);
     time(&file->save_time);
