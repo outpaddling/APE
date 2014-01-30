@@ -470,10 +470,6 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
 	snprintf(cmd, CMD_LEN, "mcrypt --flush -q -F -d -k %s < %s",
 	    key, files[af].source);
 	fp = popen(cmd, "r");
-	
-	/* Erase key from memory for security */
-	memset(key, 0, MCRYPT_KEY_LEN);
-	memset(cmd, 0, CMD_LEN);
 	files[af].crypt = 1;
     }
     else
@@ -486,7 +482,13 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
     {
 	load_file(files + af, fp,options);
 	if ( files[af].crypt )
+	{
 	    pclose(fp);
+	
+	    /* Erase key from memory for security */
+	    memset(key, 0, MCRYPT_KEY_LEN);
+	    memset(cmd, 0, CMD_LEN);
+	}
 	else
 	    fclose(fp);
     }
@@ -910,7 +912,6 @@ int     save_file(file_t *file, opt_t   *options)
 	nbytes += file->line[l].length + 1;
     }
     fflush(fp);
-    fsync(fileno(fp));
     if (file->crypt)
     {
 	pclose(fp);
@@ -920,7 +921,10 @@ int     save_file(file_t *file, opt_t   *options)
 	memset(cmd, 0, CMD_LEN);
     }
     else
+    {
+	fsync(fileno(fp));
 	fclose(fp);
+    }
     time(&file->save_time);
 
     /* Script or other interpreted language */
