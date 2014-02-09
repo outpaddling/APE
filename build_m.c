@@ -730,6 +730,7 @@ opt_t *options;
     if (*project->makefile == '\0')
     {
 	sprintw(2, TWC_ST_LEN, "Sorry, no Makefile.");
+	return 0;
     }
     else
     {

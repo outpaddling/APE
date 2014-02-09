@@ -1,8 +1,4 @@
 .If-then-else
-.Switch
-f.Or loop
-.While loop
-.Function
 New .Main program
 f.Printf
 Plo.T
@@ -11,3 +7,8 @@ Semilog.X plot
 Semilog.Y plot
 Mesh.Grid plot
 M.Esh plot
+F.Unction
+.For loop
+.Switch
+.While loop
+.Do-until

@@ -1,7 +1,13 @@
-.If-then
 .While loop
 .For loop
-.Block Comment
 .Case
+.Exit codes
+.Block Comment
+F.Unction
+.Heredoc
+.If-then
 .PBS template
+Usa.Ge
+.Root only
 New .Main
+P.Ause

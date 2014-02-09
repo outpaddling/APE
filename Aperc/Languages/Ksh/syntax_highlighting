@@ -1,11 +1,13 @@
 1 -1 16
-\$?{?[a-zA-Z_][a-zA-Z0-9_]*}?|\$#
+\${.*}|\$?{?[a-zA-Z_][a-zA-Z0-9_]*}?|\$#|\$\(\(.*\)\)
 5 -1 8
-^#PBS .*$|^#BSUB .*$
+^#SBATCH .*$|^#PBS .*$|^#BSUB .*$
 6 -1 8
 ".*["$]|'.*['$]
 2 -1 8
-set|export|echo|read|cd|case|esac|if|then|elif|else|fi|while|for|do|done|in|end|goto|exit
+set|export|echo|read|cd|case|esac|if|then|elif|else|fi|while|break|for|do|done|in|end|goto|exit
+5 -1 8
+`.*`|\$\(.*\)
 3 -1 8
 #.*$
 -2 0 0

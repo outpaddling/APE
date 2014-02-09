@@ -2,7 +2,7 @@ name                    Fortran90
 name_spec               *.f90 *.F90
 id_comment              
 compiler                gfortran
-compile_flags           -g -O -I$LOCALBASE/include
+compile_flags           -Wall -O -g -DDEBUG -I$LOCALBASE/include
 compile_output_flag     -o 
 syntax_check_flag       -c
 compile_only_flag       -c
