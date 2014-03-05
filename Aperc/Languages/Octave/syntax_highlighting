@@ -3,7 +3,7 @@
 6 -1 8
 '.*['$]
 2 -1 8
-all_va_args|break|case|catch|continue|else|elseif|end|end_try_catch|end_unwind_protect|endfor|endfunction|endif|endswitch|endwhile|for|function|global|gplot|gsplot|if|otherwise|return|switch|try|unwind_protect|unwind_protect_cleanup|while
+all_va_args|break|case|catch|continue|do|else|elseif|end|end_try_catch|end_unwind_protect|endfor|endfunction|endif|endswitch|endwhile|for|function|global|gplot|gsplot|if|otherwise|return|switch|try|until|unwind_protect|unwind_protect_cleanup|while
 5 -1 8
 casesen|cd|chdir|clear|diary|dir|echo|edit_history|format|help|history|hold|load|ls|more|run_history|save|set|show|type|which|who|whos
 -2 0 0
