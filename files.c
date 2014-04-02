@@ -57,9 +57,9 @@ event_t *event;
     char    path_name[PATH_LEN + 1] = "";
     int     ch, af, cancel, start_row = 1;
     win_t  *file_pop;
-    static char *file_text[] = {".New",".Open file","Open .Encrypted file",
+    static char *file_text[] = {".New",".Open file",//"Open .Encrypted file",
 				".Close", ".Merge", ".Save (Ctrl+s)",
-				"Save .As", "Save Encr.Ypted",
+				"Save .As", //"Save Encr.Ypted",
 				TWC_HLINE,
 				".Toggle file (Ctrl+t)",
 				TWC_HLINE, ".View header file",
@@ -100,8 +100,8 @@ event_t *event;
 	    break;
 #endif
 	case 'e':
-	    if ((af = load_new_file('l', files, options, OPEN_FLAG_CRYPT)) != CANT_LOAD)
-		*af_ptr = af;
+	    /*if ((af = load_new_file('l', files, options, OPEN_FLAG_CRYPT)) != CANT_LOAD)
+		*af_ptr = af;*/
 	    break;
 	case 'c':
 	    /* Add filename to reopen list */
@@ -131,7 +131,7 @@ event_t *event;
 	    chdir(files[af].cwd);
 	    break;
 	case 'y':
-	    files[af].crypt = 1;
+	    //files[af].crypt = 1;
 	case 's':
 	    synhigh_update(files+af,files[af].curline,options,cut_buff);
 	    if (strcmp(files[af].source, "untitled") == 0)
