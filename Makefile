@@ -23,7 +23,7 @@ BINS    = ${BIN1} ${BIN2}
 
 MANS    = Man/*.1
 HTML    = Man/*.html
-SCRIPTS = Tools/search* Tools/ape_ispell Xape/* Java/runjava
+SCRIPTS = Tools/search* Tools/ape_aspell Xape/* Java/runjava
 
 
 ###################################################
@@ -44,8 +44,8 @@ OBJS    = ${OBJS1} ${OBJS2}
 PREFIX  ?= /usr/local
 MANPREFIX  ?= ${PREFIX}
 LOCALBASE ?= /usr/local
-DATADIR	?= ${PREFIX}/share/ape
-DOCSDIR	?= ${PREFIX}/share/doc/ape
+DATADIR ?= ${PREFIX}/share/ape
+DOCSDIR ?= ${PREFIX}/share/doc/ape
 
 # APE depends on signed chars.  Some compilers treat chars as unsigned
 # by default, so adjust compiler flags as needed. (e.g. gcc -fsigned-char)
