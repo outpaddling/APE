@@ -6,7 +6,6 @@ Index Ter.M
 .List Item
 .Itemized List
 .Ordered List
-Image .File
 .Table
 P.Rogram Listing
 Scr.Een shot
@@ -17,3 +16,4 @@ Xinclu.De
 E.Xample
 .Section
 .Chapter
+Image .File
