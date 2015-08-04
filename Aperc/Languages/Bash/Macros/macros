@@ -1,8 +1,4 @@
-i 1 2 6 0 0 0 0 0 4 1:#
-if []; then
-fi
-
-w 1 10 15 0 0 0 0 0 5 2:# 
+w 1 10 15 0 0 0 0 0 5 2:# 
 while 
 do
 done
@@ -12,10 +8,6 @@ for in
 do
 done
 
-b 1 2 6 0 0 0 0 0 4 74:##########################################################################
-#
-##########################################################################
-
 c 1 6 14 0 0 0 0 0 8 2:# 
 case in
 pattern)
@@ -24,7 +16,27 @@ pattern)
     ;;
 esac
 
-u 0 2 18 0 0 0 0 0 16 74:##########################################################################
+e 0 189 206 0 0 187 187 0 17 7:EX_OK=0
+EX__BASE=64
+EX_USAGE=64
+EX_DATAERR=65
+EX_NOINPUT=66
+EX_NOUSER=67
+EX_NOHOST=68
+EX_UNAVAILABLE=69
+EX_SOFTWARE=70
+EX_OSERR=71
+EX_OSFILE=72
+EX_CANTCREAT=73
+EX_IOERR=74
+EX_TEMPFAIL=75
+EX_PROTOCOL=76
+EX_NOPERM=77
+EX_CONFIG=78
+b 1 60 63 0 0 53 53 0 3 74:##########################################################################
+#   
+##########################################################################
+u 0 14 30 0 0 10 10 0 16 74:##########################################################################
 #   Function description:
 #       
 #   Arguments:
@@ -40,10 +52,12 @@ esac
 {
     return 0
 }
-h 0 941 944 0 0 924 924 0 3 10:cat << EOM
+h 0 64 66 0 3 59 59 0 2 10:cat << EOM
 
-EOM
-p 0 2 153 0 0 0 135 0 151 74:##########################################################################
+EOMi 1 47 50 0 2 33 33 0 3 1:#
+if [  ]; then
+    
+fip 0 2 153 0 0 0 133 0 151 74:##########################################################################
 #   Torque (PBS) job submission script template
 #   "#PBS" denotes PBS command-line flags
 #   "##PBS" is ignored by torque/PBS
@@ -194,6 +208,20 @@ cd $PBS_O_WORKDIR
 
 # Array job example:
 # ./\filename_stem(0) < input-$PBS_ARRAYID.txt > output-$PBS_ARRAYID.txt
+g 0 2 11 0 0 0 0 0 9 7:usage()
+{
+    printf "Usage: $0 \n"
+    exit 64 # From sysexits.h
+}
+
+if [ $# != 0 ]; then
+    usage
+fi
+r 0 12 17 0 0 0 0 0 5 29:# Must be run by root because
+if [ `whoami` != 'root' ]; then
+    printf "$0 must be run by root.\n"
+    exit 64
+fi
 m 0 2 28 0 0 0 8 0 26 74:##########################################################################
 #   Script description:
 #       
@@ -220,4 +248,17 @@ usage()
 if [ $# != 1 ]; then
     usage
 fi
+a 0 13 13 0 0 0 0 0 13 0:
+##########################################################################
+#   Function description:
+#       Pause until user presses return
+##########################################################################
+
+pause()
+{
+    local junk
+    
+    printf "Press return to continue..."
+    read junk
+}
 

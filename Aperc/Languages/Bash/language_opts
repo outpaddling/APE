@@ -1,5 +1,5 @@
-name                    BASH
-name_spec               *.bash*
+name                    Bash
+name_spec               *.bash *.bashrc *.bash_profile
 id_comment              #!/usr/bin/env bash
 compiler                
 compile_flags           
@@ -12,7 +12,7 @@ link_flags
 debugger                
 debugger_flags          
 debugger_backtrace_cmd  
-run_prefix              bash
+run_prefix              
 upload_prefix           
 executable_name         \fn
 executable_source       Fixed
