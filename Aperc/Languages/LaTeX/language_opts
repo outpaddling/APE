@@ -1,7 +1,7 @@
 name                    LaTeX
 name_spec               *.tex .sty
 id_comment              
-compiler                latex
+compiler                pdflatex
 compile_flags           
 compile_output_flag     
 syntax_check_flag       
@@ -12,9 +12,9 @@ link_flags
 debugger                
 debugger_flags          
 debugger_backtrace_cmd  
-run_prefix              xdvi
+run_prefix              docviewer
 upload_prefix           
-executable_name         \st.dvi
+executable_name         \st.pdf
 executable_source       Fixed
 error_msg_format        
 auto_wrap               0
