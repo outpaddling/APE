@@ -1,0 +1,7 @@
+F.Unction
+.Block comment
+.Do-while loop
+.While loop
+.For loop
+.If block
+New .Main

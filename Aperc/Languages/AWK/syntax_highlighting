@@ -3,7 +3,7 @@
 6 -1 8
 ".*["$]|'.*['$]
 2 -1 8
-break|if|else|while|for|do|continue|goto|return|main
+break|if|else|while|for|do|continue|goto|return|main|function
 1 -1 8
 0[Xx][0-9A-Fa-f]+|[0-9]+
 5 -1 8

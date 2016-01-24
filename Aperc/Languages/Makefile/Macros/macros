@@ -551,7 +551,7 @@ uninstall:
         @for file in ${MAN3} ; do \
             ${RM} ${MANPREFIX}/man/man3/$${file}; \
         done
-p 0 0 171 0 0 0 151 0 171 76:############################################################################
+p 2 0 183 0 0 0 157 0 183 76:############################################################################
 #
 #              Another Programmer's Editor Makefile Template
 #
@@ -665,6 +665,18 @@ AR      ?= ar
 PRINTF  ?= printf
 INSTALL ?= install
 
+help:
+        @printf "Usage: make [VARIABLE=value ...] all\n\n"
+        @printf "Some common tunable variables:\n\n"
+        @printf "\tCC        [currently ${CC}]\n"
+        @printf "\tCFLAGS    [currently ${CFLAGS}]\n"
+        @printf "\tCXX       [currently ${CXX}]\n"
+        @printf "\tCXXFLAGS  [currently ${CXXFLAGS}]\n"
+        @printf "\tF77       [currently ${F77}]\n"
+        @printf "\tFC        [currently ${FC}]\n"
+        @printf "\tFFLAGS    [currently ${FFLAGS}]\n\n"
+        @printf "View Makefile for more tunable variables.\n\n"
+        
 ############################################################################
 # Standard targets required by ports
 

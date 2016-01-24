@@ -1,4 +1,6 @@
 
+Seg fault in strblank in create_build_menu()
+
 Cannot replace in fortran77 due to max line len
     Warning about insert although not in insert mode
 
