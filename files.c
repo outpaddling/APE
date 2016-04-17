@@ -834,7 +834,8 @@ int     save_file(file_t *file, opt_t   *options)
 		"wake", "blowfish-compat", "des", "rijndael-256",
 		"serpent", "xtea", "blowfish", "enigma", 
 		"rc2", "tripledes", NULL },
-	    cmd[CMD_LEN+1];
+	    cmd[CMD_LEN+1],
+	    full_path[PATH_LEN+1];
 
     if (file->read_only)
     {
@@ -859,11 +860,13 @@ int     save_file(file_t *file, opt_t   *options)
 		return OK;
 	}
     */
+
+    snprintf(full_path, PATH_LEN, "%s/%s", file->cwd, file->source);
     
     /* Back up file before first save */
     if (!file->saved_once)
     {
-	backup_file(file->source);
+	backup_file(full_path);
 	file->saved_once = 1;
     }
 
@@ -892,11 +895,11 @@ int     save_file(file_t *file, opt_t   *options)
 	if (TW_EXIT_KEY(status) != TWC_INPUT_DONE)
 	    return OK;
 	snprintf(cmd, CMD_LEN, "mcrypt --flush -q -F -a %s -k %s > %s 2> mcrypt.stderr",
-	    algo, key, file->source);
+	    algo, key, full_path);
 	fp = popen(cmd, "w");
     }
     else
-	fp = fopen(file->source, "w");
+	fp = fopen(full_path, "w");
 	
     if (fp == NULL)
     {
@@ -929,7 +932,7 @@ int     save_file(file_t *file, opt_t   *options)
 
     /* Script or other interpreted language */
     if ((file->lang != NULL) && (*file->lang->compiler == '\0'))
-	make_exe(file->source);
+	make_exe(full_path);
 
     sprintw(2, TWC_ST_LEN, "Saved %s: %d lines, %d characters.",
 	    file->short_src, lines, nbytes);
