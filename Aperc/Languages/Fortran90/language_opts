@@ -1,14 +1,14 @@
 name                    Fortran90
 name_spec               *.f90 *.F90
 id_comment              
-compiler                gfortran48
+compiler                gfortran
 compile_flags           -Wall -O -g -DDEBUG
 compile_output_flag     -o 
 syntax_check_flag       -c
 compile_only_flag       -c
 compile_to_asm_flag     
 preprocess_only_flag    
-link_flags              -Wl,-rpath=/usr/local/lib/gcc48
+link_flags              
 debugger                gdb
 debugger_flags          
 debugger_backtrace_cmd  where

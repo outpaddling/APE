@@ -2,13 +2,13 @@ name                    C
 name_spec               *.c
 id_comment              
 compiler                cc
-compile_flags           -Wall -O -g -DDEBUG=1 -I$LOCALBASE/include
+compile_flags           -Wall -O -g -DDEBUG
 compile_output_flag     -o 
 syntax_check_flag       -fsyntax-only
 compile_only_flag       -c
 compile_to_asm_flag     -S
 preprocess_only_flag    -E -C
-link_flags              -L$LOCALBASE/lib -lm
+link_flags              -lm
 debugger                gdb
 debugger_flags          
 debugger_backtrace_cmd  where
