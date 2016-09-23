@@ -94,7 +94,7 @@ opt_t  *options;
     tw_init_string(&panel, 2, 2, LANG_ID_LEN, 15, TWC_VERBATIM,
 		   "Language name:   ",
 		   " Common name of the language. (Case sensitive) ",
-		   file->lang->name);
+		   file->lang->lang_name);
     tw_init_string(&panel, 2, 35, SPEC_LEN, 23,
 		    TWC_VERBATIM, "File spec(s): ",
 	    " Filespec matching source file name, e.g. '*.c', 'Makefile'. ",
@@ -104,7 +104,7 @@ opt_t  *options;
 		   " Comment on first line of script identifying language. ",
 		   file->lang->id_comment);
     tw_init_string(&panel, 4, 2, TWC_FILENAME_LEN, TW_COLS(win) - 21, TWC_VERBATIM, "Compiler:        ",
-		   " Compile command name. ", file->lang->compiler);
+		   " Compile command name. ", file->lang->compiler_cmd);
     tw_init_string(&panel, 5, 2, OPTION_LEN, TW_COLS(win) - 21, TWC_VERBATIM, "Compile options: ",
     " Compiler options preceding source file name in all compile commands. ",
 		   file->lang->compile_flags);
@@ -173,7 +173,7 @@ opt_t  *options;
     file->lang->auto_wrap = (strcmp(auto_wrap, "Yes") == 0);
 
     /* Check for changes */
-    if (strcmp(old_opt.compiler, file->lang->compiler) ||
+    if (strcmp(old_opt.compiler_cmd, file->lang->compiler_cmd) ||
 	strcmp(old_opt.compile_flags, file->lang->compile_flags) ||
 	strcmp(old_opt.link_flags, file->lang->link_flags) ||
 	strcmp(old_opt.executable_name, file->lang->executable_name) ||
@@ -208,14 +208,14 @@ opt_t  *options;
 
 void    check_compiler_options(lang_t * lang, lang_t * old)
 {
-    if ((strcmp(lang->compiler, old->compiler) != 0) &&
+    if ((strcmp(lang->compiler_cmd, old->compiler_cmd) != 0) &&
 	(strcmp(lang->error_msg_format, old->error_msg_format) == 0))
     {
-	if ((strcmp(lang->compiler, "gcc") == 0) ||
-	    (strcmp(lang->compiler, "g++") == 0))
+	if ((strcmp(lang->compiler_cmd, "gcc") == 0) ||
+	    (strcmp(lang->compiler_cmd, "g++") == 0))
 	    strlcpy(lang->error_msg_format, GCC_ERROR_FORMAT, ERR_FORMAT_LEN);
-	else if ((strcmp(lang->compiler, "cc") == 0) ||
-		 (strcmp(lang->compiler, "c++") == 0))
+	else if ((strcmp(lang->compiler_cmd, "cc") == 0) ||
+		 (strcmp(lang->compiler_cmd, "c++") == 0))
 	    strlcpy(lang->error_msg_format, ERROR_FORMAT, ERR_FORMAT_LEN);
     }
 }
@@ -269,13 +269,13 @@ int     read_lang(char *lang_file, lang_t *lang)
 	while (isspace(*p))
 	    ++p;
 	if (strcmp(name, "name") == 0)
-	    strlcpy(lang->name, p, LANG_NAME_LEN);
+	    strlcpy(lang->lang_name, p, LANG_NAME_LEN);
 	else if (strcmp(name, "name_spec") == 0)
 	    strlcpy(lang->name_spec, p, SPEC_LEN);
 	else if (strcmp(name, "id_comment") == 0)
 	    strlcpy(lang->id_comment, p, LANG_ID_LEN);
 	else if (strcmp(name, "compiler") == 0)
-	    strlcpy(lang->compiler, p, TWC_FILENAME_LEN);
+	    strlcpy(lang->compiler_cmd, p, TWC_FILENAME_LEN);
 	else if (strcmp(name, "compile_flags") == 0)
 	    strlcpy(lang->compile_flags, p, OPTION_LEN);
 	else if (strcmp(name, "compile_output_flag") == 0)
@@ -291,7 +291,7 @@ int     read_lang(char *lang_file, lang_t *lang)
 	else if (strcmp(name, "link_flags") == 0)
 	    strlcpy(lang->link_flags, p, OPTION_LEN);
 	else if (strcmp(name, "debugger") == 0)
-	    strlcpy(lang->debugger, p, TWC_FILENAME_LEN);
+	    strlcpy(lang->debugger_cmd, p, TWC_FILENAME_LEN);
 	else if (strcmp(name, "debugger_flags") == 0)
 	    strlcpy(lang->debugger_flags, p, OPTION_LEN);
 	else if (strcmp(name, "debugger_backtrace_cmd") == 0)
@@ -411,10 +411,10 @@ int     save_language(lang_t *lang)
 	fp = fopen(lang_file, "w");
 	if ( fp != NULL )
 	{
-	    fprintf(fp, "name                    %s\n", lang->name);
+	    fprintf(fp, "name                    %s\n", lang->lang_name);
 	    fprintf(fp, "name_spec               %s\n", lang->name_spec);
 	    fprintf(fp, "id_comment              %s\n", lang->id_comment);
-	    fprintf(fp, "compiler                %s\n", lang->compiler);
+	    fprintf(fp, "compiler                %s\n", lang->compiler_cmd);
 	    fprintf(fp, "compile_flags           %s\n", lang->compile_flags);
 	    fprintf(fp, "compile_output_flag     %s\n", lang->compile_output_flag);
 	    fprintf(fp, "syntax_check_flag       %s\n", lang->syntax_check_flag);
@@ -422,7 +422,7 @@ int     save_language(lang_t *lang)
 	    fprintf(fp, "compile_to_asm_flag     %s\n", lang->compile_to_asm_flag);
 	    fprintf(fp, "preprocess_only_flag    %s\n", lang->preprocess_only_flag);
 	    fprintf(fp, "link_flags              %s\n", lang->link_flags);
-	    fprintf(fp, "debugger                %s\n", lang->debugger);
+	    fprintf(fp, "debugger                %s\n", lang->debugger_cmd);
 	    fprintf(fp, "debugger_flags          %s\n", lang->debugger_flags);
 	    fprintf(fp, "debugger_backtrace_cmd  %s\n", lang->debugger_backtrace_cmd);
 	    fprintf(fp, "run_prefix              %s\n", lang->run_prefix);
@@ -435,7 +435,7 @@ int     save_language(lang_t *lang)
 	    fclose(fp);
 	}
 	else
-	    sprintw(2,50,"Error saving language options for %s.",lang->name);
+	    sprintw(2,50,"Error saving language options for %s.",lang->lang_name);
 	
 	synhigh_save_opts(lang_dir, lang);
     }
@@ -525,8 +525,7 @@ char   *filename;
 }
 
 
-lang_t *
-	add_language(
+lang_t *add_language(
 		lang_t * head,
 		char  *name,
 		char  *name_spec,
@@ -554,27 +553,27 @@ lang_t *
     temp = MALLOC(1, lang_t);
     if (temp != NULL)
     {
-	strlcpy(temp->name, name, LANG_NAME_LEN);
+	strlcpy(temp->lang_name, name, LANG_NAME_LEN);
 	strlcpy(temp->name_spec, name_spec, SPEC_LEN);
 	strlcpy(temp->id_comment, id_comment, LANG_ID_LEN);
-	strlcpy(temp->compiler, compiler, OPTION_LEN);
-	strlcpy(temp->compile_only_flag, compile_only_flag,
-		COMPILE_ONLY_LEN);
+	strlcpy(temp->compiler_cmd, compiler, TWC_FILENAME_LEN);
 	strlcpy(temp->compile_flags, compile_flags, OPTION_LEN);
-	strlcpy(temp->link_flags, link_flags, OPTION_LEN);
-	strlcpy(temp->syntax_check_flag, syntax_check_flag, SYNTAX_CHECK_LEN);
-	strlcpy(temp->debugger, debugger, OPTION_LEN);
-	strlcpy(temp->debugger_flags, debugger_flags, OPTION_LEN);
-	strlcpy(temp->run_prefix, run_prefix, OPTION_LEN);
-	strlcpy(temp->error_msg_format, error_msg_format, ERR_FORMAT_LEN);
-	strlcpy(temp->executable_name, executable_name, TWC_FILENAME_LEN);
+	strlcpy(temp->compile_only_flag, compile_only_flag, COMPILE_ONLY_LEN);
 	strlcpy(temp->compile_output_flag, compile_output_flag, OUTPUT_FLAG_LEN);
-	strlcpy(temp->executable_spec, executable_spec, EXE_SRC_LEN);
-	temp->auto_wrap = auto_wrap;
+	strlcpy(temp->syntax_check_flag, syntax_check_flag, SYNTAX_CHECK_LEN);
 	strlcpy(temp->compile_to_asm_flag, compile_to_asm_flag, OPTION_LEN);
 	strlcpy(temp->preprocess_only_flag, preprocess_only_flag, OPTION_LEN);
+	strlcpy(temp->link_flags, link_flags, OPTION_LEN);
+	strlcpy(temp->debugger_cmd, debugger, TWC_FILENAME_LEN);
+	strlcpy(temp->debugger_flags, debugger_flags, OPTION_LEN);
+	strlcpy(temp->debugger_backtrace_cmd, debugger_backtrace_cmd,
+	    BACKTRACE_LEN);
+	strlcpy(temp->run_prefix, run_prefix, TWC_FILENAME_LEN);
 	strlcpy(temp->upload_prefix, upload_prefix, TWC_FILENAME_LEN);
-	strlcpy(temp->debugger_backtrace_cmd, debugger_backtrace_cmd, BACKTRACE_LEN);
+	strlcpy(temp->executable_name, executable_name, TWC_FILENAME_LEN);
+	strlcpy(temp->executable_spec, executable_spec, EXE_SRC_LEN);
+	strlcpy(temp->error_msg_format, error_msg_format, ERR_FORMAT_LEN);
+	temp->auto_wrap = auto_wrap;
 
 	temp->patterns[0] = NULL;
 	temp->next = head;
@@ -606,10 +605,10 @@ lang_t **head;
 void
 	init_lang(lang_t * lang)
 {
-    *lang->name = '\0';
+    *lang->lang_name = '\0';
     *lang->name_spec = '\0';
     *lang->id_comment = '\0';
-    *lang->compiler = '\0';
+    *lang->compiler_cmd = '\0';
     *lang->compile_flags = '\0';
     *lang->compile_output_flag = '\0';
     *lang->syntax_check_flag = '\0';
@@ -617,7 +616,7 @@ void
     *lang->compile_to_asm_flag = '\0';
     *lang->preprocess_only_flag = '\0';
     *lang->link_flags = '\0';
-    *lang->debugger = '\0';
+    *lang->debugger_cmd = '\0';
     *lang->debugger_flags = '\0';
     *lang->debugger_backtrace_cmd = '\0';
     *lang->run_prefix = '\0';

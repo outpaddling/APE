@@ -465,7 +465,7 @@ int     debug_options(file_t *file, opt_t *options)
 
     tw_init_string(&panel, 2, 2, TWC_FILENAME_LEN, TW_COLS(win)-22, TWC_VERBATIM,
 		"Debugger:          ",
-		" Debugger command name. ", file->lang->debugger);
+		" Debugger command name. ", file->lang->debugger_cmd);
     tw_init_string(&panel, 3, 2, OPTION_LEN, TW_COLS(win)-22, TWC_VERBATIM,
 		"Debugger options:  ",
 		" Command-line options for the debugger. ",
@@ -813,7 +813,7 @@ int     get_language_dir(lang_t *lang,char language_dir[],size_t maxlen)
     get_language_parent_dir(language_parent_dir, PATH_LEN);
     
     /* Use the language name as the macro dir */
-    snprintf(language_dir, maxlen, "%s/%s", language_parent_dir,lang->name);
+    snprintf(language_dir, maxlen, "%s/%s", language_parent_dir,lang->lang_name);
     return 0;
 }
 

@@ -931,7 +931,7 @@ int     save_file(file_t *file, opt_t   *options)
     time(&file->save_time);
 
     /* Script or other interpreted language */
-    if ((file->lang != NULL) && (*file->lang->compiler == '\0'))
+    if ((file->lang != NULL) && (*file->lang->compiler_cmd == '\0'))
 	make_exe(full_path);
 
     sprintw(2, TWC_ST_LEN, "Saved %s: %d lines, %d characters.",

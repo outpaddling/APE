@@ -220,13 +220,13 @@ void    create_build_menu(char *build_text[], proj_t *project, lang_t *lang)
     if ( ACTIVE_PROJ(project) || ((lang != NULL) && compiled_language(lang)) )
 	build_text[c++] = ".View compiler errors";
     
-    if ( (lang != NULL) && !strblank(lang->debugger) )
+    if ( (lang != NULL) && !strblank(lang->debugger_cmd) )
 	build_text[c++] = "Run .Debugger";
     
     if ( (lang != NULL) && !strblank(lang->debugger_backtrace_cmd) )
 	build_text[c++] = "View function call .trace";
     
-    if ( (lang != NULL) && !strblank(lang->debugger) )
+    if ( (lang != NULL) && !strblank(lang->debugger_cmd) )
 	build_text[c++] = "View e.Xecution profile";
     
     if ( line_c != c )
@@ -254,14 +254,14 @@ opt_t   *options;
     int     status, c, fd;
     FILE    *fp;
     
-    if ( (file->lang == NULL) || (*file->lang->debugger == '\0') )
+    if ( (file->lang == NULL) || (*file->lang->debugger_cmd == '\0') )
     {
 	popup_mesg("No debugger configured for this language.",
 		    ok_button, options);
 	return;
     }
     
-    strlcpy(debugger, file->lang->debugger, TWC_FILENAME_LEN);
+    strlcpy(debugger, file->lang->debugger_cmd, TWC_FILENAME_LEN);
     
     /* Make sure build options exist */
     if ( check_build_opts(file) == NULL )
@@ -374,12 +374,12 @@ out_t   output;
     switch(output)
     {
 	case    OBJECT:
-	    snprintf(cmd, CMD_LEN, "%s %s %s %s", files[af].lang->compiler,
+	    snprintf(cmd, CMD_LEN, "%s %s %s %s", files[af].lang->compiler_cmd,
 		files[af].lang->compile_only_flag,
 		files[af].lang->compile_flags, files[af].source);
 	    break;
 	case    ASSEMBLY:
-	    snprintf(cmd, CMD_LEN, "%s %s %s %s", files[af].lang->compiler,
+	    snprintf(cmd, CMD_LEN, "%s %s %s %s", files[af].lang->compiler_cmd,
 		files[af].lang->compile_to_asm_flag,
 		files[af].lang->compile_flags,
 		files[af].source);
@@ -770,20 +770,20 @@ char   *cmd, **outfile;
 	    *cmd = '\0';
 	else if ( strcmp(file->lang->executable_spec, "Command Line Flag") == 0 )
 	{
-	    snprintf(cmd, CMD_LEN, "%s %s %s %s%s %s", file->lang->compiler,
+	    snprintf(cmd, CMD_LEN, "%s %s %s %s%s %s", file->lang->compiler_cmd,
 		file->lang->compile_flags, file->source, 
 		file->lang->compile_output_flag,
 		file->executable, file->lang->link_flags);
 	}
 	else if ( strcmp(file->lang->executable_spec, "Fixed") == 0 )
 	{
-	    snprintf(cmd, CMD_LEN, "%s %s %s %s", file->lang->compiler,
+	    snprintf(cmd, CMD_LEN, "%s %s %s %s", file->lang->compiler_cmd,
 		file->lang->compile_flags, file->source,
 		file->lang->link_flags);
 	}
 	else if ( strcmp(file->lang->executable_spec, "Standard Output") == 0 )
 	{
-	    snprintf(cmd, CMD_LEN, "%s %s %s %s", file->lang->compiler,
+	    snprintf(cmd, CMD_LEN, "%s %s %s %s", file->lang->compiler_cmd,
 		file->lang->compile_flags, file->source,
 		file->lang->link_flags);
 	    *outfile = file->executable;
@@ -831,7 +831,8 @@ void    set_makefile(proj_t *project, char *makefile, file_t *file,
 	    project->make_args);
     tw_init_string(&panel, 7, 2, CMD_LEN, 40, TWC_VERBATIM,
 	"Run prefix:      ",
-	    " Prefixed to executable when running program. ", project->run_prefix);
+	    " Prefixed to executable when running program. ",
+	    project->run_prefix);
     tw_init_string(&panel, 8, 2, OPTION_LEN, 40, TWC_VERBATIM,
 	"Run Arguments:   ",
 	    " Command line arguments to executable.",
@@ -872,7 +873,7 @@ void    init_makefile(proj_t *project,char *makefile,file_t *file,opt_t *options
     parse_makefile(project, project->makefile, options);
     
     getcwd(project->make_directory,PATH_LEN);
-    strlcpy(project->run_prefix,"time",CMD_LEN);
+    strlcpy(project->run_prefix,"time",TWC_FILENAME_LEN);
     set_makefile(project,"makefile",file,options);
 }
 
@@ -910,7 +911,7 @@ err_t   *errfile;
     /* Give user chance to save files or cancel */
     if (prompt_save_all(files,options) != 'c')
     {
-	snprintf(cmd,CMD_LEN, "%s %s %s %s", files[af].lang->compiler,
+	snprintf(cmd,CMD_LEN, "%s %s %s %s", files[af].lang->compiler_cmd,
 		files[af].lang->syntax_check_flag,
 		files[af].lang->compile_flags, files[af].source);
 	parse_cmd(argv, cmd);
@@ -938,7 +939,7 @@ int     preprocess(file_t files[], int af, opt_t *options)
 	if ( prompt_save_all(files,options) == 'c')
 	    return 0;
 	snprintf(cmd,CMD_LEN,"%s %s %s %s | uniq | more",    /* more -s? */
-	    files[af].lang->compiler, PP_OPTIONS,
+	    files[af].lang->compiler_cmd, PP_OPTIONS,
 	    files[af].lang->compile_flags, files[af].source);
 	meta_chars(cmd2,cmd,CMD_LEN);
 	status = run_command(P_WAIT,P_ECHO,cmd2,"sh");
@@ -1262,6 +1263,6 @@ void    parse_makefile(proj_t *project, char *makefile, opt_t *options)
 int     compiled_language(lang_t *lang)
 
 {
-    return ( (lang != NULL) && (*lang->compiler != '\0') );
+    return ( (lang != NULL) && (*lang->compiler_cmd != '\0') );
 }
 

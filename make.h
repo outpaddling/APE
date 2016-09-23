@@ -9,7 +9,7 @@ typedef struct
     char    make_cmd[CMD_LEN+1];
     char    makefile[TWC_FILENAME_LEN+1];
     char    executable[TWC_FILENAME_LEN+1];
-    char    run_prefix[CMD_LEN+1];
+    char    run_prefix[TWC_FILENAME_LEN+1];
     char    run_cmd[CMD_LEN+1];
     char    make_args[OPTION_LEN+1];
     char    run_args[OPTION_LEN+1];
