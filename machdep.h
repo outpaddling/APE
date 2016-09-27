@@ -28,7 +28,7 @@
 /* Portability stuff */
 #define GCC_ERROR_FORMAT    "\\fn: \\ln: \\te"
 
-#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__)
+#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__DragonFly__)
 
 #define C_COMPILER      "cc"
 #define CPP_COMPILER    "c++"
