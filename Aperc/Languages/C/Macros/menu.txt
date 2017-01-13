@@ -8,5 +8,6 @@ I.Nclude
 Doxygen def.Group
 .API comment
 New F.Unction
-New .Main
 .Error check
+New .Main
+.Process arguments
