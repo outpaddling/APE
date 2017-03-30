@@ -690,7 +690,7 @@ int     wsmemcmp(char *buff,char *str)
 {
     char    *b = buff;
     
-    while ( (*b == *str) && (*b != '\0') && (*str != '\0') )
+    while ( (*b != '\0') && (*str != '\0') && (*b == *str) )
     {
 	if ( isspace(*b) )
 	{
@@ -720,14 +720,15 @@ int     wsmemcmp(char *buff,char *str)
 /**********************************************************************
   wsimemcmp():   Whitespace-independent memory comparison
   Description:      
-	See if location buff matches str, treating multiple
-	whitespace characters as one.  All chars to the end
-	of str must be matched, but any portion of buff is sufficient.
+	See if location buff matches str, treating multiple whitespace
+	characters as one.  All chars to the end of str must be matched,
+	but any portion of buff from the beginning is sufficient.
 	I.e., str must match some or all of the beginning of buff.
   Arguments:
-	buff:   
-	str:    The nul-terminated string to look for
+	buff:   The nul-terminated buffer in which str must be matched.
+	str:    The nul-terminated string to look for.
   Return values:
+	Number of characters matched in buff, including spaces
 	
  **********************************************************************/
 
@@ -736,9 +737,9 @@ int     wsmemicmp(char *buff,char *str)
 {
     char    *b = buff;
     
-    while ( (tolower(*b) == tolower(*str)) &&
-	    (*b != '\0') && (*str != '\0') )
+    while ( (*b != '\0') && (*str != '\0') && (tolower(*b) == tolower(*str)) )
     {
+	/* Check either b or str, they are the same */
 	if ( isspace(*b) )
 	{
 	    /* Eat additional whitespace */
