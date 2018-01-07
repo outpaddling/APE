@@ -1,10 +1,11 @@
 
+Make sure all arrays are matched with correct length,
+    lang->name LANG_NAME_LEN
+
 Seg fault in strblank in create_build_menu()
 
 Cannot replace in fortran77 due to max line len
     Warning about insert although not in insert mode
-
-Infinite loop at end of search and replace 'a' <listitem><para>
 
 Enable '-' in F1 help targets
 

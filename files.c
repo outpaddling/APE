@@ -835,7 +835,8 @@ int     save_file(file_t *file, opt_t   *options)
 		"serpent", "xtea", "blowfish", "enigma", 
 		"rc2", "tripledes", NULL },
 	    cmd[CMD_LEN+1],
-	    full_path[PATH_LEN+1];
+	    full_path[PATH_LEN+1],
+	    backup_path[PATH_LEN+1];
 
     if (file->read_only)
     {
@@ -862,11 +863,12 @@ int     save_file(file_t *file, opt_t   *options)
     */
 
     snprintf(full_path, PATH_LEN, "%s/%s", file->cwd, file->source);
+    snprintf(backup_path, PATH_LEN, "%s/.%s.bak", file->cwd, file->source);
     
     /* Back up file before first save */
     if (!file->saved_once)
     {
-	backup_file(full_path);
+	fast_cp(full_path, backup_path);
 	file->saved_once = 1;
     }
 
@@ -1002,22 +1004,6 @@ char   *file;
 }
 
 
-/**********************************
- * Create a backup copy of a file.
- **********************************/
-
-void    backup_file(file)
-char   *file;
-
-{
-    char    backup[PATH_LEN + 1] = "";
-
-    /* Find last extension or end of name if no extension */
-    snprintf(backup, PATH_LEN, ".%s.bak", file);
-    fast_cp(file,backup);
-}
-
-
 int     file_type(char *filename)
 
 {
@@ -1068,4 +1054,3 @@ int     file_save_for_undo(file_t *file, undo_action_t undo_action,
 	      undo_action, deleted_text);
     return OK;
 }
-
