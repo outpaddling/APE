@@ -50,7 +50,7 @@ DOCSDIR ?= ${PREFIX}/share/doc/ape
 # APE depends on signed chars.  Some compilers treat chars as unsigned
 # by default, so adjust compiler flags as needed. (e.g. gcc -fsigned-char)
 CC      ?= cc
-CFLAGS  = -g -Wall
+CFLAGS  ?= -g -Wall
 INCLUDES = -I${LOCALBASE}/include
 CFLAGS  += ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\"" -fsigned-char
 
