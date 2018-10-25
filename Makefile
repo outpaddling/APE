@@ -8,7 +8,7 @@
 #
 #       make VAR=value
 # e.g.
-#       make PREFIX=/opt/local CC=gcc CFLAGS=-O2 LFLAGS1="-L/usr/X11R6 -lX11"
+#       make PREFIX=/opt/local CC=gcc CFLAGS=-O2 LDFLAGS1="-L/usr/X11R6 -lX11"
 #
 # Author: Jason W. Bacon
 #         Medical College of Wisconsin
@@ -50,12 +50,11 @@ DOCSDIR ?= ${PREFIX}/share/doc/ape
 # APE depends on signed chars.  Some compilers treat chars as unsigned
 # by default, so adjust compiler flags as needed. (e.g. gcc -fsigned-char)
 CC      ?= cc
-CFLAGS  ?= -g -Wall -fsigned-char
+CFLAGS  ?= -g -Wall
 INCLUDES = -I${LOCALBASE}/include
-CFLAGS  += ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\""
+CFLAGS  += ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\"" -fsigned-char
 
-LFLAGS1 += -L${LOCALBASE}/lib -ltwintk -lpare -lbacon
-LFLAGS2 += -L${LOCALBASE}/lib
+LDFLAGS1 += -L${LOCALBASE}/lib -ltwintk -lpare -lbacon
 
 INSTALL         ?= install
 INSTALL_PROGRAM ?= install -m 0755
@@ -72,7 +71,7 @@ all:    ${BINS} ${LIBS}
 
 # Link rules
 ${BIN1}:        ${OBJS1}
-		${CC} -o ${BIN1} ${OBJS1} ${LFLAGS1}
+		${CC} -o ${BIN1} ${OBJS1} ${LDFLAGS1}
 
 ${BIN2}:        ${OBJS2}
 		(cd Ascii; ${MAKE})
