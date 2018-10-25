@@ -49,7 +49,6 @@ DOCSDIR ?= ${PREFIX}/share/doc/ape
 
 # APE depends on signed chars.  Some compilers treat chars as unsigned
 # by default, so adjust compiler flags as needed. (e.g. gcc -fsigned-char)
-CPP     ?= cpp
 CC      ?= cc
 CFLAGS  ?= -g -Wall -fsigned-char
 INCLUDES = -I${LOCALBASE}/include
@@ -83,7 +82,7 @@ include Makefile.depend
 depend:
 	rm -f Makefile.depend
 	for file in *.c; do \
-	    ${CPP} ${INCLUDES} -MM $${file} >> Makefile.depend; \
+	    ${CC} ${INCLUDES} -MM $${file} >> Makefile.depend; \
 	    printf "\t\$${CC} -c \$${CFLAGS} $${file}\n" >> Makefile.depend; \
 	done
 
