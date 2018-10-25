@@ -344,7 +344,7 @@ opt_t   *options;
     begin_full_screen();
     status = spawnvp(P_WAIT, P_ECHO, argv, stdout_file, NULL, NULL);
     check_stat(status, argv[0]);
-    if ( command_file != NULL )
+    if ( *command_file != '\0' )
     {
 	putchar('\n');
     }

@@ -31,7 +31,7 @@
 #include <ctype.h>
 #include <sys/types.h>
 #include "pare.h"
-#include "bacon.h"
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 

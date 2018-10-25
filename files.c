@@ -33,8 +33,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <time.h>
-#include "twintk.h"
-#include "bacon.h"
+#include <twintk.h>
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 
@@ -450,7 +450,7 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
 
     /* Hack to allow testing real tabs while editing 
        the rest with expanded tabs. */
-    files[af].expand_tabs = (strcmp(files[af].source,"tabtest") != 0);
+    //files[af].expand_tabs = (strcmp(files[af].source,"tabtest") != 0);
     //sprintw(2,50,"expand_tabs = %d",files[af].expand_tabs);
     
     /* Attempt to open file */

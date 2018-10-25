@@ -28,8 +28,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "twintk.h"
-#include "bacon.h"
+#include <twintk.h>
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 

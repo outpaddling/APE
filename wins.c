@@ -29,8 +29,8 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <ctype.h>
-#include "twintk.h"
-#include "bacon.h"
+#include <twintk.h>
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 

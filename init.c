@@ -34,8 +34,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include "twintk.h"
-#include "bacon.h"
+#include <twintk.h>
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 

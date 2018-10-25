@@ -27,8 +27,8 @@
 
 #include <ctype.h>
 #include <stdlib.h>
-#include "twintk.h"
-#include "bacon.h"
+#include <twintk.h>
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 

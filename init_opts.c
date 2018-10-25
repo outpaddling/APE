@@ -30,8 +30,8 @@
 #include <ctype.h>
 #include <sys/utsname.h>
 #include <sys/stat.h>
-#include "twintk.h"
-#include "bacon.h"
+#include <twintk.h>
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 

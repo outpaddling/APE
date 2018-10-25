@@ -29,8 +29,8 @@
 #include <ctype.h>
 #include <string.h>
 #include <sys/wait.h>
-#include "twintk.h"
-#include "bacon.h"
+#include <twintk.h>
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 
