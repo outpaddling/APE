@@ -383,7 +383,9 @@ opt_t *options;
     /* FIXME: Don't hard-code this, do it with language options */
     file->notabs =  (strcmp(ext,".tex") == 0) ||
 			(strcmp(file->source,"Portfile") == 0) ||
-			(strcmp(file->lang->lang_name,"Python") == 0);
+			(strcmp(ext,".py") == 0);
+			// FIXME: crashes if we replace the ext check with this
+			// (strcmp(file->lang->lang_name,"Python") == 0);
 
     /* Find options with matching name spec */
     file->lang = get_bop(file,options->lang_head);
