@@ -8,7 +8,7 @@
 #
 #       make VAR=value
 # e.g.
-#       make PREFIX=/opt/local CC=gcc CFLAGS=-O2 LDFLAGS1="-L/usr/X11R6 -lX11"
+#       make PREFIX=/opt/local CC=gcc CFLAGS=-O2 LDFLAGS="-L/usr/X11R6 -lX11"
 #
 # Author: Jason W. Bacon
 #         Medical College of Wisconsin
@@ -54,7 +54,7 @@ CFLAGS  ?= -g -Wall
 INCLUDES = -I${LOCALBASE}/include
 CFLAGS  += ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\"" -fsigned-char
 
-LDFLAGS1 += -L${LOCALBASE}/lib -ltwintk -lpare -lbacon
+LDFLAGS += -L${LOCALBASE}/lib -ltwintk -lpare -lbacon
 
 INSTALL         ?= install
 INSTALL_PROGRAM ?= install -m 0755
@@ -71,7 +71,7 @@ all:    ${BINS} ${LIBS}
 
 # Link rules
 ${BIN1}:        ${OBJS1}
-		${CC} -o ${BIN1} ${OBJS1} ${LDFLAGS1}
+		${CC} -o ${BIN1} ${OBJS1} ${LDFLAGS}
 
 ${BIN2}:        ${OBJS2}
 		(cd Ascii; ${MAKE})
