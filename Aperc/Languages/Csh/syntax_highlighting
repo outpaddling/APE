@@ -8,5 +8,7 @@
 set|unset|setenv|unsetenv|alias|umask|echo|cd|source|rehash|switch|case|default|breaksw|endsw|if|then|else|endif|while|foreach|end|goto|exit
 3 -1 8
 #.*$
+5 -1 8
+`.*`
 -2 0 0
 end
