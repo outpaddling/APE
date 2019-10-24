@@ -46,8 +46,8 @@ int
 lang_t *old_lang, *new_lang;
 
 {
-    char    old_ext[EXT_LEN + 1], new_ext[EXT_LEN + 1], config_dir[PATH_LEN + 1],
-	    from[PATH_LEN + 1], to[PATH_LEN + 1];
+    char    old_ext[EXT_LEN + 1], new_ext[EXT_LEN + 1], config_dir[PATH_MAX + 1],
+	    from[PATH_MAX + 1], to[PATH_MAX + 1];
 
     strlcpy(old_ext, old_lang->name_spec, SPEC_LEN);
     strlcpy(new_ext, new_lang->name_spec, SPEC_LEN);
@@ -55,11 +55,11 @@ lang_t *old_lang, *new_lang;
     strtok(new_ext, " ");
     if (strcmp(old_ext, new_ext) != 0)
     {
-	if (get_config_dir(config_dir, PATH_LEN) != NULL)
+	if (get_config_dir(config_dir, PATH_MAX) != NULL)
 	{
 	    /* Skip '.' by adding one to pointer */
-	    snprintf(from, PATH_LEN, "%s/macros/%s", config_dir, old_ext + 1);
-	    snprintf(to, PATH_LEN, "%s/macros/%s", config_dir, new_ext + 1);
+	    snprintf(from, PATH_MAX, "%s/macros/%s", config_dir, old_ext + 1);
+	    snprintf(to, PATH_MAX, "%s/macros/%s", config_dir, new_ext + 1);
 	    rename(from, to);
 	}
     }
@@ -337,16 +337,16 @@ int     read_language_opts(lang_t **head)
 {
     lang_t  temp, *lang;
     long    status;
-    char    language_parent_dir[PATH_LEN+1],
-	    lang_dir[PATH_LEN+1],
-	    filename[PATH_LEN+1];
+    char    language_parent_dir[PATH_MAX+1],
+	    lang_dir[PATH_MAX+1],
+	    filename[PATH_MAX+1];
     DIR     *dp;
     struct dirent *dir_entry;
     struct stat     st;
     extern term_t *Terminal;
     
     /* For each directory under Languages, read language opts and syntax opts */
-    get_language_parent_dir(language_parent_dir,PATH_LEN); 
+    get_language_parent_dir(language_parent_dir,PATH_MAX); 
     dp = opendir(language_parent_dir);
     if ( dp != NULL ) 
     {
@@ -354,7 +354,7 @@ int     read_language_opts(lang_t **head)
 	{ 
 	    if ( dir_entry->d_name[0] != '.' )
 	    {
-		snprintf(lang_dir, PATH_LEN, "%s/%s",
+		snprintf(lang_dir, PATH_MAX, "%s/%s",
 		    language_parent_dir, dir_entry->d_name);
 		if ( stat(lang_dir, &st) != 0 )
 		{
@@ -364,14 +364,14 @@ int     read_language_opts(lang_t **head)
 		}
 		if ( S_ISDIR(st.st_mode) )
 		{
-		    snprintf(filename, PATH_LEN, "%s/%s/language_opts",
+		    snprintf(filename, PATH_MAX, "%s/%s/language_opts",
 			language_parent_dir, dir_entry->d_name);
 		    
 		    if ( (status = read_lang(filename, &temp)) == 0 )
 		    {
 			lang = MALLOC(1, lang_t);
 			*lang = temp;
-			snprintf(filename, PATH_LEN, "%s/%s/syntax_highlighting",
+			snprintf(filename, PATH_MAX, "%s/%s/syntax_highlighting",
 			    language_parent_dir, dir_entry->d_name);
 			synhigh_load_opts(filename, lang);
 			lang->next = *head;
@@ -396,16 +396,16 @@ int     read_language_opts(lang_t **head)
 int     save_language(lang_t *lang)
 
 {
-    char    lang_dir[PATH_LEN+1],
-	    lang_file[PATH_LEN+1];
+    char    lang_dir[PATH_MAX+1],
+	    lang_file[PATH_MAX+1];
     FILE    *fp;
     
     if ( lang == NULL )
 	return NO_LANGUAGE_OPTS;
 
-    if ( get_language_dir(lang,lang_dir,PATH_LEN) == 0 )
+    if ( get_language_dir(lang,lang_dir,PATH_MAX) == 0 )
     {
-	snprintf(lang_file, PATH_LEN, "%s/language_opts", lang_dir);
+	snprintf(lang_file, PATH_MAX, "%s/language_opts", lang_dir);
 	/* Create language dir if it doesn't already exist. */
 	mkdir(lang_dir,0777);
 	fp = fopen(lang_file, "w");

@@ -34,6 +34,10 @@
 #include <ctype.h>
 #endif
 
+#if !defined(_SYS_PARAM_H_) && !defined(__SYS_PARAM_H__)
+#include <sys/param.h>
+#endif
+
 #if !defined(_WINDOWS_H_)
 #include "twintk.h"
 #endif
@@ -203,13 +207,13 @@ typedef struct
     unsigned int    edit_border;    /* Character for title line of edit window */
 
     /* Do we still need this, or should we use the INSTALL_PREFIX macro? */
-    char    install_prefix[PATH_LEN+1]; /* Where HTML docs etc. are kept */
+    char    install_prefix[PATH_MAX+1]; /* Where HTML docs etc. are kept */
     char    browser[TWC_FILENAME_LEN+1]; /* HTML browser */
-    char    shell[PATH_LEN+1];          /* Shell to pass commands to */
-    char    ishell[PATH_LEN+1];         /* For interactive sub-shell */
+    char    shell[PATH_MAX+1];          /* Shell to pass commands to */
+    char    ishell[PATH_MAX+1];         /* For interactive sub-shell */
     char    file_spec[TWC_SPEC_LEN+1];  /* File listing mask for list */
-    char    include_path[PATH_LEN+1];   /* Additional headers to search */
-    char    lib_path[PATH_LEN+1];       /* Additional libraries to search */
+    char    include_path[PATH_MAX+1];   /* Additional headers to search */
+    char    lib_path[PATH_MAX+1];       /* Additional libraries to search */
 }   opt_t;
 
 /* File structure */
@@ -296,8 +300,8 @@ typedef struct
     char    high_bg;
     
     /* General file info */
-    char    cwd[PATH_LEN+1];                /* Working directory for file */
-    char    run_directory[PATH_LEN+1];
+    char    cwd[PATH_MAX+1];                /* Working directory for file */
+    char    run_directory[PATH_MAX+1];
     char    source[TWC_FILENAME_LEN+1];     /* Name of source file */
     char    executable[TWC_FILENAME_LEN+1]; /* Name of executable */
     char    short_src[TWC_SHORT_NAME_LEN+1];
@@ -336,7 +340,7 @@ typedef struct
 
 typedef struct
 {
-    char    filename[PATH_LEN+1];
+    char    filename[PATH_MAX+1];
     FILE    *fp;
 }   err_t;
 

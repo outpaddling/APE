@@ -137,8 +137,8 @@ int     macro_new_item(file_t files[],
 
 {
     char    menu_text[TWC_MENU_TEXT_LEN+1],
-	    macro_dir[PATH_LEN+1]="", path_name[PATH_LEN+1]="",
-	    macro_list[PATH_LEN+1]="",
+	    macro_dir[PATH_MAX+1]="", path_name[PATH_MAX+1]="",
+	    macro_list[PATH_MAX+1]="",
 	    *ok_button[2] = OK_BUTTON,
 	    *yes_no[] = YES_NO_ENUM, auto_indent[4] = "Yes",
 	    auto_load[4] = "No", *buttons[3] = {"[ Yes ]","[ Cancel ]",NULL};
@@ -215,11 +215,11 @@ int     macro_new_item(file_t files[],
 	    else
 	    {
 		/* Get filename from text */
-		if ( macro_get_config_dir(files+*af_ptr,macro_dir,PATH_LEN) == NO_LANGUAGE_OPTS )
+		if ( macro_get_config_dir(files+*af_ptr,macro_dir,PATH_MAX) == NO_LANGUAGE_OPTS )
 		    return NO_MACROS;
     
 		/* See if macro action key is taken */
-		macro_get_filename(files+*af_ptr,path_name,PATH_LEN);
+		macro_get_filename(files+*af_ptr,path_name,PATH_MAX);
 		if ( macro_key_taken(files+*af_ptr,macro_key(menu_text)) )
 		{
 		    sprintw(2,TWC_ST_LEN,"Action key '%c' is already in use.",
@@ -255,7 +255,7 @@ int     macro_new_item(file_t files[],
 	fclose(macrofp);
 	rewind(cut_buff->fp);
     
-	snprintf(macro_list,PATH_LEN,"%s/menu.txt",macro_dir);
+	snprintf(macro_list,PATH_MAX,"%s/menu.txt",macro_dir);
 	if ( (fp=fopen(macro_list,"a")) != NULL )
 	{
 	    fprintf(fp,"%s\n",menu_text);
@@ -275,10 +275,10 @@ char    selected_text[];
 
 {
     int     ch;
-    char    macro_dir[PATH_LEN+1],
-	    path_name[PATH_LEN+1],
+    char    macro_dir[PATH_MAX+1],
+	    path_name[PATH_MAX+1],
 	    line[TWC_MENU_TEXT_LEN+1],
-	    tempfile[PATH_LEN+1],
+	    tempfile[PATH_MAX+1],
 	    *p,
 	    *yes_no_buttons[] = YES_NO_BUTTONS;
     FILE    *infile,*outfile;
@@ -295,16 +295,16 @@ char    selected_text[];
 	return MENU_NO_SELECTION;
     
     /* Remove macro body from macros file */
-    if ( macro_get_config_dir(file,macro_dir,PATH_LEN) == NO_LANGUAGE_OPTS )
+    if ( macro_get_config_dir(file,macro_dir,PATH_MAX) == NO_LANGUAGE_OPTS )
 	return NO_MACROS;
-    macro_get_filename(file,path_name,PATH_LEN);
+    macro_get_filename(file,path_name,PATH_MAX);
     macro_remove_body(path_name,ch,options);
     
     /* Remove text from menu */
-    snprintf(path_name,PATH_LEN,"%s/menu.txt",macro_dir);
+    snprintf(path_name,PATH_MAX,"%s/menu.txt",macro_dir);
     
     /* Must be on the same filesystem as path_name for rename() */
-    snprintf(tempfile,PATH_LEN,"%s.tmp",path_name);
+    snprintf(tempfile,PATH_MAX,"%s.tmp",path_name);
     
     if ( (infile=fopen(path_name,"r")) == NULL )
     {
@@ -398,16 +398,16 @@ file_t  *file;
 char    *menu_text[];
 
 {
-    char    macro_dir[PATH_LEN+1], macro_list[PATH_LEN+1];
+    char    macro_dir[PATH_MAX+1], macro_list[PATH_MAX+1];
     FILE    *fp;
     static char macro[MACRO_MAX_MENU_ITEMS+2][TWC_MENU_TEXT_LEN+1];
     int     c = 0;
     struct stat st;
 
-    if ( macro_get_config_dir(file,macro_dir,PATH_LEN) == NO_LANGUAGE_OPTS )
+    if ( macro_get_config_dir(file,macro_dir,PATH_MAX) == NO_LANGUAGE_OPTS )
 	return -1;
 
-    snprintf(macro_list,PATH_LEN,"%s/menu.txt",macro_dir);
+    snprintf(macro_list,PATH_MAX,"%s/menu.txt",macro_dir);
     if ( (fp=fopen(macro_list,"r")) != NULL )
     {
 	fstat(fileno(fp),&st);
@@ -535,16 +535,16 @@ int     macro_invoke(file_t *file,int ch,opt_t *options, macro_expand_t expand)
 
 {
     FILE    *macrofp;
-    char    path_name[PATH_LEN+1],
-	    macro_dir[PATH_LEN+1],
+    char    path_name[PATH_MAX+1],
+	    macro_dir[PATH_MAX+1],
 	    macro_key,
 	    *ok_button[2] = OK_BUTTON;
     int     key, flags, found = 0;
     buff_t  macro_buff;
     
-    if ( macro_get_config_dir(file,macro_dir,PATH_LEN) == NO_LANGUAGE_OPTS )
+    if ( macro_get_config_dir(file,macro_dir,PATH_MAX) == NO_LANGUAGE_OPTS )
 	return NO_MACROS;
-    macro_get_filename(file,path_name,PATH_LEN);
+    macro_get_filename(file,path_name,PATH_MAX);
     
     /* Test ownership and permissions for security */
     
@@ -604,9 +604,9 @@ int     macro_invoke(file_t *file,int ch,opt_t *options, macro_expand_t expand)
 int     macro_get_config_dir(file_t *file,char macro_dir[],size_t maxlen)
 
 {
-    char    language_dir[PATH_LEN+1];
+    char    language_dir[PATH_MAX+1];
     
-    if ( get_language_dir(file->lang, language_dir,PATH_LEN) != NO_LANGUAGE_OPTS )
+    if ( get_language_dir(file->lang, language_dir,PATH_MAX) != NO_LANGUAGE_OPTS )
     {
 	/* Use the language name as the macro dir */
 	snprintf(macro_dir,maxlen,"%s/Macros", language_dir);
@@ -620,12 +620,12 @@ int     macro_get_config_dir(file_t *file,char macro_dir[],size_t maxlen)
 int     macro_get_filename(file_t *file,char macro_filename[],size_t maxlen)
 
 {
-    char    macro_dir[PATH_LEN+1];
+    char    macro_dir[PATH_MAX+1];
     
     if ( file->lang == NULL )
 	return NO_LANGUAGE_OPTS;
 
-    macro_get_config_dir(file,macro_dir,PATH_LEN);
+    macro_get_config_dir(file,macro_dir,PATH_MAX);
     snprintf(macro_filename,maxlen,"%s/macros",macro_dir);
     
     return 0;
@@ -794,8 +794,8 @@ int     macro_new_submenu(file_t files[],
 
 {
     char    menu_text[TWC_MENU_TEXT_LEN+1],
-	    macro_dir[PATH_LEN+1]="", path_name[PATH_LEN+1]="",
-	    macro_list[PATH_LEN+1]="",
+	    macro_dir[PATH_MAX+1]="", path_name[PATH_MAX+1]="",
+	    macro_list[PATH_MAX+1]="",
 	    *ok_button[2] = OK_BUTTON,
 	    cmd[CMD_LEN+1];
     struct stat st;
@@ -840,11 +840,11 @@ int     macro_new_submenu(file_t files[],
 	    else
 	    {
 		/* Get filename from text */
-		if ( macro_get_config_dir(files+*af_ptr,macro_dir,PATH_LEN) == NO_LANGUAGE_OPTS )
+		if ( macro_get_config_dir(files+*af_ptr,macro_dir,PATH_MAX) == NO_LANGUAGE_OPTS )
 		    return NO_MACROS;
     
 		/* See if macro action key is taken */
-		macro_get_filename(files+*af_ptr,path_name,PATH_LEN);
+		macro_get_filename(files+*af_ptr,path_name,PATH_MAX);
 		if ( macro_key_taken(files+*af_ptr,macro_key(menu_text)) )
 		{
 		    sprintw(2,TWC_ST_LEN,"Action key '%c' is already in use.",
@@ -864,7 +864,7 @@ int     macro_new_submenu(file_t files[],
 	    rmkdir(macro_dir,0755);
 	flags = 0;
     
-	snprintf(macro_list,PATH_LEN,"%s/menu.txt",macro_dir);
+	snprintf(macro_list,PATH_MAX,"%s/menu.txt",macro_dir);
 	if ( (fp=fopen(macro_list,"a")) != NULL )
 	{
 	    fprintf(fp,"SUBMENU %s\n",menu_text);

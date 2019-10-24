@@ -279,7 +279,7 @@ int     edit_item(cust_t menu_items[],
     tw_init_string(&panel, 2, 2, TWC_MENU_TEXT_LEN, TW_COLS(win)-24, TWC_VERBATIM, "Menu text?         ",
 		"Place a '.' before the character which selects the option.",
 		item->text);
-    tw_init_string(&panel, 3, 2, PATH_LEN, TW_COLS(win)-24, TWC_VERBATIM, "Working directory? ",
+    tw_init_string(&panel, 3, 2, PATH_MAX, TW_COLS(win)-24, TWC_VERBATIM, "Working directory? ",
 	 "A \"cd\" to this directory will occur before running the command.",
 		item->directory);
     tw_init_string(&panel, 4, 2, CMD_LEN, TW_COLS(win)-24, TWC_VERBATIM, "Command or script? ",
@@ -347,12 +347,12 @@ void    write_items(cust_t items[],
 {
     int     c, fd;
     char   *pos,
-	    config_dir[PATH_LEN+1],
-	    pathname[PATH_LEN+1];
+	    config_dir[PATH_MAX+1],
+	    pathname[PATH_MAX+1];
 
-    if ( get_config_dir(config_dir, PATH_LEN) != NULL )
+    if ( get_config_dir(config_dir, PATH_MAX) != NULL )
     {
-	snprintf(pathname, PATH_LEN, "%s/custom_menu", config_dir);
+	snprintf(pathname, PATH_MAX, "%s/custom_menu", config_dir);
 
 	/* Write back all but the item selected for deletion */
 	if ((fd = open(pathname, O_WRONLY | O_TRUNC)) == -1)
@@ -381,13 +381,13 @@ int     read_custom(char *custom_text[],
 
 {
     int     c, fd;
-    char    config_dir[PATH_LEN+1],
-	    pathname[PATH_LEN+1];
+    char    config_dir[PATH_MAX+1],
+	    pathname[PATH_MAX+1];
     struct stat statinfo;
 
-    if (get_config_dir(config_dir, PATH_LEN) == NULL)
+    if (get_config_dir(config_dir, PATH_MAX) == NULL)
 	return (0);
-    snprintf(pathname, PATH_LEN, "%s/custom_menu", config_dir);
+    snprintf(pathname, PATH_MAX, "%s/custom_menu", config_dir);
     if ((fd = open(pathname, O_RDONLY)) == -1)
 	return (0);
     fstat(fd, &statinfo);
@@ -415,12 +415,12 @@ void    save_item(cust_t *item)
 
 {
     int     fd;
-    char    pathname[PATH_LEN+1],
-	    config_dir[PATH_LEN+1];
+    char    pathname[PATH_MAX+1],
+	    config_dir[PATH_MAX+1];
 
-    if (get_config_dir(config_dir, PATH_LEN) == NULL)
+    if (get_config_dir(config_dir, PATH_MAX) == NULL)
 	return;
-    snprintf(pathname, PATH_LEN, "%s/custom_menu", config_dir);
+    snprintf(pathname, PATH_MAX, "%s/custom_menu", config_dir);
     fd = open(pathname, O_WRONLY | O_CREAT | O_APPEND, 0700);
     if (fd == -1)
     {
@@ -442,7 +442,7 @@ void    run_item(file_t files[],
 
 {
     int     c;
-    char    cmd[CMD_LEN + 1], cwd[PATH_LEN + 2];
+    char    cmd[CMD_LEN + 1], cwd[PATH_MAX + 2];
 
     /* Find menu item matching key */
     for (c = 0; c < item_count; ++c)
@@ -451,7 +451,7 @@ void    run_item(file_t files[],
 	{
 	    if ( prompt_save_all(files, options) == 'c' )
 		return;
-	    getcwd(cwd, PATH_LEN);
+	    getcwd(cwd, PATH_MAX);
 	    if (chdir(menu_items[c].directory) == -1)
 	    {
 		sprintw(2, TWC_ST_LEN, "Cannot chdir to %s", menu_items[c].directory);

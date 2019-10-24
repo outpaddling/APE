@@ -49,8 +49,8 @@ int     options_menu(file_t file[], int af, opt_t *options,buff_t *cut_buff,even
     opt_t   old_options;
     lang_t   old_lang;
     char    /* *buttons[3] = YES_NO_BUTTONS, */
-	    config_dir[PATH_LEN+1],
-	    filename[PATH_LEN+1];
+	    config_dir[PATH_MAX+1],
+	    filename[PATH_MAX+1];
     struct stat st;
     static char *options_text[] = {
 				".Language",
@@ -69,9 +69,9 @@ int     options_menu(file_t file[], int af, opt_t *options,buff_t *cut_buff,even
     old_options = *options;
 
     /* See if options.rc has been modified */
-    if (get_config_dir(config_dir,PATH_LEN) != NULL)
+    if (get_config_dir(config_dir,PATH_MAX) != NULL)
     {
-	snprintf(filename, PATH_LEN, "%s/options.rc", config_dir);
+	snprintf(filename, PATH_MAX, "%s/options.rc", config_dir);
 	if ( (stat(filename,&st) == 0) &&
 	     (st.st_size > 0) &&
 	     (st.st_mtime > options->loaded) )
@@ -252,8 +252,8 @@ int     load_options (char *filename, opt_t *options)
     extern          win_t *Swin;
     FILE            *fp;
     int             extra;
-    char            pathname[PATH_LEN + 1], 
-		    config_dir[PATH_LEN + 1],
+    char            pathname[PATH_MAX + 1], 
+		    config_dir[PATH_MAX + 1],
 		    extra_buff[200];
     unsigned char   *cp;
     boolean         *bp;
@@ -261,9 +261,9 @@ int     load_options (char *filename, opt_t *options)
 		    temp_ch;
 
     /* Determine pathname */
-    if (get_config_dir (config_dir, PATH_LEN) == NULL)
+    if (get_config_dir (config_dir, PATH_MAX) == NULL)
 	return CANT_LOAD;
-    snprintf (pathname, PATH_LEN, "%s/%s", config_dir, filename);
+    snprintf (pathname, PATH_MAX, "%s/%s", config_dir, filename);
 
     /* Attempt to read */
     if ((fp = fopen (pathname, "r")) == NULL)
@@ -306,13 +306,13 @@ int     load_options (char *filename, opt_t *options)
 	    *ip = temp_ch;
 	}
 
-	fgetline (fp, options->install_prefix, PATH_LEN);
+	fgetline (fp, options->install_prefix, PATH_MAX);
 	fgetline (fp, options->browser, TWC_FILENAME_LEN);
-	fgetline (fp, options->shell, PATH_LEN);
-	fgetline (fp, options->ishell, PATH_LEN);
+	fgetline (fp, options->shell, PATH_MAX);
+	fgetline (fp, options->ishell, PATH_MAX);
 	fgetline (fp, options->file_spec, TWC_SPEC_LEN);
-	fgetline (fp, options->include_path, PATH_LEN);
-	fgetline (fp, options->lib_path, PATH_LEN);
+	fgetline (fp, options->include_path, PATH_MAX);
+	fgetline (fp, options->lib_path, PATH_MAX);
 	
 	/* Check for extra stuff */
 	extra = fread (extra_buff, 199, 1, fp);
@@ -356,15 +356,15 @@ void    save_options(char *filename, opt_t *options)
 {
     FILE            *fp;
     struct stat     st;
-    char            pathname[PATH_LEN+1],
-		    config_dir[PATH_LEN+1], 
+    char            pathname[PATH_MAX+1],
+		    config_dir[PATH_MAX+1], 
 		    *button[2] = OK_BUTTON;
     unsigned char   *cp;
     boolean         *bp;
     unsigned int    *ip;
     
     /* Get pathname for user's options file */
-    if (get_config_dir(config_dir,PATH_LEN) == NULL)
+    if (get_config_dir(config_dir,PATH_MAX) == NULL)
     {
 	stat_mesg("save_options(): Cannot find config directory!");
 	return;
@@ -377,7 +377,7 @@ void    save_options(char *filename, opt_t *options)
     }
     
     /* Write options file */
-    snprintf(pathname, PATH_LEN, "%s/%s", config_dir, filename);
+    snprintf(pathname, PATH_MAX, "%s/%s", config_dir, filename);
     fp = fopen(pathname, "w");
     if (fp == NULL)
     {
@@ -680,7 +680,7 @@ int     misc_options(opt_t *options)
     tw_init_uint(&panel, 2, 2, 1, 1000, "Maximum open files:   ",
 		" Limit on number of files users can edit at once. ",
 		&options->max_files);
-    tw_init_string(&panel, 2, 32, PATH_LEN,TW_COLS(win)-56, TWC_VERBATIM,
+    tw_init_string(&panel, 2, 32, PATH_MAX,TW_COLS(win)-56, TWC_VERBATIM,
 		"Command shell:    ",
 		" Shell used to run programs from build and custom menus. ",
 		options->shell);
@@ -690,15 +690,15 @@ int     misc_options(opt_t *options)
     tw_init_enum(&panel, 3, 32, 4, yes_no,
 		"Detect makefiles: ",
 		" Hit <space> to toggle. Looks for makefiles at startup time. ", seek_make );
-    tw_init_string(&panel, 4, 2, PATH_LEN,TW_COLS(win)-26, TWC_VERBATIM,
+    tw_init_string(&panel, 4, 2, PATH_MAX,TW_COLS(win)-26, TWC_VERBATIM,
 		"Interactive shell:    ",
 		" Shell used for File menu/Unix shell prompt. ",
 		options->ishell);
-    tw_init_string(&panel, 5, 2, PATH_LEN,TW_COLS(win)-26, TWC_VERBATIM,
+    tw_init_string(&panel, 5, 2, PATH_MAX,TW_COLS(win)-26, TWC_VERBATIM,
 		"Include search path:  ",
 		" Extra include directory for \"Search Header files\" and \"View Header\". ",
 		options->include_path);
-    tw_init_string(&panel, 6, 2, PATH_LEN,TW_COLS(win)-26, TWC_VERBATIM,
+    tw_init_string(&panel, 6, 2, PATH_MAX,TW_COLS(win)-26, TWC_VERBATIM,
 		"Library search path:  ",
 		" Additional lib directory for \"Search Libraries\". ",
 		options->lib_path);
@@ -712,7 +712,7 @@ int     misc_options(opt_t *options)
     tw_init_string(&panel, 9, 2, TWC_FILENAME_LEN,TW_COLS(win)-26, TWC_VERBATIM,
 		"Browser:              ",
 		" Browser and options to use for HTML docs. ",options->browser);
-    tw_init_string(&panel, 10, 2, PATH_LEN,TW_COLS(win)-26, TWC_VERBATIM,
+    tw_init_string(&panel, 10, 2, PATH_MAX,TW_COLS(win)-26, TWC_VERBATIM,
 		"Install prefix:       ",
 		" Location of APE installation. ",
 		options->install_prefix);
@@ -774,9 +774,9 @@ void    set_borders(opt_t *options, bord_t  *borders)
 char    *get_config_dir(char *dir,size_t maxlen)
 
 {
-    char    home[PATH_LEN+1];
+    char    home[PATH_MAX+1];
     
-    if (get_home_dir(home,PATH_LEN) != NULL)
+    if (get_home_dir(home,PATH_MAX) != NULL)
     {
 	snprintf(dir,maxlen-1,"%s/.ape-%s",home,APE_VERSION);
 	return dir;
@@ -792,9 +792,9 @@ char    *get_config_dir(char *dir,size_t maxlen)
 int     get_language_parent_dir(char language_parent_dir[],size_t maxlen)
 
 {
-    char    config_dir[PATH_LEN+1];
+    char    config_dir[PATH_MAX+1];
     
-    get_config_dir(config_dir,PATH_LEN);
+    get_config_dir(config_dir,PATH_MAX);
     
     /* Use the language name as the macro dir */
     snprintf(language_parent_dir,maxlen, "%s/Languages", config_dir);
@@ -805,12 +805,12 @@ int     get_language_parent_dir(char language_parent_dir[],size_t maxlen)
 int     get_language_dir(lang_t *lang,char language_dir[],size_t maxlen)
 
 {
-    char    language_parent_dir[PATH_LEN+1];
+    char    language_parent_dir[PATH_MAX+1];
     
     if ( lang == NULL )
 	return NO_LANGUAGE_OPTS;
 
-    get_language_parent_dir(language_parent_dir, PATH_LEN);
+    get_language_parent_dir(language_parent_dir, PATH_MAX);
     
     /* Use the language name as the macro dir */
     snprintf(language_dir, maxlen, "%s/%s", language_parent_dir,lang->lang_name);

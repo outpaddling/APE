@@ -173,13 +173,13 @@ opt_t   *options;
 {
     int     stat,
 	    fd;
-    char    path[PATH_LEN+1],
-	    errors[PATH_LEN+1];
+    char    path[PATH_MAX+1],
+	    errors[PATH_MAX+1];
     
-    strlcpy(errors,".ape_browser_errors.XXXXX",PATH_LEN);
+    strlcpy(errors,".ape_browser_errors.XXXXX",PATH_MAX);
     if ( (fd=mkstemp(errors)) != -1 )
 	close(fd);
-    snprintf(path,PATH_LEN,"%s/share/doc/ape/%s",options->install_prefix,
+    snprintf(path,PATH_MAX,"%s/share/doc/ape/%s",options->install_prefix,
 	    file);
     stat = spawnlp(P_NOWAIT,P_NOECHO,NULL,errors,errors,
 		    options->browser,path,NULL);

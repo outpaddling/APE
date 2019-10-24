@@ -5,7 +5,7 @@
 
 typedef struct
 {
-    char    make_directory[PATH_LEN+1];
+    char    make_directory[PATH_MAX+1];
     char    make_cmd[CMD_LEN+1];
     char    makefile[TWC_FILENAME_LEN+1];
     char    executable[TWC_FILENAME_LEN+1];
