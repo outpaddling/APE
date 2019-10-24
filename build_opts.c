@@ -483,21 +483,18 @@ int     multispec_match(char *name_spec, char *str, int flags)
 lang_t *get_bop(file_t * file, lang_t * head)
 {
     lang_t *lang = head;
-    char    first_line[1024], *p;
+    char    first_line[MAX_LINE_LEN + 1], *p;
     size_t  len;
 
     /* First check language ID if it exists. */
     if (memcmp(file->line[0].buff, "#!", 2) == 0)
     {
 	/* Remove whitespace following #! if present */
-	strlcpy(first_line, file->line[0].buff, 1023);
+	strlcpy(first_line, file->line[0].buff, MAX_LINE_LEN);
 	/* Don't set p within first_line, unsafe for strlcpy to overlap */
 	for (p = file->line[0].buff + 2; isspace(*p); ++p)
 	    ;
-	// This triggers SIGABRT on OS X High Sierra
-	// strlcpy(first_line + 2, p, 1023);
-	len = strlen(p);
-	memcpy(first_line+2, p, len+1);
+	strlcpy(first_line + 2, p, MAX_LINE_LEN - 2);
 
 	/* Find matching language ID */
 	while ((lang != NULL) && ((*lang->id_comment == '\0') ||
