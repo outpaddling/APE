@@ -104,7 +104,7 @@ opt_t  *options;
 		   "Language ID:     ",
 		   " Comment on first line of script identifying language. ",
 		   file->lang->id_comment);
-    tw_init_string(&panel, 4, 2, TWC_FILENAME_LEN, TW_COLS(win) - 21, TWC_VERBATIM, "Compiler:        ",
+    tw_init_string(&panel, 4, 2, PATH_MAX, TW_COLS(win) - 21, TWC_VERBATIM, "Compiler:        ",
 		   " Compile command name. ", file->lang->compiler_cmd);
     tw_init_string(&panel, 5, 2, OPTION_LEN, TW_COLS(win) - 21, TWC_VERBATIM, "Compile options: ",
     " Compiler options preceding source file name in all compile commands. ",
@@ -119,18 +119,18 @@ opt_t  *options;
     tw_init_string(&panel, 8, 2, SYNTAX_CHECK_LEN, TW_COLS(win) - 21, TWC_VERBATIM, "Syntax check:    ",
 		   " Compiler options to run syntax check only. ",
 		   file->lang->syntax_check_flag);
-    tw_init_string(&panel, 9, 2, TWC_FILENAME_LEN, TW_COLS(win) - 21,
+    tw_init_string(&panel, 9, 2, PATH_MAX, TW_COLS(win) - 21,
 		   TWC_VERBATIM, "Run prefix:      ",
 		   " Command preceding executable name in execute command. ",
 		   file->lang->run_prefix);
-    tw_init_string(&panel, 10, 2, TWC_FILENAME_LEN, TW_COLS(win) - 21,
+    tw_init_string(&panel, 10, 2, PATH_MAX, TW_COLS(win) - 21,
 		   TWC_VERBATIM, "Upload prefix:   ",
 		   " Command preceding executable name in upload command. ",
 		   file->lang->upload_prefix);
     tw_init_string(&panel, 11, 2, ERR_FORMAT_LEN, TW_COLS(win) - 21, TWC_VERBATIM, "Error format:    ",
 	 " \\fn=filename, \\ln=line #, \\te=message, \\ig=text to ignore. ",
 		   file->lang->error_msg_format);
-    tw_init_string(&panel, 12, 2, TWC_FILENAME_LEN, TW_COLS(win) - 21, TWC_VERBATIM, "Executable name: ",
+    tw_init_string(&panel, 12, 2, PATH_MAX, TW_COLS(win) - 21, TWC_VERBATIM, "Executable name: ",
 	 " \\fn = source file name, \\st = source name without extension. ",
 		   file->lang->executable_name);
     tw_init_enum(&panel, 13, 2, EXE_SRC_LEN, exe_options, "Compiler output: ",
@@ -278,7 +278,7 @@ int     read_lang(char *lang_file, lang_t *lang)
 	else if (strcmp(name, "id_comment") == 0)
 	    strlcpy(lang->id_comment, p, LANG_ID_LEN);
 	else if (strcmp(name, "compiler") == 0)
-	    strlcpy(lang->compiler_cmd, p, TWC_FILENAME_LEN);
+	    strlcpy(lang->compiler_cmd, p, PATH_MAX);
 	else if (strcmp(name, "compile_flags") == 0)
 	    strlcpy(lang->compile_flags, p, OPTION_LEN);
 	else if (strcmp(name, "compile_output_flag") == 0)
@@ -294,17 +294,17 @@ int     read_lang(char *lang_file, lang_t *lang)
 	else if (strcmp(name, "link_flags") == 0)
 	    strlcpy(lang->link_flags, p, OPTION_LEN);
 	else if (strcmp(name, "debugger") == 0)
-	    strlcpy(lang->debugger_cmd, p, TWC_FILENAME_LEN);
+	    strlcpy(lang->debugger_cmd, p, PATH_MAX);
 	else if (strcmp(name, "debugger_flags") == 0)
 	    strlcpy(lang->debugger_flags, p, OPTION_LEN);
 	else if (strcmp(name, "debugger_backtrace_cmd") == 0)
 	    strlcpy(lang->debugger_backtrace_cmd, p, BACKTRACE_LEN);
 	else if (strcmp(name, "run_prefix") == 0)
-	    strlcpy(lang->run_prefix, p, TWC_FILENAME_LEN);
+	    strlcpy(lang->run_prefix, p, PATH_MAX);
 	else if (strcmp(name, "upload_prefix") == 0)
-	    strlcpy(lang->upload_prefix, p, TWC_FILENAME_LEN);
+	    strlcpy(lang->upload_prefix, p, PATH_MAX);
 	else if (strcmp(name, "executable_name") == 0)
-	    strlcpy(lang->executable_name, p, TWC_FILENAME_LEN);
+	    strlcpy(lang->executable_name, p, PATH_MAX);
 	else if (strcmp(name, "executable_source") == 0)
 	    strlcpy(lang->executable_spec, p, EXE_SRC_LEN);
 	else if (strcmp(name, "error_msg_format") == 0)
@@ -562,7 +562,7 @@ lang_t *add_language(
 	strlcpy(temp->lang_name, name, LANG_NAME_LEN);
 	strlcpy(temp->name_spec, name_spec, SPEC_LEN);
 	strlcpy(temp->id_comment, id_comment, LANG_ID_LEN);
-	strlcpy(temp->compiler_cmd, compiler, TWC_FILENAME_LEN);
+	strlcpy(temp->compiler_cmd, compiler, PATH_MAX);
 	strlcpy(temp->compile_flags, compile_flags, OPTION_LEN);
 	strlcpy(temp->compile_only_flag, compile_only_flag, COMPILE_ONLY_LEN);
 	strlcpy(temp->compile_output_flag, compile_output_flag, OUTPUT_FLAG_LEN);
@@ -570,13 +570,13 @@ lang_t *add_language(
 	strlcpy(temp->compile_to_asm_flag, compile_to_asm_flag, OPTION_LEN);
 	strlcpy(temp->preprocess_only_flag, preprocess_only_flag, OPTION_LEN);
 	strlcpy(temp->link_flags, link_flags, OPTION_LEN);
-	strlcpy(temp->debugger_cmd, debugger, TWC_FILENAME_LEN);
+	strlcpy(temp->debugger_cmd, debugger, PATH_MAX);
 	strlcpy(temp->debugger_flags, debugger_flags, OPTION_LEN);
 	strlcpy(temp->debugger_backtrace_cmd, debugger_backtrace_cmd,
 	    BACKTRACE_LEN);
-	strlcpy(temp->run_prefix, run_prefix, TWC_FILENAME_LEN);
-	strlcpy(temp->upload_prefix, upload_prefix, TWC_FILENAME_LEN);
-	strlcpy(temp->executable_name, executable_name, TWC_FILENAME_LEN);
+	strlcpy(temp->run_prefix, run_prefix, PATH_MAX);
+	strlcpy(temp->upload_prefix, upload_prefix, PATH_MAX);
+	strlcpy(temp->executable_name, executable_name, PATH_MAX);
 	strlcpy(temp->executable_spec, executable_spec, EXE_SRC_LEN);
 	strlcpy(temp->error_msg_format, error_msg_format, ERR_FORMAT_LEN);
 	temp->auto_wrap = auto_wrap;

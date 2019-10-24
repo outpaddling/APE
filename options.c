@@ -307,7 +307,7 @@ int     load_options (char *filename, opt_t *options)
 	}
 
 	fgetline (fp, options->install_prefix, PATH_MAX);
-	fgetline (fp, options->browser, TWC_FILENAME_LEN);
+	fgetline (fp, options->browser, PATH_MAX);
 	fgetline (fp, options->shell, PATH_MAX);
 	fgetline (fp, options->ishell, PATH_MAX);
 	fgetline (fp, options->file_spec, TWC_SPEC_LEN);
@@ -463,7 +463,7 @@ int     debug_options(file_t *file, opt_t *options)
     
     win = centered_panel_win(10, 75, options);
 
-    tw_init_string(&panel, 2, 2, TWC_FILENAME_LEN, TW_COLS(win)-22, TWC_VERBATIM,
+    tw_init_string(&panel, 2, 2, PATH_MAX, TW_COLS(win)-22, TWC_VERBATIM,
 		"Debugger:          ",
 		" Debugger command name. ", file->lang->debugger_cmd);
     tw_init_string(&panel, 3, 2, OPTION_LEN, TW_COLS(win)-22, TWC_VERBATIM,
@@ -709,7 +709,7 @@ int     misc_options(opt_t *options)
     tw_init_enum(&panel, 8, 2, 5, html,
 		"Documentation type:   ",
 		" Hit <space> to toggle. ", docs);
-    tw_init_string(&panel, 9, 2, TWC_FILENAME_LEN,TW_COLS(win)-26, TWC_VERBATIM,
+    tw_init_string(&panel, 9, 2, PATH_MAX,TW_COLS(win)-26, TWC_VERBATIM,
 		"Browser:              ",
 		" Browser and options to use for HTML docs. ",options->browser);
     tw_init_string(&panel, 10, 2, PATH_MAX,TW_COLS(win)-26, TWC_VERBATIM,

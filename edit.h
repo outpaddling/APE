@@ -208,7 +208,7 @@ typedef struct
 
     /* Do we still need this, or should we use the INSTALL_PREFIX macro? */
     char    install_prefix[PATH_MAX+1]; /* Where HTML docs etc. are kept */
-    char    browser[TWC_FILENAME_LEN+1]; /* HTML browser */
+    char    browser[PATH_MAX+1]; /* HTML browser */
     char    shell[PATH_MAX+1];          /* Shell to pass commands to */
     char    ishell[PATH_MAX+1];         /* For interactive sub-shell */
     char    file_spec[TWC_SPEC_LEN+1];  /* File listing mask for list */
@@ -302,8 +302,8 @@ typedef struct
     /* General file info */
     char    cwd[PATH_MAX+1];                /* Working directory for file */
     char    run_directory[PATH_MAX+1];
-    char    source[TWC_FILENAME_LEN+1];     /* Name of source file */
-    char    executable[TWC_FILENAME_LEN+1]; /* Name of executable */
+    char    source[PATH_MAX+1];     /* Name of source file */
+    char    executable[PATH_MAX+1]; /* Name of executable */
     char    short_src[TWC_SHORT_NAME_LEN+1];
     char    run_cmd[CMD_LEN+1];
     unsigned char   line_style;             /* Bit mask for CR, NL */

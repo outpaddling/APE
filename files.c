@@ -213,7 +213,7 @@ opt_t  *options;
 {
     char    filename[PATH_MAX + 1] = "", temp[PATH_MAX+1] = "",
 	    dir_name[PATH_MAX + 1] = "", base_name[PATH_MAX + 1] = "",
-	    start_dir[PATH_MAX + 1], save_source[TWC_FILENAME_LEN + 1],
+	    start_dir[PATH_MAX + 1], save_source[PATH_MAX + 1],
 	    save_short[TWC_SHORT_NAME_LEN + 1], msg[128], path[PATH_MAX+1],
 	    *buttons[3] = YES_NO_BUTTONS, *ok_button[2] = OK_BUTTON;
     struct stat st;
@@ -257,7 +257,7 @@ opt_t  *options;
 
     /* Save old name in case new one can't be used */
     strlcpy(start_dir, files[af].cwd, PATH_MAX);
-    strlcpy(save_source, files[af].source, TWC_FILENAME_LEN);
+    strlcpy(save_source, files[af].source, PATH_MAX);
     strlcpy(save_short, files[af].short_src, TWC_SHORT_NAME_LEN);
 
     /* Switch to new name */
@@ -267,7 +267,7 @@ opt_t  *options;
 	return CANT_SAVE;
     }
     strlcpy(files[af].cwd, dir_name, PATH_MAX);
-    strlcpy(files[af].source, base_name, TWC_FILENAME_LEN);
+    strlcpy(files[af].source, base_name, PATH_MAX);
     strlcpy(files[af].short_src, files[af].source, TWC_SHORT_NAME_LEN);
     if (save_file(files+af,options) == OK)
     {
@@ -294,7 +294,7 @@ opt_t  *options;
 	    files[af].source);
 	chdir(start_dir);
 	strlcpy(files[af].cwd, start_dir, PATH_MAX);
-	strlcpy(files[af].source, save_source, TWC_FILENAME_LEN);
+	strlcpy(files[af].source, save_source, PATH_MAX);
 	strlcpy(files[af].short_src, save_short, TWC_SHORT_NAME_LEN);
 	return CANT_SAVE;
     }
@@ -443,7 +443,7 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
 	return CANT_OPEN;
 
     /* Set filenames and dir name */
-    strlcpy(files[af].source, base_name, TWC_FILENAME_LEN);
+    strlcpy(files[af].source, base_name, PATH_MAX);
     strlcpy(files[af].short_src, base_name, TWC_SHORT_NAME_LEN);
     strlcpy(files[af].cwd, dir_name, PATH_MAX);
     strlcpy(files[af].run_directory, dir_name, PATH_MAX);
@@ -636,14 +636,14 @@ char    full_name[], dir_name[], base_name[];
 	else
 	{
 	    getcwd(dir_name, PATH_MAX);         /* Get new directory name */
-	    strlcpy(base_name, end_dir + 1, TWC_FILENAME_LEN);
+	    strlcpy(base_name, end_dir + 1, PATH_MAX);
 	    chdir(start_dir);   /* Return to original directory */
 	}
     }
     else                        /* Only base name given */
     {
 	getcwd(dir_name, PATH_MAX);
-	strlcpy(base_name, full_name, TWC_FILENAME_LEN);
+	strlcpy(base_name, full_name, PATH_MAX);
     }
     return OK;
 }

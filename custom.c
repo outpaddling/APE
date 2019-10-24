@@ -195,7 +195,7 @@ int     run_custom_item(file_t files[],
 			int ch)
 
 {
-    char    temp[TWC_FILENAME_LEN + 1];
+    char    temp[PATH_MAX + 1];
     struct stat *old_stat, new_stat;
     int     c;
     
@@ -220,7 +220,7 @@ int     run_custom_item(file_t files[],
 		    /* Reload file if modified and desired */
 		    if (1)
 		    {
-			strlcpy(temp, files[c].source, TWC_FILENAME_LEN);
+			strlcpy(temp, files[c].source, PATH_MAX);
 			close_file(files, c, options, PROMPT_BEFORE_CLOSE);
 			*af_ptr = open_file(files, temp, options, OPEN_FLAG_NORMAL);
 			sprintw(2,TWC_ST_LEN,"Reloaded %s.",files[*af_ptr].source);
@@ -474,7 +474,7 @@ void    expand_command(file_t *file,
 
 {
     extern win_t    *Swin;
-    char    base[TWC_FILENAME_LEN + 1], input[CMD_LEN + 1], *p, *temp = expanded;
+    char    base[PATH_MAX + 1], input[CMD_LEN + 1], *p, *temp = expanded;
 
     while (*command != '\0')
     {
@@ -489,7 +489,7 @@ void    expand_command(file_t *file,
 	    else if (memicmp(command, "\\st", 3) == 0)
 	    {
 		command += 3;
-		strlcpy(base, file->source, TWC_FILENAME_LEN);
+		strlcpy(base, file->source, PATH_MAX);
 		if ((p = strrchr(base, '.')) != NULL)
 		    *p = '\0';
 		for (p = base; *p != '\0';)
@@ -500,7 +500,7 @@ void    expand_command(file_t *file,
 		command += 3;
 		*temp = *input = '\0';
 		stat_mesg(expanded);
-		tw_get_string(Swin, input, TWC_FILENAME_LEN, TWC_ST_LEN-TW_CUR_COL(Swin)-2, TWC_VERBATIM, NULL);
+		tw_get_string(Swin, input, PATH_MAX, TWC_ST_LEN-TW_CUR_COL(Swin)-2, TWC_VERBATIM, NULL);
 		for (p = input; *p != '\0';)
 		    *temp++ = *p++;
 	    }

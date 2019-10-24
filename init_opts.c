@@ -143,7 +143,7 @@ opt_t  *options;
     options->terminfo_mouse = 0;
     options->use_html = 0;
     strlcpy (options->install_prefix, install_prefix, PATH_MAX);
-    strlcpy (options->browser, APE_BROWSER, TWC_FILENAME_LEN);
+    strlcpy (options->browser, APE_BROWSER, PATH_MAX);
     options->indent_size = 4;
     options->search_forward = 1;
     options->case_sensitive = 0;

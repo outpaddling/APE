@@ -246,8 +246,8 @@ char    *trace_cmd;
 opt_t   *options;
 
 {
-    char    *exe, core[TWC_FILENAME_LEN+1], cmd[CMD_LEN+1], *argv[MAX_ARGS],
-	    command_file[PATH_MAX+1], debugger[TWC_FILENAME_LEN+1],
+    char    *exe, core[PATH_MAX+1], cmd[CMD_LEN+1], *argv[MAX_ARGS],
+	    command_file[PATH_MAX+1], debugger[PATH_MAX+1],
 	    *ok_button[2] = OK_BUTTON, *file_names[TWC_MAX_FILENAMES+1],
 	    *stdout_file = NULL;
     struct stat corestat;
@@ -261,7 +261,7 @@ opt_t   *options;
 	return;
     }
     
-    strlcpy(debugger, file->lang->debugger_cmd, TWC_FILENAME_LEN);
+    strlcpy(debugger, file->lang->debugger_cmd, PATH_MAX);
     
     /* Make sure build options exist */
     if ( check_build_opts(file) == NULL )
@@ -280,7 +280,7 @@ opt_t   *options;
 		/* db[xX]tra assumes stdin is a tty and will fail */
 		/* Fall back to dbx, which is redirectable */
 		if ( stricmp(debugger, "dbxtra") == 0 )
-		    strlcpy(debugger, "dbx", TWC_FILENAME_LEN);
+		    strlcpy(debugger, "dbx", PATH_MAX);
 #endif
 		fprintf(fp, "%s\n", trace_cmd);
 		fclose(fp);
@@ -310,7 +310,7 @@ opt_t   *options;
     else
     {
 	/* FreeBSD names core file <prog>.core */
-	snprintf(core, TWC_FILENAME_LEN, "%s.core", exe);
+	snprintf(core, PATH_MAX, "%s.core", exe);
 	if ( stat(core, &corestat) == 0 )
 	    strlcat(cmd, core, CMD_LEN);
 	else
@@ -324,7 +324,7 @@ opt_t   *options;
 		case    0:
 		    break;
 		case    1:
-		    strlcpy(core, file_names[0], TWC_FILENAME_LEN);
+		    strlcpy(core, file_names[0], PATH_MAX);
 		    if ( stat(core, &corestat) == 0 )
 			strlcat(cmd, core, CMD_LEN);
 		    else if ( trace_cmd != NULL )
@@ -816,10 +816,10 @@ void    set_makefile(proj_t *project, char *makefile, file_t *file,
     tw_init_string(&panel, 2, 2, CMD_LEN, 40, TWC_VERBATIM,
 	"Make command:    ",
 	    " Name of make command (make, gmake, etc.) ", project->make_cmd);
-    tw_init_string(&panel, 3, 2, TWC_FILENAME_LEN, 40, TWC_VERBATIM,
+    tw_init_string(&panel, 3, 2, PATH_MAX, 40, TWC_VERBATIM,
 	"Makefile:        ",
 	    " Enter name of makefile in the current directory. ", project->makefile);
-    tw_init_string(&panel, 4, 2, TWC_FILENAME_LEN, 40, TWC_VERBATIM,
+    tw_init_string(&panel, 4, 2, PATH_MAX, 40, TWC_VERBATIM,
 	"Executable:      ",
 	    " Name of executable produced by makefile. ", project->executable);
     tw_init_string(&panel, 5, 2, PATH_MAX, 40, TWC_VERBATIM,
@@ -861,8 +861,8 @@ void    set_makefile(proj_t *project, char *makefile, file_t *file,
 void    init_makefile(proj_t *project,char *makefile,file_t *file,opt_t *options)
 
 {
-    strlcpy(project->make_cmd, "make", TWC_FILENAME_LEN);
-    strlcpy(project->makefile, makefile, TWC_FILENAME_LEN);
+    strlcpy(project->make_cmd, "make", PATH_MAX);
+    strlcpy(project->makefile, makefile, PATH_MAX);
     
     /*
      *  Attempt to parse makefile for executable name, etc.
@@ -873,7 +873,7 @@ void    init_makefile(proj_t *project,char *makefile,file_t *file,opt_t *options
     parse_makefile(project, project->makefile, options);
     
     getcwd(project->make_directory,PATH_MAX);
-    strlcpy(project->run_prefix,"time",TWC_FILENAME_LEN);
+    strlcpy(project->run_prefix,"time",PATH_MAX);
     set_makefile(project,"makefile",file,options);
 }
 
@@ -1161,13 +1161,13 @@ void    add_make_var(proj_t *project, char *ident, char *p)
     {
 	/* Attempt to identify the main target of the Makefile */
 	if ( strcmp(ident, "LIB1") == 0 )
-	    strlcpy(project->executable, val, TWC_FILENAME_LEN);
+	    strlcpy(project->executable, val, PATH_MAX);
 	if ( strcmp(ident, "LIB") == 0 )
-	    strlcpy(project->executable, val, TWC_FILENAME_LEN);
+	    strlcpy(project->executable, val, PATH_MAX);
 	if ( strcmp(ident, "BIN1") == 0 )
-	    strlcpy(project->executable, val, TWC_FILENAME_LEN);
+	    strlcpy(project->executable, val, PATH_MAX);
 	if ( strcmp(ident, "BIN") == 0 )
-	    strlcpy(project->executable, val, TWC_FILENAME_LEN);
+	    strlcpy(project->executable, val, PATH_MAX);
     }
 }
 
