@@ -74,6 +74,7 @@ opt_t  *options;
 {
     int     options_ok,
 	    status;
+    size_t  len;
     tw_panel_t panel = TWC_PANEL_INIT;
     win_t  *win;
     lang_t  old_opt;
@@ -181,10 +182,12 @@ opt_t  *options;
     {
 	file->lang_rebuild = TRUE;
     }
+    
     /* Remove leading whitespace from name_spec */
     for (p = file->lang->name_spec; isspace(*p); ++p)
 	;
-    strlcpy(file->lang->name_spec, p, SPEC_LEN);
+    len = strlen(p);
+    memmove(file->lang->name_spec, p, len+1);
 
     /*
      * Macros directory is named after first extension.  See if it changed.
@@ -480,15 +483,17 @@ int     multispec_match(char *name_spec, char *str, int flags)
 lang_t *get_bop(file_t * file, lang_t * head)
 {
     lang_t *lang = head;
-    char    first_line[64], *p;
+    char    first_line[1024], *p;
 
     /* First check language ID if it exists. */
     if (memcmp(file->line[0].buff, "#!", 2) == 0)
     {
 	/* Remove whitespace following #! if present */
-	strlcpy(first_line, file->line[0].buff, 63);
-	for (p = first_line + 2; isspace(*p); ++p);
-	strlcpy(first_line + 2, p, 63);
+	strlcpy(first_line, file->line[0].buff, 1023);
+	/* Don't set p within first_line, unsafe for strlcpy to overlap */
+	for (p = file->line[0].buff + 2; isspace(*p); ++p)
+	    ;
+	strlcpy(first_line + 2, p, 1023);
 
 	/* Find matching language ID */
 	while ((lang != NULL) && ((*lang->id_comment == '\0') ||
