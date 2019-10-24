@@ -484,6 +484,7 @@ lang_t *get_bop(file_t * file, lang_t * head)
 {
     lang_t *lang = head;
     char    first_line[1024], *p;
+    size_t  len;
 
     /* First check language ID if it exists. */
     if (memcmp(file->line[0].buff, "#!", 2) == 0)
@@ -493,7 +494,10 @@ lang_t *get_bop(file_t * file, lang_t * head)
 	/* Don't set p within first_line, unsafe for strlcpy to overlap */
 	for (p = file->line[0].buff + 2; isspace(*p); ++p)
 	    ;
-	strlcpy(first_line + 2, p, 1023);
+	// This triggers SIGABRT on OS X High Sierra
+	// strlcpy(first_line + 2, p, 1023);
+	len = strlen(p);
+	memcpy(first_line+2, p, len+1);
 
 	/* Find matching language ID */
 	while ((lang != NULL) && ((*lang->id_comment == '\0') ||
