@@ -1,7 +1,7 @@
 name                    R
 name_spec               *.R
-id_comment              
-compiler                /usr/bin/env Rscript
+id_comment              #!/usr/bin/env Rscript
+compiler                
 compile_flags           
 compile_output_flag     
 syntax_check_flag       
