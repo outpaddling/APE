@@ -171,12 +171,12 @@ int more_lines(file_t *file);
 int ape_putc(win_t *text, int ch);
 /* files.c */
 int file_menu(file_t files[], int *af_ptr, opt_t *options, buff_t *cut_buff, event_t *event);
-int load_new_file(int ch, file_t files[], opt_t *options);
+int load_new_file(int ch, file_t files[], opt_t *options, unsigned int flags);
 int save_as(file_t files[], int af, opt_t *options);
 void view_header(file_t *file, opt_t *options);
 int prompt_save_all(file_t files[], opt_t *options);
 int prompt_save(file_t files[], int af, opt_t *options);
-int open_file(file_t files[], char *path_name, opt_t *options);
+int open_file(file_t files[], char *path_name, opt_t *options, unsigned int flags);
 int new_file(file_t *file);
 int init_file(file_t *file, opt_t *options);
 void create_edit_win(file_t *file, opt_t *options);
@@ -338,4 +338,5 @@ void draw_menu_bar(opt_t *options);
 void draw_status_bar(opt_t *options);
 win_t *panel_win(int rows, int cols, int start_row, int start_col, opt_t *options);
 win_t *centered_panel_win(int rows, int cols, opt_t *options);
-int panel_get_string(file_t *file, opt_t *options, size_t len, const char *prompt, const char *help, char *string);
+int panel_get_string(file_t *file, opt_t *options, size_t len, const char *prompt, const char *help, tw_str_t string_type, char *string);
+

@@ -72,7 +72,22 @@ for ( ; ; )
 
 {
 }
-m 0 0 28 0 0 0 8 0 28 76:/***************************************************************************
+
+ 0 0 28 0 0 0 8 0 28 76:e 1 993 1000 0 0 980 980 0 7 6:if ( )
+{
+    fprintf(stderr, "Error: %s: %s\n", __func__, strerror(errno));
+}
+else
+{
+}
+e 1 994 1001 0 0 981 981 0 7 6:if ( )
+{
+    fprintf(stderr, "Error: %s(): %s\n", __func__, strerror(errno));
+}
+else
+{
+}
+m 0 0 20 0 0 0 0 0 20 76:/***************************************************************************
  *  Description:
  *  
  *  Arguments:
@@ -90,29 +105,13 @@ for ( ; ; )
 int     main(int argc,char *argv[])
 
 {
-    switch(argc)
-    {
-        case    1:
-            break;
-        default:
-            fprintf(stderr,"Usage: %s\n",argv[0]);
-            break;
-    }
     return EX_OK;
 }
-
- 0 0 28 0 0 0 8 0 28 76:e 1 993 1000 0 0 980 980 0 7 6:if ( )
+p 1 18 25 0 1 5 5 0 7 12:switch(argc)
 {
-    fprintf(stderr, "Error: %s: %s\n", __func__, strerror(errno));
-}
-else
-{
-}
-e 1 994 1001 0 0 981 981 0 7 6:if ( )
-{
-    fprintf(stderr, "Error: %s(): %s\n", __func__, strerror(errno));
-}
-else
-{
-}
-
+    case    1:
+        break;
+    default:
+        fprintf(stderr,"Usage: %s\n",argv[0]);
+        break;
+}

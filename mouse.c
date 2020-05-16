@@ -25,7 +25,7 @@
     OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 */
 
-#include "twintk.h"
+#include <twintk.h>
 #include "edit.h"
 #include "protos.h"
 

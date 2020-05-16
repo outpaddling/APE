@@ -1,8 +1,8 @@
 ape.o: ape.c /usr/local/include/twintk.h /usr/local/include/twintk_term.h \
   /usr/local/include/twintk_image.h /usr/local/include/twintk_mouse.h \
   /usr/local/include/bacon.h edit.h /usr/local/include/pare.h macros.h \
-  synhigh.h language.h undo_stack.h undo_item.h make.h custom.h machdep.h \
-  protos.h
+  synhigh.h language.h undo_stack.h undo_item.h make.h custom.h \
+  machdep.h protos.h
 	${CC} -c ${CFLAGS} ape.c
 build_m.o: build_m.c /usr/local/include/bacon.h \
   /usr/local/include/twintk.h /usr/local/include/twintk_term.h \
@@ -146,8 +146,8 @@ undo_item.o: undo_item.c undo_item.h
 undo_stack.o: undo_stack.c edit.h /usr/local/include/twintk.h \
   /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \
   /usr/local/include/twintk_mouse.h /usr/local/include/pare.h macros.h \
-  synhigh.h language.h undo_stack.h undo_item.h make.h custom.h machdep.h \
-  protos.h
+  synhigh.h language.h undo_stack.h undo_item.h make.h custom.h \
+  machdep.h protos.h
 	${CC} -c ${CFLAGS} undo_stack.c
 wins.o: wins.c /usr/local/include/twintk.h \
   /usr/local/include/twintk_term.h /usr/local/include/twintk_image.h \

@@ -32,8 +32,8 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <fnmatch.h>
-#include "twintk.h"
-#include "bacon.h"
+#include <twintk.h>
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 
@@ -206,7 +206,7 @@ opt_t *options;
 {
     extern term_t   *Terminal;
     int     c, edit_border, top_right, name_len, left_tee, right_tee;
-    char    full_path[PATH_LEN+10+1];
+    char    full_path[PATH_MAX+10+1];
     
     if ( options->no_acs )
     {
@@ -224,11 +224,11 @@ opt_t *options;
     }
     
     if ( strcmp(file->cwd,"/") == 0 )
-	snprintf(full_path, PATH_LEN, " /%s ",file->source);
+	snprintf(full_path, PATH_MAX, " /%s ",file->source);
     else
-	snprintf(full_path, PATH_LEN, " %s/%s ",file->cwd,file->source);
+	snprintf(full_path, PATH_MAX, " %s/%s ",file->cwd,file->source);
     if ( strlen(full_path) > (size_t)(TW_COLS(file->window)-4) )
-	snprintf(full_path, PATH_LEN, " %s ",file->source);
+	snprintf(full_path, PATH_MAX, " %s ",file->source);
     name_len = strlen(full_path);
     
     /* Draw border left of name */
@@ -325,7 +325,7 @@ buff_t  *cut_buff;
     /* If no open files, open untitled - can this happen? */
     if (file[af].window == NULL)
     {
-	af = open_file(file,"untitled",options);
+	af = open_file(file,"untitled",options, OPEN_FLAG_NORMAL);
     }
 
     /* Update screen */
@@ -346,6 +346,21 @@ buff_t  *cut_buff;
 }
 
 
+/* FIXME: Move this to a library */
+
+const char    *find_ext(const char *filename)
+
+{
+    const char    *ext;
+    
+    /* Get extension, or end of string */
+    if ( ((ext = strrchr(filename, '.')) == NULL) ||
+	 (ext == filename) )
+	ext = filename + strlen(filename);
+    return ext;
+}
+
+
 /***********************************************
  * Set up compiler and options for an open file
  ***********************************************/
@@ -355,12 +370,9 @@ file_t *file;
 opt_t *options;
 
 {
-    char   *ext;
+    const char   *ext;
     
-    /* Get extension, or end of string */
-    if ( ((ext = strrchr(file->source, '.')) == NULL) ||
-	 (ext == file->source) )
-	ext = file->source + strlen(file->source);
+    ext = find_ext(file->source);
     
     /* Check for Fortran 77 */
     if (strcmp(ext,".f") == 0)
@@ -368,9 +380,12 @@ opt_t *options;
     else
 	file->max_line_len = MAX_LINE_LEN;
     
+    /* FIXME: Don't hard-code this, do it with language options */
     file->notabs =  (strcmp(ext,".tex") == 0) ||
 			(strcmp(file->source,"Portfile") == 0) ||
 			(strcmp(ext,".py") == 0);
+			// FIXME: crashes if we replace the ext check with this
+			// (strcmp(file->lang->lang_name,"Python") == 0);
 
     /* Find options with matching name spec */
     file->lang = get_bop(file,options->lang_head);
@@ -443,9 +458,9 @@ lang_t *opt;
 
 {
     if ( (*opt->name_spec == '\0') && (*opt->syntax_check_flag == '\0')
-	&& (*opt->compiler == '\0') && (*opt->compile_only_flag == '\0')
+	&& (*opt->compiler_cmd == '\0') && (*opt->compile_only_flag == '\0')
 	&& (*opt->compile_flags == '\0') && (*opt->link_flags == '\0')
-	&& (*opt->debugger =='\0') && (*opt->debugger_flags == '\0')
+	&& (*opt->debugger_cmd =='\0') && (*opt->debugger_flags == '\0')
 	&& (*opt->run_prefix == '\0') && (*opt->error_msg_format == '\0') )
 	return 1;
     else

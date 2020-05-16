@@ -259,7 +259,8 @@ buff_t  *cut_buff;
     file->insert = 1;
 
     /* Fortran 77 */
-    if ((file->lang != NULL) && (strcmp(file->lang->name_spec, "*.f") == 0))
+    if ((file->lang != NULL) &&
+	(strcmp(file->lang->lang_name, "Fortran77") == 0))
     {
 	if (file->curcol < 6)
 	    repeat = 6 - file->curcol;

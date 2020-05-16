@@ -8,7 +8,7 @@
 #
 #       make VAR=value
 # e.g.
-#       make PREFIX=/opt/local CC=gcc CFLAGS=-O2 LFLAGS1="-L/usr/X11R6 -lX11"
+#       make PREFIX=/opt/local CC=gcc CFLAGS=-O2 LDFLAGS="-L/usr/X11R6 -lX11"
 #
 # Author: Jason W. Bacon
 #         Medical College of Wisconsin
@@ -23,7 +23,7 @@ BINS    = ${BIN1} ${BIN2}
 
 MANS    = Man/*.1
 HTML    = Man/*.html
-SCRIPTS = Tools/search* Tools/ape_ispell Xape/* Java/runjava
+SCRIPTS = Tools/search* Tools/ape_aspell Xape/* Java/runjava
 
 
 ###################################################
@@ -42,18 +42,19 @@ OBJS    = ${OBJS1} ${OBJS2}
 # Compile, link, and install options
 
 PREFIX  ?= /usr/local
+MANPREFIX  ?= ${PREFIX}
 LOCALBASE ?= /usr/local
+DATADIR ?= ${PREFIX}/share/ape
+DOCSDIR ?= ${PREFIX}/share/doc/ape
 
 # APE depends on signed chars.  Some compilers treat chars as unsigned
 # by default, so adjust compiler flags as needed. (e.g. gcc -fsigned-char)
-CPP     ?= cpp
 CC      ?= cc
 CFLAGS  ?= -g -Wall
 INCLUDES = -I${LOCALBASE}/include
-CFLAGS  += ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\""
+CFLAGS  += ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\"" -fsigned-char
 
-LFLAGS1 += -L${LOCALBASE}/lib -ltwintk -lpare -lbacon
-LFLAGS2 += -L${LOCALBASE}/lib
+LDFLAGS += -L${LOCALBASE}/lib -ltwintk -lpare -lbacon
 
 INSTALL         ?= install
 INSTALL_PROGRAM ?= install -m 0755
@@ -70,7 +71,7 @@ all:    ${BINS} ${LIBS}
 
 # Link rules
 ${BIN1}:        ${OBJS1}
-		${CC} -o ${BIN1} ${OBJS1} ${LFLAGS1}
+		${CC} -o ${BIN1} ${OBJS1} ${LDFLAGS}
 
 ${BIN2}:        ${OBJS2}
 		(cd Ascii; ${MAKE})
@@ -80,7 +81,7 @@ include Makefile.depend
 depend:
 	rm -f Makefile.depend
 	for file in *.c; do \
-	    ${CPP} ${INCLUDES} -MM $${file} >> Makefile.depend; \
+	    ${CC} ${INCLUDES} -MM $${file} >> Makefile.depend; \
 	    printf "\t\$${CC} -c \$${CFLAGS} $${file}\n" >> Makefile.depend; \
 	done
 
@@ -92,14 +93,17 @@ realclean: clean
 	rm -f .*.bak *.bak *.BAK *.core
 
 install: all
-	mkdir -p ${PREFIX}/bin ${PREFIX}/man/man1 \
-	${PREFIX}/share/ape ${PREFIX}/share/doc/ape
-	${INSTALL_PROGRAM} ${BINS} ${PREFIX}/bin
-	${INSTALL_PROGRAM} ${SCRIPTS} ${PREFIX}/bin
-	${INSTALL_DATA} ${MANS} ${PREFIX}/man/man1
-	${INSTALL_DATA} ${HTML} ${PREFIX}/share/doc/ape
-	cp -Rp Aperc/Languages Aperc/options.rc Aperc/custom_menu ${PREFIX}/share/ape
-	${CHMOD} -R u+rwX,go-w+rX ${PREFIX}/share/ape
+	mkdir -p ${STAGEDIR}${PREFIX}/bin \
+		${STAGEDIR}${MANPREFIX}/man/man1 \
+		${STAGEDIR}${DATADIR} \
+		${STAGEDIR}${DOCSDIR}
+	${INSTALL_PROGRAM} ${BINS} ${STAGEDIR}${PREFIX}/bin
+	${INSTALL_PROGRAM} ${SCRIPTS} ${STAGEDIR}${PREFIX}/bin
+	${INSTALL_DATA} ${MANS} ${STAGEDIR}${MANPREFIX}/man/man1
+	${INSTALL_DATA} ${HTML} ${STAGEDIR}${DOCSDIR}
+	cp -Rp Aperc/Languages Aperc/options.rc Aperc/custom_menu \
+		${STAGEDIR}${DATADIR}
+	${CHMOD} -R u+rwX,go-w+rX ${STAGEDIR}${DATADIR}
 
 protos:
 	(cproto ${INCLUDES} *.c > temp_protos.h && mv -f temp_protos.h protos.h)

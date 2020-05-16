@@ -1,4 +1,3 @@
+Simple .Program
 .Static library
 .Dynamic library
-.Advanced Makefile
-Simple .Program

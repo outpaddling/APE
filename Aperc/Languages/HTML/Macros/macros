@@ -21,10 +21,6 @@ c 0 1 1 0 5 0 0 0 0 5:<!  >t 1 0 15 0 0 0 0 0 15 29:<! Simple, two-section tabl
 o 1 0 3 0 0 0 0 0 3 4:<ol>
 <li>
 </ol>
-p 1 0 4 0 0 0 0 0 4 3:<p>
-<pre>
-</pre>
-<p>
 q 1 0 2 0 0 0 0 0 2 12:<blockquote>
 </blockquote>
 3 1 19 20 0 0 5 5 0 1 9:<h3></h3>
@@ -61,4 +57,8 @@ function ()
 <body>
 </body>
 </html>
+p 1 53 57 0 0 36 36 0 4 3:<p>
+<pre>
+</pre>
+</p>
 

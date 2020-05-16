@@ -12,7 +12,7 @@ link_flags
 debugger                
 debugger_flags          
 debugger_backtrace_cmd  
-run_prefix              python
+run_prefix              
 upload_prefix           
 executable_name         \fn
 executable_source       

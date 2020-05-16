@@ -1,9 +1,0 @@
-.If-then
-.While loop
-.For loop
-.Block Comment
-.Case
-F.Unction
-.Heredoc
-.New script
-.PBS template

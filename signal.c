@@ -27,7 +27,7 @@
 
 #include <sys/types.h>
 #include <sys/wait.h>
-#include "twintk.h"
+#include <twintk.h>
 #include "edit.h"
 #include "protos.h"
 

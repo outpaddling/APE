@@ -1,7 +1,7 @@
 name                    EPC
 name_spec               *.epc
 id_comment              
-compiler                asepc
+compiler                plasm
 compile_flags           
 compile_output_flag     
 syntax_check_flag       
@@ -12,10 +12,10 @@ link_flags
 debugger                
 debugger_flags          
 debugger_backtrace_cmd  
-run_prefix              time epc
+run_prefix              epc
 upload_prefix           
 executable_name         \st.bin
 executable_source       Fixed
-error_msg_format        
+error_msg_format        \fn, line \ln: \te
 auto_wrap               0
 end_language

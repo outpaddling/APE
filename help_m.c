@@ -30,8 +30,8 @@
 #include <ctype.h>
 #include <unistd.h>
 #include <sys/stat.h>
-#include "twintk.h"
-#include "bacon.h"
+#include <twintk.h>
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 
@@ -80,12 +80,12 @@ int     help_menu(file_t *file, opt_t *options, event_t *event)
 	    break;
 	case 'u':
 	    panel_get_string(file, options, CMD_LEN, 
-			    "Command or function? ", "", cmd);
+			    "Command or function? ", "", TWC_VERBATIM, cmd);
 	    man(cmd, NULL);
 	    break;
 	case 's':
 	    panel_get_string(file, options, CMD_LEN, 
-			    "Topic? ", "", topic);
+			    "Topic? ", "", TWC_VERBATIM, topic);
 	    apropos(topic);
 	    break;
 	case 'b':
@@ -144,7 +144,7 @@ char    *word;
 {
     char    *ptr = file->curchar, *start = file->line[file->curline].buff;
     
-    while ( (ISIDENT(*ptr)) && (ptr>=start) )
+    while ( ISIDENT(*ptr) && (ptr>=start) )
 	--ptr;
     ++ptr;
     while ( ISIDENT(*ptr) )
@@ -173,13 +173,13 @@ opt_t   *options;
 {
     int     stat,
 	    fd;
-    char    path[PATH_LEN+1],
-	    errors[PATH_LEN+1];
+    char    path[PATH_MAX+1],
+	    errors[PATH_MAX+1];
     
-    strlcpy(errors,".ape_browser_errors.XXXXX",PATH_LEN);
+    strlcpy(errors,".ape_browser_errors.XXXXX",PATH_MAX);
     if ( (fd=mkstemp(errors)) != -1 )
 	close(fd);
-    snprintf(path,PATH_LEN,"%s/share/doc/ape/%s",options->install_prefix,
+    snprintf(path,PATH_MAX,"%s/share/doc/ape/%s",options->install_prefix,
 	    file);
     stat = spawnlp(P_NOWAIT,P_NOECHO,NULL,errors,errors,
 		    options->browser,path,NULL);

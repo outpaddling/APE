@@ -5,11 +5,11 @@
 
 typedef struct
 {
-    char    make_directory[PATH_LEN+1];
+    char    make_directory[PATH_MAX+1];
     char    make_cmd[CMD_LEN+1];
-    char    makefile[TWC_FILENAME_LEN+1];
-    char    executable[TWC_FILENAME_LEN+1];
-    char    run_prefix[CMD_LEN+1];
+    char    makefile[PATH_MAX+1];
+    char    executable[PATH_MAX+1];
+    char    run_prefix[PATH_MAX+1];
     char    run_cmd[CMD_LEN+1];
     char    make_args[OPTION_LEN+1];
     char    run_args[OPTION_LEN+1];

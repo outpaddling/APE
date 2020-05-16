@@ -7,3 +7,4 @@ If-.Else
 .Block comment
 .Function
 .Subroutine
+Select .Case

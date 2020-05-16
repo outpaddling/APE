@@ -1,48 +1,122 @@
-n 2 0 47 0 0 0 27 0 47 63:## Choose which universe you want your program is running with 
-## Available options are 
-## - standard: defaults to transfer executables and files 
-## - vanilla: explicitly enable file transfer mechanism 
-## - grid: explicitly enable file transfer mechanism 
-## - java: explicitly enable file transfer mechanism. Used for java jobs. 
-## - scheduler 
-## - local 
-## - parallel: explicitly enable file transfer mechanism. Used for MPI jobs. 
-## - vm 
-## Refer http://research.cs.wisc.edu/condor/manual/v7.6/2_4Road_map_Running.html for detailes. 
+n 2 0 121 0 0 0 101 0 121 76:############################################################################
+# Sample condor submit description file
+#
+# Use \ to continue an entry on the next line.
+
+############################################################################
+# Condor Universe
+# Common options:
+#
+# standard:
+#      Defaults to transfer executables and files.
+#      Use when you are running your own script or program.
+#   
+# vanilla:
+# grid:
+#      Explicitly enable file transfer mechanisms with
+#      'transfer_executable', etc.
+#      Use when you are using your own files and some installed on the
+#      execute hosts.
+#
+# parallel:
+#      Explicitly enable file transfer mechanism. Used for MPI jobs.
+
 universe = vanilla 
 
-## Specify the executable path and name 
-## NOTE: the POVB currently supports 32-bit executable only 
-executable = \filename_stem(0)
-arguments = 
+# Macros (variables) to use in this description file
+Points = 1000000000
+Process_count = 10
 
-## Where the standard outputs go 
-## $(Process) is current jobs index 
-output = $(Process).out 
+############################################################################
+# Specify the executable filename.  This can be a binary file or a script.
+# If compiling a program on the execute hosts, the executable should be a
+# script that compiles and runs the program.
+#
+# In \filename_stem(0).sh, be sure to give the executable a different
+# name for each process, since multiple processes could be on the same host.
+#
+# E.g. cc -O -o prog.$(Process) prog.c
+#
+# This will require sending $(Process) as an argument or environment variable
 
-## Where the standard error go 
-error = $(Process).err 
+executable = \filename_stem(0).sh
 
-## Logs for job on the condor 
+# Command-line arguments passed to \filename_stem(0).sh on the execute hosts
+# arguments = 
+
+############################################################################
+# Set environment variables for use by the executable on the execute hosts.
+# Enclose the entire environment string in quotes.
+# A variable assignment is var=value (no space around =).
+# Separate variable assignments with whitespace.
+
+environment = "Process=$(Process) Process_count=$(Process_count) Points=$(Points)"
+
+############################################################################
+# Filenames to which standard output and standard error are redirected on
+# the execute hosts.  Use different names for each process so that they
+# don't clobber each other when transferred back to the submit host.
+# $(Process) is current job ID.
+
+# If running \filename_stem(0) under both PBS and Condor, use same output
+# names here as in \filename_stem(0)-run.pbs so that we can use the same
+# script to tally all the outputs from any run.
+
+output = \filename_stem(0).out-$(Process)
+error = \filename_stem(0).err-$(Process)
+
+############################################################################
+# Logs for the job, produced by condor.  This contains output from
+# Condor, not from the executable.
+
 log = \filename_stem(0).log 
 
-## Customed job requirements 
-## Condor assumes job requirements from the node submitting job. 
-## For example, if the jobs is submitted from peregrine, the architecture is "X86_64", 
-## operating system is "FREEBSD8", which are currently not supported by POVB. 
-## Change them to "INTEL" and "LINUX" like this. 
-## You can query if your submitting node is accepted by command: condor_q -analyze 
-requirements = target.arch == "INTEL" && target.opsys == "LINUX" 
+############################################################################
+# Custom job requirements 
+# Condor assumes job requirements from the host submitting job. 
+# IT DOES NOT DEFAULT TO ACCEPTING ANY ARCH OR OPSYS!!!
+# For example, if the jobs is submitted from peregrine, target.arch is
+# "X86_64" and target.opsys is "FREEBSD", which do not match
+# POVB execute hosts ("INTEL" and "LINUX").
 
-## Explicitly enable executable transfer mechanism 
-transfer_executable = false
+# Memory requirements in megabytes
+request_memory = 50
 
-should_transfer_files = yes 
-transfer_input_files = 
-transfer_output_files = 
+# Requirements for a binary compiled on 32-bit CentOS 4 Linux (POVB hosts):
+# requirements = (target.arch == "INTEL") && (target.opsys == "LINUX")
+
+# Requirements for a Unix shell script or Unix program compiled on the
+# execute host:
+requirements = ((target.arch == "INTEL") || (target.arch == "X86_64")) && \
+               ((target.opsys == "FREEBSD") || (target.opsys == "LINUX"))
+
+# Requirements for a job utilizing software installed via FreeBSD ports:
+# requirements = ((target.arch == "INTEL") || (target.arch == "X86_64")) && \
+#    (target.opsys == "FREEBSD")
+
+############################################################################
+# Explicitly enable executable transfer mechanism for vanilla universe.
+
+# true | false
+transfer_executable = true
+
+# yes | no | if_needed
+should_transfer_files = if_needed
+
+# All files to be transferred to the execute hosts in addition to the
+# executable.  If compiling on the execute hosts, list the source file(s)
+# here, and put the compile command in the executable script.
+transfer_input_files = \filename_stem(0).c
+
+# All files to be transferred back from the execute hosts in addition to
+# those listed in "output" and "error".
+# transfer_output_files = file1,file2,...
+
+# on_exit | on_exit_or_evict
 when_to_transfer_output = on_exit 
 
-## Specify how many jobs you would like to submit at a time and put them in the queue. 
-## You can query your jobs by command: condor_q 
-queue 1
+############################################################################
+# Specify how many jobs you would like to submit to the queue.
+
+queue $(Process_count)
 

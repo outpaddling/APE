@@ -30,8 +30,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <ctype.h>
-#include "twintk.h"
-#include "bacon.h"
+#include <twintk.h>
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 
@@ -59,7 +59,7 @@ event_t *event;
 	"C.Ancel area (Ctrl+c or F4)",
 	TWC_HLINE,
 	".New macro",
-	"New macro .Submenu",
+	/* "New macro .Submenu", */
 	/*".Modify macro",*/
 	".Replace macro",
 	"Remo.ve macro",

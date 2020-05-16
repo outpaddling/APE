@@ -1,0 +1,8 @@
+2 -1 8
+if|for|func|import|package|while
+6 -1 8
+".*"
+3 -1 8
+/\*.*\*/|//.*$
+-2 0 0
+end

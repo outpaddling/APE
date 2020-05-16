@@ -34,6 +34,10 @@
 #include <ctype.h>
 #endif
 
+#if !defined(_SYS_PARAM_H_) && !defined(__SYS_PARAM_H__)
+#include <sys/param.h>
+#endif
+
 #if !defined(_WINDOWS_H_)
 #include "twintk.h"
 #endif
@@ -42,7 +46,7 @@
 #include "pare.h"
 #endif
 
-#define APE_VERSION     "3.5.1"
+#define APE_VERSION     "3.5.2"
 
 #define EMPTY_FILE(f) (((f)->total_lines == 1) && ((f)->line[0].length == 0))
 
@@ -73,13 +77,18 @@
 #define NOMEM               -1
 #define CANT_SAVE           -1
 
+#define OPEN_FLAG_NORMAL    0x00
+#define OPEN_FLAG_CRYPT     0x01
+
 #define OPTION_LEN          1024
 #define EXT_LEN             40
-#define SPEC_LEN            40
+#define SPEC_LEN            80
 #define TWC_SHORT_NAME_LEN  14
 #define SEARCH_STR_LEN      80
 #define SEARCH_WIN_LEN      30
 #define CMD_LEN             256
+#define MCRYPT_KEY_LEN      64  /* FIXME: Allow longer keys? */
+#define MCRYPT_ALGO_LEN     32
 #define MESG_LEN            80
 #define MAX_ARGS            40
 #define ERROR_LEN           128
@@ -198,13 +207,13 @@ typedef struct
     unsigned int    edit_border;    /* Character for title line of edit window */
 
     /* Do we still need this, or should we use the INSTALL_PREFIX macro? */
-    char    install_prefix[PATH_LEN+1]; /* Where HTML docs etc. are kept */
-    char    browser[TWC_FILENAME_LEN+1]; /* HTML browser */
-    char    shell[PATH_LEN+1];          /* Shell to pass commands to */
-    char    ishell[PATH_LEN+1];         /* For interactive sub-shell */
+    char    install_prefix[PATH_MAX+1]; /* Where HTML docs etc. are kept */
+    char    browser[PATH_MAX+1]; /* HTML browser */
+    char    shell[PATH_MAX+1];          /* Shell to pass commands to */
+    char    ishell[PATH_MAX+1];         /* For interactive sub-shell */
     char    file_spec[TWC_SPEC_LEN+1];  /* File listing mask for list */
-    char    include_path[PATH_LEN+1];   /* Additional headers to search */
-    char    lib_path[PATH_LEN+1];       /* Additional libraries to search */
+    char    include_path[PATH_MAX+1];   /* Additional headers to search */
+    char    lib_path[PATH_MAX+1];       /* Additional libraries to search */
 }   opt_t;
 
 /* File structure */
@@ -291,10 +300,10 @@ typedef struct
     char    high_bg;
     
     /* General file info */
-    char    cwd[PATH_LEN+1];                /* Working directory for file */
-    char    run_directory[PATH_LEN+1];
-    char    source[TWC_FILENAME_LEN+1];     /* Name of source file */
-    char    executable[TWC_FILENAME_LEN+1]; /* Name of executable */
+    char    cwd[PATH_MAX+1];                /* Working directory for file */
+    char    run_directory[PATH_MAX+1];
+    char    source[PATH_MAX+1];     /* Name of source file */
+    char    executable[PATH_MAX+1]; /* Name of executable */
     char    short_src[TWC_SHORT_NAME_LEN+1];
     char    run_cmd[CMD_LEN+1];
     unsigned char   line_style;             /* Bit mask for CR, NL */
@@ -331,7 +340,7 @@ typedef struct
 
 typedef struct
 {
-    char    filename[PATH_LEN+1];
+    char    filename[PATH_MAX+1];
     FILE    *fp;
 }   err_t;
 

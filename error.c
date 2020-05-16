@@ -30,7 +30,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "bacon.h"
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 
@@ -74,10 +74,10 @@ void    next_error(file_t *files,int *aw,err_t *errfile,
 
 {
     char    mesg[ERROR_LEN+1],
-	    raw_file[PATH_LEN+1],
+	    raw_file[PATH_MAX+1],
 	    *last_slash,
-	    source_file[PATH_LEN+1],
-	    source_dir[PATH_LEN+1],
+	    source_file[PATH_MAX+1],
+	    source_dir[PATH_MAX+1],
 	    *text = "";
     int     line, c, found = 0, resp = 'n';
     struct stat st;
@@ -103,12 +103,12 @@ void    next_error(file_t *files,int *aw,err_t *errfile,
 	    if ( *raw_file == '/' )
 	    {
 		last_slash = strrchr(raw_file,'/');
-		strlcpy(source_file,last_slash+1,PATH_LEN);
-		strlcpy(source_dir,raw_file,PATH_LEN);
+		strlcpy(source_file,last_slash+1,PATH_MAX);
+		strlcpy(source_dir,raw_file,PATH_MAX);
 		*strrchr(source_dir,'/') = '\0';
 	    }
 	    else
-		strlcpy(source_file,raw_file,PATH_LEN);
+		strlcpy(source_file,raw_file,PATH_MAX);
     
 	    /* Check open files for filename (and directory if possible) */
 	    for (c=0; c < options->max_files; ++c)
@@ -157,7 +157,7 @@ void    next_error(file_t *files,int *aw,err_t *errfile,
 		 */
 		if ( found )
 		{
-		    c = open_file(files,raw_file,options);
+		    c = open_file(files,raw_file,options, OPEN_FLAG_NORMAL);
 		    if ( c >= 0 )
 		    {
 			*aw = c;
@@ -242,7 +242,7 @@ opt_t   *options;
 		    fn = source_file;
 		    while ( (*mesg_ptr != *format_ptr) &&
 			    (*mesg_ptr != '\0') &&
-			    (fn-source_file < PATH_LEN) )
+			    (fn-source_file < PATH_MAX) )
 			*fn++ = *mesg_ptr++;
 		    *fn = '\0';
 

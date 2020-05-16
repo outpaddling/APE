@@ -28,8 +28,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "twintk.h"
-#include "bacon.h"
+#include <twintk.h>
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 
@@ -212,7 +212,7 @@ void    find_string(file_t *file, char *string, opt_t *options, buff_t *cut_buff
 
     /* Get string to search for */
     status = panel_get_string(file, options, SEARCH_STR_LEN,
-			    "Search for? ", "", string);
+			    "Search for? ", "", TWC_VERBATIM, string);
     
     if (TW_EXIT_KEY(status) == TWC_INPUT_DONE)
     {
@@ -286,8 +286,7 @@ int     resume_old_search;
     if (resume_old_search || TW_EXIT_KEY(status) == TWC_INPUT_DONE)
     {
 	/* Initialize for search and replace */
-	start_line = file->start_line;  /* 0 if this file hasn't been
-					 * searched */
+	start_line = file->start_line;
 	TW_RESTORE_WIN(file->window);
 	response = ' ';         /* (y/n/q) */
 	start_col = ACTUAL_COL(file);
@@ -352,6 +351,10 @@ int     resume_old_search;
 		/* Shouldn't be needed - strlen()+1 should do it,
 		   but fails when replacing string and eoln */
 		file->line[file->curline].buff[len] = '\0';
+		
+		/* If line has shrunk, start_col may no longer be valid */
+		if ( file->curline == start_line )
+		    start_col = MIN(start_col, len);
 
 		/* Capitalize replace_string if necessary */
 		for (fl=replace_str[choice];
@@ -491,7 +494,8 @@ buff_t *cut_buff;
 	}
 	check_search_wrap(file, options, line, (cur - file->line[line].buff));
 	len = compare(cur, string, options);
-    } while ((len == 0) && (cur != file->line[start_line].buff + start_col));
+    }   while ((len == 0) &&
+	    (cur != file->line[start_line].buff + start_col));
 
     if ( len )
     {
@@ -600,7 +604,7 @@ void    grep_headers(file_t *file, opt_t *options)
     int     status;
 
     status = panel_get_string(file, options, TWC_SPEC_LEN,
-	"Enter egrep pattern: ", "", grep_str);
+	"Enter egrep pattern: ", "", TWC_VERBATIM, grep_str);
     if ( (status != TWC_INPUT_CANCEL) && (grep_str[0] != '\0') )
     {
 	/* Don't search /usr/include twice */
@@ -623,7 +627,7 @@ void    search_libs(file_t *file, opt_t *options)
     int     status;
 
     status = panel_get_string(file, options, SEARCH_STR_LEN,
-			    "Enter egrep pattern: ", "", symbol);
+			    "Enter egrep pattern: ", "", TWC_VERBATIM, symbol);
     if ( (status != TWC_INPUT_CANCEL) && (symbol[0] != '\0') )
     {
 	if (strblank(options->lib_path))
@@ -690,7 +694,7 @@ int     wsmemcmp(char *buff,char *str)
 {
     char    *b = buff;
     
-    while ( (*b == *str) && (*b != '\0') && (*str != '\0') )
+    while ( (*b != '\0') && (*str != '\0') && (*b == *str) )
     {
 	if ( isspace(*b) )
 	{
@@ -720,14 +724,15 @@ int     wsmemcmp(char *buff,char *str)
 /**********************************************************************
   wsimemcmp():   Whitespace-independent memory comparison
   Description:      
-	See if location buff matches str, treating multiple
-	whitespace characters as one.  All chars to the end
-	of str must be matched, but any portion of buff is sufficient.
+	See if location buff matches str, treating multiple whitespace
+	characters as one.  All chars to the end of str must be matched,
+	but any portion of buff from the beginning is sufficient.
 	I.e., str must match some or all of the beginning of buff.
   Arguments:
-	buff:   
-	str:    The nul-terminated string to look for
+	buff:   The nul-terminated buffer in which str must be matched.
+	str:    The nul-terminated string to look for.
   Return values:
+	Number of characters matched in buff, including spaces
 	
  **********************************************************************/
 
@@ -736,9 +741,9 @@ int     wsmemicmp(char *buff,char *str)
 {
     char    *b = buff;
     
-    while ( (tolower(*b) == tolower(*str)) &&
-	    (*b != '\0') && (*str != '\0') )
+    while ( (*b != '\0') && (*str != '\0') && (tolower(*b) == tolower(*str)) )
     {
+	/* Check either b or str, they are the same */
 	if ( isspace(*b) )
 	{
 	    /* Eat additional whitespace */

@@ -46,20 +46,20 @@ int
 lang_t *old_lang, *new_lang;
 
 {
-    char    old_ext[EXT_LEN + 1], new_ext[EXT_LEN + 1], config_dir[PATH_LEN + 1],
-	    from[PATH_LEN + 1], to[PATH_LEN + 1];
+    char    old_ext[EXT_LEN + 1], new_ext[EXT_LEN + 1], config_dir[PATH_MAX + 1],
+	    from[PATH_MAX + 1], to[PATH_MAX + 1];
 
-    strlcpy(old_ext, old_lang->name_spec, EXT_LEN);
-    strlcpy(new_ext, new_lang->name_spec, EXT_LEN);
+    strlcpy(old_ext, old_lang->name_spec, SPEC_LEN);
+    strlcpy(new_ext, new_lang->name_spec, SPEC_LEN);
     strtok(old_ext, " ");
     strtok(new_ext, " ");
     if (strcmp(old_ext, new_ext) != 0)
     {
-	if (get_config_dir(config_dir, PATH_LEN) != NULL)
+	if (get_config_dir(config_dir, PATH_MAX) != NULL)
 	{
 	    /* Skip '.' by adding one to pointer */
-	    snprintf(from, PATH_LEN, "%s/macros/%s", config_dir, old_ext + 1);
-	    snprintf(to, PATH_LEN, "%s/macros/%s", config_dir, new_ext + 1);
+	    snprintf(from, PATH_MAX, "%s/macros/%s", config_dir, old_ext + 1);
+	    snprintf(to, PATH_MAX, "%s/macros/%s", config_dir, new_ext + 1);
 	    rename(from, to);
 	}
     }
@@ -74,6 +74,7 @@ opt_t  *options;
 {
     int     options_ok,
 	    status;
+    size_t  len;
     tw_panel_t panel = TWC_PANEL_INIT;
     win_t  *win;
     lang_t  old_opt;
@@ -94,8 +95,8 @@ opt_t  *options;
     tw_init_string(&panel, 2, 2, LANG_ID_LEN, 15, TWC_VERBATIM,
 		   "Language name:   ",
 		   " Common name of the language. (Case sensitive) ",
-		   file->lang->name);
-    tw_init_string(&panel, 2, 35, EXT_LEN, 23,
+		   file->lang->lang_name);
+    tw_init_string(&panel, 2, 35, SPEC_LEN, 23,
 		    TWC_VERBATIM, "File spec(s): ",
 	    " Filespec matching source file name, e.g. '*.c', 'Makefile'. ",
 		   file->lang->name_spec);
@@ -103,8 +104,8 @@ opt_t  *options;
 		   "Language ID:     ",
 		   " Comment on first line of script identifying language. ",
 		   file->lang->id_comment);
-    tw_init_string(&panel, 4, 2, TWC_FILENAME_LEN, TW_COLS(win) - 21, TWC_VERBATIM, "Compiler:        ",
-		   " Compile command name. ", file->lang->compiler);
+    tw_init_string(&panel, 4, 2, PATH_MAX, TW_COLS(win) - 21, TWC_VERBATIM, "Compiler:        ",
+		   " Compile command name. ", file->lang->compiler_cmd);
     tw_init_string(&panel, 5, 2, OPTION_LEN, TW_COLS(win) - 21, TWC_VERBATIM, "Compile options: ",
     " Compiler options preceding source file name in all compile commands. ",
 		   file->lang->compile_flags);
@@ -118,18 +119,18 @@ opt_t  *options;
     tw_init_string(&panel, 8, 2, SYNTAX_CHECK_LEN, TW_COLS(win) - 21, TWC_VERBATIM, "Syntax check:    ",
 		   " Compiler options to run syntax check only. ",
 		   file->lang->syntax_check_flag);
-    tw_init_string(&panel, 9, 2, TWC_FILENAME_LEN, TW_COLS(win) - 21,
+    tw_init_string(&panel, 9, 2, PATH_MAX, TW_COLS(win) - 21,
 		   TWC_VERBATIM, "Run prefix:      ",
 		   " Command preceding executable name in execute command. ",
 		   file->lang->run_prefix);
-    tw_init_string(&panel, 10, 2, TWC_FILENAME_LEN, TW_COLS(win) - 21,
+    tw_init_string(&panel, 10, 2, PATH_MAX, TW_COLS(win) - 21,
 		   TWC_VERBATIM, "Upload prefix:   ",
 		   " Command preceding executable name in upload command. ",
 		   file->lang->upload_prefix);
     tw_init_string(&panel, 11, 2, ERR_FORMAT_LEN, TW_COLS(win) - 21, TWC_VERBATIM, "Error format:    ",
 	 " \\fn=filename, \\ln=line #, \\te=message, \\ig=text to ignore. ",
 		   file->lang->error_msg_format);
-    tw_init_string(&panel, 12, 2, TWC_FILENAME_LEN, TW_COLS(win) - 21, TWC_VERBATIM, "Executable name: ",
+    tw_init_string(&panel, 12, 2, PATH_MAX, TW_COLS(win) - 21, TWC_VERBATIM, "Executable name: ",
 	 " \\fn = source file name, \\st = source name without extension. ",
 		   file->lang->executable_name);
     tw_init_enum(&panel, 13, 2, EXE_SRC_LEN, exe_options, "Compiler output: ",
@@ -173,7 +174,7 @@ opt_t  *options;
     file->lang->auto_wrap = (strcmp(auto_wrap, "Yes") == 0);
 
     /* Check for changes */
-    if (strcmp(old_opt.compiler, file->lang->compiler) ||
+    if (strcmp(old_opt.compiler_cmd, file->lang->compiler_cmd) ||
 	strcmp(old_opt.compile_flags, file->lang->compile_flags) ||
 	strcmp(old_opt.link_flags, file->lang->link_flags) ||
 	strcmp(old_opt.executable_name, file->lang->executable_name) ||
@@ -181,10 +182,12 @@ opt_t  *options;
     {
 	file->lang_rebuild = TRUE;
     }
+    
     /* Remove leading whitespace from name_spec */
     for (p = file->lang->name_spec; isspace(*p); ++p)
 	;
-    strlcpy(file->lang->name_spec, p, EXT_LEN);
+    len = strlen(p);
+    memmove(file->lang->name_spec, p, len+1);
 
     /*
      * Macros directory is named after first extension.  See if it changed.
@@ -208,14 +211,14 @@ opt_t  *options;
 
 void    check_compiler_options(lang_t * lang, lang_t * old)
 {
-    if ((strcmp(lang->compiler, old->compiler) != 0) &&
+    if ((strcmp(lang->compiler_cmd, old->compiler_cmd) != 0) &&
 	(strcmp(lang->error_msg_format, old->error_msg_format) == 0))
     {
-	if ((strcmp(lang->compiler, "gcc") == 0) ||
-	    (strcmp(lang->compiler, "g++") == 0))
+	if ((strcmp(lang->compiler_cmd, "gcc") == 0) ||
+	    (strcmp(lang->compiler_cmd, "g++") == 0))
 	    strlcpy(lang->error_msg_format, GCC_ERROR_FORMAT, ERR_FORMAT_LEN);
-	else if ((strcmp(lang->compiler, "cc") == 0) ||
-		 (strcmp(lang->compiler, "c++") == 0))
+	else if ((strcmp(lang->compiler_cmd, "cc") == 0) ||
+		 (strcmp(lang->compiler_cmd, "c++") == 0))
 	    strlcpy(lang->error_msg_format, ERROR_FORMAT, ERR_FORMAT_LEN);
     }
 }
@@ -269,13 +272,13 @@ int     read_lang(char *lang_file, lang_t *lang)
 	while (isspace(*p))
 	    ++p;
 	if (strcmp(name, "name") == 0)
-	    strlcpy(lang->name, p, LANG_NAME_LEN);
+	    strlcpy(lang->lang_name, p, LANG_NAME_LEN);
 	else if (strcmp(name, "name_spec") == 0)
-	    strlcpy(lang->name_spec, p, EXT_LEN);
+	    strlcpy(lang->name_spec, p, SPEC_LEN);
 	else if (strcmp(name, "id_comment") == 0)
 	    strlcpy(lang->id_comment, p, LANG_ID_LEN);
 	else if (strcmp(name, "compiler") == 0)
-	    strlcpy(lang->compiler, p, TWC_FILENAME_LEN);
+	    strlcpy(lang->compiler_cmd, p, PATH_MAX);
 	else if (strcmp(name, "compile_flags") == 0)
 	    strlcpy(lang->compile_flags, p, OPTION_LEN);
 	else if (strcmp(name, "compile_output_flag") == 0)
@@ -291,17 +294,17 @@ int     read_lang(char *lang_file, lang_t *lang)
 	else if (strcmp(name, "link_flags") == 0)
 	    strlcpy(lang->link_flags, p, OPTION_LEN);
 	else if (strcmp(name, "debugger") == 0)
-	    strlcpy(lang->debugger, p, TWC_FILENAME_LEN);
+	    strlcpy(lang->debugger_cmd, p, PATH_MAX);
 	else if (strcmp(name, "debugger_flags") == 0)
 	    strlcpy(lang->debugger_flags, p, OPTION_LEN);
 	else if (strcmp(name, "debugger_backtrace_cmd") == 0)
 	    strlcpy(lang->debugger_backtrace_cmd, p, BACKTRACE_LEN);
 	else if (strcmp(name, "run_prefix") == 0)
-	    strlcpy(lang->run_prefix, p, TWC_FILENAME_LEN);
+	    strlcpy(lang->run_prefix, p, PATH_MAX);
 	else if (strcmp(name, "upload_prefix") == 0)
-	    strlcpy(lang->upload_prefix, p, TWC_FILENAME_LEN);
+	    strlcpy(lang->upload_prefix, p, PATH_MAX);
 	else if (strcmp(name, "executable_name") == 0)
-	    strlcpy(lang->executable_name, p, TWC_FILENAME_LEN);
+	    strlcpy(lang->executable_name, p, PATH_MAX);
 	else if (strcmp(name, "executable_source") == 0)
 	    strlcpy(lang->executable_spec, p, EXE_SRC_LEN);
 	else if (strcmp(name, "error_msg_format") == 0)
@@ -337,16 +340,16 @@ int     read_language_opts(lang_t **head)
 {
     lang_t  temp, *lang;
     long    status;
-    char    language_parent_dir[PATH_LEN+1],
-	    lang_dir[PATH_LEN+1],
-	    filename[PATH_LEN+1];
+    char    language_parent_dir[PATH_MAX+1],
+	    lang_dir[PATH_MAX+1],
+	    filename[PATH_MAX+1];
     DIR     *dp;
     struct dirent *dir_entry;
     struct stat     st;
     extern term_t *Terminal;
     
     /* For each directory under Languages, read language opts and syntax opts */
-    get_language_parent_dir(language_parent_dir,PATH_LEN); 
+    get_language_parent_dir(language_parent_dir,PATH_MAX); 
     dp = opendir(language_parent_dir);
     if ( dp != NULL ) 
     {
@@ -354,7 +357,7 @@ int     read_language_opts(lang_t **head)
 	{ 
 	    if ( dir_entry->d_name[0] != '.' )
 	    {
-		snprintf(lang_dir, PATH_LEN, "%s/%s",
+		snprintf(lang_dir, PATH_MAX, "%s/%s",
 		    language_parent_dir, dir_entry->d_name);
 		if ( stat(lang_dir, &st) != 0 )
 		{
@@ -364,14 +367,14 @@ int     read_language_opts(lang_t **head)
 		}
 		if ( S_ISDIR(st.st_mode) )
 		{
-		    snprintf(filename, PATH_LEN, "%s/%s/language_opts",
+		    snprintf(filename, PATH_MAX, "%s/%s/language_opts",
 			language_parent_dir, dir_entry->d_name);
 		    
 		    if ( (status = read_lang(filename, &temp)) == 0 )
 		    {
 			lang = MALLOC(1, lang_t);
 			*lang = temp;
-			snprintf(filename, PATH_LEN, "%s/%s/syntax_highlighting",
+			snprintf(filename, PATH_MAX, "%s/%s/syntax_highlighting",
 			    language_parent_dir, dir_entry->d_name);
 			synhigh_load_opts(filename, lang);
 			lang->next = *head;
@@ -396,25 +399,25 @@ int     read_language_opts(lang_t **head)
 int     save_language(lang_t *lang)
 
 {
-    char    lang_dir[PATH_LEN+1],
-	    lang_file[PATH_LEN+1];
+    char    lang_dir[PATH_MAX+1],
+	    lang_file[PATH_MAX+1];
     FILE    *fp;
     
     if ( lang == NULL )
 	return NO_LANGUAGE_OPTS;
 
-    if ( get_language_dir(lang,lang_dir,PATH_LEN) == 0 )
+    if ( get_language_dir(lang,lang_dir,PATH_MAX) == 0 )
     {
-	snprintf(lang_file, PATH_LEN, "%s/language_opts", lang_dir);
+	snprintf(lang_file, PATH_MAX, "%s/language_opts", lang_dir);
 	/* Create language dir if it doesn't already exist. */
 	mkdir(lang_dir,0777);
 	fp = fopen(lang_file, "w");
 	if ( fp != NULL )
 	{
-	    fprintf(fp, "name                    %s\n", lang->name);
+	    fprintf(fp, "name                    %s\n", lang->lang_name);
 	    fprintf(fp, "name_spec               %s\n", lang->name_spec);
 	    fprintf(fp, "id_comment              %s\n", lang->id_comment);
-	    fprintf(fp, "compiler                %s\n", lang->compiler);
+	    fprintf(fp, "compiler                %s\n", lang->compiler_cmd);
 	    fprintf(fp, "compile_flags           %s\n", lang->compile_flags);
 	    fprintf(fp, "compile_output_flag     %s\n", lang->compile_output_flag);
 	    fprintf(fp, "syntax_check_flag       %s\n", lang->syntax_check_flag);
@@ -422,7 +425,7 @@ int     save_language(lang_t *lang)
 	    fprintf(fp, "compile_to_asm_flag     %s\n", lang->compile_to_asm_flag);
 	    fprintf(fp, "preprocess_only_flag    %s\n", lang->preprocess_only_flag);
 	    fprintf(fp, "link_flags              %s\n", lang->link_flags);
-	    fprintf(fp, "debugger                %s\n", lang->debugger);
+	    fprintf(fp, "debugger                %s\n", lang->debugger_cmd);
 	    fprintf(fp, "debugger_flags          %s\n", lang->debugger_flags);
 	    fprintf(fp, "debugger_backtrace_cmd  %s\n", lang->debugger_backtrace_cmd);
 	    fprintf(fp, "run_prefix              %s\n", lang->run_prefix);
@@ -435,7 +438,7 @@ int     save_language(lang_t *lang)
 	    fclose(fp);
 	}
 	else
-	    sprintw(2,50,"Error saving language options for %s.",lang->name);
+	    sprintw(2,50,"Error saving language options for %s.",lang->lang_name);
 	
 	synhigh_save_opts(lang_dir, lang);
     }
@@ -480,15 +483,18 @@ int     multispec_match(char *name_spec, char *str, int flags)
 lang_t *get_bop(file_t * file, lang_t * head)
 {
     lang_t *lang = head;
-    char    first_line[64], *p;
+    char    first_line[MAX_LINE_LEN + 1], *p;
+    size_t  len;
 
     /* First check language ID if it exists. */
     if (memcmp(file->line[0].buff, "#!", 2) == 0)
     {
 	/* Remove whitespace following #! if present */
-	strlcpy(first_line, file->line[0].buff, 63);
-	for (p = first_line + 2; isspace(*p); ++p);
-	strlcpy(first_line + 2, p, 63);
+	strlcpy(first_line, file->line[0].buff, MAX_LINE_LEN);
+	/* Don't set p within first_line, unsafe for strlcpy to overlap */
+	for (p = file->line[0].buff + 2; isspace(*p); ++p)
+	    ;
+	strlcpy(first_line + 2, p, MAX_LINE_LEN - 2);
 
 	/* Find matching language ID */
 	while ((lang != NULL) && ((*lang->id_comment == '\0') ||
@@ -525,8 +531,7 @@ char   *filename;
 }
 
 
-lang_t *
-	add_language(
+lang_t *add_language(
 		lang_t * head,
 		char  *name,
 		char  *name_spec,
@@ -554,27 +559,27 @@ lang_t *
     temp = MALLOC(1, lang_t);
     if (temp != NULL)
     {
-	strlcpy(temp->name, name, LANG_NAME_LEN);
-	strlcpy(temp->name_spec, name_spec, EXT_LEN);
+	strlcpy(temp->lang_name, name, LANG_NAME_LEN);
+	strlcpy(temp->name_spec, name_spec, SPEC_LEN);
 	strlcpy(temp->id_comment, id_comment, LANG_ID_LEN);
-	strlcpy(temp->compiler, compiler, OPTION_LEN);
-	strlcpy(temp->compile_only_flag, compile_only_flag,
-		COMPILE_ONLY_LEN);
+	strlcpy(temp->compiler_cmd, compiler, PATH_MAX);
 	strlcpy(temp->compile_flags, compile_flags, OPTION_LEN);
-	strlcpy(temp->link_flags, link_flags, OPTION_LEN);
-	strlcpy(temp->syntax_check_flag, syntax_check_flag, SYNTAX_CHECK_LEN);
-	strlcpy(temp->debugger, debugger, OPTION_LEN);
-	strlcpy(temp->debugger_flags, debugger_flags, OPTION_LEN);
-	strlcpy(temp->run_prefix, run_prefix, OPTION_LEN);
-	strlcpy(temp->error_msg_format, error_msg_format, ERR_FORMAT_LEN);
-	strlcpy(temp->executable_name, executable_name, TWC_FILENAME_LEN);
+	strlcpy(temp->compile_only_flag, compile_only_flag, COMPILE_ONLY_LEN);
 	strlcpy(temp->compile_output_flag, compile_output_flag, OUTPUT_FLAG_LEN);
-	strlcpy(temp->executable_spec, executable_spec, EXE_SRC_LEN);
-	temp->auto_wrap = auto_wrap;
+	strlcpy(temp->syntax_check_flag, syntax_check_flag, SYNTAX_CHECK_LEN);
 	strlcpy(temp->compile_to_asm_flag, compile_to_asm_flag, OPTION_LEN);
 	strlcpy(temp->preprocess_only_flag, preprocess_only_flag, OPTION_LEN);
-	strlcpy(temp->upload_prefix, upload_prefix, TWC_FILENAME_LEN);
-	strlcpy(temp->debugger_backtrace_cmd, debugger_backtrace_cmd, BACKTRACE_LEN);
+	strlcpy(temp->link_flags, link_flags, OPTION_LEN);
+	strlcpy(temp->debugger_cmd, debugger, PATH_MAX);
+	strlcpy(temp->debugger_flags, debugger_flags, OPTION_LEN);
+	strlcpy(temp->debugger_backtrace_cmd, debugger_backtrace_cmd,
+	    BACKTRACE_LEN);
+	strlcpy(temp->run_prefix, run_prefix, PATH_MAX);
+	strlcpy(temp->upload_prefix, upload_prefix, PATH_MAX);
+	strlcpy(temp->executable_name, executable_name, PATH_MAX);
+	strlcpy(temp->executable_spec, executable_spec, EXE_SRC_LEN);
+	strlcpy(temp->error_msg_format, error_msg_format, ERR_FORMAT_LEN);
+	temp->auto_wrap = auto_wrap;
 
 	temp->patterns[0] = NULL;
 	temp->next = head;
@@ -606,10 +611,10 @@ lang_t **head;
 void
 	init_lang(lang_t * lang)
 {
-    *lang->name = '\0';
+    *lang->lang_name = '\0';
     *lang->name_spec = '\0';
     *lang->id_comment = '\0';
-    *lang->compiler = '\0';
+    *lang->compiler_cmd = '\0';
     *lang->compile_flags = '\0';
     *lang->compile_output_flag = '\0';
     *lang->syntax_check_flag = '\0';
@@ -617,7 +622,7 @@ void
     *lang->compile_to_asm_flag = '\0';
     *lang->preprocess_only_flag = '\0';
     *lang->link_flags = '\0';
-    *lang->debugger = '\0';
+    *lang->debugger_cmd = '\0';
     *lang->debugger_flags = '\0';
     *lang->debugger_backtrace_cmd = '\0';
     *lang->run_prefix = '\0';

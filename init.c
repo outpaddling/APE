@@ -34,8 +34,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include "twintk.h"
-#include "bacon.h"
+#include <twintk.h>
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 
@@ -108,12 +108,12 @@ opt_t  *options;
 {
     extern int  errno;
     int     aw = NO_FILES, arg, a;
-    char    startup_dir[PATH_LEN + 1],
+    char    startup_dir[PATH_MAX + 1],
 	    *buttons[2] = OK_BUTTON;
 
     if (argc > 1)
     {
-	if ( getcwd(startup_dir, PATH_LEN) == NULL )
+	if ( getcwd(startup_dir, PATH_MAX) == NULL )
 	{
 	    popup_mesg(strerror(errno),buttons,options);
 	}
@@ -122,15 +122,15 @@ opt_t  *options;
 	    if (*argv[arg] != '-')
 	    {
 		chdir(startup_dir);     /* Open file may do a chdir() */
-		if ((a = open_file(files, argv[arg], options)) != CANT_OPEN)
+		if ((a = open_file(files, argv[arg], options, OPEN_FLAG_NORMAL)) != CANT_OPEN)
 		    aw = a;
 	    }
 	}
 	if (aw == NO_FILES)
-	    aw = open_file(files, "untitled", options);
+	    aw = open_file(files, "untitled", options, OPEN_FLAG_NORMAL);
     }
     else
-	aw = open_file(files, "untitled", options);
+	aw = open_file(files, "untitled", options, OPEN_FLAG_NORMAL);
     return aw;
 }
 
@@ -177,10 +177,10 @@ opt_t   *options;
 void    check_hostname()
 
 {
-    static char legal_host[PATH_LEN + 1] = "Change this";
-    char    this_host[PATH_LEN + 1];
+    static char legal_host[PATH_MAX + 1] = "Change this";
+    char    this_host[PATH_MAX + 1];
 
-    gethostname(this_host, PATH_LEN);
+    gethostname(this_host, PATH_MAX);
     if (strcmp(this_host, legal_host) != 0)
     {
 	fprintf(stderr, "Warning: APE is not legally installed on %s.\n",
@@ -217,13 +217,13 @@ char    *argv[];
 int     init_xterm()
 
 {
-    char    *display_name, *window_str, home[PATH_LEN+1],
-	    xdefaults[PATH_LEN+1];
+    char    *display_name, *window_str, home[PATH_MAX+1],
+	    xdefaults[PATH_MAX+1];
     struct stat st;
     
     /* Set up .Xdefaults if it doesn't exist */
-    get_home_dir(home,PATH_LEN);
-    snprintf(xdefaults,PATH_LEN,"%s/.Xdefaults",home);
+    get_home_dir(home,PATH_MAX);
+    snprintf(xdefaults,PATH_MAX,"%s/.Xdefaults",home);
     if ( stat(xdefaults,&st) == -1 )
 	if ( spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"xapedefaults",NULL) != 0 )
 	{

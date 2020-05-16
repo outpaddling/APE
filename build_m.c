@@ -83,7 +83,7 @@ event_t *event;
 	case 'a':
 	    if ( check_build_opts(files+*af_ptr) != NULL )
 	    {
-		char    out_filename[PATH_LEN+1], *p;
+		char    out_filename[PATH_MAX+1], *p;
 	
 		status = compile_prog(files, *af_ptr, errfile, options, ASSEMBLY);
 		edit_border(files+*af_ptr, options);
@@ -92,10 +92,10 @@ event_t *event;
 		else
 		{
 		    /* Open assembly file */
-		    strlcpy(out_filename, files[*af_ptr].source, PATH_LEN);
+		    strlcpy(out_filename, files[*af_ptr].source, PATH_MAX);
 		    if ( (p=strrchr(out_filename, '.')) != NULL )
-			strbasecpy(p, ".s", out_filename, PATH_LEN);
-		    if ( (c = open_file(files+*af_ptr, out_filename, options)) >= 0 )
+			strbasecpy(p, ".s", out_filename, PATH_MAX);
+		    if ( (c = open_file(files+*af_ptr, out_filename, options, OPEN_FLAG_NORMAL)) >= 0 )
 			*af_ptr = c;
 		}
 	    }
@@ -140,7 +140,7 @@ event_t *event;
 		set_makefile(project, "makefile", files+*af_ptr, options);
 	    else
 		panel_get_string(files+*af_ptr, options, CMD_LEN,
-		    "Command? ", "", files[*af_ptr].run_cmd);
+		    "Command? ", "", TWC_VERBATIM, files[*af_ptr].run_cmd);
 	    break;
 	case 'm':
 	    if ( stat("makefile", &mkst) == 0 )
@@ -220,13 +220,13 @@ void    create_build_menu(char *build_text[], proj_t *project, lang_t *lang)
     if ( ACTIVE_PROJ(project) || ((lang != NULL) && compiled_language(lang)) )
 	build_text[c++] = ".View compiler errors";
     
-    if ( (lang != NULL) && !strblank(lang->debugger) )
+    if ( (lang != NULL) && !strblank(lang->debugger_cmd) )
 	build_text[c++] = "Run .Debugger";
     
     if ( (lang != NULL) && !strblank(lang->debugger_backtrace_cmd) )
 	build_text[c++] = "View function call .trace";
     
-    if ( (lang != NULL) && !strblank(lang->debugger) )
+    if ( (lang != NULL) && !strblank(lang->debugger_cmd) )
 	build_text[c++] = "View e.Xecution profile";
     
     if ( line_c != c )
@@ -246,22 +246,22 @@ char    *trace_cmd;
 opt_t   *options;
 
 {
-    char    *exe, core[TWC_FILENAME_LEN+1], cmd[CMD_LEN+1], *argv[MAX_ARGS],
-	    command_file[PATH_LEN+1], debugger[TWC_FILENAME_LEN+1],
+    char    *exe, core[PATH_MAX+1], cmd[CMD_LEN+1], *argv[MAX_ARGS],
+	    command_file[PATH_MAX+1], debugger[PATH_MAX+1],
 	    *ok_button[2] = OK_BUTTON, *file_names[TWC_MAX_FILENAMES+1],
 	    *stdout_file = NULL;
     struct stat corestat;
     int     status, c, fd;
     FILE    *fp;
     
-    if ( (file->lang == NULL) || (*file->lang->debugger == '\0') )
+    if ( (file->lang == NULL) || (*file->lang->debugger_cmd == '\0') )
     {
 	popup_mesg("No debugger configured for this language.",
 		    ok_button, options);
 	return;
     }
     
-    strlcpy(debugger, file->lang->debugger, TWC_FILENAME_LEN);
+    strlcpy(debugger, file->lang->debugger_cmd, PATH_MAX);
     
     /* Make sure build options exist */
     if ( check_build_opts(file) == NULL )
@@ -270,7 +270,7 @@ opt_t   *options;
     /* Set up GDB start command if needed */
     if ( trace_cmd != NULL )
     {
-	strlcpy(command_file, ".ape_cmd_file.XXXXX", PATH_LEN);
+	strlcpy(command_file, ".ape_cmd_file.XXXXX", PATH_MAX);
 	stdout_file = command_file;
 	if ( (fd = mkstemp(command_file)) != -1 )
 	{
@@ -280,7 +280,7 @@ opt_t   *options;
 		/* db[xX]tra assumes stdin is a tty and will fail */
 		/* Fall back to dbx, which is redirectable */
 		if ( stricmp(debugger, "dbxtra") == 0 )
-		    strlcpy(debugger, "dbx", TWC_FILENAME_LEN);
+		    strlcpy(debugger, "dbx", PATH_MAX);
 #endif
 		fprintf(fp, "%s\n", trace_cmd);
 		fclose(fp);
@@ -310,7 +310,7 @@ opt_t   *options;
     else
     {
 	/* FreeBSD names core file <prog>.core */
-	snprintf(core, TWC_FILENAME_LEN, "%s.core", exe);
+	snprintf(core, PATH_MAX, "%s.core", exe);
 	if ( stat(core, &corestat) == 0 )
 	    strlcat(cmd, core, CMD_LEN);
 	else
@@ -324,7 +324,7 @@ opt_t   *options;
 		case    0:
 		    break;
 		case    1:
-		    strlcpy(core, file_names[0], TWC_FILENAME_LEN);
+		    strlcpy(core, file_names[0], PATH_MAX);
 		    if ( stat(core, &corestat) == 0 )
 			strlcat(cmd, core, CMD_LEN);
 		    else if ( trace_cmd != NULL )
@@ -344,7 +344,7 @@ opt_t   *options;
     begin_full_screen();
     status = spawnvp(P_WAIT, P_ECHO, argv, stdout_file, NULL, NULL);
     check_stat(status, argv[0]);
-    if ( command_file != NULL )
+    if ( *command_file != '\0' )
     {
 	putchar('\n');
     }
@@ -374,12 +374,12 @@ out_t   output;
     switch(output)
     {
 	case    OBJECT:
-	    snprintf(cmd, CMD_LEN, "%s %s %s %s", files[af].lang->compiler,
+	    snprintf(cmd, CMD_LEN, "%s %s %s %s", files[af].lang->compiler_cmd,
 		files[af].lang->compile_only_flag,
 		files[af].lang->compile_flags, files[af].source);
 	    break;
 	case    ASSEMBLY:
-	    snprintf(cmd, CMD_LEN, "%s %s %s %s", files[af].lang->compiler,
+	    snprintf(cmd, CMD_LEN, "%s %s %s %s", files[af].lang->compiler_cmd,
 		files[af].lang->compile_to_asm_flag,
 		files[af].lang->compile_flags,
 		files[af].source);
@@ -669,7 +669,7 @@ opt_t *options;
 {
     char    cmd[CMD_LEN + 1] = "",
 	    *argv[MAX_ARGS],
-	    obj[PATH_LEN+1],
+	    obj[PATH_MAX+1],
 	    *p,
 	    *executable;
     int     stat = 0;
@@ -678,7 +678,7 @@ opt_t *options;
     if (*project->makefile == '\0')
     {
 	executable = files[af].executable;
-	strlcpy(obj, files[af].source, PATH_LEN);
+	strlcpy(obj, files[af].source, PATH_MAX);
 	if ( (p = strrchr(obj, '.')) != NULL )
 	    strlcpy(p, ".o", 3);
 	snprintf(cmd, CMD_LEN, "rm -f %s %s", executable, obj);
@@ -730,6 +730,7 @@ opt_t *options;
     if (*project->makefile == '\0')
     {
 	sprintw(2, TWC_ST_LEN, "Sorry, no Makefile.");
+	return 0;
     }
     else
     {
@@ -769,20 +770,20 @@ char   *cmd, **outfile;
 	    *cmd = '\0';
 	else if ( strcmp(file->lang->executable_spec, "Command Line Flag") == 0 )
 	{
-	    snprintf(cmd, CMD_LEN, "%s %s %s %s%s %s", file->lang->compiler,
+	    snprintf(cmd, CMD_LEN, "%s %s %s %s%s %s", file->lang->compiler_cmd,
 		file->lang->compile_flags, file->source, 
 		file->lang->compile_output_flag,
 		file->executable, file->lang->link_flags);
 	}
 	else if ( strcmp(file->lang->executable_spec, "Fixed") == 0 )
 	{
-	    snprintf(cmd, CMD_LEN, "%s %s %s %s", file->lang->compiler,
+	    snprintf(cmd, CMD_LEN, "%s %s %s %s", file->lang->compiler_cmd,
 		file->lang->compile_flags, file->source,
 		file->lang->link_flags);
 	}
 	else if ( strcmp(file->lang->executable_spec, "Standard Output") == 0 )
 	{
-	    snprintf(cmd, CMD_LEN, "%s %s %s %s", file->lang->compiler,
+	    snprintf(cmd, CMD_LEN, "%s %s %s %s", file->lang->compiler_cmd,
 		file->lang->compile_flags, file->source,
 		file->lang->link_flags);
 	    *outfile = file->executable;
@@ -815,13 +816,13 @@ void    set_makefile(proj_t *project, char *makefile, file_t *file,
     tw_init_string(&panel, 2, 2, CMD_LEN, 40, TWC_VERBATIM,
 	"Make command:    ",
 	    " Name of make command (make, gmake, etc.) ", project->make_cmd);
-    tw_init_string(&panel, 3, 2, TWC_FILENAME_LEN, 40, TWC_VERBATIM,
+    tw_init_string(&panel, 3, 2, PATH_MAX, 40, TWC_VERBATIM,
 	"Makefile:        ",
 	    " Enter name of makefile in the current directory. ", project->makefile);
-    tw_init_string(&panel, 4, 2, TWC_FILENAME_LEN, 40, TWC_VERBATIM,
+    tw_init_string(&panel, 4, 2, PATH_MAX, 40, TWC_VERBATIM,
 	"Executable:      ",
 	    " Name of executable produced by makefile. ", project->executable);
-    tw_init_string(&panel, 5, 2, PATH_LEN, 40, TWC_VERBATIM,
+    tw_init_string(&panel, 5, 2, PATH_MAX, 40, TWC_VERBATIM,
 	"Directory:       ",
 	    " Directory where makefile is located. ", project->make_directory);
     tw_init_string(&panel, 6, 2, OPTION_LEN, 40, TWC_VERBATIM,
@@ -830,7 +831,8 @@ void    set_makefile(proj_t *project, char *makefile, file_t *file,
 	    project->make_args);
     tw_init_string(&panel, 7, 2, CMD_LEN, 40, TWC_VERBATIM,
 	"Run prefix:      ",
-	    " Prefixed to executable when running program. ", project->run_prefix);
+	    " Prefixed to executable when running program. ",
+	    project->run_prefix);
     tw_init_string(&panel, 8, 2, OPTION_LEN, 40, TWC_VERBATIM,
 	"Run Arguments:   ",
 	    " Command line arguments to executable.",
@@ -859,8 +861,8 @@ void    set_makefile(proj_t *project, char *makefile, file_t *file,
 void    init_makefile(proj_t *project,char *makefile,file_t *file,opt_t *options)
 
 {
-    strlcpy(project->make_cmd, "make", TWC_FILENAME_LEN);
-    strlcpy(project->makefile, makefile, TWC_FILENAME_LEN);
+    strlcpy(project->make_cmd, "make", PATH_MAX);
+    strlcpy(project->makefile, makefile, PATH_MAX);
     
     /*
      *  Attempt to parse makefile for executable name, etc.
@@ -870,8 +872,8 @@ void    init_makefile(proj_t *project,char *makefile,file_t *file,opt_t *options
     project->make_vars = 0;
     parse_makefile(project, project->makefile, options);
     
-    getcwd(project->make_directory,PATH_LEN);
-    strlcpy(project->run_prefix,"time",CMD_LEN);
+    getcwd(project->make_directory,PATH_MAX);
+    strlcpy(project->run_prefix,"time",PATH_MAX);
     set_makefile(project,"makefile",file,options);
 }
 
@@ -909,7 +911,7 @@ err_t   *errfile;
     /* Give user chance to save files or cancel */
     if (prompt_save_all(files,options) != 'c')
     {
-	snprintf(cmd,CMD_LEN, "%s %s %s %s", files[af].lang->compiler,
+	snprintf(cmd,CMD_LEN, "%s %s %s %s", files[af].lang->compiler_cmd,
 		files[af].lang->syntax_check_flag,
 		files[af].lang->compile_flags, files[af].source);
 	parse_cmd(argv, cmd);
@@ -937,7 +939,7 @@ int     preprocess(file_t files[], int af, opt_t *options)
 	if ( prompt_save_all(files,options) == 'c')
 	    return 0;
 	snprintf(cmd,CMD_LEN,"%s %s %s %s | uniq | more",    /* more -s? */
-	    files[af].lang->compiler, PP_OPTIONS,
+	    files[af].lang->compiler_cmd, PP_OPTIONS,
 	    files[af].lang->compile_flags, files[af].source);
 	meta_chars(cmd2,cmd,CMD_LEN);
 	status = run_command(P_WAIT,P_ECHO,cmd2,"sh");
@@ -957,12 +959,12 @@ char    *executable;
 
 {
     int     status,exe_status;
-    char    save_dir[PATH_LEN+1];
+    char    save_dir[PATH_MAX+1];
     struct stat stats;
     
     if ( *project->makefile != '\0' )
     {
-	getcwd(save_dir,PATH_LEN);
+	getcwd(save_dir,PATH_MAX);
 	chdir(project->make_directory);
     }
     exe_status = stat(executable,&stats);
@@ -1153,16 +1155,20 @@ void    add_make_var(proj_t *project, char *ident, char *p)
     project->make_var_names[project->make_vars] = strdup(ident);
     project->make_var_values[project->make_vars] = strdup(val);
     ++project->make_vars;
-    
-    /* Attempt to identify the main target of the Makefile */
-    if ( strcmp(ident, "LIB1") == 0 )
-	strlcpy(project->executable, val, TWC_FILENAME_LEN);
-    if ( strcmp(ident, "LIB") == 0 )
-	strlcpy(project->executable, val, TWC_FILENAME_LEN);
-    if ( strcmp(ident, "BIN1") == 0 )
-	strlcpy(project->executable, val, TWC_FILENAME_LEN);
-    if ( strcmp(ident, "BIN") == 0 )
-	strlcpy(project->executable, val, TWC_FILENAME_LEN);
+
+    /* First qualifying var is used as the executable */
+    if ( *project->executable == '\0' )
+    {
+	/* Attempt to identify the main target of the Makefile */
+	if ( strcmp(ident, "LIB1") == 0 )
+	    strlcpy(project->executable, val, PATH_MAX);
+	if ( strcmp(ident, "LIB") == 0 )
+	    strlcpy(project->executable, val, PATH_MAX);
+	if ( strcmp(ident, "BIN1") == 0 )
+	    strlcpy(project->executable, val, PATH_MAX);
+	if ( strcmp(ident, "BIN") == 0 )
+	    strlcpy(project->executable, val, PATH_MAX);
+    }
 }
 
 
@@ -1257,6 +1263,6 @@ void    parse_makefile(proj_t *project, char *makefile, opt_t *options)
 int     compiled_language(lang_t *lang)
 
 {
-    return ( (lang != NULL) && (*lang->compiler != '\0') );
+    return ( (lang != NULL) && (*lang->compiler_cmd != '\0') );
 }
 

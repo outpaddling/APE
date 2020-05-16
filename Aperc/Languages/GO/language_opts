@@ -1,6 +1,6 @@
-name                    BASH
-name_spec               *.bash*
-id_comment              #!/usr/bin/env bash
+name                    GO
+name_spec               *.go
+id_comment              
 compiler                
 compile_flags           
 compile_output_flag     
@@ -12,10 +12,10 @@ link_flags
 debugger                
 debugger_flags          
 debugger_backtrace_cmd  
-run_prefix              bash
+run_prefix              go run
 upload_prefix           
 executable_name         \fn
-executable_source       Fixed
+executable_source       
 error_msg_format        
 auto_wrap               0
 end_language

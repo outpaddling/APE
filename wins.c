@@ -29,8 +29,8 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <ctype.h>
-#include "twintk.h"
-#include "bacon.h"
+#include <twintk.h>
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 
@@ -190,7 +190,8 @@ win_t   *centered_panel_win(int rows, int cols, opt_t *options)
 
 
 int     panel_get_string(file_t *file, opt_t *options,
-	    size_t len, const char *prompt, const char *help, char *string)
+	    size_t len, const char *prompt, const char *help,
+	    tw_str_t string_type, char *string)
 
 {
     int     status;
@@ -199,7 +200,7 @@ int     panel_get_string(file_t *file, opt_t *options,
 
     /* Set up input window */
     win = centered_panel_win(7, 65, options);
-    tw_init_string(&panel, 2, 3, len, 40, TWC_VERBATIM,
+    tw_init_string(&panel, 2, 3, len, 40, string_type,
 		(char *)prompt, (char *)help, string);
 
     status = tw_input_panel(win, &panel, TW_LINES(win) - 3);

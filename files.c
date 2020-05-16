@@ -33,8 +33,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <time.h>
-#include "twintk.h"
-#include "bacon.h"
+#include <twintk.h>
+#include <bacon.h>
 #include "edit.h"
 #include "protos.h"
 
@@ -54,12 +54,12 @@ event_t *event;
 {
     extern term_t   *Terminal;
     extern win_t    *File_list;
-    char    path_name[PATH_LEN + 1] = "";
+    char    path_name[PATH_MAX + 1] = "";
     int     ch, af, cancel, start_row = 1;
     win_t  *file_pop;
-    static char *file_text[] = {".New",".Open file",/*".List files",*/".Close",
-				".Merge", ".Save (Ctrl+s)",
-				"Save .As",
+    static char *file_text[] = {".New",".Open file",//"Open .Encrypted file",
+				".Close", ".Merge", ".Save (Ctrl+s)",
+				"Save .As", //"Save Encr.Ypted",
 				TWC_HLINE,
 				".Toggle file (Ctrl+t)",
 				TWC_HLINE, ".View header file",
@@ -82,7 +82,7 @@ event_t *event;
 	    new_blank_file(files, af_ptr, options);
 	    break;
 	case 'o':
-	    if ((af = load_new_file('l', files, options)) != CANT_LOAD)
+	    if ((af = load_new_file('l', files, options, OPEN_FLAG_NORMAL)) != CANT_LOAD)
 		*af_ptr = af;
 	    break;
 #if 0
@@ -100,6 +100,8 @@ event_t *event;
 	    break;
 #endif
 	case 'e':
+	    /*if ((af = load_new_file('l', files, options, OPEN_FLAG_CRYPT)) != CANT_LOAD)
+		*af_ptr = af;*/
 	    break;
 	case 'c':
 	    /* Add filename to reopen list */
@@ -128,6 +130,8 @@ event_t *event;
 	    merge_file(files + af, path_name, options, cut_buff);
 	    chdir(files[af].cwd);
 	    break;
+	case 'y':
+	    //files[af].crypt = 1;
 	case 's':
 	    synhigh_update(files+af,files[af].curline,options,cut_buff);
 	    if (strcmp(files[af].source, "untitled") == 0)
@@ -162,15 +166,12 @@ event_t *event;
  * Prompt for a filename and open file
  **************************************/
 
-int     load_new_file(ch, files, options)
-int     ch;
-file_t  files[];
-opt_t  *options;
+int     load_new_file(int ch, file_t files[], opt_t *options, unsigned int flags)
 
 {
     extern win_t    *File_list;
     extern term_t   *Terminal;
-    char    path_name[PATH_LEN + 1] = "", *pn, *button[2] = OK_BUTTON,
+    char    path_name[PATH_MAX + 1] = "", *pn, *button[2] = OK_BUTTON,
 	    *message = "Sorry, can't open any more files.";
     int     af;
 
@@ -194,7 +195,7 @@ opt_t  *options;
 	pn = strtok(path_name," \t");
 	while ( pn != NULL )
 	{
-	    af = open_file(files, pn, options);
+	    af = open_file(files, pn, options, flags);
 	    pn = strtok(NULL," \t");
 	}
 	return af;
@@ -210,22 +211,23 @@ int     af;
 opt_t  *options;
 
 {
-    char    filename[PATH_LEN + 1] = "", temp[PATH_LEN+1] = "",
-	    dir_name[PATH_LEN + 1] = "", base_name[PATH_LEN + 1] = "",
-	    start_dir[PATH_LEN + 1], save_source[TWC_FILENAME_LEN + 1],
-	    save_short[TWC_SHORT_NAME_LEN + 1], msg[128], path[PATH_LEN+1],
+    char    filename[PATH_MAX + 1] = "", temp[PATH_MAX+1] = "",
+	    dir_name[PATH_MAX + 1] = "", base_name[PATH_MAX + 1] = "",
+	    start_dir[PATH_MAX + 1], save_source[PATH_MAX + 1],
+	    save_short[TWC_SHORT_NAME_LEN + 1], msg[128], path[PATH_MAX+1],
 	    *buttons[3] = YES_NO_BUTTONS, *ok_button[2] = OK_BUTTON;
     struct stat st;
     int     remove;
 
     /* Get new filename */
-    panel_get_string(files + af, options, PATH_LEN, "Save as? ", "", temp);
+    panel_get_string(files + af, options, PATH_MAX, "Save as? ", "",
+	TWC_VERBATIM, temp);
     if (*temp == '\0')
     {
 	stat_mesg("File not saved.");
 	return CANT_SAVE;
     }
-    meta_chars(filename,temp,PATH_LEN);
+    meta_chars(filename,temp,PATH_MAX);
 
     /* Split filename into base name and directory */
     if (get_dirname(filename, dir_name, base_name) == NO_DIR)
@@ -254,8 +256,8 @@ opt_t  *options;
     }
 
     /* Save old name in case new one can't be used */
-    strlcpy(start_dir, files[af].cwd, PATH_LEN);
-    strlcpy(save_source, files[af].source, TWC_FILENAME_LEN);
+    strlcpy(start_dir, files[af].cwd, PATH_MAX);
+    strlcpy(save_source, files[af].source, PATH_MAX);
     strlcpy(save_short, files[af].short_src, TWC_SHORT_NAME_LEN);
 
     /* Switch to new name */
@@ -264,8 +266,8 @@ opt_t  *options;
 	sprintw(2, TWC_ST_LEN, "Can't open directory \"%s\".", dir_name);
 	return CANT_SAVE;
     }
-    strlcpy(files[af].cwd, dir_name, PATH_LEN);
-    strlcpy(files[af].source, base_name, TWC_FILENAME_LEN);
+    strlcpy(files[af].cwd, dir_name, PATH_MAX);
+    strlcpy(files[af].source, base_name, PATH_MAX);
     strlcpy(files[af].short_src, files[af].source, TWC_SHORT_NAME_LEN);
     if (save_file(files+af,options) == OK)
     {
@@ -279,7 +281,7 @@ opt_t  *options;
 	    remove = popup_mesg(msg,buttons,options);
 	    if ( tolower(remove) == 'y' )
 	    {
-		snprintf(path,PATH_LEN,"%s/%s",start_dir,save_source);
+		snprintf(path,PATH_MAX,"%s/%s",start_dir,save_source);
 		unlink(path);
 	    }
 	    TW_RESTORE_WIN(files[af].window);
@@ -291,8 +293,8 @@ opt_t  *options;
 	sprintw(2,TWC_ST_LEN,"Unable to save %s: Keeping old name.",
 	    files[af].source);
 	chdir(start_dir);
-	strlcpy(files[af].cwd, start_dir, PATH_LEN);
-	strlcpy(files[af].source, save_source, TWC_FILENAME_LEN);
+	strlcpy(files[af].cwd, start_dir, PATH_MAX);
+	strlcpy(files[af].source, save_source, PATH_MAX);
 	strlcpy(files[af].short_src, save_short, TWC_SHORT_NAME_LEN);
 	return CANT_SAVE;
     }
@@ -302,11 +304,12 @@ opt_t  *options;
 void    view_header(file_t *file, opt_t *options)
 
 {
-    static char path_name[PATH_LEN + 1] = "";
+    static char path_name[PATH_MAX + 1] = "";
     char    cmd[CMD_LEN + 1] = "", *ext, *argv[MAX_ARGS],
 	    *x11_include = X11_INCLUDE;
 
-    panel_get_string(file, options, PATH_LEN, "Header? ", "", path_name);
+    panel_get_string(file, options, PATH_MAX, "Header? ", "",
+	TWC_VERBATIM, path_name);
     
     sprintw(2, 50, "path_name = %s", path_name);
     if ( *path_name == '\0' )
@@ -316,7 +319,7 @@ void    view_header(file_t *file, opt_t *options)
     /* Check for no extension, ./base, or ../base */
     /*
     if ((ext == NULL) || ((ext <= path_name + 1) && (*path_name == '.')))
-	strlcat(path_name, ".h", PATH_LEN);
+	strlcat(path_name, ".h", PATH_MAX);
     */
     if ((path_name[0] == '/') || (path_name[0] == '.'))
 	snprintf(cmd, CMD_LEN, "more %s", path_name);
@@ -389,24 +392,24 @@ opt_t   *options;
  * Open a new file and create an edit window for it.
  ****************************************************/
 
-int     open_file(files, path_name, options)
-file_t  files[];
-char   *path_name;
-opt_t  *options;
+int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int flags)
 
 {
     FILE   *fp;
     int     af,
-	    ftype;
-    char    dir_name[PATH_LEN + 1], base_name[PATH_LEN + 1],
-	    temp[PATH_LEN + 1], home[PATH_LEN + 1],
-	    *button[2] = OK_BUTTON;
+	    ftype,
+	    status;
+    char    dir_name[PATH_MAX + 1], base_name[PATH_MAX + 1],
+	    temp[PATH_MAX + 1], home[PATH_MAX + 1],
+	    *button[2] = OK_BUTTON,
+	    cmd[CMD_LEN+1],
+	    key[MCRYPT_KEY_LEN+1];
     
     /* Expand ~ to home dir if necessary */
     if (*path_name == '~')
-	snprintf(temp, PATH_LEN, "%s/%s", get_home_dir(home, PATH_LEN), path_name + 1);
+	snprintf(temp, PATH_MAX, "%s/%s", get_home_dir(home, PATH_MAX), path_name + 1);
     else
-	strlcpy(temp, path_name, PATH_LEN);
+	strlcpy(temp, path_name, PATH_MAX);
 
     /* Check if file is a directory */
     ftype = file_type(temp);
@@ -440,14 +443,15 @@ opt_t  *options;
 	return CANT_OPEN;
 
     /* Set filenames and dir name */
-    strlcpy(files[af].source, base_name, TWC_FILENAME_LEN);
+    strlcpy(files[af].source, base_name, PATH_MAX);
     strlcpy(files[af].short_src, base_name, TWC_SHORT_NAME_LEN);
-    strlcpy(files[af].cwd, dir_name, PATH_LEN);
-    strlcpy(files[af].run_directory, dir_name, PATH_LEN);
+    strlcpy(files[af].cwd, dir_name, PATH_MAX);
+    strlcpy(files[af].run_directory, dir_name, PATH_MAX);
 
     /* Hack to allow testing real tabs while editing 
        the rest with expanded tabs. */
-    files[af].expand_tabs = (strcmp(files[af].source,"tabtest") != 0);
+    //files[af].expand_tabs = (strcmp(files[af].source,"tabtest") != 0);
+    files[af].expand_tabs = TRUE;
     //sprintw(2,50,"expand_tabs = %d",files[af].expand_tabs);
     
     /* Attempt to open file */
@@ -457,8 +461,38 @@ opt_t  *options;
 	return CANT_OPEN;
     }
     
-    if ((fp = fopen(base_name, "r")) != NULL)
+    /* FIXME: Support other encryption programs */
+    if ( flags & OPEN_FLAG_CRYPT )
+    {
+	// tunset_tty(Terminal,C_LFLAG,ECHO);
+	*key = '\0';
+	status = panel_get_string(files+af, options, MCRYPT_KEY_LEN,
+			    "Key? ", "", TWC_SECURE, key);
+	snprintf(cmd, CMD_LEN, "mcrypt --flush -q -F -d -k %s < %s",
+	    key, files[af].source);
+	fp = popen(cmd, "r");
+	files[af].crypt = 1;
+    }
+    else
+    {
+	fp = fopen(base_name, "r");
+	files[af].crypt = 0;
+    }
+	
+    if (fp != NULL)
+    {
 	load_file(files + af, fp,options);
+	if ( files[af].crypt )
+	{
+	    pclose(fp);
+	
+	    /* Erase key from memory for security */
+	    memset(key, 0, MCRYPT_KEY_LEN);
+	    memset(cmd, 0, CMD_LEN);
+	}
+	else
+	    fclose(fp);
+    }
     else if (new_file(files + af) == NOMEM) /* Must come after init_file() */
 	return CANT_OPEN;
     
@@ -579,10 +613,10 @@ int     get_dirname(full_name, dir_name, base_name)
 char    full_name[], dir_name[], base_name[];
 
 {
-    char   *end_dir, temp_path[PATH_LEN + 1], start_dir[PATH_LEN + 1], *new_dir;
+    char   *end_dir, temp_path[PATH_MAX + 1], start_dir[PATH_MAX + 1], *new_dir;
 
     /* Look for last '/' in name to see if path info present */
-    strlcpy(temp_path, full_name, PATH_LEN);
+    strlcpy(temp_path, full_name, PATH_MAX);
     end_dir = strrchr(temp_path, '/');
     if (end_dir != NULL)        /* Path info present in name */
     {
@@ -591,7 +625,7 @@ char    full_name[], dir_name[], base_name[];
 	else
 	    new_dir = temp_path;
 	*end_dir = '\0';        /* Cap off directory name */
-	getcwd(start_dir, PATH_LEN);
+	getcwd(start_dir, PATH_MAX);
 	if (chdir(new_dir) == -1)
 	{
 	    sprintw(2, TWC_ST_LEN, "Cannot chdir to \"%s\".", temp_path);
@@ -601,15 +635,15 @@ char    full_name[], dir_name[], base_name[];
 	}
 	else
 	{
-	    getcwd(dir_name, PATH_LEN);         /* Get new directory name */
-	    strlcpy(base_name, end_dir + 1, TWC_FILENAME_LEN);
+	    getcwd(dir_name, PATH_MAX);         /* Get new directory name */
+	    strlcpy(base_name, end_dir + 1, PATH_MAX);
 	    chdir(start_dir);   /* Return to original directory */
 	}
     }
     else                        /* Only base name given */
     {
-	getcwd(dir_name, PATH_LEN);
-	strlcpy(base_name, full_name, TWC_FILENAME_LEN);
+	getcwd(dir_name, PATH_MAX);
+	strlcpy(base_name, full_name, PATH_MAX);
     }
     return OK;
 }
@@ -786,10 +820,24 @@ int     read_line(char string[], FILE *fp, file_t *file, opt_t *options)
 int     save_file(file_t *file, opt_t   *options)
 
 {
-    int     l = 0, nbytes = 0, lines;
+    win_t   *win = NULL;
+    tw_panel_t panel = TWC_PANEL_INIT;
+    int     l = 0, nbytes = 0, lines, status, match;
     FILE   *fp;
-    char   *filename, pipe[PATH_LEN + 1],
-	    *ok_button[2] = OK_BUTTON;
+    char    pipe[PATH_MAX + 1],
+	    *ok_button[2] = OK_BUTTON,
+	    key[MCRYPT_KEY_LEN+1] = "",
+	    key2[MCRYPT_KEY_LEN+1] = "",
+	    algo[MCRYPT_ALGO_LEN+1],
+	    *encryption_algorithms[] = { \
+		"cast-128", "gost", "rijndael-128", "twofish", "arcfour",
+		"cast-256", "loki97", "rijndael-192", "saferplus",
+		"wake", "blowfish-compat", "des", "rijndael-256",
+		"serpent", "xtea", "blowfish", "enigma", 
+		"rc2", "tripledes", NULL },
+	    cmd[CMD_LEN+1],
+	    full_path[PATH_MAX+1],
+	    backup_path[PATH_MAX+1];
 
     if (file->read_only)
     {
@@ -814,26 +862,49 @@ int     save_file(file_t *file, opt_t   *options)
 		return OK;
 	}
     */
+
+    snprintf(full_path, PATH_MAX, "%s/%s", file->cwd, file->source);
+    snprintf(backup_path, PATH_MAX, "%s/.%s.bak", file->cwd, file->source);
     
     /* Back up file before first save */
     if (!file->saved_once)
     {
-	backup_file(file->source);
+	fast_cp(full_path, backup_path);
 	file->saved_once = 1;
     }
 
     if (file->crypt)
     {
-	snprintf(pipe, PATH_LEN, ".ape_save_pipe.%lu",(unsigned long)getpid());
-	mkfifo(pipe, 0600);
-	spawnlp(P_NOWAIT, P_NOECHO, "pipe", NULL, file->source, "crypt",
-		"yogurt", NULL);
-	filename = pipe;
+	for (match = 0; !match; )
+	{
+	    *key = *key2 = '\0';
+	    win = centered_panel_win(10, 65, options);
+	    tw_init_enum(&panel, 2, 3, MCRYPT_ALGO_LEN, encryption_algorithms,
+			"Algorithm?  ",
+			" mcrypt -a algorithm?  Hit <space> to toggle. ",algo);
+	    tw_init_string(&panel, 3, 3, MCRYPT_KEY_LEN, 40, TWC_SECURE,
+			"Key?        "," Encryption Key ", key);
+	    tw_init_string(&panel, 4, 3, MCRYPT_KEY_LEN, 40, TWC_SECURE,
+			"Verify Key: "," Encryption Key ", key2);
+	    status = tw_input_panel(win, &panel, TW_LINES(win) - 3);
+	    match = (strcmp(key, key2) == 0);
+	    if ( ! match )
+		popup_mesg("Keys do not match.  Please try again.",
+		    ok_button,options);
+	    tw_del_win(&win);
+	    TW_RESTORE_WIN(file->window);
+	}
+	
+	if (TW_EXIT_KEY(status) != TWC_INPUT_DONE)
+	    return OK;
+	snprintf(cmd, CMD_LEN, "mcrypt --flush -q -F -a %s -k %s > %s 2> mcrypt.stderr",
+	    algo, key, full_path);
+	fp = popen(cmd, "w");
     }
     else
-	filename = file->source;
-
-    if ((fp = fopen(filename, "w")) == NULL)
+	fp = fopen(full_path, "w");
+	
+    if (fp == NULL)
     {
 	popup_mesg("Cannot save file",ok_button,options);
 	TW_RESTORE_WIN(file->window);
@@ -847,13 +918,24 @@ int     save_file(file_t *file, opt_t   *options)
 	nbytes += file->line[l].length + 1;
     }
     fflush(fp);
-    fsync(fileno(fp));
-    fclose(fp);
+    if (file->crypt)
+    {
+	pclose(fp);
+	
+	/* Erase key from memory for security */
+	memset(key, 0, MCRYPT_KEY_LEN);
+	memset(cmd, 0, CMD_LEN);
+    }
+    else
+    {
+	fsync(fileno(fp));
+	fclose(fp);
+    }
     time(&file->save_time);
 
     /* Script or other interpreted language */
-    if ((file->lang != NULL) && (*file->lang->compiler == '\0'))
-	make_exe(file->source);
+    if ((file->lang != NULL) && (*file->lang->compiler_cmd == '\0'))
+	make_exe(full_path);
 
     sprintw(2, TWC_ST_LEN, "Saved %s: %d lines, %d characters.",
 	    file->short_src, lines, nbytes);
@@ -923,22 +1005,6 @@ char   *file;
 }
 
 
-/**********************************
- * Create a backup copy of a file.
- **********************************/
-
-void    backup_file(file)
-char   *file;
-
-{
-    char    backup[PATH_LEN + 1] = "";
-
-    /* Find last extension or end of name if no extension */
-    snprintf(backup, PATH_LEN, ".%s.bak", file);
-    fast_cp(file,backup);
-}
-
-
 int     file_type(char *filename)
 
 {
@@ -956,7 +1022,7 @@ void    new_blank_file(file_t files[], int *af_ptr, opt_t *options)
 {
     int     af;
     
-    if ((af = open_file(files, "untitled", options)) != CANT_OPEN)
+    if ((af = open_file(files, "untitled", options, OPEN_FLAG_NORMAL)) != CANT_OPEN)
 	*af_ptr = af;
 }
 
@@ -989,4 +1055,3 @@ int     file_save_for_undo(file_t *file, undo_action_t undo_action,
 	      undo_action, deleted_text);
     return OK;
 }
-

@@ -26,7 +26,7 @@
  */
 
 #include <string.h>
-#include "twintk.h"
+#include <twintk.h>
 #include "edit.h"
 #include "protos.h"
 
