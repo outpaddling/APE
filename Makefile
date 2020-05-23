@@ -44,8 +44,8 @@ OBJS    = ${OBJS1} ${OBJS2}
 PREFIX  ?= /usr/local
 MANPREFIX  ?= ${PREFIX}
 LOCALBASE ?= /usr/local
-DATADIR ?= ${PREFIX}/share/ape
-DOCSDIR ?= ${PREFIX}/share/doc/ape
+DATADIR ?= ${PREFIX}/share/APE
+DOCSDIR ?= ${PREFIX}/share/doc/APE
 
 # APE depends on signed chars.  Some compilers treat chars as unsigned
 # by default, so adjust compiler flags as needed. (e.g. gcc -fsigned-char)
