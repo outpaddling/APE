@@ -594,7 +594,7 @@ int     install_default_user_config(opt_t *options)
     {
 	rmkdir(config_dir,0755);
 	snprintf(cmd,CMD_LEN,
-	    "cp -R %s/share/APE/Languages %s/share/ape/options.rc %s/share/ape/custom_menu %s",
+	    "cp -R %s/share/APE/Languages %s/share/APE/options.rc %s/share/APE/custom_menu %s",
 	    INSTALL_PREFIX, INSTALL_PREFIX, INSTALL_PREFIX, config_dir);
 	if ( spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"sh","-c",cmd,NULL) != 0 )
 	{
