@@ -480,19 +480,23 @@ int     debug_options(file_t *file, opt_t *options)
 }
 
 
-void    draw_color_bar(win_t *win, int  line, int col, opt_t   *options)
+void    draw_color_bar(win_t *win, int  line, opt_t   *options)
 
 {
     int     c, save_fg = TW_CUR_FOREGROUND(win),
 	    save_bg = TW_CUR_BACKGROUND(win),
-	    save_modes = TW_CUR_MODES(win);
+	    save_modes = TW_CUR_MODES(win),
+	    col, colors_to_show;
+    char    *color_string = " Color sample: ";
     
     /* Draw color bar */
     if ( TCOLOR_TERM(win->terminal) && !MONO_MODE(options) )
     {
+	colors_to_show = MIN(TMAX_COLORS(win->terminal), 16);
+	col = (TW_COLS(win) - strlen(color_string) - colors_to_show * 3) / 2;
 	tw_move_to(win, line, col);
-	tw_printf(win, " Color sample: ");
-	for (c = 0; c < TMAX_COLORS(win->terminal); ++c)
+	tw_printf(win, color_string);
+	for (c = 0; c < colors_to_show; ++c)
 	{
 	    tw_set_background(win, c);
 	    if (c == 7)
@@ -630,7 +634,7 @@ int     screen_options(opt_t *options)
 	    "Preconfigured color sets.  Hit <space> to toggle.",
 	    color_scheme);
     
-    draw_color_bar(win,TW_LINES(win)-6,20,options);
+    draw_color_bar(win,TW_LINES(win)-6,options);
     /* Clears window - tw_draw_border() needed after */
     set_popup_color(win,options);
     tw_draw_border(win);

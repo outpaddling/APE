@@ -565,7 +565,7 @@ buff_t *cut_buff;
     }
     
     /* Add visual aids for color and modes */
-    draw_color_bar (win, 11, 19, options);
+    draw_color_bar (win, 11, options);
     draw_modes_bar (win, 12, 16);
     
     /* Input changes */

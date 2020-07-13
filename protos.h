@@ -266,7 +266,7 @@ int load_options(char *filename, opt_t *options);
 void save_options(char *filename, opt_t *options);
 int create_lang_options_if_missing(file_t *file, opt_t *options);
 int debug_options(file_t *file, opt_t *options);
-void draw_color_bar(win_t *win, int line, int col, opt_t *options);
+void draw_color_bar(win_t *win, int line, opt_t *options);
 int screen_options(opt_t *options);
 int misc_options(opt_t *options);
 void get_borders(opt_t *options, bord_t *borders);
