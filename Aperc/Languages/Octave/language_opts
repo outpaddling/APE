@@ -1,6 +1,6 @@
 name                    Octave
 name_spec               *.m
-id_comment              #!/usr/local/bin/octave
+id_comment              #!/usr/bin/env octave
 compiler                
 compile_flags           
 compile_output_flag     
