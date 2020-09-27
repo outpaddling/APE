@@ -12,7 +12,7 @@ link_flags
 debugger                
 debugger_flags          
 debugger_backtrace_cmd  
-run_prefix              bc
+run_prefix              bc -l
 upload_prefix           
 executable_name         \fn
 executable_source       
