@@ -1,0 +1,23 @@
+m 2 0 22 0 0 0 0 0 22 17:#!/usr/bin/env bc
+
+/***************************************************************************
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  \date(12)\gecos(12)Begin
+ ***************************************************************************/
+
+define factorial(n) {
+    if (n == 0) return(1)
+    return(n * factorial(n - 1))
+}
+
+define choose(n, k) {
+    return factorial(n) / (factorial(k) * factorial(n-k))
+}
+
