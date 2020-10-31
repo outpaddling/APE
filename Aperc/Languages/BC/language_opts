@@ -1,6 +1,6 @@
 name                    BC
 name_spec               *.bc
-id_comment              #!/usr/bin/env bc
+id_comment              #!/usr/bin/bc
 compiler                
 compile_flags           
 compile_output_flag     
