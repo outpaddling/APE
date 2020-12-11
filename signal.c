@@ -34,7 +34,7 @@
 err_t   *Errfile;
 pid_t   Pid;
 file_t  *Files;
-opt_t   *Options;
+extern opt_t   *Options;
 
  /* 
   * Die with honor

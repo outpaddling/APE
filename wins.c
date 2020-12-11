@@ -34,7 +34,7 @@
 #include "edit.h"
 #include "protos.h"
 
-term_t  *Terminal;
+extern term_t  *Terminal;
 
 /***************************************************************
  * Print a message in the Swin window, blanking out a specified
