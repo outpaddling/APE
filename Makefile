@@ -43,9 +43,11 @@ OBJS    = ${OBJS1} ${OBJS2}
 
 PREFIX  ?= /usr/local
 MANPREFIX  ?= ${PREFIX}
+MANDIR	?= ${MANPREFIX}/man
 LOCALBASE ?= /usr/local
 DATADIR ?= ${PREFIX}/share/APE
 DOCSDIR ?= ${PREFIX}/share/doc/APE
+DESTDIR	?= .
 
 # APE depends on signed chars.  Some compilers treat chars as unsigned
 # by default, so adjust compiler flags as needed. (e.g. gcc -fsigned-char)
@@ -93,17 +95,18 @@ realclean: clean
 	rm -f .*.bak *.bak *.BAK *.core
 
 install: all
-	mkdir -p ${STAGEDIR}${PREFIX}/bin \
-		${STAGEDIR}${MANPREFIX}/man/man1 \
-		${STAGEDIR}${DATADIR} \
-		${STAGEDIR}${DOCSDIR}
-	${INSTALL_PROGRAM} ${BINS} ${STAGEDIR}${PREFIX}/bin
-	${INSTALL_PROGRAM} ${SCRIPTS} ${STAGEDIR}${PREFIX}/bin
-	${INSTALL_DATA} ${MANS} ${STAGEDIR}${MANPREFIX}/man/man1
-	${INSTALL_DATA} ${HTML} ${STAGEDIR}${DOCSDIR}
+	printenv | grep MAN
+	mkdir -p ${DESTDIR}${PREFIX}/bin \
+		${DESTDIR}${MANDIR}/man1 \
+		${DESTDIR}${DATADIR} \
+		${DESTDIR}${DOCSDIR}
+	${INSTALL_PROGRAM} ${BINS} ${DESTDIR}${PREFIX}/bin
+	${INSTALL_PROGRAM} ${SCRIPTS} ${DESTDIR}${PREFIX}/bin
+	${INSTALL_DATA} ${MANS} ${DESTDIR}${MANDIR}/man1
+	${INSTALL_DATA} ${HTML} ${DESTDIR}${DOCSDIR}
 	cp -Rp Aperc/Languages Aperc/options.rc Aperc/custom_menu \
-		${STAGEDIR}${DATADIR}
-	${CHMOD} -R u+rwX,go-w+rX ${STAGEDIR}${DATADIR}
+		${DESTDIR}${DATADIR}
+	${CHMOD} -R u+rwX,go-w+rX ${DESTDIR}${DATADIR}
 
 protos:
 	(cproto ${INCLUDES} *.c > temp_protos.h && mv -f temp_protos.h protos.h)
