@@ -1,4 +1,13 @@
-m 2 0 15 0 8 0 0 0 15 22:#!/usr/bin/env Rscript
+t 1 16 25 0 0 7 7 0 9 68:library(tcltk)  # Popup window to close manhattan plot on the screen
+# Force plot to use display even though we're in Rscript
+# X11() for typical Unix (BSD, Linux, etc)
+# windows() for Windows
+# quartz() for mac
+
+X11()
+prompt <- "Press any key or click here to close plot."
+capture <- tk_messageBox(message = prompt)
+m 2 0 16 0 0 0 0 0 16 22:#!/usr/bin/env Rscript
 
 ##########################################################################
 #   Script description:
@@ -13,4 +22,59 @@ m 2 0 15 0 8 0 0 0 15 22:#!/usr/bin/env Rscript
 ##########################################################################
 
 # library()
-# load()
+# load()
+a 0 17 23 0 0 12 12 0 6 38:argv <- commandArgs(trailingOnly=TRUE)
+if ( length(argv) != 1 )
+{
+    print("Usage: RScript diff-anal.R ")
+    stop()
+}
+b 0 17 20 0 0 0 0 0 3 74:##########################################################################
+#   
+##########################################################################
+u 0 2 19 0 0 0 0 0 17 74:##########################################################################
+#   Function description:
+#       
+#   Arguments:
+#       
+#   Returns:
+#       
+#   History:
+#   Date        Name        Modification
+#   2021-03-25  Jason Bacon Begin
+##########################################################################
+
+ <- function()
+{
+    return()
+}
+
+p 0 19 30 0 0 7 7 0 11 74:##########################################################################
+#   Pause until user presses enter
+##########################################################################
+
+pause <- function()
+{
+    # Change to TRUE for interactive run
+    cat("Press Enter to continue...")
+    invisible(b <- scan("stdin", character(), nlines=1, quiet=TRUE))
+}
+
+f 1 17 22 0 0 10 10 0 5 1:#
+for ( in )
+{
+}
+
+w 1 17 22 0 0 10 10 0 5 1:#
+while ()
+{
+}
+
+i 1 17 24 0 0 10 10 0 7 1:#
+if ()
+{
+} else
+{
+}
+
+

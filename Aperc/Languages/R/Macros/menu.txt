@@ -1,1 +1,9 @@
+.TCL pause
 New .Main
+.Argv init
+.Block comment
+F.Unction
+.Pause function
+.For loop
+.While loop
+.If-else
