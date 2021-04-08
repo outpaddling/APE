@@ -1,4 +1,4 @@
-p 0 0 186 0 0 0 160 0 186 76:############################################################################
+p 0 0 180 0 0 0 156 0 180 76:############################################################################
 #
 #              Another Programmer's Editor Makefile Template
 #
@@ -11,12 +11,12 @@ p 0 0 186 0 0 0 160 0 186 76:###################################################
 # on any Unix-compatible system.
 #
 # Variables that are conditionally assigned (with ?=) can be overridden
-# via the command line as follows:
+# by the environment or via the command line as follows:
 #
 #       make VAR=value
 #
 # For example, MacPorts installs to /opt/local instead of the default
-# /usr/local, and hence might use the following:
+# ../local, and hence might use the following:
 # 
 #       make PREFIX=/opt/local
 #
@@ -29,7 +29,8 @@ p 0 0 186 0 0 0 160 0 186 76:###################################################
 #
 # Lastly, they can be overridden by the environment, e.g.
 # 
-#       setenv CFLAGS "-O -Wall -pipe"
+#       setenv CFLAGS "-O -Wall -pipe"  # C-shell and derivatives
+#       export CFLAGS="-O -Wall -pipe"  # Bourne-shell and derivatives
 #       make
 #
 # All these override methods allow the Makefile to respect the environment
@@ -56,9 +57,9 @@ OBJS    = file1.o file2.o
 
 # Where to find local libraries and headers.  For MacPorts, override
 # with LOCALBASE=/opt/local.
-LOCALBASE   ?= /usr/local
+LOCALBASE   ?= ../local
 
-# Install in /usr/local, unless defined by the parent Makefile, the
+# Install in ../local, unless defined by the parent Makefile, the
 # environment, or a command line option such as PREFIX=/opt/local.
 PREFIX      ?= ${LOCALBASE}
 MANPREFIX   ?= ${PREFIX}
@@ -166,13 +167,6 @@ install: all
         ${INSTALL} -s -m 0555 ${BIN} ${DESTDIR}${PREFIX}/bin
         ${INSTALL} -m 0444 ${MAN} ${DESTDIR}${MANPREFIX}/man/man1
 
-############################################################################
-# Remove all installed files
-
-uninstall:
-        ${RM} ${PREFIX}/bin/${BIN}
-        ${RM} ${MANPREFIX}/man/man1/${MAN}
-
 help:
         @printf "Usage: make [VARIABLE=value ...] all\n\n"
         @printf "Some common tunable variables:\n\n"
@@ -184,7 +178,7 @@ help:
         @printf "\tFC        [currently ${FC}]\n"
         @printf "\tFFLAGS    [currently ${FFLAGS}]\n\n"
         @printf "View Makefile for more tunable variables.\n\n"
-s 0 0 194 0 0 0 168 0 194 76:############################################################################
+s 0 0 184 0 0 0 160 0 184 76:############################################################################
 #
 #              Another Programmer's Editor Makefile Template
 #
@@ -202,7 +196,7 @@ help:
 #       make VAR=value
 #
 # For example, MacPorts installs to /opt/local instead of the default
-# /usr/local, and hence might use the following:
+# ../local, and hence might use the following:
 # 
 #       make PREFIX=/opt/local
 #
@@ -243,9 +237,9 @@ OBJS    = file1.o file2.o
 
 # Where to find local libraries and headers.  For MacPorts, override
 # with LOCALBASE=/opt/local.
-LOCALBASE   ?= /usr/local
+LOCALBASE   ?= ../local
 
-# Install in /usr/local, unless defined by the parent Makefile, the
+# Install in ../local, unless defined by the parent Makefile, the
 # environment, or a command line option such as PREFIX=/opt/local.
 PREFIX      ?= ${LOCALBASE}
 MANPREFIX   ?= ${PREFIX}
@@ -357,16 +351,6 @@ install: all
         done
         ${INSTALL} -m 0444 ${MAN} ${MANPREFIX}/man/man3
 
-############################################################################
-# Remove all installed files
-
-uninstall:
-        ${RM} ${PREFIX}/lib/${LIB}
-        ${RM} ${MANPREFIX}/man/man3/${MAN}
-        @for file in ${HEADERS}; do \
-            ${RM} ${PREFIX}/include/$${file}; \
-        done
-
 help:
         @printf "Usage: make [VARIABLE=value ...] all\n\n"
         @printf "Some common tunable variables:\n\n"
@@ -378,7 +362,7 @@ help:
         @printf "\tFC        [currently ${FC}]\n"
         @printf "\tFFLAGS    [currently ${FFLAGS}]\n\n"
         @printf "View Makefile for more tunable variables.\n\n"
-d 0 0 193 0 0 0 167 0 193 76:############################################################################
+d 0 0 183 0 0 0 159 0 183 76:############################################################################
 #
 #              Another Programmer's Editor Makefile Template
 #
@@ -396,7 +380,7 @@ help:
 #       make VAR=value
 #
 # For example, MacPorts installs to /opt/local instead of the default
-# /usr/local, and hence might use the following:
+# ../local, and hence might use the following:
 # 
 #       make PREFIX=/opt/local
 #
@@ -437,9 +421,9 @@ OBJS    = file1.o file2.o
 
 # Where to find local libraries and headers.  For MacPorts, override
 # with LOCALBASE=/opt/local.
-LOCALBASE   ?= /usr/local
+LOCALBASE   ?= ../local
 
-# Install in /usr/local, unless defined by the parent Makefile, the
+# Install in ../local, unless defined by the parent Makefile, the
 # environment, or a command line option such as PREFIX=/opt/local.
 PREFIX      ?= ${LOCALBASE}
 MANPREFIX   ?= ${PREFIX}
@@ -549,16 +533,6 @@ install: all
             ${INSTALL} -m 0444 $${file} ${DESTDIR}${PREFIX}/include; \
         done
         ${INSTALL} -m 0444 ${MAN} ${MANPREFIX}/man/man3
-
-############################################################################
-# Remove all installed files
-
-uninstall:
-        ${RM} ${PREFIX}/lib/${LIB}
-        ${RM} ${MANPREFIX}/man/man3/${MAN}
-        @for file in ${HEADERS}; do \
-            ${RM} ${PREFIX}/include/$${file}; \
-        done
 
 help:
         @printf "Usage: make [VARIABLE=value ...] all\n\n"
