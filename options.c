@@ -461,20 +461,16 @@ int     debug_options(file_t *file, opt_t *options)
     if ( create_lang_options_if_missing(file, options) )
 	return FALSE;
     
-    win = centered_panel_win(10, 75, options);
+    win = centered_panel_win(9, 75, options);
 
     tw_init_string(&panel, 2, 2, PATH_MAX, TW_COLS(win)-22, TWC_VERBATIM,
-		"Debugger:          ",
-		" Debugger command name. ", file->lang->debugger_cmd);
-    tw_init_string(&panel, 3, 2, OPTION_LEN, TW_COLS(win)-22, TWC_VERBATIM,
-		"Debugger options:  ",
-		" Command-line options for the debugger. ",
-		file->lang->debugger_flags);
-    tw_init_string(&panel, 4, 2, BACKTRACE_LEN, TW_COLS(win)-22, TWC_VERBATIM,
+		"Debugger command:  ",
+		" \\ex = executable name ", file->lang->debugger_cmd);
+    tw_init_string(&panel, 3, 2, BACKTRACE_LEN, TW_COLS(win)-22, TWC_VERBATIM,
 		"Backtrace command: ",
 		" Debugger command that shows function call trace. ",
 		file->lang->debugger_backtrace_cmd);
-    status = tw_input_panel(win, &panel, TW_LINES(win) - 3);
+    status = tw_input_panel(win, &panel, TW_LINES(win) - 2);
     tw_del_win(&win);
     return TW_EXIT_KEY(status) == TWC_INPUT_DONE;
 }

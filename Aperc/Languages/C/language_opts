@@ -9,9 +9,8 @@ compile_only_flag       -c
 compile_to_asm_flag     -S
 preprocess_only_flag    -E -C
 link_flags              -lm
-debugger                gdb
-debugger_flags          
-debugger_backtrace_cmd  where
+debugger                lldb -c \ex.core \ex
+debugger_backtrace_cmd  bt
 run_prefix              time
 upload_prefix           
 executable_name         \st

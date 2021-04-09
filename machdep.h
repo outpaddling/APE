@@ -28,7 +28,7 @@
 /* Portability stuff */
 #define GCC_ERROR_FORMAT    "\\fn: \\ln: \\te"
 
-#if defined(__FreeBSD__) || defined(__NetBSD__) || defined(__OpenBSD__) || defined(__DragonFly__)
+#if defined(__FreeBSD__)
 
 #define C_COMPILER      "cc"
 #define CPP_COMPILER    "c++"
@@ -39,7 +39,34 @@
 #define FORTRAN_COMPILER "f90"
 #define PP_OPTIONS      "-E -C"
 #define RUN_PREFIX      "/usr/bin/time"
-#define DEBUGGER        "gdb"
+#define DEBUGGER        "lldb -c \\ex.core \\ex"
+#define BACKTRACE_CMD   "bt"
+#define ERROR_FORMAT    "\\fn: \\ln: \\te"
+#define CPP_ERROR_FORMAT    "\\fn: \\ln: \\te"
+#define X11_INCLUDE     "/usr/X11R6/include/X11"
+#define LOCAL_INCLUDE   "/usr/local/include"
+#define ISHELL          "csh"
+#define MOUSE_DEV       "/dev/mouse"
+#define PROF_CMD        "gprof"
+#define PROF_OUT        "gmon.out"
+#define PROF_OPT        "-pg"
+/* Use manpath command to get system manpath */
+#define MAN             "man -a"
+#define MANOPTS         "-a"
+#define DYNAMIC_MANPATH
+
+#elif defined(__NetBSD__) || defined(__OpenBSD__) || defined(__DragonFly__)
+
+#define C_COMPILER      "cc"
+#define CPP_COMPILER    "c++"
+#define CCOMPILE_OPTS   "-Wall -g -DDEBUG=1 -I/usr/local/include"
+#define CCOMPILE_ONLY   "-c"
+#define CLINK_OPTS      "-L/usr/local/lib -lm"
+#define CSYNTAX_ONLY    "-fsyntax-only"
+#define FORTRAN_COMPILER "f90"
+#define PP_OPTIONS      "-E -C"
+#define RUN_PREFIX      "/usr/bin/time"
+#define DEBUGGER        "gdb \\ex \\ex.core"
 #define BACKTRACE_CMD   "where"
 #define ERROR_FORMAT    "\\fn: \\ln: \\te"
 #define CPP_ERROR_FORMAT    "\\fn: \\ln: \\te"

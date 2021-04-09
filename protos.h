@@ -85,7 +85,8 @@ void write_items(cust_t items[], int skip, int item_count);
 int read_custom(char *custom_text[], cust_t menu_items[]);
 void save_item(cust_t *item);
 void run_item(file_t files[], int aw, cust_t menu_items[], int item_count, int ch, opt_t *options);
-void expand_command(file_t *file, char *expanded, char *command);
+void expand_command(char *source_file, char *executable,
+		    char *command, char *expanded, size_t maxlen);
 void suspend(opt_t *options);
 /* edit_m.c */
 int edit_menu(file_t files[], int *aw, buff_t *cut_buff, opt_t *options, event_t *event);

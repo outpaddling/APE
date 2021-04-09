@@ -36,8 +36,7 @@ struct lang
     char    compile_to_asm_flag[OPTION_LEN+1];      /* E.g. -s */
     char    preprocess_only_flag[OPTION_LEN+1];
     char    link_flags[OPTION_LEN+1];
-    char    debugger_cmd[PATH_MAX+1];
-    char    debugger_flags[OPTION_LEN+1];
+    char    debugger_cmd[CMD_LEN+1];
     char    debugger_backtrace_cmd[BACKTRACE_LEN+1];
     char    run_prefix[PATH_MAX+1];
     char    upload_prefix[PATH_MAX+1];

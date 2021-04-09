@@ -295,8 +295,6 @@ int     read_lang(char *lang_file, lang_t *lang)
 	    strlcpy(lang->link_flags, p, OPTION_LEN);
 	else if (strcmp(name, "debugger") == 0)
 	    strlcpy(lang->debugger_cmd, p, PATH_MAX);
-	else if (strcmp(name, "debugger_flags") == 0)
-	    strlcpy(lang->debugger_flags, p, OPTION_LEN);
 	else if (strcmp(name, "debugger_backtrace_cmd") == 0)
 	    strlcpy(lang->debugger_backtrace_cmd, p, BACKTRACE_LEN);
 	else if (strcmp(name, "run_prefix") == 0)
@@ -426,7 +424,6 @@ int     save_language(lang_t *lang)
 	    fprintf(fp, "preprocess_only_flag    %s\n", lang->preprocess_only_flag);
 	    fprintf(fp, "link_flags              %s\n", lang->link_flags);
 	    fprintf(fp, "debugger                %s\n", lang->debugger_cmd);
-	    fprintf(fp, "debugger_flags          %s\n", lang->debugger_flags);
 	    fprintf(fp, "debugger_backtrace_cmd  %s\n", lang->debugger_backtrace_cmd);
 	    fprintf(fp, "run_prefix              %s\n", lang->run_prefix);
 	    fprintf(fp, "upload_prefix           %s\n", lang->upload_prefix);
@@ -484,7 +481,6 @@ lang_t *get_bop(file_t * file, lang_t * head)
 {
     lang_t *lang = head;
     char    first_line[MAX_LINE_LEN + 1], *p;
-    size_t  len;
 
     /* First check language ID if it exists. */
     if (memcmp(file->line[0].buff, "#!", 2) == 0)
@@ -571,7 +567,6 @@ lang_t *add_language(
 	strlcpy(temp->preprocess_only_flag, preprocess_only_flag, OPTION_LEN);
 	strlcpy(temp->link_flags, link_flags, OPTION_LEN);
 	strlcpy(temp->debugger_cmd, debugger, PATH_MAX);
-	strlcpy(temp->debugger_flags, debugger_flags, OPTION_LEN);
 	strlcpy(temp->debugger_backtrace_cmd, debugger_backtrace_cmd,
 	    BACKTRACE_LEN);
 	strlcpy(temp->run_prefix, run_prefix, PATH_MAX);
@@ -623,7 +618,6 @@ void
     *lang->preprocess_only_flag = '\0';
     *lang->link_flags = '\0';
     *lang->debugger_cmd = '\0';
-    *lang->debugger_flags = '\0';
     *lang->debugger_backtrace_cmd = '\0';
     *lang->run_prefix = '\0';
     *lang->upload_prefix = '\0';

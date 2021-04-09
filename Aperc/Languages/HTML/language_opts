@@ -10,7 +10,6 @@ compile_to_asm_flag
 preprocess_only_flag    
 link_flags              
 debugger                
-debugger_flags          
 debugger_backtrace_cmd  
 run_prefix              webbrowser
 upload_prefix           

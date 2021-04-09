@@ -457,7 +457,8 @@ void    run_item(file_t files[],
 		sprintw(2, TWC_ST_LEN, "Cannot chdir to %s", menu_items[c].directory);
 		return;
 	    }
-	    expand_command(files + aw, cmd, menu_items[c].command);
+	    expand_command(files[aw].source, "", menu_items[c].command,
+			   cmd, CMD_LEN);
 	    if (strcmp(menu_items[c].run_mode, "Foreground") == 0)
 		run_command(P_WAIT, menu_items[c].echo_command, cmd, options->shell);
 	    else
@@ -468,28 +469,33 @@ void    run_item(file_t files[],
 }
 
 
-void    expand_command(file_t *file,
-			char *expanded,
-			char *command)
+void    expand_command(char *source_file, char *executable,
+		       char *command, char *expanded, size_t maxlen)
 
 {
     extern win_t    *Swin;
     char    base[PATH_MAX + 1], input[CMD_LEN + 1], *p, *temp = expanded;
 
-    while (*command != '\0')
+    while ( (*command != '\0') && (temp - expanded < maxlen) )
     {
 	if (*command == '\\')
 	{
 	    if (memicmp(command, "\\fn", 3) == 0)
 	    {
 		command += 3;
-		for (p = file->source; *p != '\0';)
+		for (p = source_file; *p != '\0';)
+		    *temp++ = *p++;
+	    }
+	    else if (memicmp(command, "\\ex", 3) == 0)
+	    {
+		command += 3;
+		for (p = executable; *p != '\0';)
 		    *temp++ = *p++;
 	    }
 	    else if (memicmp(command, "\\st", 3) == 0)
 	    {
 		command += 3;
-		strlcpy(base, file->source, PATH_MAX);
+		strlcpy(base, source_file, PATH_MAX);
 		if ((p = strrchr(base, '.')) != NULL)
 		    *p = '\0';
 		for (p = base; *p != '\0';)
@@ -511,6 +517,7 @@ void    expand_command(file_t *file,
 	    *temp++ = *command++;
     }
     *temp = '\0';
+    // FIXME: Deal with truncated commands
 }
 
 

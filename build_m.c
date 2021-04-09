@@ -246,8 +246,8 @@ char    *trace_cmd;
 opt_t   *options;
 
 {
-    char    *exe, core[PATH_MAX+1], cmd[CMD_LEN+1], *argv[MAX_ARGS],
-	    command_file[PATH_MAX+1], debugger[PATH_MAX+1],
+    char    core[PATH_MAX+1], cmd[CMD_LEN+1], *argv[MAX_ARGS], *exe,
+	    command_file[PATH_MAX+1], debugger_cmd[CMD_LEN+1],
 	    *ok_button[2] = OK_BUTTON, *file_names[TWC_MAX_FILENAMES+1],
 	    *stdout_file = NULL;
     struct stat corestat;
@@ -260,9 +260,8 @@ opt_t   *options;
 		    ok_button, options);
 	return;
     }
-    
-    strlcpy(debugger, file->lang->debugger_cmd, PATH_MAX);
-    
+    strlcpy(debugger_cmd, file->lang->debugger_cmd, CMD_LEN);
+
     /* Make sure build options exist */
     if ( check_build_opts(file) == NULL )
 	return;
@@ -279,8 +278,8 @@ opt_t   *options;
 #ifdef SCO_SV  
 		/* db[xX]tra assumes stdin is a tty and will fail */
 		/* Fall back to dbx, which is redirectable */
-		if ( stricmp(debugger, "dbxtra") == 0 )
-		    strlcpy(debugger, "dbx", PATH_MAX);
+		if ( stricmp(debugger_cmd, "dbxtra") == 0 )
+		    strlcpy(debugger_cmd, "dbx", PATH_MAX);
 #endif
 		fprintf(fp, "%s\n", trace_cmd);
 		fclose(fp);
@@ -291,18 +290,10 @@ opt_t   *options;
     
     /* Fixme: abstract out all these references to project->makefile */
     if ( project->makefile[0] != '\0')
-    {
 	exe = project->executable;
-	/* Is this a good idea - using file->lang for a project? */
-	snprintf(cmd, CMD_LEN, "%s %s %s ", debugger,
-		file->lang->debugger_flags, project->executable);
-    }
     else
-    {
 	exe = file->executable;
-	snprintf(cmd, CMD_LEN, "%s %s %s ", debugger,
-		file->lang->debugger_flags, file->executable);
-    }
+    expand_command(file->source, exe, debugger_cmd, cmd, CMD_LEN);
     
     /* Use core file if it exists */
     if ( stat("core", &corestat) == 0 )

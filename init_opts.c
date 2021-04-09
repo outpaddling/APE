@@ -210,7 +210,7 @@ opt_t  *options;
     /* html */
     options->lang_head = add_language (options->lang_head,"HTML",
 	"*.html .htm", "", "", "", "", "", "", "", "",
-	"runsomebrowser", "", "\\fn", "", "Fixed", 
+	"webbrowser", "", "\\fn", "", "Fixed", 
 	NO_AUTO_WRAP,"","","","");
     patterns = options->lang_head->patterns;
     synhigh_add_pattern (patterns, "</?[a-zA-Z].*>", GREEN, TEXT_BG, DIM_MODE);
@@ -219,7 +219,7 @@ opt_t  *options;
     /* html with embedded m4 macros */
     options->lang_head = add_language (options->lang_head,"M4HTML",
 	"*.m4html", "", "m4", "", "", "", "", "", "",
-	"runsomebrowser", "", "\\st.html", "", "Standard Output", 
+	"webbrowser", "", "\\st.html", "", "Standard Output", 
 	NO_AUTO_WRAP,"","","","");
     patterns = options->lang_head->patterns;
     synhigh_add_pattern (patterns, "</?[a-zA-Z].*>", GREEN, TEXT_BG, DIM_MODE);

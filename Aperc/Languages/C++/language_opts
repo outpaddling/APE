@@ -10,7 +10,6 @@ compile_to_asm_flag     -S
 preprocess_only_flag    -E -C
 link_flags              -lm
 debugger                gdb
-debugger_flags          
 debugger_backtrace_cmd  where
 run_prefix              time
 upload_prefix           

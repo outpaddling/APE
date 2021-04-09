@@ -460,7 +460,7 @@ lang_t *opt;
     if ( (*opt->name_spec == '\0') && (*opt->syntax_check_flag == '\0')
 	&& (*opt->compiler_cmd == '\0') && (*opt->compile_only_flag == '\0')
 	&& (*opt->compile_flags == '\0') && (*opt->link_flags == '\0')
-	&& (*opt->debugger_cmd =='\0') && (*opt->debugger_flags == '\0')
+	&& (*opt->debugger_cmd =='\0')
 	&& (*opt->run_prefix == '\0') && (*opt->error_msg_format == '\0') )
 	return 1;
     else
