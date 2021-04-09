@@ -246,12 +246,11 @@ char    *trace_cmd;
 opt_t   *options;
 
 {
-    char    core[PATH_MAX+1], cmd[CMD_LEN+1], *argv[MAX_ARGS], *exe,
+    char    cmd[CMD_LEN+1], *argv[MAX_ARGS], *exe,
 	    command_file[PATH_MAX+1], debugger_cmd[CMD_LEN+1],
-	    *ok_button[2] = OK_BUTTON, *file_names[TWC_MAX_FILENAMES+1],
+	    *ok_button[2] = OK_BUTTON,
 	    *stdout_file = NULL;
-    struct stat corestat;
-    int     status, c, fd;
+    int     status, fd;
     FILE    *fp;
     
     if ( (file->lang == NULL) || (*file->lang->debugger_cmd == '\0') )
@@ -295,42 +294,6 @@ opt_t   *options;
 	exe = file->executable;
     expand_command(file->source, exe, debugger_cmd, cmd, CMD_LEN);
     
-    /* Use core file if it exists */
-    if ( stat("core", &corestat) == 0 )
-	strlcat(cmd, "core", CMD_LEN);
-    else
-    {
-	/* FreeBSD names core file <prog>.core */
-	snprintf(core, PATH_MAX, "%s.core", exe);
-	if ( stat(core, &corestat) == 0 )
-	    strlcat(cmd, core, CMD_LEN);
-	else
-	{
-	    /* UnixWare names core file core.<pid> */
-	    list_files(file_names, "core.*", S_IFREG, TWC_MAX_FILENAMES);
-	    for (c=0; file_names[c] != NULL; ++c)
-		;
-	    switch(c)
-	    {
-		case    0:
-		    break;
-		case    1:
-		    strlcpy(core, file_names[0], PATH_MAX);
-		    if ( stat(core, &corestat) == 0 )
-			strlcat(cmd, core, CMD_LEN);
-		    else if ( trace_cmd != NULL )
-		    {
-			popup_mesg("Cannot trace: No core file.", ok_button, options);
-			return;
-		    }
-		    break;
-		default:
-		    popup_mesg("Cannot trace: Multiple core files.",
-			    ok_button, options);
-		    return;
-	    }
-	}
-    }
     parse_cmd(argv, cmd);
     begin_full_screen();
     status = spawnvp(P_WAIT, P_ECHO, argv, stdout_file, NULL, NULL);
