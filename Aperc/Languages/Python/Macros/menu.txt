@@ -1,3 +1,7 @@
+F.Unction
 New .Main
-.For
-.If
+.Block comment
+.process command line
+.For loop
+.If-then-else
+.Switch function
