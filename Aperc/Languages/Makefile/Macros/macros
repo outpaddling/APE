@@ -178,7 +178,7 @@ help:
         @printf "\tFC        [currently ${FC}]\n"
         @printf "\tFFLAGS    [currently ${FFLAGS}]\n\n"
         @printf "View Makefile for more tunable variables.\n\n"
-s 0 0 184 0 0 0 160 0 184 76:############################################################################
+s 0 0 184 0 0 0 161 0 184 76:############################################################################
 #
 #              Another Programmer's Editor Makefile Template
 #
@@ -349,7 +349,7 @@ install: all
         @for file in ${HEADERS}; do \
             ${INSTALL} -m 0444 $${file} ${DESTDIR}${PREFIX}/include; \
         done
-        ${INSTALL} -m 0444 ${MAN} ${MANPREFIX}/man/man3
+        ${INSTALL} -m 0444 ${MAN} ${DESTDIR}${MANPREFIX}/man/man3
 
 help:
         @printf "Usage: make [VARIABLE=value ...] all\n\n"
@@ -362,7 +362,7 @@ help:
         @printf "\tFC        [currently ${FC}]\n"
         @printf "\tFFLAGS    [currently ${FFLAGS}]\n\n"
         @printf "View Makefile for more tunable variables.\n\n"
-d 0 0 183 0 0 0 159 0 183 76:############################################################################
+d 0 0 183 0 0 0 160 0 183 76:############################################################################
 #
 #              Another Programmer's Editor Makefile Template
 #
@@ -532,7 +532,7 @@ install: all
         @for file in ${HEADERS}; do \
             ${INSTALL} -m 0444 $${file} ${DESTDIR}${PREFIX}/include; \
         done
-        ${INSTALL} -m 0444 ${MAN} ${MANPREFIX}/man/man3
+        ${INSTALL} -m 0444 ${MAN} ${DESTDIR}${MANPREFIX}/man/man3
 
 help:
         @printf "Usage: make [VARIABLE=value ...] all\n\n"
