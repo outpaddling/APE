@@ -105,12 +105,22 @@ int     main(int argc,char *argv[])
     }
     return EX_OK;
 }
-u 0 0 16 0 0 0 0 0 16 76:/***************************************************************************
+u 0 0 27 0 0 0 4 0 27 76:/***************************************************************************
+ *  Library:
+ *      #include <>
+ *      -l
+ *
  *  Description:
  *  
  *  Arguments:
  *
  *  Returns:
+ *
+ *  Files:
+ *
+ *  Environment
+ *
+ *  See also:
  *
  *  History: 
  *  Date        Name        Modification
@@ -121,4 +131,5 @@ int     main(int argc,char *argv[])
 
 {
 }
+
 

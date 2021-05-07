@@ -7,7 +7,7 @@ I.Nclude
 .Block comment
 Doxygen def.Group
 .API comment
-New F.Unction
 .Error check
 New .Main
 .Process arguments
+New F.Unction

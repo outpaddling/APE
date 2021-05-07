@@ -56,22 +56,6 @@ for ( ; ; )
  *
  *  \param
  */
-u 0 0 16 0 0 0 0 0 16 76:/***************************************************************************
- *  Description:
- *  
- *  Arguments:
- *
- *  Returns:
- *
- *  History: 
- *  Date        Name        Modification
- *  \date(12)\gecos(12)Begin
- ***************************************************************************/
-
-()
-
-{
-}
 
  0 0 28 0 0 0 8 0 28 76:e 1 993 1000 0 0 980 980 0 7 6:if ( )
 {
@@ -114,4 +98,31 @@ int     main(int argc,char *argv[])
     default:
         fprintf(stderr,"Usage: %s\n",argv[0]);
         break;
-}
+}u 0 0 27 0 0 0 4 0 27 76:/***************************************************************************
+ *  Library:
+ *      #include <>
+ *      -l
+ *
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  Files:
+ *
+ *  Environment
+ *
+ *  See also:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  \date(12)\gecos(12)Begin
+ ***************************************************************************/
+
+()
+
+{
+}
+
+
