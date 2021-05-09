@@ -224,7 +224,7 @@ opt_t   *options;
 		    ++mesg_ptr;
 		
 		/* Look for line number in message */
-		if ( memicmp(format_ptr,"\\ln",3) == 0 )
+		if ( memcmp(format_ptr,"\\ln",3) == 0 )
 		{
 		    format_ptr += 3;
 		    line = strtol(mesg_ptr,&end_ptr,10);
@@ -236,7 +236,7 @@ opt_t   *options;
 		}
 		
 		/* Look for filename in message */
-		else if ( memicmp(format_ptr,"\\fn",3) == 0 )
+		else if ( memcmp(format_ptr,"\\fn",3) == 0 )
 		{
 		    format_ptr += 3;              /* Next char after \fn */
 		    fn = source_file;
@@ -252,7 +252,7 @@ opt_t   *options;
 		}
 		
 		/* Text to be displayed in error message window */
-		else if ( memicmp(format_ptr,"\\te",3) == 0 )
+		else if ( memcmp(format_ptr,"\\te",3) == 0 )
 		{
 		    format_ptr += 3;
 		    *text = mesg_ptr;
@@ -264,7 +264,7 @@ opt_t   *options;
 		}
 		
 		/* Some compiler errors contain useless fluff to discard */
-		else if ( memicmp(format_ptr,"\\ig",3) == 0 )
+		else if ( memcmp(format_ptr,"\\ig",3) == 0 )
 		{
 		    format_ptr += 3;
 		    while ( !isspace(*mesg_ptr) &&

@@ -480,19 +480,19 @@ void    expand_command(char *source_file, char *executable,
     {
 	if (*command == '\\')
 	{
-	    if (memicmp(command, "\\fn", 3) == 0)
+	    if (memcmp(command, "\\fn", 3) == 0)
 	    {
 		command += 3;
 		for (p = source_file; *p != '\0';)
 		    *temp++ = *p++;
 	    }
-	    else if (memicmp(command, "\\ex", 3) == 0)
+	    else if (memcmp(command, "\\ex", 3) == 0)
 	    {
 		command += 3;
 		for (p = executable; *p != '\0';)
 		    *temp++ = *p++;
 	    }
-	    else if (memicmp(command, "\\st", 3) == 0)
+	    else if (memcmp(command, "\\st", 3) == 0)
 	    {
 		command += 3;
 		strlcpy(base, source_file, PATH_MAX);
@@ -501,7 +501,7 @@ void    expand_command(char *source_file, char *executable,
 		for (p = base; *p != '\0';)
 		    *temp++ = *p++;
 	    }
-	    else if (memicmp(command, "\\in", 3) == 0)
+	    else if (memcmp(command, "\\in", 3) == 0)
 	    {
 		command += 3;
 		*temp = *input = '\0';

@@ -43,11 +43,11 @@ OBJS    = ${OBJS1} ${OBJS2}
 
 PREFIX  ?= /usr/local
 MANPREFIX  ?= ${PREFIX}
-MANDIR	?= ${MANPREFIX}/man
+MANDIR  ?= ${MANPREFIX}/man
 LOCALBASE ?= /usr/local
 DATADIR ?= ${PREFIX}/share/APE
 DOCSDIR ?= ${PREFIX}/share/doc/APE
-DESTDIR	?= .
+DESTDIR ?= .
 
 # APE depends on signed chars.  Some compilers treat chars as unsigned
 # by default, so adjust compiler flags as needed. (e.g. gcc -fsigned-char)

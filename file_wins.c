@@ -420,7 +420,7 @@ file_t  *file;
 	if ( *src == '\\' )
 	{
 	    /* Using source base name? */
-	    if ( memicmp(src,"\\st",3) == 0 )
+	    if ( memcmp(src,"\\st",3) == 0 )
 	    {
 		if ( (ext = strrchr(file->source, '.')) == NULL)
 		    ext = file->source + strlen(file->source);
@@ -430,7 +430,7 @@ file_t  *file;
 		src += 3;
 	    }
 	    /* Using whole source name? */
-	    else if ( memicmp(src,"\\fn",3) == 0 )
+	    else if ( memcmp(src,"\\fn",3) == 0 )
 	    {
 		/* strcpy source name to exe */
 		s2 = file->source;
