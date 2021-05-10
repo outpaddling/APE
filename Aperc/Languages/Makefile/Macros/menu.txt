@@ -1,3 +1,2 @@
-Simple .Program
-.Static library
-.Dynamic library
+.Library
+.Program
