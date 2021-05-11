@@ -30,7 +30,7 @@
 #include <stdarg.h>
 #include <ctype.h>
 #include <twintk.h>
-#include <bacon.h>
+#include <xtend.h>
 #include "edit.h"
 #include "protos.h"
 

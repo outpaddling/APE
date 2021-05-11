@@ -31,7 +31,7 @@
 #include <sys/stat.h>
 #include <ctype.h>
 #include <twintk.h>
-#include <bacon.h>
+#include <xtend.h>
 #include "edit.h"
 #include "protos.h"
 
@@ -330,7 +330,7 @@ buff_t *cut_buff;
     start_point = file->line[start_line].buff + cut_buff->start_col;
 
     /* Concatenate portions of first and last lines */
-    strbasecpy (start_point, end_point, file->line[start_line].buff, LINE_BUFF_SIZE (len));
+    strlbasecpy (start_point, end_point, file->line[start_line].buff, LINE_BUFF_SIZE (len));
     file->line[start_line].length = strlen (file->line[start_line].buff);
 
     /* Delete lines between */
@@ -661,7 +661,7 @@ int     indent;
     {
 	len = col + c;
 	expand_buff_if_needed (file, curline, len);
-	strbasecpy (file->curchar, temp, file->line[curline].buff, LINE_BUFF_SIZE (len));
+	strlbasecpy (file->curchar, temp, file->line[curline].buff, LINE_BUFF_SIZE (len));
     }
     file->curcol = col;
     file->line[curline].length = len;

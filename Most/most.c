@@ -29,8 +29,8 @@
 #include <string.h>
 #include <time.h>
 #include <sys/types.h>
-#include "direct.h"
-#include "bacon.h"
+#include <xtend.h>
+#include <direct.h>
 
 int     main(argc,argv)
 int     argc;

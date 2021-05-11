@@ -7,13 +7,13 @@ CC = cc
 COPTS = -Wall -O -I$$INSTALL_ROOT/include -D$$OSTYPE
 LD = cc
 
-most:	$(OBJS)
-	$(LD) -o most $(OBJS) -L$$INSTALL_ROOT/lib -ltwin -lbacon
+most:   $(OBJS)
+	$(LD) -o most $(OBJS) -L$$INSTALL_ROOT/lib -ltwin -lxtend
 	
 
 most.o: most.c ../../Include/direct.h ../../Include/image.h \
   ../../Include/iprotos.h ../../Include/mouse.h ../../Include/mprotos.h \
-  ../../Include/tprotos.h ../../Include/bacon.h \
+  ../../Include/tprotos.h ../../Include/xtend.h \
   ../../Include/baconprotos.h
 	$(CC) -c $(COPTS) most.c
 

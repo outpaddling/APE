@@ -29,7 +29,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <twintk.h>
-#include <bacon.h>
+#include <xtend.h>
 #include "edit.h"
 #include "protos.h"
 
@@ -420,7 +420,7 @@ int     del_under_expand_tabs(file_t *file,opt_t *options,buff_t *cut_buff)
     int     len, last, y, x;
 
     len = --file->line[file->curline].length;
-    strbasecpy(ptr, ptr + 1, file->line[file->curline].buff,
+    strlbasecpy(ptr, ptr + 1, file->line[file->curline].buff,
 	       LINE_BUFF_SIZE(len + 1));
     last = file->leftcol + TW_COLS(file->text) - 2;
     tw_del_ch(file->text);
@@ -461,7 +461,7 @@ buff_t  *cut_buff;
 	if ( expand_buff_if_needed(file, curline, len) )
 	    file->curcol = file->curchar - file->line[curline].buff;
 
-	strbasecpy(file->curchar, next, file->line[curline].buff, LINE_BUFF_SIZE(len));
+	strlbasecpy(file->curchar, next, file->line[curline].buff, LINE_BUFF_SIZE(len));
 	file->line[curline].length = len;
 	delete_lines(file, curline + 1, curline + 1);
 
@@ -681,7 +681,7 @@ unsigned long   time_diff;
 	;
 
     /* Copy part of current line to new line */
-    strbasecpy(newptr, oldptr, file->line[curline + 1].buff, LINE_BUFF_SIZE(len));
+    strlbasecpy(newptr, oldptr, file->line[curline + 1].buff, LINE_BUFF_SIZE(len));
     *(file->curchar) = '\0';    /* Mark new end of old line */
     file->curcol = file->curchar - file->line[curline].buff;
     file->line[curline].length = file->curcol;

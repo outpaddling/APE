@@ -34,7 +34,7 @@
 #include <sys/stat.h>
 #include <pwd.h>
 #include <twintk.h>
-#include <bacon.h>
+#include <xtend.h>
 #include "edit.h"
 #include "protos.h"
 

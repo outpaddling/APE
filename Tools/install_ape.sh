@@ -78,7 +78,6 @@ export CFLAGS
 CC="gcc"
 export CC
 
-# master_site=http://personalpages.tds.net/~jwbacon/Ports/distfiles
 master_site=http://acadix.biz/Ports/distfiles
 
 # Currently supported versions of dependencies

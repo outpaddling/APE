@@ -34,7 +34,7 @@
 #include <fcntl.h>
 #include <time.h>
 #include <twintk.h>
-#include <bacon.h>
+#include <xtend.h>
 #include "edit.h"
 #include "protos.h"
 
@@ -227,7 +227,7 @@ opt_t  *options;
 	stat_mesg("File not saved.");
 	return CANT_SAVE;
     }
-    meta_chars(filename,temp,PATH_MAX);
+    strshellcpy(filename,temp,PATH_MAX);
 
     /* Split filename into base name and directory */
     if (get_dirname(filename, dir_name, base_name) == NO_DIR)

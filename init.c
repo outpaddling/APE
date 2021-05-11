@@ -35,7 +35,7 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <twintk.h>
-#include <bacon.h>
+#include <xtend.h>
 #include "edit.h"
 #include "protos.h"
 
@@ -206,7 +206,7 @@ char    *argv[];
 	    {
 		case    'h':
 		default:
-		    usage("%s [-h[elp]] [filespec]\n",*argv);
+		    va_usage("%s [-h[elp]] [filespec]\n",*argv);
 		    break;
 	    }
 	}

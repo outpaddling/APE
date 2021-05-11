@@ -31,7 +31,7 @@
 #include <sys/utsname.h>
 #include <sys/stat.h>
 #include <twintk.h>
-#include <bacon.h>
+#include <xtend.h>
 #include "edit.h"
 #include "protos.h"
 

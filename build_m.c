@@ -33,7 +33,7 @@
 #include <signal.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <bacon.h>
+#include <xtend.h>
 #include <twintk.h>
 #include "edit.h"
 #include "protos.h"
@@ -94,7 +94,7 @@ event_t *event;
 		    /* Open assembly file */
 		    strlcpy(out_filename, files[*af_ptr].source, PATH_MAX);
 		    if ( (p=strrchr(out_filename, '.')) != NULL )
-			strbasecpy(p, ".s", out_filename, PATH_MAX);
+			strlbasecpy(p, ".s", out_filename, PATH_MAX);
 		    if ( (c = open_file(files+*af_ptr, out_filename, options, OPEN_FLAG_NORMAL)) >= 0 )
 			*af_ptr = c;
 		}
@@ -895,7 +895,7 @@ int     preprocess(file_t files[], int af, opt_t *options)
 	snprintf(cmd,CMD_LEN,"%s %s %s %s | uniq | more",    /* more -s? */
 	    files[af].lang->compiler_cmd, PP_OPTIONS,
 	    files[af].lang->compile_flags, files[af].source);
-	meta_chars(cmd2,cmd,CMD_LEN);
+	strshellcpy(cmd2,cmd,CMD_LEN);
 	status = run_command(P_WAIT,P_ECHO,cmd2,"sh");
 	init_compiler_lines(files,options);
 	return status;

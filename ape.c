@@ -37,7 +37,7 @@
 #include <time.h>
 #include <sysexits.h>
 #include <twintk.h>
-#include <bacon.h>
+#include <xtend.h>
 #include "edit.h"
 #include "protos.h"
 

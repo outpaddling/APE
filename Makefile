@@ -56,7 +56,7 @@ CFLAGS  ?= -g -Wall
 INCLUDES = -I${LOCALBASE}/include
 CFLAGS  += ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\"" -fsigned-char
 
-LDFLAGS += -L${LOCALBASE}/lib -ltwintk -lpare -lbacon
+LDFLAGS += -L${LOCALBASE}/lib -ltwintk -lpare -lxtend
 
 INSTALL         ?= install
 INSTALL_PROGRAM ?= install -m 0755

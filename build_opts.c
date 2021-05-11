@@ -36,7 +36,7 @@
 #include <sysexits.h>
 #include <fnmatch.h>
 #include <twintk.h>
-#include <bacon.h>
+#include <xtend.h>
 #include "edit.h"
 #include "protos.h"
 
