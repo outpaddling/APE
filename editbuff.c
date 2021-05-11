@@ -420,7 +420,7 @@ int     del_under_expand_tabs(file_t *file,opt_t *options,buff_t *cut_buff)
     int     len, last, y, x;
 
     len = --file->line[file->curline].length;
-    strlbasecpy(ptr, ptr + 1, file->line[file->curline].buff,
+    strlbasecpy(ptr, file->line[file->curline].buff, ptr + 1,
 	       LINE_BUFF_SIZE(len + 1));
     last = file->leftcol + TW_COLS(file->text) - 2;
     tw_del_ch(file->text);
@@ -461,7 +461,7 @@ buff_t  *cut_buff;
 	if ( expand_buff_if_needed(file, curline, len) )
 	    file->curcol = file->curchar - file->line[curline].buff;
 
-	strlbasecpy(file->curchar, next, file->line[curline].buff, LINE_BUFF_SIZE(len));
+	strlbasecpy(file->curchar, file->line[curline].buff, next, LINE_BUFF_SIZE(len));
 	file->line[curline].length = len;
 	delete_lines(file, curline + 1, curline + 1);
 
@@ -681,7 +681,7 @@ unsigned long   time_diff;
 	;
 
     /* Copy part of current line to new line */
-    strlbasecpy(newptr, oldptr, file->line[curline + 1].buff, LINE_BUFF_SIZE(len));
+    strlbasecpy(newptr, file->line[curline + 1].buff, oldptr, LINE_BUFF_SIZE(len));
     *(file->curchar) = '\0';    /* Mark new end of old line */
     file->curcol = file->curchar - file->line[curline].buff;
     file->line[curline].length = file->curcol;

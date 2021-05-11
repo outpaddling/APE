@@ -94,7 +94,7 @@ event_t *event;
 		    /* Open assembly file */
 		    strlcpy(out_filename, files[*af_ptr].source, PATH_MAX);
 		    if ( (p=strrchr(out_filename, '.')) != NULL )
-			strlbasecpy(p, ".s", out_filename, PATH_MAX);
+			strlbasecpy(p, out_filename, ".s", PATH_MAX);
 		    if ( (c = open_file(files+*af_ptr, out_filename, options, OPEN_FLAG_NORMAL)) >= 0 )
 			*af_ptr = c;
 		}
