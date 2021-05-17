@@ -182,7 +182,7 @@ help:
         @printf "\tFC        [currently ${FC}]\n"
         @printf "\tFFLAGS    [currently ${FFLAGS}]\n\n"
         @printf "View Makefile for more tunable variables.\n\n"
-l 0 0 230 0 0 0 207 0 230 76:############################################################################
+l 0 0 246 0 0 0 222 0 246 76:############################################################################
 #
 #              Another Programmer's Editor Makefile Template
 #
@@ -252,6 +252,13 @@ DLIB    = ${SONAME}.${LIB_VER}
 INSTALL_NAME    = lib${LIB}.${API_VER}.dylib
 DYLIB           = lib${LIB}.${API_VER}.${LIB_VER}.dylib
 CURRENT_VERSION = ${API_VER}.${LIB_VER}
+# Need absolute pathname embedded in Apple dylib, or it will only be found
+# if the relative path to it is the same as from the build directory.
+# Big Sur lacks a realpath command but it can be installed via pkgsrc-wip.
+# GNU make 3.81 on Big Sur doesn't support !=, so we must use the gmake
+# shell extension and this will fail if not using gmake.
+# Fortunately most platforms don't need this.
+DYLIB_PATH      ?= $(shell realpath ${PREFIX}/lib)
 
 HEADERS = mylib.h
 
@@ -324,7 +331,9 @@ RM      ?= rm
 # in case a locally installed version is preferred.
 PRINTF  ?= printf
 INSTALL ?= install
-        
+STRIP   ?= strip
+CHMOD   ?= chmod
+
 ############################################################################
 # Standard targets required by package managers
 
@@ -341,7 +350,7 @@ ${DLIB}: ${OBJS}
 
 ${DYLIB}: ${OBJS}
         $(CC) $(CFLAGS) -dynamiclib \
-            -install_name ${PREFIX}/lib/${INSTALL_NAME} \
+            -install_name ${DYLIB_PATH}/${INSTALL_NAME} \
             -current_version ${CURRENT_VERSION} \
             -compatibility_version ${API_VER} \
             -o ${DYLIB} ${OBJS}
@@ -392,12 +401,19 @@ common-install:
         ${INSTALL} -m 0444 Man/*.3 ${DESTDIR}${MANPREFIX}/man/man3
 
 install: all common-install
-        ${INSTALL} -m 0444 ${SLIB} ${DLIB} ${DESTDIR}${PREFIX}/lib
+        ${INSTALL} -m 0444 ${SLIB} ${DESTDIR}${PREFIX}/lib
+        ${INSTALL} -m 0555 ${DLIB} ${DESTDIR}${PREFIX}/lib
         ${INSTALL} -ls ${DLIB} ${DESTDIR}${PREFIX}/lib/${SONAME}
         ${INSTALL} -ls ${DLIB} ${DESTDIR}${PREFIX}/lib/lib${LIB}.so
 
+install-strip: install
+        ${CHMOD} 0655 ${DESTDIR}${PREFIX}/lib/${DLIB}
+        ${STRIP} ${DESTDIR}${PREFIX}/lib/${DLIB}
+        ${CHMOD} 0555 ${DESTDIR}${PREFIX}/lib/${DLIB}
+
 apple-install: apple common-install
-        ${INSTALL} -m 0444 ${SLIB} ${DYLIB} ${DESTDIR}${PREFIX}/lib
+        ${INSTALL} -m 0444 ${SLIB} ${DESTDIR}${PREFIX}/lib
+        ${INSTALL} -m 0555 ${DYLIB} ${DESTDIR}${PREFIX}/lib
         ln -sf ${DYLIB} ${DESTDIR}${PREFIX}/lib/${INSTALL_NAME}
         ln -sf ${DYLIB} ${DESTDIR}${PREFIX}/lib/lib${LIB}.dylib
 
