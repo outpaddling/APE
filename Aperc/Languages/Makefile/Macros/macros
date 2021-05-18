@@ -182,7 +182,7 @@ help:
         @printf "\tFC        [currently ${FC}]\n"
         @printf "\tFFLAGS    [currently ${FFLAGS}]\n\n"
         @printf "View Makefile for more tunable variables.\n\n"
-l 0 0 247 0 0 0 224 0 247 76:############################################################################
+l 0 0 246 0 0 0 223 0 246 76:############################################################################
 #
 #              Another Programmer's Editor Makefile Template
 #
@@ -399,10 +399,10 @@ common-install:
             ${INSTALL} -m 0444 $${file} ${DESTDIR}${PREFIX}/include; \
         done
         ${INSTALL} -m 0444 Man/*.3 ${DESTDIR}${MANPREFIX}/man/man3
+        ${INSTALL} -m 0444 ${SLIB} ${DESTDIR}${PREFIX}/lib
 
 # CentOS 7 does not support install -ls, use ${LN} -sf instead
 install: all common-install
-        ${INSTALL} -m 0444 ${SLIB} ${DESTDIR}${PREFIX}/lib
         ${INSTALL} -m 0555 ${DLIB} ${DESTDIR}${PREFIX}/lib
         ${LN} -sf ${DLIB} ${DESTDIR}${PREFIX}/lib/${SONAME}
         ${LN} -sf ${DLIB} ${DESTDIR}${PREFIX}/lib/lib${LIB}.so
@@ -413,7 +413,6 @@ install-strip: install
         ${CHMOD} 0555 ${DESTDIR}${PREFIX}/lib/${DLIB}
 
 apple-install: apple common-install
-        ${INSTALL} -m 0444 ${SLIB} ${DESTDIR}${PREFIX}/lib
         ${INSTALL} -m 0555 ${DYLIB} ${DESTDIR}${PREFIX}/lib
         ${LN} -sf ${DYLIB} ${DESTDIR}${PREFIX}/lib/${INSTALL_NAME}
         ${LN} -sf ${DYLIB} ${DESTDIR}${PREFIX}/lib/lib${LIB}.dylib
