@@ -18,13 +18,12 @@
 # Files to be installed by make
 
 BIN1    = ape
-BIN2    = Ascii/ascii
+BIN2    = ascii
 BINS    = ${BIN1} ${BIN2}
 
 MANS    = Man/*.1
 HTML    = Man/*.html
 SCRIPTS = Tools/search* Tools/ape_aspell Xape/* Java/runjava
-
 
 ###################################################
 # List object files that comprise BIN1, BIN2, etc.
@@ -34,29 +33,26 @@ OBJS1   = ape.o files.o file_wins.o editbuff.o edit_m.o search_m.o build_m.o \
 	    build_opts.o resize.o match.o macros.o synhigh.o init.o \
 	    messages.o error.o mouse.o subproc.o signal.o undo_stack.o \
 	    undo_item.o
-
-OBJS2   = Ascii/ascii.o
+OBJS2   = ascii.o
 OBJS    = ${OBJS1} ${OBJS2}
 
 #####################################
 # Compile, link, and install options
 
-PREFIX  ?= /usr/local
-MANPREFIX  ?= ${PREFIX}
-MANDIR  ?= ${MANPREFIX}/man
-LOCALBASE ?= /usr/local
-DATADIR ?= ${PREFIX}/share/APE
-DOCSDIR ?= ${PREFIX}/share/doc/APE
-DESTDIR ?= .
+MANPREFIX   ?= ${PREFIX}
+MANDIR      ?= ${MANPREFIX}/man
+LOCALBASE   ?= ../local
+PREFIX      ?= ${LOCALBASE}
+DATADIR     ?= ${PREFIX}/share/APE
+DOCSDIR     ?= ${PREFIX}/share/doc/APE
 
 # APE depends on signed chars.  Some compilers treat chars as unsigned
 # by default, so adjust compiler flags as needed. (e.g. gcc -fsigned-char)
-CC      ?= cc
-CFLAGS  ?= -g -Wall
-INCLUDES = -I${LOCALBASE}/include
-CFLAGS  += ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\"" -fsigned-char
-
-LDFLAGS += -L${LOCALBASE}/lib -ltwintk -lpare -lxtend
+CC          ?= cc
+CFLAGS      ?= -g -Wall
+INCLUDES    = -I${LOCALBASE}/include
+CFLAGS      += ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\"" -fsigned-char
+LDFLAGS     += -L${LOCALBASE}/lib -ltwintk -lpare -lxtend
 
 INSTALL         ?= install
 INSTALL_PROGRAM ?= install -m 0755
@@ -69,33 +65,33 @@ MAKE            ?= make
 #####################################
 # Standard targets required by ports
 
-all:    ${BINS} ${LIBS}
+all:    ${BINS}
 
 # Link rules
-${BIN1}:        ${OBJS1}
-		${CC} -o ${BIN1} ${OBJS1} ${LDFLAGS}
+${BIN1}: ${OBJS1}
+	${CC} -o ${BIN1} ${OBJS1} ${LDFLAGS}
 
-${BIN2}:        ${OBJS2}
-		(cd Ascii; ${MAKE})
+${BIN2}: ${OBJS2}
+	${CC} -o ${BIN2} ${OBJS2} -L${LOCALBASE}/lib ${LDFLAGS} \
+		-ltwintk -lxtend
 
 include Makefile.depend
 
 depend:
 	rm -f Makefile.depend
-	for file in *.c; do \
+	for file in *.c Ascii/ascii.c; do \
 	    ${CC} ${INCLUDES} -MM $${file} >> Makefile.depend; \
-	    printf "\t\$${CC} -c \$${CFLAGS} $${file}\n" >> Makefile.depend; \
+	    printf "\t\$${CC} -c \$${CFLAGS} $${file}\n\n" >> Makefile.depend; \
 	done
 
 # Remove generated files (objs and nroff output from man pages)
 clean:
-	rm -f ${OBJS} ${BINS} ${LIBS} *.nr
+	rm -f ${OBJS} ${BINS} *.nr
 
 realclean: clean
 	rm -f .*.bak *.bak *.BAK *.core
 
 install: all
-	printenv | grep MAN
 	mkdir -p ${DESTDIR}${PREFIX}/bin \
 		${DESTDIR}${MANDIR}/man1 \
 		${DESTDIR}${DATADIR} \
