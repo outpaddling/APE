@@ -18,7 +18,8 @@
 # Files to be installed by make
 
 BIN1    = ape
-BIN2    = ascii
+# Place in subdir for case-insensitive filesystems, where Ascii == ascii
+BIN2    = Ascii/ascii
 BINS    = ${BIN1} ${BIN2}
 
 MANS    = Man/*.1
