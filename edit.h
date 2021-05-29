@@ -103,6 +103,8 @@
 #define CANT_COMPILE_MSG    "Can't compile: unknown language."
 #define NO_LANGUAGE_OPTS    -2
 #define MENU_NO_SELECTION   -1
+#define TABS_WARNING_MAX    256
+#define TABS_FILENAME_MAX   17
 
 #include "macros.h"
 
