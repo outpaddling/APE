@@ -282,6 +282,7 @@ typedef struct
     int     lang_rebuild;   /* True if language options have changed */
     int     saved_once;     /* True if file has been saved at least once */
     int     read_only;      /* File cannot be saved */
+    int     tabs_flagged;   /* User has been warned about tab conversions */
     int     insert;         /* Insert (1) or replace (0) mode */
     time_t  save_time;      /* Time of last save */
     int     crypt;          /* True if file is saved encrypted */

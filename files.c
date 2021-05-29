@@ -388,6 +388,34 @@ opt_t   *options;
 }
 
 
+/***************************************************************************
+ *  Description:
+ *      Warn user if a file contains TABs, since APE will convert them to
+ *      spaces when saving.
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  2021-05-29  Jason Bacon Begin
+ ***************************************************************************/
+
+int     prompt_tabs(file_t *file, opt_t *options)
+
+{
+    int     sv = 'n';
+    char    *buttons[3] = YES_NO_BUTTONS,
+	    msg[200];
+
+    snprintf(msg, 199, "The file \"%s\" contains TAB characters.  APE is a soft-tabs\n"
+		       "editor and will replace tabs with spaces when saving.\n"
+		       "Open read-only to avoid corrupting the file?",
+	     file->source);
+    sv = popup_mesg(msg,buttons,options);
+    if (sv == 'y')
+	file->read_only = 1;
+    return (sv);
+}
+
+
 /****************************************************
  * Open a new file and create an edit window for it.
  ****************************************************/
@@ -552,6 +580,8 @@ opt_t  *options;
     file->start_line = 0;
     file->high_line = file->high_col = -1;
     file->line_style = 0;
+    file->read_only = 0;
+    file->tabs_flagged = 0;
 
     create_edit_win(file,options);
 	
@@ -683,6 +713,7 @@ int     load_file(file_t *file, FILE *fp, opt_t *options)
     struct stat st;
     char    temp[MAX_LINE_LEN + 1];
 
+    file->tabs_flagged = 0;
     do
     {
 	if ( (len = read_line(temp, fp, file, options)) != -1)
@@ -761,6 +792,11 @@ int     read_line(char string[], FILE *fp, file_t *file, opt_t *options)
 	switch (ch)
 	{
 	    case '\t':
+		if ( ! (file->read_only || file->tabs_flagged) )
+		{
+		    prompt_tabs(file, options);
+		    file->tabs_flagged = 1;
+		}
 		if ( file->expand_tabs )
 		{
 		    /* Expand tabs to spaces */
