@@ -403,12 +403,22 @@ int     prompt_tabs(file_t *file, opt_t *options)
 {
     int     sv = 'n';
     char    *buttons[3] = YES_NO_BUTTONS,
-	    msg[200];
+	    msg[201],
+	    name[18];
+    size_t  len = strlen(file->source);              
+						     
+    if ( len < 17 )                                  
+	strlcpy(name, file->source, 17);
+    else
+    {
+	memcpy(name, file->source, 7);
+	strlcat(name, "...", 17);
+	strlcat(name, file->source + len - 6, 17);
+    }
 
-    snprintf(msg, 199, "The file \"%s\" contains TAB characters.  APE is a soft-tabs\n"
-		       "editor and will replace tabs with spaces when saving.\n"
-		       "Open read-only to avoid corrupting the file?",
-	     file->source);
+    snprintf(msg, 200, "\"%s\" contains non-leading TAB characters.  APE is a\n"
+		       "soft-tabs editor and will replace non-leading tabs with spaces when\n"
+		       "saving. Open read-only to avoid altering the whitespace?", name);
     sv = popup_mesg(msg,buttons,options);
     if (sv == 'y')
 	file->read_only = 1;
@@ -783,16 +793,20 @@ int     read_line(char string[], FILE *fp, file_t *file, opt_t *options)
 
 {
     char   *ptr = string, *end = string + file->max_line_len;
-    int     ch = '\0';
+    int     ch = '\0',
+	    non_whitespace_found = 0;
     
     /* Check ptr first */
     while ( (ptr < end) && ((ch = getc(fp)) != '\n') && 
 	    (ch != '\r') && (ch != EOF) )
     {
+	if ( ! isspace(ch) )
+	    non_whitespace_found = 1;
 	switch (ch)
 	{
 	    case '\t':
-		if ( ! (file->read_only || file->tabs_flagged) )
+		if ( ! (file->read_only || file->tabs_flagged) && \
+		     non_whitespace_found )
 		{
 		    prompt_tabs(file, options);
 		    file->tabs_flagged = 1;
