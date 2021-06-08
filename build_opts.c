@@ -41,12 +41,10 @@
 #include "protos.h"
 
 
-int
-	check_first_ext(old_lang, new_lang)
-lang_t *old_lang, *new_lang;
+int     check_first_ext(lang_t *old_lang, lang_t *new_lang)
 
 {
-    char    old_ext[EXT_LEN + 1], new_ext[EXT_LEN + 1], config_dir[PATH_MAX + 1],
+    char    old_ext[SPEC_LEN + 1], new_ext[SPEC_LEN + 1], config_dir[PATH_MAX + 1],
 	    from[PATH_MAX + 1], to[PATH_MAX + 1];
 
     strlcpy(old_ext, old_lang->name_spec, SPEC_LEN);
