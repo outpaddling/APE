@@ -305,7 +305,7 @@ void    view_header(file_t *file, opt_t *options)
 
 {
     static char path_name[PATH_MAX + 1] = "";
-    char    cmd[CMD_LEN + 1] = "", *ext, *argv[MAX_ARGS],
+    char    cmd[CMD_LEN + 1] = "", *argv[MAX_ARGS],
 	    *x11_include = X11_INCLUDE;
 
     panel_get_string(file, options, PATH_MAX, "Header? ", "",
@@ -314,10 +314,10 @@ void    view_header(file_t *file, opt_t *options)
     sprintw(2, 50, "path_name = %s", path_name);
     if ( *path_name == '\0' )
 	return;
-    ext = strrchr(path_name, '.');
     
     /* Check for no extension, ./base, or ../base */
     /*
+    ext = strrchr(path_name, '.');
     if ((ext == NULL) || ((ext <= path_name + 1) && (*path_name == '.')))
 	strlcat(path_name, ".h", PATH_MAX);
     */

@@ -47,7 +47,7 @@ event_t *event;
 {
     extern term_t   *Terminal;
     win_t  *search_pop;
-    int     ch = 'f', oldch, start_row = 1;
+    int     ch = 'f', start_row = 1;
     static char search_direction[] = ".Direction: Forward ", case_sensitive[] = ".Case sensitive: No ", *search_text[] = {
 	".Find (Esc-/)",
 	"R.Epeat last find (Ctrl+n or F3)",
@@ -75,8 +75,6 @@ event_t *event;
 
     do
     {
-	if (ch != 'd')
-	    oldch = ch;         /* For d & c: What was highlighted last? */
 	ch = tw_get_item(search_pop, search_text, event, &start_row,
 		       options->reverse_menu,NULL);
 	switch (ch)
