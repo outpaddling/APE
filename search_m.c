@@ -240,7 +240,7 @@ int     resume_old_search;
     extern term_t   *Terminal;
     win_t  *win = NULL, *resp_win = NULL;
     tw_panel_t panel = TWC_PANEL_INIT;
-    int     response, c, old_len, new_len, x, y, start_col, line, col,
+    int     response, c, old_len, new_len, x, y, start_col,
 	    save, status = 0, cap, choice, len, bytes;
     static char replace_str[4][SEARCH_STR_LEN + 1] = {"","","",""},
 		cap_str[4], prompt[4][20];
@@ -306,7 +306,7 @@ int     resume_old_search;
 		temp[c] = '\0';
 
 		/* Reprint string in standout video */
-		TW_FIND_CURSOR(file->text, line, col);
+		// TW_FIND_CURSOR(file->text, line, col);
 		set_highlight(file, options);
 		rewrite(file, options, cut_buff,
 		    file->curline, ACTUAL_COL(file),

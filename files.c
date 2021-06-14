@@ -368,11 +368,13 @@ opt_t   *options;
 {
     int     sv = 'n', status;
     char    *buttons[4] = YES_NO_CANCEL_BUTTONS,
-	    msg[128];
+	    msg[128],
+	    sfile[102];
 
+    strsqueeze(sfile, files[af].source, 102);
     if (files[af].modified)
     {
-	snprintf(msg,127,"File \"%s\" has changed.  Save?",files[af].source);
+	snprintf(msg,127,"File \"%s\" has changed. Save?",sfile);
 	sv = popup_mesg(msg,buttons,options);
 	if (sv == 'y')
 	{
@@ -429,8 +431,7 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
 {
     FILE   *fp;
     int     af,
-	    ftype,
-	    status;
+	    ftype;
     char    dir_name[PATH_MAX + 1], base_name[PATH_MAX + 1],
 	    temp[PATH_MAX + 1], home[PATH_MAX + 1],
 	    *button[2] = OK_BUTTON,
@@ -498,7 +499,7 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
     {
 	// tunset_tty(Terminal,C_LFLAG,ECHO);
 	*key = '\0';
-	status = panel_get_string(files+af, options, MCRYPT_KEY_LEN,
+	panel_get_string(files+af, options, MCRYPT_KEY_LEN,
 			    "Key? ", "", TWC_SECURE, key);
 	snprintf(cmd, CMD_LEN, "mcrypt --flush -q -F -d -k %s < %s",
 	    key, files[af].source);
@@ -880,8 +881,8 @@ int     save_file(file_t *file, opt_t   *options)
 		"serpent", "xtea", "blowfish", "enigma", 
 		"rc2", "tripledes", NULL },
 	    cmd[CMD_LEN+1],
-	    full_path[PATH_MAX+1],
-	    backup_path[PATH_MAX+1];
+	    full_path[PATH_MAX*2+2],
+	    backup_path[PATH_MAX*2+7];
 
     if (file->read_only)
     {
@@ -907,8 +908,8 @@ int     save_file(file_t *file, opt_t   *options)
 	}
     */
 
-    snprintf(full_path, PATH_MAX, "%s/%s", file->cwd, file->source);
-    snprintf(backup_path, PATH_MAX, "%s/.%s.bak", file->cwd, file->source);
+    snprintf(full_path, PATH_MAX*2+2, "%s/%s", file->cwd, file->source);
+    snprintf(backup_path, PATH_MAX*2+7, "%s/.%s.bak", file->cwd, file->source);
     
     /* Back up file before first save */
     if (!file->saved_once)

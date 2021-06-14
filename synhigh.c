@@ -522,7 +522,7 @@ buff_t *cut_buff;
     extern term_t *Terminal;
     tw_panel_t panel = TWC_PANEL_INIT;
     win_t  *win;
-    int     status, c, f, line, save, max_colors = TMAX_COLORS (Terminal),
+    int     status, c, line, save, max_colors = TMAX_COLORS (Terminal),
 	    fg[MAX_PATTERNS], bg[MAX_PATTERNS], modes[MAX_PATTERNS];
     char    str[MAX_PATTERNS][MAX_RE + 1];
 
@@ -551,7 +551,7 @@ buff_t *cut_buff;
     /* Set up input panel */
     for (c = 0; c < MAX_PATTERNS; ++c)
     {
-	f = c * 4;
+	// f = c * 4;
 	line = c + 2;
 	tw_init_int (&panel, line, 2, -1, max_colors, "Fg: ",
 		  " Foreground color. -1 matches text foreground. ", &fg[c]);

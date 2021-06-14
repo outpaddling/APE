@@ -253,7 +253,7 @@ opt_t  *options;
 buff_t  *cut_buff;
 
 {
-    int     repeat, col, len, c, save_mode = file->insert;
+    int     repeat, len, c, save_mode = file->insert;
 
     /* Override replace mode for tabs */
     file->insert = 1;
@@ -269,7 +269,7 @@ buff_t  *cut_buff;
     }
     else
 	repeat = options->indent_size - file->curcol % options->indent_size;
-    col = file->curcol;
+    // col = file->curcol;
     len = file->line[file->curline].length;
 
     if (len + repeat >= file->max_line_len)

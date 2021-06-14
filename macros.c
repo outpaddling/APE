@@ -800,7 +800,7 @@ int     macro_new_submenu(file_t files[],
 	    cmd[CMD_LEN+1];
     struct stat st;
     FILE    *fp;
-    int     done, flags, status;
+    int     done, status;
     win_t   *win;
     tw_panel_t panel = TWC_PANEL_INIT;
     extern term_t   *Terminal;
@@ -862,7 +862,6 @@ int     macro_new_submenu(file_t files[],
 	/* Get macro body */
 	if ( stat(macro_dir,&st) == -1 )
 	    rmkdir(macro_dir,0755);
-	flags = 0;
     
 	snprintf(macro_list,PATH_MAX,"%s/menu.txt",macro_dir);
 	if ( (fp=fopen(macro_list,"a")) != NULL )

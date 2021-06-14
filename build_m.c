@@ -315,7 +315,7 @@ opt_t *options;
 out_t   output;
 
 {
-    char    *argv[MAX_ARGS], cmd[CMD_LEN+1], *ok_button[2] = OK_BUTTON;
+    char    *argv[MAX_ARGS], cmd[CMD_LEN+4], *ok_button[2] = OK_BUTTON;
     int     stat;
 
     if ( check_build_opts(files+af) == NULL )
@@ -328,12 +328,12 @@ out_t   output;
     switch(output)
     {
 	case    OBJECT:
-	    snprintf(cmd, CMD_LEN, "%s %s %s %s", files[af].lang->compiler_cmd,
+	    snprintf(cmd, CMD_LEN + 4, "%s %s %s %s", files[af].lang->compiler_cmd,
 		files[af].lang->compile_only_flag,
 		files[af].lang->compile_flags, files[af].source);
 	    break;
 	case    ASSEMBLY:
-	    snprintf(cmd, CMD_LEN, "%s %s %s %s", files[af].lang->compiler_cmd,
+	    snprintf(cmd, CMD_LEN + 4, "%s %s %s %s", files[af].lang->compiler_cmd,
 		files[af].lang->compile_to_asm_flag,
 		files[af].lang->compile_flags,
 		files[af].source);

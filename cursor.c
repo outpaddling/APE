@@ -84,12 +84,12 @@ opt_t *options;
 buff_t  *cut_buff;
 
 {
-    int     x, y, newcol;
+    int     newcol;
 
     synhigh_update(file,file->curline,options,cut_buff);
     if (file->curline != 0)
     {
-	TW_FIND_CURSOR(file->text, y, x);
+	// TW_FIND_CURSOR(file->text, y, x);
 	--file->curline;
 
 	newcol = MIN(file->line[file->curline].length, file->curcol);
@@ -216,12 +216,11 @@ buff_t  *cut_buff;
 
 {
     char   *lptr;
-    int     x, y;
 
     synhigh_update(file,file->curline,options,cut_buff);
     if (file->curline < file->total_lines - 1)
     {
-	TW_FIND_CURSOR(file->text, y, x);
+	// TW_FIND_CURSOR(file->text, y, x);
 	++file->curline;
 	lptr = file->line[file->curline].buff;
 	file->curchar = lptr;
@@ -394,10 +393,8 @@ opt_t   *options;
 buff_t  *cut_buff;
 
 {
-    int     x, y;
-
     file->topline = file->curline;
-    TW_FIND_CURSOR(file->text, y, x);
+    // TW_FIND_CURSOR(file->text, y, x);
     update_win(file,options,cut_buff);
 }
 
