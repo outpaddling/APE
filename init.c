@@ -108,12 +108,12 @@ opt_t  *options;
 {
     extern int  errno;
     int     aw = NO_FILES, arg, a;
-    char    startup_dir[PATH_MAX + 1],
+    char    startup_dir[APE_PATH_MAX + 1],
 	    *buttons[2] = OK_BUTTON;
 
     if (argc > 1)
     {
-	if ( getcwd(startup_dir, PATH_MAX) == NULL )
+	if ( getcwd(startup_dir, APE_PATH_MAX) == NULL )
 	{
 	    popup_mesg(strerror(errno),buttons,options);
 	}
@@ -177,10 +177,10 @@ opt_t   *options;
 void    check_hostname()
 
 {
-    static char legal_host[PATH_MAX + 1] = "Change this";
-    char    this_host[PATH_MAX + 1];
+    static char legal_host[APE_PATH_MAX + 1] = "Change this";
+    char    this_host[APE_PATH_MAX + 1];
 
-    gethostname(this_host, PATH_MAX);
+    gethostname(this_host, APE_PATH_MAX);
     if (strcmp(this_host, legal_host) != 0)
     {
 	fprintf(stderr, "Warning: APE is not legally installed on %s.\n",
@@ -217,13 +217,13 @@ char    *argv[];
 int     init_xterm()
 
 {
-    char    *display_name, *window_str, home[PATH_MAX+1],
-	    xdefaults[PATH_MAX+1];
+    char    *display_name, *window_str, home[APE_PATH_MAX+1],
+	    xdefaults[APE_PATH_MAX+1];
     struct stat st;
     
     /* Set up .Xdefaults if it doesn't exist */
-    get_home_dir(home,PATH_MAX);
-    snprintf(xdefaults,PATH_MAX,"%s/.Xdefaults",home);
+    get_home_dir(home,APE_PATH_MAX);
+    snprintf(xdefaults,APE_PATH_MAX,"%s/.Xdefaults",home);
     if ( stat(xdefaults,&st) == -1 )
 	if ( spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"xapedefaults",NULL) != 0 )
 	{

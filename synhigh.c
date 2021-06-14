@@ -458,12 +458,12 @@ int     synhigh_save_opts (char *lang_dir, lang_t *lang)
 {
     pattern_t   **p;
     FILE        *fp;
-    char        synhigh_file[PATH_MAX+1];
+    char        synhigh_file[APE_PATH_MAX+1];
     
     if ( lang == NULL )
 	return NO_LANGUAGE_OPTS;
     
-    snprintf(synhigh_file, PATH_MAX, "%s/syntax_highlighting", lang_dir);
+    snprintf(synhigh_file, APE_PATH_MAX, "%s/syntax_highlighting", lang_dir);
     fp = fopen(synhigh_file, "w");
     if ( fp != NULL ) 
     {

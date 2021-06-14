@@ -39,11 +39,11 @@
 #endif
 
 #if !defined(_WINDOWS_H_)
-#include "twintk.h"
+#include <twintk.h>
 #endif
 
 #if !defined(_PARE_H_)
-#include "pare.h"
+#include <pare.h>
 #endif
 
 #define APE_VERSION     "3.5.3"
@@ -80,6 +80,7 @@
 #define OPEN_FLAG_NORMAL    0x00
 #define OPEN_FLAG_CRYPT     0x01
 
+#define APE_PATH_MAX        1024
 #define OPTION_LEN          1024
 #define EXT_LEN             40
 #define SPEC_LEN            80
@@ -209,13 +210,13 @@ typedef struct
     unsigned int    edit_border;    /* Character for title line of edit window */
 
     /* Do we still need this, or should we use the INSTALL_PREFIX macro? */
-    char    install_prefix[PATH_MAX+1]; /* Where HTML docs etc. are kept */
-    char    browser[PATH_MAX+1]; /* HTML browser */
-    char    shell[PATH_MAX+1];          /* Shell to pass commands to */
-    char    ishell[PATH_MAX+1];         /* For interactive sub-shell */
+    char    install_prefix[APE_PATH_MAX+1]; /* Where HTML docs etc. are kept */
+    char    browser[APE_PATH_MAX+1];        /* HTML browser */
+    char    shell[APE_PATH_MAX+1];          /* Shell to pass commands to */
+    char    ishell[APE_PATH_MAX+1];         /* For interactive sub-shell */
     char    file_spec[TWC_SPEC_LEN+1];  /* File listing mask for list */
-    char    include_path[PATH_MAX+1];   /* Additional headers to search */
-    char    lib_path[PATH_MAX+1];       /* Additional libraries to search */
+    char    include_path[APE_PATH_MAX+1];   /* Additional headers to search */
+    char    lib_path[APE_PATH_MAX+1];       /* Additional libraries to search */
 }   opt_t;
 
 /* File structure */
@@ -303,10 +304,10 @@ typedef struct
     char    high_bg;
     
     /* General file info */
-    char    cwd[PATH_MAX+1];                /* Working directory for file */
-    char    run_directory[PATH_MAX+1];
-    char    source[PATH_MAX+1];     /* Name of source file */
-    char    executable[PATH_MAX+1]; /* Name of executable */
+    char    cwd[APE_PATH_MAX+1];                /* Working directory for file */
+    char    run_directory[APE_PATH_MAX+1];
+    char    source[APE_PATH_MAX+1];     /* Name of source file */
+    char    executable[APE_PATH_MAX+1]; /* Name of executable */
     char    short_src[TWC_SHORT_NAME_LEN+1];
     char    run_cmd[CMD_LEN+1];
     unsigned char   line_style;             /* Bit mask for CR, NL */
@@ -343,7 +344,7 @@ typedef struct
 
 typedef struct
 {
-    char    filename[PATH_MAX+1];
+    char    filename[APE_PATH_MAX+1];
     FILE    *fp;
 }   err_t;
 

@@ -123,7 +123,7 @@ opt_t  *options;
 
 {
     /* Patched during setup - must be static initialized array fixed size */
-    static char install_prefix[PATH_MAX + 1] = INSTALL_PREFIX;
+    static char install_prefix[APE_PATH_MAX + 1] = INSTALL_PREFIX;
 
     char   *user_shell;
     pattern_t **patterns;
@@ -142,8 +142,8 @@ opt_t  *options;
     options->reverse_menu = 1;
     options->terminfo_mouse = 0;
     options->use_html = 0;
-    strlcpy (options->install_prefix, install_prefix, PATH_MAX);
-    strlcpy (options->browser, APE_BROWSER, PATH_MAX);
+    strlcpy (options->install_prefix, install_prefix, APE_PATH_MAX);
+    strlcpy (options->browser, APE_BROWSER, APE_PATH_MAX);
     options->indent_size = 4;
     options->search_forward = 1;
     options->case_sensitive = 0;
@@ -153,11 +153,11 @@ opt_t  *options;
     options->max_files = 30;
     options->no_acs = 0;
     strlcpy (options->file_spec, "*", TWC_SPEC_LEN);
-    strlcpy (options->shell, "sh", PATH_MAX);
+    strlcpy (options->shell, "sh", APE_PATH_MAX);
     if ((user_shell = getenv ("SHELL")) != NULL)
-	strlcpy (options->ishell, user_shell, PATH_MAX);
+	strlcpy (options->ishell, user_shell, APE_PATH_MAX);
     else
-	strlcpy (options->ishell, ISHELL, PATH_MAX);
+	strlcpy (options->ishell, ISHELL, APE_PATH_MAX);
     options->include_path[0] = '\0';
     options->lib_path[0] = '\0';
 
@@ -584,12 +584,12 @@ int     install_default_user_config(opt_t *options)
 
 {
     char    cmd[CMD_LEN+1],
-	    config_dir[PATH_MAX+1],
+	    config_dir[APE_PATH_MAX+1],
 	    *ok_button[2] = OK_BUTTON,
 	    msg[121];
     struct stat st;
     
-    get_config_dir(config_dir,PATH_MAX);
+    get_config_dir(config_dir,APE_PATH_MAX);
     if ( stat(config_dir,&st) != 0 )
     {
 	rmkdir(config_dir,0755);

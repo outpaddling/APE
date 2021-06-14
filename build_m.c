@@ -83,7 +83,7 @@ event_t *event;
 	case 'a':
 	    if ( check_build_opts(files+*af_ptr) != NULL )
 	    {
-		char    out_filename[PATH_MAX+1], *p;
+		char    out_filename[APE_PATH_MAX+1], *p;
 	
 		status = compile_prog(files, *af_ptr, errfile, options, ASSEMBLY);
 		edit_border(files+*af_ptr, options);
@@ -92,9 +92,9 @@ event_t *event;
 		else
 		{
 		    /* Open assembly file */
-		    strlcpy(out_filename, files[*af_ptr].source, PATH_MAX);
+		    strlcpy(out_filename, files[*af_ptr].source, APE_PATH_MAX);
 		    if ( (p=strrchr(out_filename, '.')) != NULL )
-			strlbasecpy(p, out_filename, ".s", PATH_MAX);
+			strlbasecpy(p, out_filename, ".s", APE_PATH_MAX);
 		    if ( (c = open_file(files+*af_ptr, out_filename, options, OPEN_FLAG_NORMAL)) >= 0 )
 			*af_ptr = c;
 		}
@@ -247,7 +247,7 @@ opt_t   *options;
 
 {
     char    cmd[CMD_LEN+1], *argv[MAX_ARGS], *exe,
-	    command_file[PATH_MAX+1], debugger_cmd[CMD_LEN+1],
+	    command_file[APE_PATH_MAX+1], debugger_cmd[CMD_LEN+1],
 	    *ok_button[2] = OK_BUTTON,
 	    *stdout_file = NULL;
     int     status, fd;
@@ -268,7 +268,7 @@ opt_t   *options;
     /* Set up GDB start command if needed */
     if ( trace_cmd != NULL )
     {
-	strlcpy(command_file, ".ape_cmd_file.XXXXX", PATH_MAX);
+	strlcpy(command_file, ".ape_cmd_file.XXXXX", APE_PATH_MAX);
 	stdout_file = command_file;
 	if ( (fd = mkstemp(command_file)) != -1 )
 	{
@@ -278,7 +278,7 @@ opt_t   *options;
 		/* db[xX]tra assumes stdin is a tty and will fail */
 		/* Fall back to dbx, which is redirectable */
 		if ( stricmp(debugger_cmd, "dbxtra") == 0 )
-		    strlcpy(debugger_cmd, "dbx", PATH_MAX);
+		    strlcpy(debugger_cmd, "dbx", APE_PATH_MAX);
 #endif
 		fprintf(fp, "%s\n", trace_cmd);
 		fclose(fp);
@@ -623,7 +623,7 @@ opt_t *options;
 {
     char    cmd[CMD_LEN + 1] = "",
 	    *argv[MAX_ARGS],
-	    obj[PATH_MAX+1],
+	    obj[APE_PATH_MAX+1],
 	    *p,
 	    *executable;
     int     stat = 0;
@@ -632,7 +632,7 @@ opt_t *options;
     if (*project->makefile == '\0')
     {
 	executable = files[af].executable;
-	strlcpy(obj, files[af].source, PATH_MAX);
+	strlcpy(obj, files[af].source, APE_PATH_MAX);
 	if ( (p = strrchr(obj, '.')) != NULL )
 	    strlcpy(p, ".o", 3);
 	snprintf(cmd, CMD_LEN, "rm -f %s %s", executable, obj);
@@ -770,13 +770,13 @@ void    set_makefile(proj_t *project, char *makefile, file_t *file,
     tw_init_string(&panel, 2, 2, CMD_LEN, 40, TWC_VERBATIM,
 	"Make command:    ",
 	    " Name of make command (make, gmake, etc.) ", project->make_cmd);
-    tw_init_string(&panel, 3, 2, PATH_MAX, 40, TWC_VERBATIM,
+    tw_init_string(&panel, 3, 2, APE_PATH_MAX, 40, TWC_VERBATIM,
 	"Makefile:        ",
 	    " Enter name of makefile in the current directory. ", project->makefile);
-    tw_init_string(&panel, 4, 2, PATH_MAX, 40, TWC_VERBATIM,
+    tw_init_string(&panel, 4, 2, APE_PATH_MAX, 40, TWC_VERBATIM,
 	"Executable:      ",
 	    " Name of executable produced by makefile. ", project->executable);
-    tw_init_string(&panel, 5, 2, PATH_MAX, 40, TWC_VERBATIM,
+    tw_init_string(&panel, 5, 2, APE_PATH_MAX, 40, TWC_VERBATIM,
 	"Directory:       ",
 	    " Directory where makefile is located. ", project->make_directory);
     tw_init_string(&panel, 6, 2, OPTION_LEN, 40, TWC_VERBATIM,
@@ -816,7 +816,7 @@ void    init_makefile(proj_t *project,char *makefile,file_t *file,opt_t *options
 
 {
     strlcpy(project->make_cmd, "make", CMD_LEN);
-    strlcpy(project->makefile, makefile, PATH_MAX);
+    strlcpy(project->makefile, makefile, APE_PATH_MAX);
     
     /*
      *  Attempt to parse makefile for executable name, etc.
@@ -826,8 +826,8 @@ void    init_makefile(proj_t *project,char *makefile,file_t *file,opt_t *options
     project->make_vars = 0;
     parse_makefile(project, project->makefile, options);
     
-    getcwd(project->make_directory,PATH_MAX);
-    strlcpy(project->run_prefix,"time",PATH_MAX);
+    getcwd(project->make_directory,APE_PATH_MAX);
+    strlcpy(project->run_prefix,"time",APE_PATH_MAX);
     set_makefile(project,"makefile",file,options);
 }
 
@@ -913,12 +913,12 @@ char    *executable;
 
 {
     int     status,exe_status;
-    char    save_dir[PATH_MAX+1];
+    char    save_dir[APE_PATH_MAX+1];
     struct stat stats;
     
     if ( *project->makefile != '\0' )
     {
-	getcwd(save_dir,PATH_MAX);
+	getcwd(save_dir,APE_PATH_MAX);
 	chdir(project->make_directory);
     }
     exe_status = stat(executable,&stats);
@@ -1115,13 +1115,13 @@ void    add_make_var(proj_t *project, char *ident, char *p)
     {
 	/* Attempt to identify the main target of the Makefile */
 	if ( strcmp(ident, "LIB1") == 0 )
-	    strlcpy(project->executable, val, PATH_MAX);
+	    strlcpy(project->executable, val, APE_PATH_MAX);
 	if ( strcmp(ident, "LIB") == 0 )
-	    strlcpy(project->executable, val, PATH_MAX);
+	    strlcpy(project->executable, val, APE_PATH_MAX);
 	if ( strcmp(ident, "BIN1") == 0 )
-	    strlcpy(project->executable, val, PATH_MAX);
+	    strlcpy(project->executable, val, APE_PATH_MAX);
 	if ( strcmp(ident, "BIN") == 0 )
-	    strlcpy(project->executable, val, PATH_MAX);
+	    strlcpy(project->executable, val, APE_PATH_MAX);
     }
 }
 

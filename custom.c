@@ -195,7 +195,7 @@ int     run_custom_item(file_t files[],
 			int ch)
 
 {
-    char    temp[PATH_MAX + 1];
+    char    temp[APE_PATH_MAX + 1];
     struct stat *old_stat, new_stat;
     int     c;
     
@@ -220,7 +220,7 @@ int     run_custom_item(file_t files[],
 		    /* Reload file if modified and desired */
 		    if (1)
 		    {
-			strlcpy(temp, files[c].source, PATH_MAX);
+			strlcpy(temp, files[c].source, APE_PATH_MAX);
 			close_file(files, c, options, PROMPT_BEFORE_CLOSE);
 			*af_ptr = open_file(files, temp, options, OPEN_FLAG_NORMAL);
 			sprintw(2,TWC_ST_LEN,"Reloaded %s.",files[*af_ptr].source);
@@ -279,7 +279,7 @@ int     edit_item(cust_t menu_items[],
     tw_init_string(&panel, 2, 2, TWC_MENU_TEXT_LEN, TW_COLS(win)-24, TWC_VERBATIM, "Menu text?         ",
 		"Place a '.' before the character which selects the option.",
 		item->text);
-    tw_init_string(&panel, 3, 2, PATH_MAX, TW_COLS(win)-24, TWC_VERBATIM, "Working directory? ",
+    tw_init_string(&panel, 3, 2, APE_PATH_MAX, TW_COLS(win)-24, TWC_VERBATIM, "Working directory? ",
 	 "A \"cd\" to this directory will occur before running the command.",
 		item->directory);
     tw_init_string(&panel, 4, 2, CMD_LEN, TW_COLS(win)-24, TWC_VERBATIM, "Command or script? ",
@@ -347,12 +347,12 @@ void    write_items(cust_t items[],
 {
     int     c, fd;
     char   *pos,
-	    config_dir[PATH_MAX+1],
-	    pathname[PATH_MAX+1];
+	    config_dir[APE_PATH_MAX+1],
+	    pathname[APE_PATH_MAX+1];
 
-    if ( get_config_dir(config_dir, PATH_MAX) != NULL )
+    if ( get_config_dir(config_dir, APE_PATH_MAX) != NULL )
     {
-	snprintf(pathname, PATH_MAX, "%s/custom_menu", config_dir);
+	snprintf(pathname, APE_PATH_MAX, "%s/custom_menu", config_dir);
 
 	/* Write back all but the item selected for deletion */
 	if ((fd = open(pathname, O_WRONLY | O_TRUNC)) == -1)
@@ -381,13 +381,13 @@ int     read_custom(char *custom_text[],
 
 {
     int     c, fd;
-    char    config_dir[PATH_MAX+1],
-	    pathname[PATH_MAX+1];
+    char    config_dir[APE_PATH_MAX+1],
+	    pathname[APE_PATH_MAX+1];
     struct stat statinfo;
 
-    if (get_config_dir(config_dir, PATH_MAX) == NULL)
+    if (get_config_dir(config_dir, APE_PATH_MAX) == NULL)
 	return (0);
-    snprintf(pathname, PATH_MAX, "%s/custom_menu", config_dir);
+    snprintf(pathname, APE_PATH_MAX, "%s/custom_menu", config_dir);
     if ((fd = open(pathname, O_RDONLY)) == -1)
 	return (0);
     fstat(fd, &statinfo);
@@ -415,12 +415,12 @@ void    save_item(cust_t *item)
 
 {
     int     fd;
-    char    pathname[PATH_MAX+1],
-	    config_dir[PATH_MAX+1];
+    char    pathname[APE_PATH_MAX+1],
+	    config_dir[APE_PATH_MAX+1];
 
-    if (get_config_dir(config_dir, PATH_MAX) == NULL)
+    if (get_config_dir(config_dir, APE_PATH_MAX) == NULL)
 	return;
-    snprintf(pathname, PATH_MAX, "%s/custom_menu", config_dir);
+    snprintf(pathname, APE_PATH_MAX, "%s/custom_menu", config_dir);
     fd = open(pathname, O_WRONLY | O_CREAT | O_APPEND, 0700);
     if (fd == -1)
     {
@@ -442,7 +442,7 @@ void    run_item(file_t files[],
 
 {
     int     c;
-    char    cmd[CMD_LEN + 1], cwd[PATH_MAX + 2];
+    char    cmd[CMD_LEN + 1], cwd[APE_PATH_MAX + 2];
 
     /* Find menu item matching key */
     for (c = 0; c < item_count; ++c)
@@ -451,7 +451,7 @@ void    run_item(file_t files[],
 	{
 	    if ( prompt_save_all(files, options) == 'c' )
 		return;
-	    getcwd(cwd, PATH_MAX);
+	    getcwd(cwd, APE_PATH_MAX);
 	    if (chdir(menu_items[c].directory) == -1)
 	    {
 		sprintw(2, TWC_ST_LEN, "Cannot chdir to %s", menu_items[c].directory);
@@ -474,7 +474,7 @@ void    expand_command(char *source_file, char *executable,
 
 {
     extern win_t    *Swin;
-    char    base[PATH_MAX + 1], input[CMD_LEN + 1], *p, *temp = expanded;
+    char    base[APE_PATH_MAX + 1], input[CMD_LEN + 1], *p, *temp = expanded;
 
     while ( (*command != '\0') && (temp - expanded < maxlen) )
     {
@@ -495,7 +495,7 @@ void    expand_command(char *source_file, char *executable,
 	    else if (memcmp(command, "\\st", 3) == 0)
 	    {
 		command += 3;
-		strlcpy(base, source_file, PATH_MAX);
+		strlcpy(base, source_file, APE_PATH_MAX);
 		if ((p = strrchr(base, '.')) != NULL)
 		    *p = '\0';
 		for (p = base; *p != '\0';)
@@ -506,7 +506,7 @@ void    expand_command(char *source_file, char *executable,
 		command += 3;
 		*temp = *input = '\0';
 		stat_mesg(expanded);
-		tw_get_string(Swin, input, PATH_MAX, TWC_ST_LEN-TW_CUR_COL(Swin)-2, TWC_VERBATIM, NULL);
+		tw_get_string(Swin, input, APE_PATH_MAX, TWC_ST_LEN-TW_CUR_COL(Swin)-2, TWC_VERBATIM, NULL);
 		for (p = input; *p != '\0';)
 		    *temp++ = *p++;
 	    }
