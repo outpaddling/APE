@@ -1,4 +1,4 @@
-l 0 0 249 0 0 0 225 0 249 76:############################################################################
+l 0 0 252 0 0 0 228 0 252 76:############################################################################
 #
 #              Another Programmer's Editor Makefile Template
 #
@@ -93,7 +93,10 @@ LOCALBASE   ?= ../local
 # Install in ../local, unless defined by the parent Makefile, the
 # environment, or a command line option such as PREFIX=/opt/local.
 PREFIX      ?= ${LOCALBASE}
+
+# Allow caller to override either MANPREFIX or MANDIR
 MANPREFIX   ?= ${PREFIX}
+MANDIR      ?= ${MANPREFIX}/man
 
 ############################################################################
 # Build flags
@@ -213,11 +216,11 @@ realclean: clean
 common-install:
         ${MKDIR} -p ${DESTDIR}${PREFIX}/lib \
             ${DESTDIR}${PREFIX}/include \
-            ${DESTDIR}${MANPREFIX}/man/man3
+            ${DESTDIR}${MANDIR}/man3
         for file in ${HEADERS}; do \
             ${INSTALL} -m 0444 $${file} ${DESTDIR}${PREFIX}/include; \
         done
-        ${INSTALL} -m 0444 Man/*.3 ${DESTDIR}${MANPREFIX}/man/man3
+        ${INSTALL} -m 0444 Man/*.3 ${DESTDIR}${MANDIR}/man3
         ${INSTALL} -m 0444 ${SLIB} ${DESTDIR}${PREFIX}/lib
 
 # CentOS 7 does not support install -ls, use ${LN} -sf instead
@@ -247,7 +250,7 @@ help:
         @printf "\tFC        [currently ${FC}]\n"
         @printf "\tFFLAGS    [currently ${FFLAGS}]\n\n"
         @printf "View Makefile for more tunable variables.\n\n"
-p 0 0 190 0 0 0 166 0 190 76:############################################################################
+p 0 0 193 0 0 0 169 0 193 76:############################################################################
 #
 #              Another Programmer's Editor Makefile Template
 #
@@ -315,7 +318,10 @@ LOCALBASE   ?= ../local
 # Install in ../local, unless defined by the parent Makefile, the
 # environment, or a command line option such as PREFIX=/opt/local.
 PREFIX      ?= ${LOCALBASE}
+
+# Allow caller to override either MANPREFIX or MANDIR
 MANPREFIX   ?= ${PREFIX}
+MANDIR      ?= ${MANPREFIX}/man
 
 ############################################################################
 # Build flags
@@ -419,9 +425,9 @@ realclean: clean
 # Install all target files (binaries, libraries, docs, etc.)
 
 install: all
-        ${MKDIR} -p ${DESTDIR}${PREFIX}/bin ${DESTDIR}${MANPREFIX}/man/man1
+        ${MKDIR} -p ${DESTDIR}${PREFIX}/bin ${DESTDIR}${MANDIR}/man1
         ${INSTALL} -s -m 0555 ${BIN} ${DESTDIR}${PREFIX}/bin
-        ${INSTALL} -m 0444 ${MAN} ${DESTDIR}${MANPREFIX}/man/man1
+        ${INSTALL} -m 0444 ${MAN} ${DESTDIR}${MANDIR}/man1
 
 install-strip: install
         ${STRIP} ${DESTDIR}${PREFIX}/bin/${BIN}
