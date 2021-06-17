@@ -1,7 +1,7 @@
 3 -1 8
 (/*).*(*/)|//.*$
 6 -1 8
-".*["$]|'.*['$]|<.*\.h>
+".*["$]|'.*['$]
 2 -1 8
 #ifdef|#ifndef|#if|#include|#else|#elif|#endif|#define|defined|#undef|#error|#pragma|inline|typedef|switch|case|default|break|if|else|while|for|do|continue|goto|return|main
 1 -1 8
