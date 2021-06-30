@@ -244,6 +244,8 @@ void    redraw_screen(opt_t *options, file_t *file, buff_t *cut_buff)
 
 /*******************************************
  * Load the user's options file if present.
+ * FIXME: Save as name=value so new options can be added without breaking
+ * compatibility
  *******************************************/
 
 int     load_options (char *filename, opt_t *options)
@@ -284,7 +286,7 @@ int     load_options (char *filename, opt_t *options)
 	}
 	
 	/* Booleans */
-	for (bp = &options->use_delays; bp <= &options->expand_tabs; ++bp)
+	for (bp = &options->use_delays; bp <= &options->prompt_tabs; ++bp)
 	{
 	    if (fscanf (fp, "%u ", &temp_ch) != 1)
 	    {
@@ -392,7 +394,7 @@ void    save_options(char *filename, opt_t *options)
     putc('\n',fp);
     
     /* Booleans */
-    for (bp = &options->use_delays; bp <= &options->expand_tabs; ++bp)
+    for (bp = &options->use_delays; bp <= &options->prompt_tabs; ++bp)
 	fprintf(fp,"%u ",*bp);
     putc('\n',fp);
     

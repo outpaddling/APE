@@ -404,20 +404,25 @@ int     prompt_tabs(file_t *file, opt_t *options)
 
 {
     int     sv = 'n';
-    char    *buttons[3] = YES_NO_BUTTONS,
+    char    *buttons[] = YES_NO_ASK_BUTTONS,
 	    msg[TABS_WARNING_MAX + 1],
 	    name[TABS_FILENAME_MAX + 1];
+    extern term_t   *Terminal;
     
-    strsqueeze(name, file->source, TABS_FILENAME_MAX + 1);
-
-    snprintf(msg, TABS_WARNING_MAX,
-	     "\"%s\" contains non-leading TAB characters.  APE is a\n"
-	     "soft-TABs editor which will replace non-leading TABs with spaces and\n"
-	     "leading groups of 8 spaces with TABs (to reduce file size).\n"
-	     "Open read-only to avoid altering whitespace?", name);
-    sv = popup_mesg(msg,buttons,options);
-    if (sv == 'y')
-	file->read_only = 1;
+    if ( options->prompt_tabs )
+    {
+	strsqueeze(name, file->source, TABS_FILENAME_MAX + 1);
+	snprintf(msg, TABS_WARNING_MAX,
+		 "\"%s\" contains non-leading TAB characters.  APE is a\n"
+		 "soft-TABs editor which will replace non-leading TABs with spaces and\n"
+		 "leading groups of 8 spaces with TABs (to reduce file size).\n"
+		 "Open read-only to avoid altering whitespace?", name);
+	sv = popup_mesg(msg,buttons,options);
+	if (sv == 'y')
+	    file->read_only = 1;
+	else if (sv == 'd')
+	    options->prompt_tabs = FALSE;
+    }
     return (sv);
 }
 

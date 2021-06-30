@@ -116,6 +116,7 @@ pattern_t *patterns[];
  * Description:
  * Arguments:
  * Return values:
+ * FIXME: Update to include latest structure members
  */
 
 void    init_options (options)
@@ -150,6 +151,7 @@ opt_t  *options;
     options->show_column = 1;
     options->smooth_scroll = 1;
     options->trap_noise = 1;
+    options->prompt_tabs = 1;
     options->max_files = 30;
     options->no_acs = 0;
     strlcpy (options->file_spec, "*", TWC_SPEC_LEN);

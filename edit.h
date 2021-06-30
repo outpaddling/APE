@@ -100,6 +100,7 @@
 #define OK_CANCEL_BUTTON    { "[ OK ]","[ Cancel ]",NULL }
 #define YES_NO_BUTTONS      { "[ Yes ]","[ No ]",NULL }
 #define YES_NO_CANCEL_BUTTONS   { "[ Yes ]","[ No ]","[ Cancel ]",NULL }
+#define YES_NO_ASK_BUTTONS  { "[ Yes ]","[ No ]","[ Don't ask aagin ]",NULL }
 #define YES_NO_ENUM         { "Yes", "No", NULL }
 #define CANT_COMPILE_MSG    "Can't compile: unknown language."
 #define NO_LANGUAGE_OPTS    -2
@@ -186,7 +187,7 @@ typedef struct
     int     smooth_scroll;  /* If true, scroll window, else page */
     int     terminfo_mouse; /* Enable terminfo mouse? */
     int     trap_noise;     /* Refuse input if line noise detected */
-    int     expand_tabs;    /* Convert tabs to spaces on input */
+    int     prompt_tabs;    /* Prompt user about files with non-leading tabs */
     /* End booleans */
     
     /* Integers: Keep tab_stops first and edit_border last */
