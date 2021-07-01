@@ -421,7 +421,10 @@ int     prompt_tabs(file_t *file, opt_t *options)
 	if (sv == 'y')
 	    file->read_only = 1;
 	else if (sv == 'd')
+	{
 	    options->prompt_tabs = FALSE;
+	    save_options(APERC, options);
+	}
     }
     return (sv);
 }
