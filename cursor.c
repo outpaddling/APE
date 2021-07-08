@@ -108,12 +108,13 @@ opt_t *options;
 buff_t  *cut_buff;
 
 {
-    int     x, y, newcol;
+    int     curline, newcol;
 
     synhigh_update(file,file->curline,options,cut_buff);
     if (file->curline < file->total_lines - 1)
     {
-	TW_FIND_CURSOR(file->text, y, x);
+	// TW_FIND_CURSOR(file->text, y, x);
+	curline = TW_CUR_LINE(file->text);
 	++file->curline;
 
 	/* Check line length before moving directly down */
@@ -121,7 +122,7 @@ buff_t  *cut_buff;
 	file->curchar = file->line[file->curline].buff + newcol;
 
 	/* Scroll if necessary */
-	if (y == TW_LINES(file->text) - 1)
+	if (curline == TW_LINES(file->text) - 1)
 	    scroll_file(file, options, cut_buff, SCROLL_FORWARD);
 	update_cursor(file,options,cut_buff);
     }
