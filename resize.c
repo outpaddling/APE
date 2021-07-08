@@ -88,6 +88,7 @@ void    win_resize()
 	TFLUSH_OUT(Terminal);
 	
 	/* Wait for resize signal */
+	// FIXME: Deprecated: Replace with sigsuspend
 	sigpause(SIGWINCH);
 	return;
     }
