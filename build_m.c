@@ -173,9 +173,9 @@ void    create_build_menu(char *build_text[], proj_t *project, lang_t *lang)
     int     c = 0,
 	    line_c;
     
-    if ( ACTIVE_PROJ(project) || ((lang != NULL) && compiled_language(lang)) )
+    if ( ACTIVE_PROJ(project) || compiled_language(lang) )
     {
-	if ( !strblank(lang->upload_prefix) )
+	if ( (lang != NULL) && !strblank(lang->upload_prefix) )
 	    build_text[c++] = "Build, Upload and .Run (Esc-r or F5)";
 	else
 	    build_text[c++] = "Build and .Run (Esc-r or F5)";
