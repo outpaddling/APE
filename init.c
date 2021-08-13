@@ -35,7 +35,8 @@
 #include <sys/stat.h>
 #include <errno.h>
 #include <twintk.h>
-#include <xtend.h>
+#include <xtend/proc.h>
+#include <xtend/file.h>
 #include "edit.h"
 #include "protos.h"
 

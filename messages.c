@@ -30,7 +30,8 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <twintk.h>
-#include <xtend.h>
+#include <xtend/proc.h>
+#include <stdarg.h>
 #include "edit.h"
 #include "protos.h"
 

@@ -29,7 +29,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
-#include <xtend.h>
+#include <xtend/proc.h>
+#include <xtend/file.h>
 #include "edit.h"
 #include "protos.h"
 

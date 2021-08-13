@@ -33,7 +33,9 @@
 #include <signal.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <xtend.h>
+#include <xtend/proc.h>
+#include <xtend/file.h>
+#include <xtend/string.h>
 #include <twintk.h>
 #include "edit.h"
 #include "protos.h"
@@ -294,7 +296,7 @@ opt_t   *options;
 	exe = file->executable;
     expand_command(file->source, exe, debugger_cmd, cmd, CMD_LEN);
     
-    parse_cmd(argv, cmd);
+    parse_cmd(argv, cmd, CMD_LEN);
     begin_full_screen();
     status = spawnvp(P_WAIT, P_ECHO, argv, stdout_file, NULL, NULL);
     check_stat(status, argv[0]);
@@ -343,7 +345,7 @@ out_t   output;
 			ok_button, options);
 	    break;
     }
-    parse_cmd(argv, cmd);
+    parse_cmd(argv, cmd, CMD_LEN);
     begin_full_screen();
     err_close(errfile);
     
@@ -518,7 +520,7 @@ opt_t   *options;
 	executable = project->executable;
     if ( *build_cmd != '\0' )
     {
-	parse_cmd(argv, build_cmd);
+	parse_cmd(argv, build_cmd, CMD_LEN);
 	err_close(errfile);
 	files[af].lang_rebuild = 0;
 	status = spawn_build_cmd(argv, outfile, errfile, project, executable);
@@ -591,7 +593,7 @@ opt_t *options;
     if ( *cmd != '\0' )
     {
 	begin_full_screen();
-	parse_cmd(argv, cmd);
+	parse_cmd(argv, cmd, CMD_LEN);
 	err_close(errfile);
 	stat = spawn_build_cmd(argv, outfile, errfile, project, executable);
 	check_stat(stat, cmd);
@@ -645,7 +647,7 @@ opt_t *options;
     }
     
     begin_full_screen();
-    parse_cmd(argv, cmd);
+    parse_cmd(argv, cmd, CMD_LEN);
     err_close(errfile);
     stat = spawn_build_cmd(argv, NULL, errfile, project, executable);
     check_stat(stat, cmd);
@@ -696,7 +698,7 @@ opt_t *options;
     prompt_save_all(files, options);
     
     begin_full_screen();
-    parse_cmd(argv, cmd);
+    parse_cmd(argv, cmd, CMD_LEN);
     err_close(errfile);
     stat = spawn_build_cmd(argv, NULL, NULL, project, executable);
     check_stat(stat, cmd);
@@ -868,7 +870,7 @@ err_t   *errfile;
 	snprintf(cmd,CMD_LEN, "%s %s %s %s", files[af].lang->compiler_cmd,
 		files[af].lang->syntax_check_flag,
 		files[af].lang->compile_flags, files[af].source);
-	parse_cmd(argv, cmd);
+	parse_cmd(argv, cmd, CMD_LEN);
 	err_close(errfile);
 	begin_full_screen();
 	status = spawnvp(P_WAIT,P_ECHO,argv, NULL, errfile->filename, errfile->filename);

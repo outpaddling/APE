@@ -30,7 +30,8 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <xtend.h>
+#include <xtend/proc.h>
+#include <xtend/string.h>
 #include "edit.h"
 #include "protos.h"
 

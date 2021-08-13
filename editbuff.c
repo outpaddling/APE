@@ -29,7 +29,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <twintk.h>
-#include <xtend.h>
+#include <xtend/string.h>
 #include "edit.h"
 #include "protos.h"
 

@@ -28,7 +28,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <twintk.h>
-#include <xtend.h>
+#include <xtend/string.h>
 #include "edit.h"
 #include "protos.h"
 

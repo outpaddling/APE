@@ -31,7 +31,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <twintk.h>
-#include <xtend.h>
+#include <xtend/proc.h>
 #include "edit.h"
 #include "protos.h"
 
@@ -129,7 +129,7 @@ void    man(char *str, char *prefix)
 	    snprintf(cmd,CMD_LEN,"%s %s",MAN,str);
 	else
 	    snprintf(cmd,CMD_LEN,"%s -M %s/man %s",MAN,prefix,str);
-	parse_cmd(argv,cmd);
+	parse_cmd(argv,cmd, CMD_LEN);
 	begin_full_screen();
 	spawnvp(P_WAIT,P_NOECHO,argv,NULL,NULL,NULL);
 	end_full_screen(EFS_PAUSE);

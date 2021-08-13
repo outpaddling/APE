@@ -32,7 +32,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <twintk.h>
-#include <xtend.h>
+#include <xtend/proc.h>
 #include "edit.h"
 #include "protos.h"
 

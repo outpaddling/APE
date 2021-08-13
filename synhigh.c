@@ -31,7 +31,7 @@
 #include <ctype.h>
 #include <sys/types.h>
 #include "pare.h"
-#include <xtend.h>
+#include <xtend/file.h>
 #include "edit.h"
 #include "protos.h"
 

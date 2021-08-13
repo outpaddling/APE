@@ -33,7 +33,7 @@
 #include <sys/stat.h>
 #include <fnmatch.h>
 #include <twintk.h>
-#include <xtend.h>
+#include <xtend/string.h>
 #include "edit.h"
 #include "protos.h"
 

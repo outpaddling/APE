@@ -33,7 +33,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <twintk.h>
-#include <xtend.h>
+#include <xtend/file.h>
 #include "edit.h"
 #include "protos.h"
 

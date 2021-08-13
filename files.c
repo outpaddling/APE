@@ -34,7 +34,9 @@
 #include <fcntl.h>
 #include <time.h>
 #include <twintk.h>
-#include <xtend.h>
+#include <xtend/string.h>
+#include <xtend/proc.h>
+#include <xtend/file.h>
 #include "edit.h"
 #include "protos.h"
 
@@ -331,7 +333,7 @@ void    view_header(file_t *file, opt_t *options)
 		"find /usr/include %s %s %s -name %s -exec more {} ;",
 		x11_include, LOCAL_INCLUDE, options->include_path, path_name);
     }
-    parse_cmd(argv, cmd);
+    parse_cmd(argv, cmd, CMD_LEN);
     begin_full_screen();
     spawnvp(P_WAIT, P_NOECHO, argv, NULL, NULL, NULL);
     end_full_screen(EFS_PAUSE);

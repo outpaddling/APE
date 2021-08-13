@@ -30,7 +30,7 @@
 #include <string.h>
 #include <signal.h>
 #include <twintk.h>
-#include <xtend.h>
+#include <xtend/string.h>
 #include "edit.h"
 #include "protos.h"
 
