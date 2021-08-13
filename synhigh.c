@@ -31,6 +31,8 @@
 #include <ctype.h>
 #include <sys/types.h>
 #include "pare.h"
+#include <xtend/string.h>
+#include <xtend/time.h>
 #include <xtend/file.h>
 #include "edit.h"
 #include "protos.h"
