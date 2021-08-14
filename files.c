@@ -307,7 +307,9 @@ void    view_header(file_t *file, opt_t *options)
 
 {
     static char path_name[APE_PATH_MAX + 1] = "";
-    char    cmd[CMD_LEN + 1] = "", *argv[MAX_ARGS],
+    char    cmd[CMD_LEN + 1] = "",
+	    *expanded_cmd,
+	    *argv[MAX_ARGS],
 	    *x11_include = X11_INCLUDE;
 
     panel_get_string(file, options, APE_PATH_MAX, "Header? ", "",
@@ -333,10 +335,11 @@ void    view_header(file_t *file, opt_t *options)
 		"find /usr/include %s %s %s -name %s -exec more {} ;",
 		x11_include, LOCAL_INCLUDE, options->include_path, path_name);
     }
-    parse_cmd(argv, cmd, CMD_LEN);
+    expanded_cmd = parse_cmd(argv, cmd);
     begin_full_screen();
     spawnvp(P_WAIT, P_NOECHO, argv, NULL, NULL, NULL);
     end_full_screen(EFS_PAUSE);
+    free(expanded_cmd);
 }
 
 

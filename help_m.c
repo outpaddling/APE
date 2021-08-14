@@ -122,7 +122,9 @@ int     help_menu(file_t *file, opt_t *options, event_t *event)
 void    man(char *str, char *prefix)
 
 {
-    char    cmd[CMD_LEN+1],*argv[MAX_ARGS];
+    char    cmd[CMD_LEN+1],
+	    *expanded_cmd,
+	    *argv[MAX_ARGS];
     
     if ( *str != '\0' )
     {
@@ -130,10 +132,11 @@ void    man(char *str, char *prefix)
 	    snprintf(cmd,CMD_LEN,"%s %s",MAN,str);
 	else
 	    snprintf(cmd,CMD_LEN,"%s -M %s/man %s",MAN,prefix,str);
-	parse_cmd(argv,cmd, CMD_LEN);
+	expanded_cmd = parse_cmd(argv,cmd);
 	begin_full_screen();
 	spawnvp(P_WAIT,P_NOECHO,argv,NULL,NULL,NULL);
 	end_full_screen(EFS_PAUSE);
+	free(expanded_cmd);
     }
 }
 

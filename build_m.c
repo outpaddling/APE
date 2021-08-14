@@ -248,7 +248,7 @@ char    *trace_cmd;
 opt_t   *options;
 
 {
-    char    cmd[CMD_LEN+1], *argv[MAX_ARGS], *exe,
+    char    cmd[CMD_LEN+1], *expanded_cmd, *argv[MAX_ARGS], *exe,
 	    command_file[APE_PATH_MAX+1], debugger_cmd[CMD_LEN+1],
 	    *ok_button[2] = OK_BUTTON,
 	    *stdout_file = NULL;
@@ -296,7 +296,7 @@ opt_t   *options;
 	exe = file->executable;
     expand_command(file->source, exe, debugger_cmd, cmd, CMD_LEN);
     
-    parse_cmd(argv, cmd, CMD_LEN);
+    expanded_cmd = parse_cmd(argv, cmd);
     begin_full_screen();
     status = spawnvp(P_WAIT, P_ECHO, argv, stdout_file, NULL, NULL);
     check_stat(status, argv[0]);
@@ -305,6 +305,7 @@ opt_t   *options;
 	putchar('\n');
     }
     unlink(command_file);
+    free(expanded_cmd);
     end_full_screen(EFS_PAUSE);
 }
 
@@ -317,7 +318,10 @@ opt_t *options;
 out_t   output;
 
 {
-    char    *argv[MAX_ARGS], cmd[CMD_LEN+4], *ok_button[2] = OK_BUTTON;
+    char    *argv[MAX_ARGS],
+	    cmd[CMD_LEN+4],
+	    *expanded_cmd,
+	    *ok_button[2] = OK_BUTTON;
     int     stat;
 
     if ( check_build_opts(files+af) == NULL )
@@ -345,7 +349,7 @@ out_t   output;
 			ok_button, options);
 	    break;
     }
-    parse_cmd(argv, cmd, CMD_LEN);
+    expanded_cmd = parse_cmd(argv, cmd);
     begin_full_screen();
     err_close(errfile);
     
@@ -363,6 +367,7 @@ out_t   output;
     //more(errfile->filename);
     init_compiler_lines(files, options);
     end_full_screen(EFS_PAUSE);
+    free(expanded_cmd);
     return P_EXIT_CODE(stat);
 }
 
@@ -508,8 +513,12 @@ err_t   *errfile;
 opt_t   *options;
 
 {
-    char    build_cmd[CMD_LEN + 1] = "", *argv[MAX_ARGS],
-	    *outfile, *executable, *ok_button[2] = OK_BUTTON;
+    char    build_cmd[CMD_LEN + 1] = "",
+	    *expanded_cmd,
+	    *argv[MAX_ARGS],
+	    *outfile,
+	    *executable,
+	    *ok_button[2] = OK_BUTTON;
     struct stat statinfo;
     int     status;
     
@@ -520,7 +529,7 @@ opt_t   *options;
 	executable = project->executable;
     if ( *build_cmd != '\0' )
     {
-	parse_cmd(argv, build_cmd, CMD_LEN);
+	expanded_cmd = parse_cmd(argv, build_cmd);
 	err_close(errfile);
 	files[af].lang_rebuild = 0;
 	status = spawn_build_cmd(argv, outfile, errfile, project, executable);
@@ -537,6 +546,7 @@ opt_t   *options;
 		getchar();
 	    }
 	}
+	free(expanded_cmd);
     }
     else
     {
@@ -559,8 +569,12 @@ err_t   *errfile;
 opt_t *options;
 
 {
-    char    cmd[CMD_LEN + 1] = "", *argv[MAX_ARGS], *outfile,
-	    *executable, *ok_button[2] = OK_BUTTON;
+    char    cmd[CMD_LEN + 1] = "",
+	    *expanded_cmd,
+	    *argv[MAX_ARGS],
+	    *outfile,
+	    *executable,
+	    *ok_button[2] = OK_BUTTON;
     int     stat = 0;
     
     /* For single file programs, check mod times to avoid unnecessary build */
@@ -593,13 +607,21 @@ opt_t *options;
     if ( *cmd != '\0' )
     {
 	begin_full_screen();
-	parse_cmd(argv, cmd, CMD_LEN);
+	expanded_cmd = parse_cmd(argv, cmd);
 	err_close(errfile);
+	/*
+	fprintf(stderr, "In build()...\n");
+	fprintf(stderr, "%s\n", expanded_cmd);
+	for (int c = 0; argv[c] != NULL; ++c)
+	    fprintf(stderr, "%s\n", argv[c]);
+	fprintf(stderr, "outfile = %p\n", outfile);
+	*/
 	stat = spawn_build_cmd(argv, outfile, errfile, project, executable);
 	check_stat(stat, cmd);
 	more(errfile->filename);
 	init_compiler_lines(files, options);
 	end_full_screen(EFS_PAUSE);
+	free(expanded_cmd);
 	//sprintw(2, 50, "build status = %d", stat);
 	return P_EXIT_CODE(stat);
     }
@@ -624,6 +646,7 @@ opt_t *options;
 
 {
     char    cmd[CMD_LEN + 1] = "",
+	    *expanded_cmd,
 	    *argv[MAX_ARGS],
 	    obj[APE_PATH_MAX+1],
 	    *p,
@@ -647,14 +670,14 @@ opt_t *options;
     }
     
     begin_full_screen();
-    parse_cmd(argv, cmd, CMD_LEN);
+    expanded_cmd = parse_cmd(argv, cmd);
     err_close(errfile);
     stat = spawn_build_cmd(argv, NULL, errfile, project, executable);
     check_stat(stat, cmd);
     more(errfile->filename);
     init_compiler_lines(files, options);
     end_full_screen(EFS_PAUSE);
-
+    free(expanded_cmd);
     return P_EXIT_CODE(stat);
 }
 
@@ -678,6 +701,7 @@ opt_t *options;
 
 {
     char    cmd[CMD_LEN + 1] = "",
+	    *expanded_cmd,
 	    *argv[MAX_ARGS],
 	    *executable;
     int     stat = 0;
@@ -698,13 +722,13 @@ opt_t *options;
     prompt_save_all(files, options);
     
     begin_full_screen();
-    parse_cmd(argv, cmd, CMD_LEN);
+    expanded_cmd = parse_cmd(argv, cmd);
     err_close(errfile);
     stat = spawn_build_cmd(argv, NULL, NULL, project, executable);
     check_stat(stat, cmd);
     init_compiler_lines(files, options);
     end_full_screen(EFS_PAUSE);
-
+    free(expanded_cmd);
     return P_EXIT_CODE(stat);
 }
 
@@ -857,7 +881,9 @@ opt_t *options;
 err_t   *errfile;
 
 {
-    char    cmd[CMD_LEN+1],*argv[MAX_ARGS];
+    char    cmd[CMD_LEN+1],
+	    *expanded_cmd,
+	    *argv[MAX_ARGS];
     int     status = 0;
     
     /* Make sure build options exist */
@@ -870,13 +896,14 @@ err_t   *errfile;
 	snprintf(cmd,CMD_LEN, "%s %s %s %s", files[af].lang->compiler_cmd,
 		files[af].lang->syntax_check_flag,
 		files[af].lang->compile_flags, files[af].source);
-	parse_cmd(argv, cmd, CMD_LEN);
+	expanded_cmd = parse_cmd(argv, cmd);
 	err_close(errfile);
 	begin_full_screen();
 	status = spawnvp(P_WAIT,P_ECHO,argv, NULL, errfile->filename, errfile->filename);
 	more(errfile->filename);
 	init_compiler_lines(files,options);
 	end_full_screen(EFS_PAUSE);
+	free(expanded_cmd);
     }
     return P_EXIT_CODE(status);
 }
@@ -907,16 +934,21 @@ int     preprocess(file_t files[], int af, opt_t *options)
 }
 
 
-int     spawn_build_cmd(argv,outfile,errfile,project,executable)
-char    *argv[],*outfile;
-err_t   *errfile;
-proj_t  *project;
-char    *executable;
+int     spawn_build_cmd(char *argv[], char *outfile, err_t *errfile,
+			proj_t *project, char *executable)
 
 {
     int     status,exe_status;
     char    save_dir[APE_PATH_MAX+1];
     struct stat stats;
+    
+    /*
+    fprintf(stderr, "Spawning command...\n");
+    for (int c = 0; argv[c] != NULL; ++c)
+	fprintf(stderr, "%s\n", argv[c]);
+    fprintf(stderr, "outfile = %p  errfile = %s  executable = %s\n",
+	    outfile, errfile->filename, executable);
+    */
     
     if ( *project->makefile != '\0' )
     {

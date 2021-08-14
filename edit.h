@@ -91,7 +91,7 @@
 #define MCRYPT_KEY_LEN      64  /* FIXME: Allow longer keys? */
 #define MCRYPT_ALGO_LEN     32
 #define MESG_LEN            80
-#define MAX_ARGS            40
+#define MAX_ARGS            100
 #define ERROR_LEN           128
 #define ERROR_WIN_ROWS      6
 #define YES_NO_LEN          3
