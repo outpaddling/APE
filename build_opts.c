@@ -336,7 +336,7 @@ int     read_language_opts(lang_t **head)
 
 {
     lang_t  temp, *lang;
-    long    status;
+    int     status = 0;
     char    language_parent_dir[APE_PATH_MAX+1],
 	    lang_dir[APE_PATH_MAX+1],
 	    filename[APE_PATH_MAX+1];
