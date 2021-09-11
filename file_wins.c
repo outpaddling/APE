@@ -206,7 +206,7 @@ opt_t *options;
 {
     extern term_t   *Terminal;
     int     c, edit_border, top_right, name_len, left_tee, right_tee;
-    char    full_path[APE_PATH_MAX+10+1];
+    char    full_path[FULL_PATH_MAX+10+1];
     
     if ( options->no_acs )
     {
@@ -224,11 +224,11 @@ opt_t *options;
     }
     
     if ( strcmp(file->cwd,"/") == 0 )
-	snprintf(full_path, APE_PATH_MAX+10+1, " /%s ",file->source);
+	snprintf(full_path, FULL_PATH_MAX+10+1, " /%s ",file->source);
     else
-	snprintf(full_path, APE_PATH_MAX+10+1, " %s/%s ",file->cwd,file->source);
+	snprintf(full_path, FULL_PATH_MAX+10+1, " %s/%s ",file->cwd,file->source);
     if ( strlen(full_path) > (size_t)(TW_COLS(file->window)-4) )
-	snprintf(full_path, APE_PATH_MAX+10+1, " %s ",file->source);
+	snprintf(full_path, FULL_PATH_MAX+10+1, " %s ",file->source);
     name_len = strlen(full_path);
     
     /* Draw border left of name */
@@ -395,7 +395,7 @@ opt_t *options;
     {
 	/* Set executable */
 	set_exe(file);
-	snprintf(file->run_cmd, CMD_LEN,
+	snprintf(file->run_cmd, APE_CMD_MAX,
 		"%s ./%s",file->lang->run_prefix,file->executable);
     }
     else

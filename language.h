@@ -1,4 +1,5 @@
 /* Language options */
+#define COMPILE_CMD_MAX     128
 #define LANG_NAME_LEN       40
 #define LANG_ID_LEN         40
 #define SYNTAX_CHECK_LEN    20
@@ -28,7 +29,7 @@ struct lang
     char    lang_name[LANG_NAME_LEN+1];
     char    name_spec[SPEC_LEN+1];          /* Filespec for source files */
     char    id_comment[LANG_ID_LEN+1];      /* E.g. #!/bin/csh */
-    char    compiler_cmd[APE_PATH_MAX+1];
+    char    compiler_cmd[COMPILE_CMD_MAX+1];
     char    compile_flags[OPTION_LEN+1];
     char    compile_only_flag[COMPILE_ONLY_LEN+1];  /* E.g. -c */
     char    compile_output_flag[OUTPUT_FLAG_LEN+1]; /* E.g. -o */
@@ -36,7 +37,7 @@ struct lang
     char    compile_to_asm_flag[OPTION_LEN+1];      /* E.g. -s */
     char    preprocess_only_flag[OPTION_LEN+1];
     char    link_flags[OPTION_LEN+1];
-    char    debugger_cmd[CMD_LEN+1];
+    char    debugger_cmd[APE_CMD_MAX+1];
     char    debugger_backtrace_cmd[BACKTRACE_LEN+1];
     char    run_prefix[APE_PATH_MAX+1];
     char    upload_prefix[APE_PATH_MAX+1];

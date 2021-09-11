@@ -198,7 +198,7 @@ opt_t  *options;
 
     /* Update executable and run command */
     set_exe(file);
-    snprintf(file->run_cmd, CMD_LEN,
+    snprintf(file->run_cmd, APE_CMD_MAX,
 	     "%s ./%s", file->lang->run_prefix, file->executable);
 
     tw_del_win(&win);

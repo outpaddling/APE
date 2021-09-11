@@ -13,7 +13,7 @@ int build_it(proj_t *project, file_t files[], int af, err_t *errfile, opt_t *opt
 int build(file_t files[], int af, proj_t *project, err_t *errfile, opt_t *options);
 int clean(file_t files[], int af, proj_t *project, err_t *errfile, opt_t *options);
 int install(file_t files[], int af, proj_t *project, err_t *errfile, opt_t *options);
-void get_build_cmd(file_t *file, proj_t *project, char *cmd, char **outfile);
+void get_build_cmd(file_t *file, proj_t *project, char *cmd, size_t cmd_max, char **outfile);
 void set_makefile(proj_t *project, char *makefile, file_t *file, opt_t *options);
 void init_makefile(proj_t *project, char *makefile, file_t *file, opt_t *options);
 void set_project_run_cmd(proj_t *project, file_t *file);

@@ -599,7 +599,7 @@ void    grep_headers(file_t *file, opt_t *options)
 
 {
     static char grep_str[TWC_SPEC_LEN + 1];
-    char    cmd[CMD_LEN + 1], *x11_include;
+    char    cmd[APE_CMD_MAX + 1], *x11_include;
     int     status;
 
     status = panel_get_string(file, options, TWC_SPEC_LEN,
@@ -609,7 +609,7 @@ void    grep_headers(file_t *file, opt_t *options)
 	/* Don't search /usr/include twice */
 	x11_include = get_x11_include();
 	begin_full_screen();
-	snprintf(cmd, CMD_LEN,
+	snprintf(cmd, APE_CMD_MAX,
 		 "find /usr/include %s %s %s -type d -exec search_headers '%s' '{}' \\; 2>&1 | more",
 		 x11_include, LOCAL_INCLUDE, options->include_path, grep_str);
 	spawnlp(P_WAIT, P_ECHO, NULL, NULL, NULL, "sh", "-c", cmd, NULL);
@@ -622,7 +622,7 @@ void    search_libs(file_t *file, opt_t *options)
 
 {
     static char symbol[TWC_SPEC_LEN + 1] = "";
-    char    cmd[CMD_LEN + 1];
+    char    cmd[APE_CMD_MAX + 1];
     int     status;
 
     status = panel_get_string(file, options, SEARCH_STR_LEN,
@@ -630,10 +630,10 @@ void    search_libs(file_t *file, opt_t *options)
     if ( (status != TWC_INPUT_CANCEL) && (symbol[0] != '\0') )
     {
 	if (strblank(options->lib_path))
-	    snprintf(cmd, CMD_LEN, "search_libs %s",
+	    snprintf(cmd, APE_CMD_MAX, "search_libs %s",
 		     symbol);
 	else
-	    snprintf(cmd, CMD_LEN, "search_libs %s %s/*.a",
+	    snprintf(cmd, APE_CMD_MAX, "search_libs %s %s/*.a",
 		     symbol, options->lib_path);
 	run_command(P_WAIT, P_NOECHO, cmd, "sh");
     }

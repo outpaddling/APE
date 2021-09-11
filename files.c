@@ -307,7 +307,7 @@ void    view_header(file_t *file, opt_t *options)
 
 {
     static char path_name[APE_PATH_MAX + 1] = "";
-    char    cmd[CMD_LEN + 1] = "",
+    char    cmd[APE_CMD_MAX + 1] = "",
 	    *expanded_cmd,
 	    *argv[MAX_ARGS],
 	    *x11_include = X11_INCLUDE;
@@ -326,12 +326,12 @@ void    view_header(file_t *file, opt_t *options)
 	strlcat(path_name, ".h", APE_PATH_MAX);
     */
     if ((path_name[0] == '/') || (path_name[0] == '.'))
-	snprintf(cmd, CMD_LEN, "more %s", path_name);
+	snprintf(cmd, APE_CMD_MAX, "more %s", path_name);
     else
     {
 	if ( memcmp(x11_include,"/usr/include",12) == 0 )
 	    x11_include = "";
-	snprintf(cmd, CMD_LEN,
+	snprintf(cmd, APE_CMD_MAX,
 		"find /usr/include %s %s %s -name %s -exec more {} ;",
 		x11_include, LOCAL_INCLUDE, options->include_path, path_name);
     }
@@ -448,7 +448,7 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
     char    dir_name[APE_PATH_MAX + 1], base_name[APE_PATH_MAX + 1],
 	    temp[APE_PATH_MAX + 1], home[APE_PATH_MAX + 1],
 	    *button[2] = OK_BUTTON,
-	    cmd[CMD_LEN+1],
+	    cmd[APE_CMD_MAX+1],
 	    key[MCRYPT_KEY_LEN+1];
     
     /* Expand ~ to home dir if necessary */
@@ -514,7 +514,7 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
 	*key = '\0';
 	panel_get_string(files+af, options, MCRYPT_KEY_LEN,
 			    "Key? ", "", TWC_SECURE, key);
-	snprintf(cmd, CMD_LEN, "mcrypt --flush -q -F -d -k %s < %s",
+	snprintf(cmd, APE_CMD_MAX, "mcrypt --flush -q -F -d -k %s < %s",
 	    key, files[af].source);
 	fp = popen(cmd, "r");
 	files[af].crypt = 1;
@@ -534,7 +534,7 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
 	
 	    /* Erase key from memory for security */
 	    memset(key, 0, MCRYPT_KEY_LEN);
-	    memset(cmd, 0, CMD_LEN);
+	    memset(cmd, 0, APE_CMD_MAX);
 	}
 	else
 	    fclose(fp);
@@ -893,9 +893,9 @@ int     save_file(file_t *file, opt_t   *options)
 		"wake", "blowfish-compat", "des", "rijndael-256",
 		"serpent", "xtea", "blowfish", "enigma", 
 		"rc2", "tripledes", NULL },
-	    cmd[CMD_LEN+1],
-	    full_path[APE_PATH_MAX+2],
-	    backup_path[APE_PATH_MAX+7];
+	    cmd[APE_CMD_MAX+1],
+	    full_path[FULL_PATH_MAX+2],
+	    backup_path[FULL_PATH_MAX+7];
 
     if (file->read_only)
     {
@@ -921,8 +921,8 @@ int     save_file(file_t *file, opt_t   *options)
 	}
     */
 
-    snprintf(full_path, APE_PATH_MAX+2, "%s/%s", file->cwd, file->source);
-    snprintf(backup_path, APE_PATH_MAX+7, "%s/.%s.bak", file->cwd, file->source);
+    snprintf(full_path, FULL_PATH_MAX+2, "%s/%s", file->cwd, file->source);
+    snprintf(backup_path, FULL_PATH_MAX+7, "%s/.%s.bak", file->cwd, file->source);
     
     /* Back up file before first save */
     if (!file->saved_once)
@@ -955,7 +955,7 @@ int     save_file(file_t *file, opt_t   *options)
 	
 	if (TW_EXIT_KEY(status) != TWC_INPUT_DONE)
 	    return OK;
-	snprintf(cmd, CMD_LEN, "mcrypt --flush -q -F -a %s -k %s > %s 2> mcrypt.stderr",
+	snprintf(cmd, APE_CMD_MAX, "mcrypt --flush -q -F -a %s -k %s > %s 2> mcrypt.stderr",
 	    algo, key, full_path);
 	fp = popen(cmd, "w");
     }
@@ -982,7 +982,7 @@ int     save_file(file_t *file, opt_t   *options)
 	
 	/* Erase key from memory for security */
 	memset(key, 0, MCRYPT_KEY_LEN);
-	memset(cmd, 0, CMD_LEN);
+	memset(cmd, 0, APE_CMD_MAX);
     }
     else
     {

@@ -141,7 +141,7 @@ event_t *event;
 	    if ( project->makefile[0] != '\0' )
 		set_makefile(project, "makefile", files+*af_ptr, options);
 	    else
-		panel_get_string(files+*af_ptr, options, CMD_LEN,
+		panel_get_string(files+*af_ptr, options, APE_CMD_MAX,
 		    "Command? ", "", TWC_VERBATIM, files[*af_ptr].run_cmd);
 	    break;
 	case 'm':
@@ -248,8 +248,8 @@ char    *trace_cmd;
 opt_t   *options;
 
 {
-    char    cmd[CMD_LEN+1], *expanded_cmd, *argv[MAX_ARGS], *exe,
-	    command_file[APE_PATH_MAX+1], debugger_cmd[CMD_LEN+1],
+    char    cmd[APE_CMD_MAX+1], *expanded_cmd, *argv[MAX_ARGS], *exe,
+	    command_file[APE_PATH_MAX+1], debugger_cmd[APE_CMD_MAX+1],
 	    *ok_button[2] = OK_BUTTON,
 	    *stdout_file = NULL;
     int     status, fd;
@@ -261,7 +261,7 @@ opt_t   *options;
 		    ok_button, options);
 	return;
     }
-    strlcpy(debugger_cmd, file->lang->debugger_cmd, CMD_LEN);
+    strlcpy(debugger_cmd, file->lang->debugger_cmd, APE_CMD_MAX);
 
     /* Make sure build options exist */
     if ( check_build_opts(file) == NULL )
@@ -294,7 +294,7 @@ opt_t   *options;
 	exe = project->executable;
     else
 	exe = file->executable;
-    expand_command(file->source, exe, debugger_cmd, cmd, CMD_LEN);
+    expand_command(file->source, exe, debugger_cmd, cmd, APE_CMD_MAX);
     
     expanded_cmd = parse_cmd(argv, cmd);
     begin_full_screen();
@@ -319,7 +319,7 @@ out_t   output;
 
 {
     char    *argv[MAX_ARGS],
-	    cmd[CMD_LEN+4],
+	    cmd[APE_CMD_MAX+4],
 	    *expanded_cmd,
 	    *ok_button[2] = OK_BUTTON;
     int     stat;
@@ -334,12 +334,12 @@ out_t   output;
     switch(output)
     {
 	case    OBJECT:
-	    snprintf(cmd, CMD_LEN + 4, "%s %s %s %s", files[af].lang->compiler_cmd,
+	    snprintf(cmd, APE_CMD_MAX + 4, "%s %s %s %s", files[af].lang->compiler_cmd,
 		files[af].lang->compile_only_flag,
 		files[af].lang->compile_flags, files[af].source);
 	    break;
 	case    ASSEMBLY:
-	    snprintf(cmd, CMD_LEN + 4, "%s %s %s %s", files[af].lang->compiler_cmd,
+	    snprintf(cmd, APE_CMD_MAX + 4, "%s %s %s %s", files[af].lang->compiler_cmd,
 		files[af].lang->compile_to_asm_flag,
 		files[af].lang->compile_flags,
 		files[af].source);
@@ -386,8 +386,8 @@ int     flags;
 
 {
     extern term_t   *Terminal;
-    char    run_cmd[CMD_LEN + 6] = "",
-	    upload_cmd[CMD_LEN + 6] = "";
+    char    run_cmd[APE_CMD_MAX + 6] = "",
+	    upload_cmd[APE_CMD_MAX + 6] = "";
     int     run_status,
 	    build_status = 0,
 	    upload_status = 0,
@@ -404,11 +404,11 @@ int     flags;
     /* Create run command */
     if ( project->makefile[0] != '\0' )
     {
-	strlcpy(run_cmd, project->run_cmd, CMD_LEN);
+	strlcpy(run_cmd, project->run_cmd, APE_CMD_MAX);
 	if ( (check_build_opts(files+af) != NULL) &&
 	    !strblank(files[af].lang->upload_prefix) )
 	{
-	    snprintf(upload_cmd, CMD_LEN, "%s %s",
+	    snprintf(upload_cmd, APE_CMD_MAX, "%s %s",
 		files[af].lang->upload_prefix, project->executable);
 	}
 	if ( chdir(project->make_directory) == -1 )
@@ -423,10 +423,10 @@ int     flags;
 	/* Make sure build options exist */
 	if ( check_build_opts(files+af) == NULL )
 	    return 0;
-	strlcpy(run_cmd, files[af].run_cmd, CMD_LEN);
+	strlcpy(run_cmd, files[af].run_cmd, APE_CMD_MAX);
 	if ( !strblank(files[af].lang->upload_prefix) )
 	{
-	    snprintf(upload_cmd, CMD_LEN, "%s %s",
+	    snprintf(upload_cmd, APE_CMD_MAX, "%s %s",
 		files[af].lang->upload_prefix, files[af].executable);
 	}
 	if ( chdir(files[af].run_directory) == -1 )
@@ -513,7 +513,7 @@ err_t   *errfile;
 opt_t   *options;
 
 {
-    char    build_cmd[CMD_LEN + 1] = "",
+    char    build_cmd[APE_CMD_MAX + 1] = "",
 	    *expanded_cmd,
 	    *argv[MAX_ARGS],
 	    *outfile,
@@ -522,7 +522,7 @@ opt_t   *options;
     struct stat statinfo;
     int     status;
     
-    get_build_cmd(files+af, project, build_cmd, &outfile);
+    get_build_cmd(files+af, project, build_cmd, APE_CMD_MAX, &outfile);
     if ( *project->makefile == '\0' )
 	executable = files[af].executable;
     else
@@ -569,7 +569,7 @@ err_t   *errfile;
 opt_t *options;
 
 {
-    char    cmd[CMD_LEN + 1] = "",
+    char    cmd[APE_CMD_MAX + 1] = "",
 	    *expanded_cmd,
 	    *argv[MAX_ARGS],
 	    *outfile,
@@ -603,7 +603,7 @@ opt_t *options;
     /* Mark build options unmodified since last build */
     files[af].lang_rebuild = 0;
     
-    get_build_cmd(files+af, project, cmd, &outfile);
+    get_build_cmd(files+af, project, cmd, APE_CMD_MAX, &outfile);
     if ( *cmd != '\0' )
     {
 	begin_full_screen();
@@ -645,7 +645,7 @@ err_t   *errfile;
 opt_t *options;
 
 {
-    char    cmd[CMD_LEN + 1] = "",
+    char    cmd[APE_CMD_MAX + 1] = "",
 	    *expanded_cmd,
 	    *argv[MAX_ARGS],
 	    obj[APE_PATH_MAX+1],
@@ -660,12 +660,12 @@ opt_t *options;
 	strlcpy(obj, files[af].source, APE_PATH_MAX);
 	if ( (p = strrchr(obj, '.')) != NULL )
 	    strlcpy(p, ".o", 3);
-	snprintf(cmd, CMD_LEN, "rm -f %s %s", executable, obj);
+	snprintf(cmd, APE_CMD_MAX, "rm -f %s %s", executable, obj);
     }
     else
     {
 	executable = project->executable;
-	snprintf(cmd, CMD_LEN, "%s -f %s clean",
+	snprintf(cmd, APE_CMD_MAX, "%s -f %s clean",
 		project->make_cmd, project->makefile);
     }
     
@@ -700,7 +700,7 @@ err_t   *errfile;
 opt_t *options;
 
 {
-    char    cmd[CMD_LEN + 1] = "",
+    char    cmd[APE_CMD_MAX + 1] = "",
 	    *expanded_cmd,
 	    *argv[MAX_ARGS],
 	    *executable;
@@ -715,7 +715,7 @@ opt_t *options;
     else
     {
 	executable = project->executable;
-	snprintf(cmd, CMD_LEN, "%s -f %s install",
+	snprintf(cmd, APE_CMD_MAX, "%s -f %s install",
 		project->make_cmd, project->makefile);
     }
     
@@ -737,10 +737,8 @@ opt_t *options;
  * Determine how to build the file in the active window
  *******************************************************/
 
-void    get_build_cmd(file, project, cmd, outfile)
-file_t *file;
-proj_t  *project;
-char   *cmd, **outfile;
+void    get_build_cmd(file_t *file, proj_t *project, char *cmd,
+		      size_t cmd_max, char **outfile)
 
 {
     *outfile = NULL;
@@ -750,27 +748,28 @@ char   *cmd, **outfile;
 	    *cmd = '\0';
 	else if ( strcmp(file->lang->executable_spec, "Command Line Flag") == 0 )
 	{
-	    snprintf(cmd, CMD_LEN, "%s %s %s %s%s %s", file->lang->compiler_cmd,
+	    snprintf(cmd, APE_CMD_MAX, "%s %s %s %s%s %s",
+		file->lang->compiler_cmd,
 		file->lang->compile_flags, file->source, 
 		file->lang->compile_output_flag,
 		file->executable, file->lang->link_flags);
 	}
 	else if ( strcmp(file->lang->executable_spec, "Fixed") == 0 )
 	{
-	    snprintf(cmd, CMD_LEN, "%s %s %s %s", file->lang->compiler_cmd,
+	    snprintf(cmd, APE_CMD_MAX, "%s %s %s %s", file->lang->compiler_cmd,
 		file->lang->compile_flags, file->source,
 		file->lang->link_flags);
 	}
 	else if ( strcmp(file->lang->executable_spec, "Standard Output") == 0 )
 	{
-	    snprintf(cmd, CMD_LEN, "%s %s %s %s", file->lang->compiler_cmd,
+	    snprintf(cmd, APE_CMD_MAX, "%s %s %s %s", file->lang->compiler_cmd,
 		file->lang->compile_flags, file->source,
 		file->lang->link_flags);
 	    *outfile = file->executable;
 	}
     }
     else
-	snprintf(cmd, CMD_LEN, "%s -f %s %s", 
+	snprintf(cmd, APE_CMD_MAX, "%s -f %s %s", 
 		project->make_cmd, project->makefile, project->make_args);
 }
 
@@ -793,7 +792,7 @@ void    set_makefile(proj_t *project, char *makefile, file_t *file,
     if ( *project->makefile == '\0' )
 	init_makefile(project, makefile, file, options);
 	
-    tw_init_string(&panel, 2, 2, CMD_LEN, 40, TWC_VERBATIM,
+    tw_init_string(&panel, 2, 2, APE_CMD_MAX, 40, TWC_VERBATIM,
 	"Make command:    ",
 	    " Name of make command (make, gmake, etc.) ", project->make_cmd);
     tw_init_string(&panel, 3, 2, APE_PATH_MAX, 40, TWC_VERBATIM,
@@ -809,7 +808,7 @@ void    set_makefile(proj_t *project, char *makefile, file_t *file,
 	"Make Arguments:  ",
 	    " Additional command line arguments to make command.",
 	    project->make_args);
-    tw_init_string(&panel, 7, 2, CMD_LEN, 40, TWC_VERBATIM,
+    tw_init_string(&panel, 7, 2, APE_CMD_MAX, 40, TWC_VERBATIM,
 	"Run prefix:      ",
 	    " Prefixed to executable when running program. ",
 	    project->run_prefix);
@@ -841,7 +840,7 @@ void    set_makefile(proj_t *project, char *makefile, file_t *file,
 void    init_makefile(proj_t *project,char *makefile,file_t *file,opt_t *options)
 
 {
-    strlcpy(project->make_cmd, "make", CMD_LEN);
+    strlcpy(project->make_cmd, "make", APE_CMD_MAX);
     strlcpy(project->makefile, makefile, APE_PATH_MAX);
     
     /*
@@ -863,13 +862,13 @@ void    set_project_run_cmd(proj_t *project,file_t *file)
 {
     /*if ( ((p=strrchr(project->executable,'.')) != NULL) &&
 	 (strcmp(p,".a") == 0) )
-	    snprintf(project->run_cmd,CMD_LEN,"ranlib %s",project->executable);
+	    snprintf(project->run_cmd,APE_CMD_MAX,"ranlib %s",project->executable);
     else if ( check_build_opts(file) != NULL )
-	snprintf(project->run_cmd,CMD_LEN,"%s ./%s",
+	snprintf(project->run_cmd,APE_CMD_MAX,"%s ./%s",
 		file->lang->run_prefix,project->executable);
     else
     */
-	snprintf(project->run_cmd,CMD_LEN,"%s ./%s %s",
+	snprintf(project->run_cmd,APE_CMD_MAX,"%s ./%s %s",
 	    project->run_prefix, project->executable, project->run_args);
 }
 
@@ -881,7 +880,7 @@ opt_t *options;
 err_t   *errfile;
 
 {
-    char    cmd[CMD_LEN+1],
+    char    cmd[APE_CMD_MAX+1],
 	    *expanded_cmd,
 	    *argv[MAX_ARGS];
     int     status = 0;
@@ -893,7 +892,7 @@ err_t   *errfile;
     /* Give user chance to save files or cancel */
     if (prompt_save_all(files,options) != 'c')
     {
-	snprintf(cmd,CMD_LEN, "%s %s %s %s", files[af].lang->compiler_cmd,
+	snprintf(cmd,APE_CMD_MAX, "%s %s %s %s", files[af].lang->compiler_cmd,
 		files[af].lang->syntax_check_flag,
 		files[af].lang->compile_flags, files[af].source);
 	expanded_cmd = parse_cmd(argv, cmd);
@@ -912,8 +911,8 @@ err_t   *errfile;
 int     preprocess(file_t files[], int af, opt_t *options)
 
 {
-    char    cmd[CMD_LEN+1] = "",
-	    cmd2[CMD_LEN+1] = "";
+    char    cmd[APE_CMD_MAX+1] = "",
+	    cmd2[APE_CMD_MAX+1] = "";
     int     status;
     
     /* Make sure build options exist */
@@ -921,10 +920,10 @@ int     preprocess(file_t files[], int af, opt_t *options)
     {
 	if ( prompt_save_all(files,options) == 'c')
 	    return 0;
-	snprintf(cmd,CMD_LEN,"%s %s %s %s | uniq | more",    /* more -s? */
+	snprintf(cmd,APE_CMD_MAX,"%s %s %s %s | uniq | more",    /* more -s? */
 	    files[af].lang->compiler_cmd, PP_OPTIONS,
 	    files[af].lang->compile_flags, files[af].source);
-	strshellcpy(cmd2,cmd,CMD_LEN);
+	strshellcpy(cmd2,cmd,APE_CMD_MAX);
 	status = run_command(P_WAIT,P_ECHO,cmd2,"sh");
 	init_compiler_lines(files,options);
 	return status;
@@ -987,7 +986,7 @@ int     spawn_build_cmd(char *argv[], char *outfile, err_t *errfile,
 void    profile(proj_t *project,file_t files[],int af,opt_t *options)
 
 {
-    char    cmd[CMD_LEN+1],
+    char    cmd[APE_CMD_MAX+1],
 	    mesg[MESG_LEN+1],
 	    *prog;
     struct stat st;
@@ -1005,7 +1004,7 @@ void    profile(proj_t *project,file_t files[],int af,opt_t *options)
 	    prog = files[af].executable;
 	else
 	    prog = project->executable;
-	snprintf(cmd,CMD_LEN,"%s %s | more",PROF_CMD,prog);
+	snprintf(cmd,APE_CMD_MAX,"%s %s | more",PROF_CMD,prog);
 	run_command(P_WAIT,P_ECHO,cmd,"sh");
     }
 }

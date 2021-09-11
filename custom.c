@@ -169,10 +169,10 @@ int     run_unix(file_t files[], int aw, opt_t *options)
 
 {
     extern win_t    *Swin;
-    static char    cmd[CMD_LEN+1] = "";
+    static char    cmd[APE_CMD_MAX+1] = "";
     int     status;
     
-    status = panel_get_string(files + aw, options, CMD_LEN, "Command? ", "",
+    status = panel_get_string(files + aw, options, APE_CMD_MAX, "Command? ", "",
 	TWC_VERBATIM, cmd);
 
     if ( (cmd[0] != '\0') && (status != TWC_INPUT_CANCEL) )
@@ -283,7 +283,7 @@ int     edit_item(cust_t menu_items[],
     tw_init_string(&panel, 3, 2, APE_PATH_MAX, TW_COLS(win)-24, TWC_VERBATIM, "Working directory? ",
 	 "A \"cd\" to this directory will occur before running the command.",
 		item->directory);
-    tw_init_string(&panel, 4, 2, CMD_LEN, TW_COLS(win)-24, TWC_VERBATIM, "Command or script? ",
+    tw_init_string(&panel, 4, 2, APE_CMD_MAX, TW_COLS(win)-24, TWC_VERBATIM, "Command or script? ",
 		"\\fn = current file, \\st = \\fn without extension, \\in = key input.", item->command);
     tw_init_enum(&panel, 5, 2, MIN(OPTION_LEN, TW_COLS(win)-24), execution_modes, "Execution mode?    ",
 	      "Hit <space> to toggle value.", item->run_mode);
@@ -443,7 +443,7 @@ void    run_item(file_t files[],
 
 {
     int     c;
-    char    cmd[CMD_LEN + 1], cwd[APE_PATH_MAX + 2];
+    char    cmd[APE_CMD_MAX + 1], cwd[APE_PATH_MAX + 2];
 
     /* Find menu item matching key */
     for (c = 0; c < item_count; ++c)
@@ -459,7 +459,7 @@ void    run_item(file_t files[],
 		return;
 	    }
 	    expand_command(files[aw].source, "", menu_items[c].command,
-			   cmd, CMD_LEN);
+			   cmd, APE_CMD_MAX);
 	    if (strcmp(menu_items[c].run_mode, "Foreground") == 0)
 		run_command(P_WAIT, menu_items[c].echo_command, cmd, options->shell);
 	    else
@@ -475,7 +475,7 @@ void    expand_command(char *source_file, char *executable,
 
 {
     extern win_t    *Swin;
-    char    base[APE_PATH_MAX + 1], input[CMD_LEN + 1], *p, *temp = expanded;
+    char    base[APE_PATH_MAX + 1], input[APE_CMD_MAX + 1], *p, *temp = expanded;
 
     while ( (*command != '\0') && (temp - expanded < maxlen) )
     {

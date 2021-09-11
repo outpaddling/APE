@@ -72,9 +72,9 @@ int     main (int argc, char *argv[])
 
     event_t event;              /* Keyboard and mouse event */
     char   *key_seq = event.seq,
-	    temp_seq[SEQ_LEN + 1] = "",    /* For displaying invalid keys */
+	    temp_seq[SEQ_LEN + 3] = "",    /* For displaying invalid keys */
 	    search_string[SEARCH_STR_LEN + 1] = "",
-	    help_str[CMD_LEN + 1] = "",
+	    help_str[APE_CMD_MAX + 1] = "",
 	   *curchar;
     proj_t  project = PROJ_INIT;        /* Makefile, etc. */
     err_t   errfile = ERR_INIT; /* Error file information */
@@ -462,7 +462,7 @@ int     main (int argc, char *argv[])
 		}
 		else
 		{
-		    snprintf (temp_seq, SEQ_LEN, "\033\033%s", key_seq);
+		    snprintf (temp_seq, SEQ_LEN + 3, "\033\033%s", key_seq);
 		    invalid_key (27, temp_seq);
 		}
 		restore_bar_help = TRUE;

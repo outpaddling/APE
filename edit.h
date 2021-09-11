@@ -81,13 +81,14 @@
 #define OPEN_FLAG_CRYPT     0x01
 
 #define APE_PATH_MAX        1024
+#define FULL_PATH_MAX       APE_PATH_MAX * 2
+#define APE_CMD_MAX         APE_PATH_MAX * 5
 #define OPTION_LEN          1024
 #define EXT_LEN             40
 #define SPEC_LEN            80
 #define TWC_SHORT_NAME_LEN  14
 #define SEARCH_STR_LEN      80
 #define SEARCH_WIN_LEN      30
-#define CMD_LEN             4096
 #define MCRYPT_KEY_LEN      64  /* FIXME: Allow longer keys? */
 #define MCRYPT_ALGO_LEN     32
 #define MESG_LEN            80
@@ -310,7 +311,7 @@ typedef struct
     char    source[APE_PATH_MAX+1];     /* Name of source file */
     char    executable[APE_PATH_MAX+1]; /* Name of executable */
     char    short_src[TWC_SHORT_NAME_LEN+1];
-    char    run_cmd[CMD_LEN+1];
+    char    run_cmd[APE_CMD_MAX+1];
     unsigned char   line_style;             /* Bit mask for CR, NL */
 }   file_t;
 

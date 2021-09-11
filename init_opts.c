@@ -587,7 +587,7 @@ void    cyan_scheme (opt_t * options)
 int     install_default_user_config(opt_t *options)
 
 {
-    char    cmd[CMD_LEN+1],
+    char    cmd[APE_CMD_MAX+1],
 	    config_dir[APE_PATH_MAX+1],
 	    *ok_button[2] = OK_BUTTON,
 	    msg[121];
@@ -597,7 +597,7 @@ int     install_default_user_config(opt_t *options)
     if ( stat(config_dir,&st) != 0 )
     {
 	rmkdir(config_dir,0755);
-	snprintf(cmd,CMD_LEN,
+	snprintf(cmd,APE_CMD_MAX,
 	    "cp -R %s/share/APE/Languages %s/share/APE/options.rc %s/share/APE/custom_menu %s",
 	    INSTALL_PREFIX, INSTALL_PREFIX, INSTALL_PREFIX, config_dir);
 	if ( spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"sh","-c",cmd,NULL) != 0 )

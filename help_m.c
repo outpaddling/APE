@@ -43,8 +43,8 @@ int     help_menu(file_t *file, opt_t *options, event_t *event)
     extern term_t   *Terminal;
     int     ch, start_row = 1;
     win_t *help_pop;
-    static char cmd[CMD_LEN + 1] = "",
-		topic[CMD_LEN + 1];
+    static char cmd[APE_CMD_MAX + 1] = "",
+		topic[APE_CMD_MAX + 1];
     static char *help_text[] = {
 				"A.Bout APE",
 				TWC_HLINE,
@@ -80,12 +80,12 @@ int     help_menu(file_t *file, opt_t *options, event_t *event)
 	    man(cmd, NULL);
 	    break;
 	case 'u':
-	    panel_get_string(file, options, CMD_LEN, 
+	    panel_get_string(file, options, APE_CMD_MAX, 
 			    "Command or function? ", "", TWC_VERBATIM, cmd);
 	    man(cmd, NULL);
 	    break;
 	case 's':
-	    panel_get_string(file, options, CMD_LEN, 
+	    panel_get_string(file, options, APE_CMD_MAX, 
 			    "Topic? ", "", TWC_VERBATIM, topic);
 	    apropos(topic);
 	    break;
@@ -122,16 +122,16 @@ int     help_menu(file_t *file, opt_t *options, event_t *event)
 void    man(char *str, char *prefix)
 
 {
-    char    cmd[CMD_LEN+1],
+    char    cmd[APE_CMD_MAX+1],
 	    *expanded_cmd,
 	    *argv[MAX_ARGS];
     
     if ( *str != '\0' )
     {
 	if ( prefix == NULL )
-	    snprintf(cmd,CMD_LEN,"%s %s",MAN,str);
+	    snprintf(cmd,APE_CMD_MAX,"%s %s",MAN,str);
 	else
-	    snprintf(cmd,CMD_LEN,"%s -M %s/man %s",MAN,prefix,str);
+	    snprintf(cmd,APE_CMD_MAX,"%s -M %s/man %s",MAN,prefix,str);
 	expanded_cmd = parse_cmd(argv,cmd);
 	begin_full_screen();
 	spawnvp(P_WAIT,P_NOECHO,argv,NULL,NULL,NULL);
@@ -177,16 +177,16 @@ opt_t   *options;
 {
     int     stat,
 	    fd;
-    char    path[APE_PATH_MAX+1],
+    char    full_path[FULL_PATH_MAX+1],
 	    errors[APE_PATH_MAX+1];
     
     strlcpy(errors,".ape_browser_errors.XXXXX",APE_PATH_MAX);
     if ( (fd=mkstemp(errors)) != -1 )
 	close(fd);
-    snprintf(path,APE_PATH_MAX,"%s/share/doc/ape/%s",options->install_prefix,
-	    file);
+    snprintf(full_path,FULL_PATH_MAX,"%s/share/doc/ape/%s",
+	    options->install_prefix, file);
     stat = spawnlp(P_NOWAIT,P_NOECHO,NULL,errors,errors,
-		    options->browser,path,NULL);
+		    options->browser,full_path,NULL);
     check_stat(stat,options->browser);
     unlink(errors);
 }

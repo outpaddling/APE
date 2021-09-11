@@ -798,7 +798,7 @@ int     macro_new_submenu(file_t files[],
 	    macro_dir[APE_PATH_MAX+1]="", path_name[APE_PATH_MAX+1]="",
 	    macro_list[APE_PATH_MAX+1]="",
 	    *ok_button[2] = OK_BUTTON,
-	    cmd[CMD_LEN+1];
+	    cmd[APE_CMD_MAX+1];
     struct stat st;
     FILE    *fp;
     int     done, status;
@@ -872,7 +872,7 @@ int     macro_new_submenu(file_t files[],
 	}
 	
 	/* Create menu and macro files for submenu */
-	snprintf(cmd, CMD_LEN, "touch %s/menu-%c.txt %s/macros-%c",
+	snprintf(cmd, APE_CMD_MAX, "touch %s/menu-%c.txt %s/macros-%c",
 	    macro_dir, macro_key(menu_text), macro_dir, macro_key(menu_text));
 	system(cmd);
     }
