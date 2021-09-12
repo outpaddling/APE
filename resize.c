@@ -48,9 +48,11 @@ void    win_resize()
     extern win_t    *Swin, *Bar_win;
     extern term_t   *Terminal;
     static volatile int  too_small = 0;
-    int     c, min_lines=24, min_cols=80;
-    static char    msg[]="APE: Resize your terminal to at least %d x %d...";
-
+    int             c, min_lines=24, min_cols=80;
+    static char     msg[]="APE: Resize your terminal to at least %d x %d...";
+    sigset_t        signals;
+    int             signal_received;
+    
 /* Linux signal() function is old-fashioned, and needs to be reset */
 #if defined(linux) || defined(sun) // sun causes char deletions and termination!
     signal(SIGWINCH,(sig_t)win_resize);
@@ -88,8 +90,12 @@ void    win_resize()
 	TFLUSH_OUT(Terminal);
 	
 	/* Wait for resize signal */
-	// FIXME: Deprecated: Replace with sigsuspend
-	sigpause(SIGWINCH);
+	// FIXME: sigpause() is deprecated.  Test replacement with sigwait().
+	// sigpause(SIGWINCH);
+	sigemptyset(&signals);
+	if (sigaddset(&signals, SIGWINCH) == -1 )
+	    sprintw(2, 50, "Warning: Sigaddset error");
+	sigwait(&signals, &signal_received);
 	return;
     }
 
