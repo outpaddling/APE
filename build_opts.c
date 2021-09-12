@@ -277,7 +277,7 @@ int     read_lang(char *lang_file, lang_t *lang)
 	else if (strcmp(name, "id_comment") == 0)
 	    strlcpy(lang->id_comment, p, LANG_ID_LEN);
 	else if (strcmp(name, "compiler") == 0)
-	    strlcpy(lang->compiler_cmd, p, APE_PATH_MAX);
+	    strlcpy(lang->compiler_cmd, p, COMPILE_CMD_MAX);
 	else if (strcmp(name, "compile_flags") == 0)
 	    strlcpy(lang->compile_flags, p, OPTION_LEN);
 	else if (strcmp(name, "compile_output_flag") == 0)
@@ -557,7 +557,7 @@ lang_t *add_language(
 	strlcpy(temp->lang_name, name, LANG_NAME_LEN);
 	strlcpy(temp->name_spec, name_spec, SPEC_LEN);
 	strlcpy(temp->id_comment, id_comment, LANG_ID_LEN);
-	strlcpy(temp->compiler_cmd, compiler, APE_PATH_MAX);
+	strlcpy(temp->compiler_cmd, compiler, COMPILE_CMD_MAX);
 	strlcpy(temp->compile_flags, compile_flags, OPTION_LEN);
 	strlcpy(temp->compile_only_flag, compile_only_flag, COMPILE_ONLY_LEN);
 	strlcpy(temp->compile_output_flag, compile_output_flag, OUTPUT_FLAG_LEN);
