@@ -142,9 +142,10 @@ void    next_error(file_t *files,int *aw,err_t *errfile,
 		    {
 			if ( files[c].window != NULL )
 			{
-			    char    path[APE_PATH_MAX+1];
+			    char    full_path[FULL_PATH_MAX+1];
 			    
-			    snprintf(path, APE_PATH_MAX, "%s/%s", files[c].cwd, raw_file);
+			    snprintf(full_path, FULL_PATH_MAX, "%s/%s",
+				     files[c].cwd, raw_file);
 			    if ( stat(raw_file,&st) == 0 )
 				found = 1;
 			}

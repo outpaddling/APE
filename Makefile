@@ -52,7 +52,7 @@ DOCSDIR     ?= ${PREFIX}/share/doc/APE
 CC          ?= cc
 CFLAGS      ?= -g
 INCLUDES    = -I${LOCALBASE}/include
-CFLAGS      += ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\"" -fsigned-char -Wall
+CFLAGS      += -Wall ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\"" -fsigned-char
 LDFLAGS     += -L${LOCALBASE}/lib -ltwintk -lpare -lxtend
 
 INSTALL         ?= install
