@@ -219,12 +219,12 @@ int     init_xterm()
 
 {
     char    *display_name, *window_str, home[APE_PATH_MAX+1],
-	    xdefaults[APE_PATH_MAX+1];
+	    xdefaults[APE_PATH_MAX+13];
     struct stat st;
     
     /* Set up .Xdefaults if it doesn't exist */
     get_home_dir(home,APE_PATH_MAX);
-    snprintf(xdefaults,APE_PATH_MAX,"%s/.Xdefaults",home);
+    snprintf(xdefaults,APE_PATH_MAX + 12,"%s/.Xdefaults",home);
     if ( stat(xdefaults,&st) == -1 )
 	if ( spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"xapedefaults",NULL) != 0 )
 	{

@@ -139,7 +139,7 @@ int     macro_new_item(file_t files[],
 {
     char    menu_text[TWC_MENU_TEXT_LEN+1],
 	    macro_dir[APE_PATH_MAX+1]="", path_name[APE_PATH_MAX+1]="",
-	    macro_list[APE_PATH_MAX+1]="",
+	    macro_list[APE_PATH_MAX+11]="",
 	    *ok_button[2] = OK_BUTTON,
 	    *yes_no[] = YES_NO_ENUM, auto_indent[4] = "Yes",
 	    auto_load[4] = "No", *buttons[3] = {"[ Yes ]","[ Cancel ]",NULL};
@@ -256,7 +256,7 @@ int     macro_new_item(file_t files[],
 	fclose(macrofp);
 	rewind(cut_buff->fp);
     
-	snprintf(macro_list,APE_PATH_MAX,"%s/menu.txt",macro_dir);
+	snprintf(macro_list,APE_PATH_MAX + 10,"%s/menu.txt",macro_dir);
 	if ( (fp=fopen(macro_list,"a")) != NULL )
 	{
 	    fprintf(fp,"%s\n",menu_text);
@@ -277,9 +277,9 @@ char    selected_text[];
 {
     int     ch;
     char    macro_dir[APE_PATH_MAX+1],
-	    path_name[APE_PATH_MAX+1],
+	    path_name[APE_PATH_MAX+11],
 	    line[TWC_MENU_TEXT_LEN+1],
-	    tempfile[APE_PATH_MAX+1],
+	    tempfile[APE_PATH_MAX+16],
 	    *p,
 	    *yes_no_buttons[] = YES_NO_BUTTONS;
     FILE    *infile,*outfile;
@@ -302,10 +302,10 @@ char    selected_text[];
     macro_remove_body(path_name,ch,options);
     
     /* Remove text from menu */
-    snprintf(path_name,APE_PATH_MAX,"%s/menu.txt",macro_dir);
+    snprintf(path_name,APE_PATH_MAX + 10,"%s/menu.txt",macro_dir);
     
     /* Must be on the same filesystem as path_name for rename() */
-    snprintf(tempfile,APE_PATH_MAX,"%s.tmp",path_name);
+    snprintf(tempfile,APE_PATH_MAX + 15,"%s.tmp",path_name);
     
     if ( (infile=fopen(path_name,"r")) == NULL )
     {
@@ -399,7 +399,7 @@ file_t  *file;
 char    *menu_text[];
 
 {
-    char    macro_dir[APE_PATH_MAX+1], macro_list[APE_PATH_MAX+1];
+    char    macro_dir[APE_PATH_MAX+1], macro_list[APE_PATH_MAX+11];
     FILE    *fp;
     static char macro[MACRO_MAX_MENU_ITEMS+2][TWC_MENU_TEXT_LEN+1];
     int     c = 0;
@@ -408,7 +408,7 @@ char    *menu_text[];
     if ( macro_get_config_dir(file,macro_dir,APE_PATH_MAX) == NO_LANGUAGE_OPTS )
 	return -1;
 
-    snprintf(macro_list,APE_PATH_MAX,"%s/menu.txt",macro_dir);
+    snprintf(macro_list,APE_PATH_MAX + 10,"%s/menu.txt",macro_dir);
     if ( (fp=fopen(macro_list,"r")) != NULL )
     {
 	fstat(fileno(fp),&st);
@@ -796,7 +796,7 @@ int     macro_new_submenu(file_t files[],
 {
     char    menu_text[TWC_MENU_TEXT_LEN+1],
 	    macro_dir[APE_PATH_MAX+1]="", path_name[APE_PATH_MAX+1]="",
-	    macro_list[APE_PATH_MAX+1]="",
+	    macro_list[APE_PATH_MAX+11]="",
 	    *ok_button[2] = OK_BUTTON,
 	    cmd[APE_CMD_MAX+1];
     struct stat st;
@@ -864,7 +864,7 @@ int     macro_new_submenu(file_t files[],
 	if ( stat(macro_dir,&st) == -1 )
 	    rmkdir(macro_dir,0755);
     
-	snprintf(macro_list,APE_PATH_MAX,"%s/menu.txt",macro_dir);
+	snprintf(macro_list,APE_PATH_MAX + 10,"%s/menu.txt",macro_dir);
 	if ( (fp=fopen(macro_list,"a")) != NULL )
 	{
 	    fprintf(fp,"SUBMENU %s\n",menu_text);
