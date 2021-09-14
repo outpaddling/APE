@@ -349,11 +349,11 @@ void    write_items(cust_t items[],
     int     c, fd;
     char   *pos,
 	    config_dir[APE_PATH_MAX+1],
-	    pathname[APE_PATH_MAX+1];
+	    pathname[APE_PATH_MAX+14];
 
     if ( get_config_dir(config_dir, APE_PATH_MAX) != NULL )
     {
-	snprintf(pathname, APE_PATH_MAX, "%s/custom_menu", config_dir);
+	snprintf(pathname, APE_PATH_MAX + 13, "%s/custom_menu", config_dir);
 
 	/* Write back all but the item selected for deletion */
 	if ((fd = open(pathname, O_WRONLY | O_TRUNC)) == -1)
@@ -383,12 +383,12 @@ int     read_custom(char *custom_text[],
 {
     int     c, fd;
     char    config_dir[APE_PATH_MAX+1],
-	    pathname[APE_PATH_MAX+1];
+	    pathname[APE_PATH_MAX+14];
     struct stat statinfo;
 
     if (get_config_dir(config_dir, APE_PATH_MAX) == NULL)
 	return (0);
-    snprintf(pathname, APE_PATH_MAX, "%s/custom_menu", config_dir);
+    snprintf(pathname, APE_PATH_MAX + 13, "%s/custom_menu", config_dir);
     if ((fd = open(pathname, O_RDONLY)) == -1)
 	return (0);
     fstat(fd, &statinfo);
@@ -416,12 +416,12 @@ void    save_item(cust_t *item)
 
 {
     int     fd;
-    char    pathname[APE_PATH_MAX+1],
+    char    pathname[APE_PATH_MAX+14],
 	    config_dir[APE_PATH_MAX+1];
 
     if (get_config_dir(config_dir, APE_PATH_MAX) == NULL)
 	return;
-    snprintf(pathname, APE_PATH_MAX, "%s/custom_menu", config_dir);
+    snprintf(pathname, APE_PATH_MAX + 13, "%s/custom_menu", config_dir);
     fd = open(pathname, O_WRONLY | O_CREAT | O_APPEND, 0700);
     if (fd == -1)
     {

@@ -216,7 +216,8 @@ opt_t  *options;
     char    filename[APE_PATH_MAX + 1] = "", temp[APE_PATH_MAX+1] = "",
 	    dir_name[APE_PATH_MAX + 1] = "", base_name[APE_PATH_MAX + 1] = "",
 	    start_dir[APE_PATH_MAX + 1], save_source[APE_PATH_MAX + 1],
-	    save_short[TWC_SHORT_NAME_LEN + 1], msg[128], path[APE_PATH_MAX+1],
+	    save_short[TWC_SHORT_NAME_LEN + 1], msg[APE_PATH_MAX + 64],
+	    squeezed[128], full_path[FULL_PATH_MAX+3],
 	    *buttons[3] = YES_NO_BUTTONS, *ok_button[2] = OK_BUTTON;
     struct stat st;
     int     remove;
@@ -252,8 +253,10 @@ opt_t  *options;
     /* See if file exists */
     if (stat(filename, &st) == 0)
     {
-	snprintf(msg,127,"File \"%s\" exists.  Overwrite?",base_name);
-	if( tolower(popup_mesg(msg,buttons,options)) != 'y' )
+	snprintf(msg, APE_PATH_MAX + 63,
+		"File \"%s\" exists.  Overwrite?",base_name);
+	strsqueeze(squeezed, msg, 127);
+	if( tolower(popup_mesg(squeezed,buttons,options)) != 'y' )
 	    return CANT_SAVE;
     }
 
@@ -279,12 +282,14 @@ opt_t  *options;
 	/* Remove old file if it exists */
 	if ( stat(save_source,&st) == 0 )
 	{
-	    snprintf(msg,127,"Remove %s?",save_source);
-	    remove = popup_mesg(msg,buttons,options);
+	    snprintf(msg, APE_PATH_MAX + 64, "Remove %s?", save_source);
+	    strsqueeze(squeezed, msg, 127);
+	    remove = popup_mesg(squeezed,buttons,options);
 	    if ( tolower(remove) == 'y' )
 	    {
-		snprintf(path,APE_PATH_MAX,"%s/%s",start_dir,save_source);
-		unlink(path);
+		snprintf(full_path, FULL_PATH_MAX + 2, "%s/%s",
+			 start_dir,save_source);
+		unlink(full_path);
 	    }
 	    TW_RESTORE_WIN(files[af].window);
 	}
@@ -373,14 +378,15 @@ opt_t   *options;
 {
     int     sv = 'n', status;
     char    *buttons[4] = YES_NO_CANCEL_BUTTONS,
-	    msg[128],
+	    msg[APE_PATH_MAX + 64], squeezed[128],
 	    sfile[102];
 
     strsqueeze(sfile, files[af].source, 102);
     if (files[af].modified)
     {
-	snprintf(msg,127,"File \"%s\" has changed. Save?",sfile);
-	sv = popup_mesg(msg,buttons,options);
+	snprintf(msg, APE_PATH_MAX + 63, "File \"%s\" has changed. Save?",sfile);
+	strsqueeze(squeezed, msg, 127);
+	sv = popup_mesg(squeezed,buttons,options);
 	if (sv == 'y')
 	{
 	    if ( strcmp(files[af].source,"untitled") == 0 )
@@ -768,7 +774,9 @@ int     load_file(file_t *file, FILE *fp, opt_t *options)
     
     /* If file exists but is empty, allocate one blank line. */
     if ( line == 0 )
+    {
 	ALLOC_LINE(file, line, 0);
+    }
     file->total_lines = line;
     file->curchar = file->line[0].buff;
 

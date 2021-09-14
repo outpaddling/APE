@@ -590,7 +590,7 @@ int     install_default_user_config(opt_t *options)
     char    cmd[APE_CMD_MAX+1],
 	    config_dir[APE_PATH_MAX+1],
 	    *ok_button[2] = OK_BUTTON,
-	    msg[121];
+	    msg[APE_PATH_MAX + 64], squeezed[128];
     struct stat st;
     
     get_config_dir(config_dir,APE_PATH_MAX);
@@ -609,9 +609,10 @@ int     install_default_user_config(opt_t *options)
 	}
 	else
 	{
-	    snprintf(msg, 120, "Default options installed in %s.\n",
-		    config_dir);
-	    popup_mesg(msg, ok_button, options);
+	    snprintf(msg, APE_PATH_MAX + 63,
+		    "Default options installed in %s.\n", config_dir);
+	    strsqueeze(squeezed, msg, 127);
+	    popup_mesg(squeezed, ok_button, options);
 	    return 1;
 	}
     }

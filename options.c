@@ -51,7 +51,7 @@ int     options_menu(file_t file[], int af, opt_t *options,buff_t *cut_buff,even
     lang_t   old_lang;
     char    /* *buttons[3] = YES_NO_BUTTONS, */
 	    config_dir[APE_PATH_MAX+1],
-	    filename[APE_PATH_MAX+1];
+	    filename[APE_PATH_MAX+13];
     struct stat st;
     static char *options_text[] = {
 				".Language",
@@ -72,7 +72,7 @@ int     options_menu(file_t file[], int af, opt_t *options,buff_t *cut_buff,even
     /* See if options.rc has been modified */
     if (get_config_dir(config_dir,APE_PATH_MAX) != NULL)
     {
-	snprintf(filename, APE_PATH_MAX, "%s/options.rc", config_dir);
+	snprintf(filename, APE_PATH_MAX + 12, "%s/options.rc", config_dir);
 	if ( (stat(filename,&st) == 0) &&
 	     (st.st_size > 0) &&
 	     (st.st_mtime > options->loaded) )
@@ -255,7 +255,7 @@ int     load_options (char *filename, opt_t *options)
     extern          win_t *Swin;
     FILE            *fp;
     int             extra;
-    char            pathname[APE_PATH_MAX + 1], 
+    char            pathname[FULL_PATH_MAX + 2], 
 		    config_dir[APE_PATH_MAX + 1],
 		    extra_buff[200];
     unsigned char   *cp;
@@ -266,7 +266,7 @@ int     load_options (char *filename, opt_t *options)
     /* Determine pathname */
     if (get_config_dir (config_dir, APE_PATH_MAX) == NULL)
 	return CANT_LOAD;
-    snprintf (pathname, APE_PATH_MAX, "%s/%s", config_dir, filename);
+    snprintf (pathname, FULL_PATH_MAX + 1, "%s/%s", config_dir, filename);
 
     /* Attempt to read */
     if ((fp = fopen (pathname, "r")) == NULL)
@@ -359,7 +359,7 @@ void    save_options(char *filename, opt_t *options)
 {
     FILE            *fp;
     struct stat     st;
-    char            pathname[APE_PATH_MAX+1],
+    char            pathname[FULL_PATH_MAX+2],
 		    config_dir[APE_PATH_MAX+1], 
 		    *button[2] = OK_BUTTON;
     unsigned char   *cp;
@@ -380,7 +380,7 @@ void    save_options(char *filename, opt_t *options)
     }
     
     /* Write options file */
-    snprintf(pathname, APE_PATH_MAX, "%s/%s", config_dir, filename);
+    snprintf(pathname, FULL_PATH_MAX + 1, "%s/%s", config_dir, filename);
     fp = fopen(pathname, "w");
     if (fp == NULL)
     {
