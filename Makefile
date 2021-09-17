@@ -50,9 +50,9 @@ DOCSDIR     ?= ${PREFIX}/share/doc/APE
 # APE depends on signed chars.  Some compilers treat chars as unsigned
 # by default, so adjust compiler flags as needed. (e.g. gcc -fsigned-char)
 CC          ?= cc
-CFLAGS      ?= -g
+CFLAGS      ?= -g -Wall
 INCLUDES    = -I${LOCALBASE}/include
-CFLAGS      += -Wall ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\"" -fsigned-char
+CFLAGS      += ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\"" -fsigned-char
 LDFLAGS     += -L${LOCALBASE}/lib -ltwintk -lpare -lxtend
 
 INSTALL         ?= install
