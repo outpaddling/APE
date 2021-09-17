@@ -228,11 +228,13 @@ typedef struct
 /* FIXME: Why is l+1 needed?  Problem began suddenly Dec 2008 */
 #define LINE_BUFF_SIZE(l)   (buff_len_t)((((l) >> BITS) + 1) << BITS)
 #define ALLOC_LINE(file,l,len)\
+{\
 	(file)->line[l].length = (len);\
 	(file)->line[l].buff = malloc(LINE_BUFF_SIZE(len+1));\
 	(file)->line[l].compiler_line = LINE_NOT_COMPILED;\
 	(file)->line[l].needs_update = TRUE;\
-	(file)->line[l].start_pattern = NO_PATTERN;
+	(file)->line[l].start_pattern = NO_PATTERN;\
+}
 
 #define LINE_NOT_COMPILED    -1
 

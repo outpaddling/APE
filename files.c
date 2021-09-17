@@ -774,9 +774,7 @@ int     load_file(file_t *file, FILE *fp, opt_t *options)
     
     /* If file exists but is empty, allocate one blank line. */
     if ( line == 0 )
-    {
 	ALLOC_LINE(file, line, 0);
-    }
     file->total_lines = line;
     file->curchar = file->line[0].buff;
 
