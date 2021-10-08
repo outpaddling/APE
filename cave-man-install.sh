@@ -20,7 +20,7 @@
 case $(uname) in
 *)
     export CFLAGS="-Wall -g -O"
-    LIBDIR=$(realpath $LOCALBASE/lib)
+    LIBDIR=$(readlink -f $LOCALBASE/lib)
     export LDFLAGS="-L$LIBDIR -Wl,-rpath,$LIBDIR:/usr/lib:/lib"
     ;;
 
