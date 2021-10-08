@@ -244,7 +244,7 @@ int     resume_old_search;
     int     response, c, old_len, new_len, x, y, start_col,
 	    save, status = 0, cap, choice, len, bytes;
     static char replace_str[4][SEARCH_STR_LEN + 1] = {"","","",""},
-		cap_str[4], prompt[4][20];
+		cap_str[4], prompt[4][28];
     char    temp[SEARCH_STR_LEN + 1] = "", *yes_no[3] = YES_NO_ENUM,
 	    *fl, *buttons[8] = {"[ 1 ]","[ 2 ]","[ 3 ]","[ 4 ]",
 			    "[ Skip ]", "[ All ]", "[ Quit ]", NULL};
@@ -262,7 +262,7 @@ int     resume_old_search;
 		    "Search for?     ","String to be replaced.", string);
 	for (c=0; c<4; ++c)
 	{
-	    snprintf(prompt[c],19,"Replacement #%d? ",c+1);
+	    snprintf(prompt[c],27,"Replacement #%d? ",c+1);
 	    tw_init_string(&panel, c+3, 3, SEARCH_STR_LEN, 40, TWC_VERBATIM,
 		    prompt[c],"Replaces search string in selected instances.",
 		    replace_str[c]);
