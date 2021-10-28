@@ -71,26 +71,6 @@ else
 else
 {
 }
-m 0 0 20 0 0 0 0 0 20 76:/***************************************************************************
- *  Description:
- *  
- *  Arguments:
- *
- *  Returns:
- *
- *  History: 
- *  Date        Name        Modification
- *  \date(12)\gecos(12)Begin
- ***************************************************************************/
-
-#include <stdio.h>
-#include <sysexits.h>
-
-int     main(int argc,char *argv[])
-
-{
-    return EX_OK;
-}
 p 1 18 25 0 1 5 5 0 7 12:switch(argc)
 {
     case    1:
@@ -127,4 +107,43 @@ int     main(int argc,char *argv[])
 {
 }
 
-
+m 0 0 39 0 1 0 13 0 39 76:/***************************************************************************
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  \date(12)\gecos(12)Begin
+ ***************************************************************************/
+
+#include <stdio.h>
+#include <sysexits.h>
+#include <stdlib.h>
+
+void    usage(char *argv[]);
+
+int     main(int argc,char *argv[])
+
+{
+    switch(argc)
+    {
+        case 1:
+            break;
+        
+        default:
+            usage(argv);
+    }
+    
+    return EX_OK;
+}
+
+
+void    usage(char *argv[])
+
+{
+    fprintf(stderr, "Usage: %s\n", argv[0]);
+    exit(EX_USAGE);
+}

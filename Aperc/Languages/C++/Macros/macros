@@ -78,33 +78,6 @@ catch()
  *
  *  \param
  */
-m 0 0 27 0 0 0 7 0 27 76:/***************************************************************************
- *  Description:
- *  
- *  Arguments:
- *
- *  Returns:
- *
- *  History: 
- *  Date        Name        Modification
- *  \date(12)\gecos(12)Begin
- ***************************************************************************/
-
-#include <iostream>     // cin, cout, cerr
-#include <sysexits.h>   // Standardized exit codes EX_OK, EX_USAGE, etc.
-
-using namespace std;
-
-int     main(int argc,char *argv[])
-
-{
-    switch(argc)
-    {
-        default:
-            break;
-    }
-    return EX_OK;
-}
 u 0 0 29 0 0 0 4 0 29 76:/***************************************************************************
  *  Library:
  *      #include <>
@@ -134,4 +107,43 @@ int     main(int argc,char *argv[])
 {
 }
 
-
+m 0 0 39 0 1 0 13 0 39 76:/***************************************************************************
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  \date(12)\gecos(12)Begin
+ ***************************************************************************/
+
+#include <stdio.h>
+#include <sysexits.h>
+#include <stdlib.h>
+
+void    usage(char *argv[]);
+
+int     main(int argc,char *argv[])
+
+{
+    switch(argc)
+    {
+        case 1:
+            break;
+        
+        default:
+            usage(argv);
+    }
+    
+    return EX_OK;
+}
+
+
+void    usage(char *argv[])
+
+{
+    fprintf(stderr, "Usage: %s\n", argv[0]);
+    exit(EX_USAGE);
+}
