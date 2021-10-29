@@ -5,9 +5,6 @@
 .For loop
 I.Nclude
 .Block comment
-Doxygen def.Group
-.API comment
 .Error check
-.Process arguments
-New F.Unction
 New .Main
+New F.Unction

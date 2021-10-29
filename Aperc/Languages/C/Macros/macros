@@ -47,15 +47,6 @@ for ( ; ; )
 n 0 33 33 0 13 19 19 0 0 13:#include <.h>b 1 0 3 0 0 0 0 0 3 2:/*
  *
  */
-g 1 3 8 0 0 0 0 0 5 3:/**
- * \defgroup name description
- *  @{
- */
-/** @} */
-a 0 14 18 0 0 0 0 0 4 3:/**
- *
- *  \param
- */
 
  0 0 28 0 0 0 8 0 28 76:e 1 993 1000 0 0 980 980 0 7 6:if ( )
 {
@@ -71,42 +62,6 @@ else
 else
 {
 }
-p 1 18 25 0 1 5 5 0 7 12:switch(argc)
-{
-    case    1:
-        break;
-    default:
-        fprintf(stderr,"Usage: %s\n",argv[0]);
-        break;
-}u 0 0 29 0 0 0 4 0 29 76:/***************************************************************************
- *  Library:
- *      #include <>
- *      -l
- *
- *  Description:
- *  
- *  Arguments:
- *
- *  Returns:
- *
- *  Examples:
- *
- *  Files:
- *
- *  Environment
- *
- *  See also:
- *
- *  History: 
- *  Date        Name        Modification
- *  \date(12)\gecos(12)Begin
- ***************************************************************************/
-
-()
-
-{
-}
-
 m 0 0 39 0 1 0 13 0 39 76:/***************************************************************************
  *  Description:
  *  
@@ -146,4 +101,35 @@ void    usage(char *argv[])
 {
     fprintf(stderr, "Usage: %s\n", argv[0]);
     exit(EX_USAGE);
+}u 0 0 31 0 1 0 5 0 31 0:
+
+/***************************************************************************
+ *  Use auto-c2man to generate a man page from this comment
+ *
+ *  Library:
+ *      #include <>
+ *      -l
+ *
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  Examples:
+ *
+ *  Files:
+ *
+ *  Environment
+ *
+ *  See also:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  \date(12)\gecos(12)Begin
+ ***************************************************************************/
+
+()
+
+{
 }

@@ -61,11 +61,6 @@ for ( ; ; )
 b 1 7 10 0 0 0 0 0 3 2:/*
  *
  */
-g 0 15 20 0 0 5 5 0 5 3:/**
- * \defgroup name description
- *  @{
- */
-/** @} */
 e 1 16 24 0 0 4 4 0 8 3:try
 {
     if ()
@@ -74,39 +69,6 @@ for ( ; ; )
 catch()
 {
 }
-a 0 15 19 0 0 4 4 0 4 3:/**
- *
- *  \param
- */
-u 0 0 29 0 0 0 4 0 29 76:/***************************************************************************
- *  Library:
- *      #include <>
- *      -l
- *
- *  Description:
- *  
- *  Arguments:
- *
- *  Returns:
- *
- *  Examples:
- *
- *  Files:
- *
- *  Environment
- *
- *  See also:
- *
- *  History: 
- *  Date        Name        Modification
- *  \date(12)\gecos(12)Begin
- ***************************************************************************/
-
-()
-
-{
-}
-
 m 0 0 39 0 1 0 13 0 39 76:/***************************************************************************
  *  Description:
  *  
@@ -146,4 +108,35 @@ void    usage(char *argv[])
 {
     fprintf(stderr, "Usage: %s\n", argv[0]);
     exit(EX_USAGE);
+}u 0 0 31 0 1 0 5 0 31 0:
+
+/***************************************************************************
+ *  Use auto-c2man to generate a man page from this comment
+ *
+ *  Library:
+ *      #include <>
+ *      -l
+ *
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  Examples:
+ *
+ *  Files:
+ *
+ *  Environment
+ *
+ *  See also:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  \date(12)\gecos(12)Begin
+ ***************************************************************************/
+
+()
+
+{
 }

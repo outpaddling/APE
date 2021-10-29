@@ -6,8 +6,6 @@
 I.Nclude
 New C.Lass
 .Block comment
-Doxygen Def.Group
 .Exception
-.API comment
-New F.Unction
 New .Main
+New F.Unction
