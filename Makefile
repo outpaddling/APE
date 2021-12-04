@@ -53,6 +53,7 @@ CC          ?= cc
 CFLAGS      ?= -g -Wall
 INCLUDES    = -I${LOCALBASE}/include
 CFLAGS      += ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\"" -fsigned-char
+CFLAGS      += -DAPE_VERSION=\"`cat version.txt`\"
 LDFLAGS     += -L${LOCALBASE}/lib -ltwintk -lpare -lxtend
 
 INSTALL         ?= install
@@ -65,9 +66,13 @@ MAKE            ?= make
 
 #####################################
 # Standard targets required by ports
+.PHONY: all depend clean realclean install install-strip help version.txt
 
-all:    ${BINS}
+all:    ${BINS} version.txt
 
+version.txt:
+	test -e .git && git describe --tags > version.txt || true
+	
 # Link rules
 ${BIN1}: ${OBJS1}
 	${CC} -o ${BIN1} ${OBJS1} ${LDFLAGS}

@@ -777,11 +777,15 @@ void    set_borders(opt_t *options, bord_t  *borders)
 char    *get_config_dir(char *dir,size_t maxlen)
 
 {
-    char    home[APE_PATH_MAX+1];
+    char    home[APE_PATH_MAX+1],
+	    base_version[20],
+	    *p = base_version;  // Just for strsep
     
     if (get_home_dir(home,APE_PATH_MAX) != NULL)
     {
-	snprintf(dir,maxlen-1,"%s/.ape-%s",home,APE_VERSION);
+	strlcpy(base_version, APE_VERSION, 20);
+	strsep(&p, "-");   // Chop off revisions and commit hashes
+	snprintf(dir, maxlen-1, "%s/.ape-%s", home, base_version);
 	return dir;
     }
     else
