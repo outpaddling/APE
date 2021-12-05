@@ -35,13 +35,16 @@ void    _reg(opt_t *options)
 {
     win_t  *win;
     char    *buttons[2] = OK_BUTTON,
-	    title[80];
+	    title[80],
+	    *p;
 
     win = centered_panel_win(8,62,options);
 
-    snprintf(title, 79, "Another Programmer's Editor v%s", APE_VERSION);
+    snprintf(title, 79, "Another Programmer's Editor %s", APE_VERSION);
+    if ( (p = strrchr(title, '-')) != NULL )
+	*p = '\0';
     tw_print_center(win,2,title);
-    tw_print_center(win,3,"(c) Copyright 1994-2011 by Acadix Consulting, LLC.");
+    tw_print_center(win,3,"(c) Copyright 1994-Present by Acadix Consulting, LLC.");
     tw_print_center(win,4,"APE is free software, published under the BSD license.");
 
     tw_button_response(win,6,buttons);
