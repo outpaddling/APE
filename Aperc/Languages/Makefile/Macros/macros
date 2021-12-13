@@ -250,7 +250,7 @@ help:
         @printf "\tFC        [currently ${FC}]\n"
         @printf "\tFFLAGS    [currently ${FFLAGS}]\n\n"
         @printf "View Makefile for more tunable variables.\n\n"
-p 0 0 196 0 0 0 170 0 196 76:############################################################################
+p 0 0 193 0 0 0 167 0 193 76:############################################################################
 #
 #              Another Programmer's Editor Makefile Template
 #
@@ -354,9 +354,9 @@ AR          ?= ar
 RANLIB      ?= ranlib
 
 INCLUDES    += -I${LOCALBASE}/include
-CFLAGS      += ${INCLUDES} -DVERSION=\"`cat version.txt`\"
-CXXFLAGS    += ${INCLUDES} -DVERSION=\"`cat version.txt`\"
-FFLAGS      += ${INCLUDES} -DVERSION=\"`cat version.txt`\"
+CFLAGS      += ${INCLUDES}
+CXXFLAGS    += ${INCLUDES}
+FFLAGS      += ${INCLUDES}
 LDFLAGS     += -L${LOCALBASE}/lib
 
 ############################################################################
@@ -380,12 +380,9 @@ STRIP   ?= strip
 ############################################################################
 # Standard targets required by package managers
 
-.PHONY: all depend clean realclean install install-strip help version.txt
+.PHONY: all depend clean realclean install install-strip help
 
-all:    ${BIN} version.txt
-
-version.txt:
-        test -e .git && git describe --tags > version.txt || true
+all:    ${BIN}
 
 ${BIN}: ${OBJS}
         ${LD} -o ${BIN} ${OBJS} ${LDFLAGS}
