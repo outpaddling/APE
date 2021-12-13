@@ -8,7 +8,7 @@ printf "This will sync everything in your ~/.apeXX to the default distribution.\
 printf "Are you sure you want to do this? (yes/no) "
 
 read resp
-if [ 0"$resp" == 0'yes' ]; then
+if [ 0"$resp" = 0'yes' ]; then
     rsync -av --delete --exclude '.svn' ~/.ape-${version}/Languages/ Aperc/Languages
     rsync -v ~/.ape-${version}/options.rc Aperc
     rsync -v ~/.ape-${version}/custom_menu Aperc
