@@ -1,0 +1,52 @@
+m 0 0 20 0 0 0 0 0 20 76:/***************************************************************************
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  \date(12)\gecos(12)Begin
+ ***************************************************************************/
+
+import std.stdio;
+import std.algorithm;
+import std.range;
+
+void    main(string []args)
+
+{
+}
+u 0 0 31 0 1 0 5 0 31 0:
+
+/***************************************************************************
+ *  Use auto-c2man to generate a man page from this comment
+ *
+ *  Library:
+ *      import
+ *      -l
+ *
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  Examples:
+ *
+ *  Files:
+ *
+ *  Environment
+ *
+ *  See also:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  \date(12)\gecos(12)Begin
+ ***************************************************************************/
+
+()
+
+{
+}
