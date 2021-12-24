@@ -1,0 +1,12 @@
+3 -1 8
+//.*$|/\*.*\*/
+6 -1 8
+".*["$]|'.*['$]
+2 -1 8
+import|while|so|for|foreach|if|else
+1 -1 8
+0[Xx][0-9A-Fa-f]+|[0-9]+
+1 -1 16
+void|bool|byte|ubyte|char|short|ushort|wchar|int|uint|dchar|long|ulong|float|double|real
+-2 0 0
+end

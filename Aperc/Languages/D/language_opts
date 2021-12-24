@@ -1,0 +1,20 @@
+name                    D
+name_spec               *.d
+id_comment              
+compiler                ldc2
+compile_flags           -O
+compile_output_flag     -of=
+syntax_check_flag       
+compile_only_flag       -c
+compile_to_asm_flag     
+preprocess_only_flag    
+link_flags              
+debugger                
+debugger_backtrace_cmd  
+run_prefix              time
+upload_prefix           
+executable_name         \st
+executable_source       Command Line Flag
+error_msg_format        
+auto_wrap               0
+end_language
