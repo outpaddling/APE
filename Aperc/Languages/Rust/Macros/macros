@@ -1,0 +1,54 @@
+m 0 0 22 0 0 0 0 0 22 76:/***************************************************************************
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  \date(12)\gecos(12)Begin
+ ***************************************************************************/
+
+use std::io;
+
+fn main()
+{
+    let mut list: Vec<i32> = Vec::new();
+    
+    read_list(&mut list);
+    selection_sort(&mut list);
+    print_list(list);
+}
+u 0 0 31 0 1 0 5 0 31 0:
+
+/***************************************************************************
+ *  Use auto-c2man to generate a man page from this comment
+ *
+ *  Library:
+ *      #include <>
+ *      -l
+ *
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  Examples:
+ *
+ *  Files:
+ *
+ *  Environment
+ *
+ *  See also:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  \date(12)\gecos(12)Begin
+ ***************************************************************************/
+
+fn ()
+
+{
+}
