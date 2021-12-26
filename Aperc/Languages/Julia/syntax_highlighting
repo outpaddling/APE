@@ -1,0 +1,12 @@
+3 -1 8
+(#=).*(=#)|#.*$
+6 -1 8
+".*["$]|'.*['$]
+2 -1 8
+if|else|for|in|end
+5 -1 8
+readline|println|parse|fill
+1 -1 8
+Int|UInt
+-2 0 0
+end
