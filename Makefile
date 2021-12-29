@@ -24,7 +24,7 @@ BINS    = ${BIN1} ${BIN2}
 
 MANS    = Man/*.1
 HTML    = Man/*.html
-SCRIPTS = Tools/search* Tools/ape_aspell Xape/* Java/runjava
+SCRIPTS = Tools/search* Tools/ape_aspell Java/runjava
 
 ###################################################
 # List object files that comprise BIN1, BIN2, etc.

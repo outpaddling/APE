@@ -1,5 +1,5 @@
-#!/bin/csh
+#!/bin/sh -e
 
-set stem=`basename $1 | cut -d'.' -f1`
-java $stem $argv[2-$#argv]
-
+stem=`basename $1 | cut -d '.' -f1`
+shift
+exec java $stem "$@"
