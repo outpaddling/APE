@@ -11,31 +11,8 @@ u 0 2 15 0 0 0 0 0 13 77:#######################################################
 
 def func():
 
-m 0 0 17 0 0 0 0 0 17 22:#!/usr/bin/env python3
-
-#############################################################################
-#   Main Program
-#
-#   Description:
-#
-#   Arguments:
-#   
-#   Returns:
-#   
-#   History: 
-#   Date        Name        Modification
-#   \date(12)\gecos(12)Begin
-
-import sys,os
-
 b 1 24 26 0 0 6 6 0 2 77:#############################################################################
 #   
-p 0 24 30 0 0 11 11 0 6 77:#############################################################################
-#   Process command line args
-
-if len(sys.argv) != 2:
-    sys.exit("Usage: sys.argv[0] \n")
-=sys.argv[1]
 f 1 17 21 0 0 11 11 0 4 77:#############################################################################
 #
 
@@ -61,4 +38,43 @@ def functio_name(argument):
     # in dictionary otherwise second argument will
     # be assigned as default value of passed argument
     return switcher.get(argument, "nothing")
+p 1 17 25 0 0 8 8 0 8 77:#############################################################################
+#   Parse file line by line
+
+with open(filename) as infile:
+    for line in infile:
+        if line[0] != '#':
+            cols = line.split("\t")
+infile.close()
+m 0 0 25 0 0 0 1 0 25 21:#!/usr/bin/env python
+
+##########################################################################
+#   Synopsis:
+#       
+#   Description:
+#       
+#   Arguments:
+#       
+#   Returns:
+#
+#   Examples:
+#
+#   Files:
+#
+#   Environment:
+#
+#   See also:
+#       
+#   History:
+#   Date        Name        Modification
+#   \date(12)\gecos(12)Begin
+##########################################################################
+
+import sys, os
+c 1 33 39 0 0 22 22 0 6 77:#############################################################################
+#   Process command line args
+
+if len(sys.argv) < 2:
+    print("Usage: %s %s" % (sys.argv[0], "args"))
+    sys.exit(1)
 

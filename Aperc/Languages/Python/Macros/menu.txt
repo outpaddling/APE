@@ -1,7 +1,8 @@
 F.Unction
-New .Main
 .Block comment
-.process command line
 .For loop
 .If-then-else
 .Switch function
+.Parse file
+New .Main
+.Command line args
