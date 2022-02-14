@@ -3,7 +3,7 @@
 6 -1 8
 '.*'|".*"
 2 -1 8
-if|else|elif|while|for|in|def|import
+and|as|assert|break|class|continue|def|del|elif|else|except|False|finally|for|from|global|if|import|in|is|lambda|None|nonlocal|not|or|pass|raise|return|True|try|while|with|yield
 1 -1 8
 0[Xx][0-9A-Fa-f]+|[0-9]+
 -2 0 0

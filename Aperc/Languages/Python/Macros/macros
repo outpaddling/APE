@@ -77,4 +77,11 @@ import sys, os
 if len(sys.argv) < 2:
     print("Usage: %s %s" % (sys.argv[0], "args"))
     sys.exit(1)
+a 0 26 33 0 0 9 9 0 7 24:import matplotlib as mpl
+import matplotlib.pyplot as plt
+import numpy as np
+
+fig, ax = plt.subplots()
+ax.plot()
+plt.show()
 
