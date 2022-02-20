@@ -296,7 +296,7 @@ opt_t   *options;
 	exe = file->executable;
     expand_command(file->source, exe, debugger_cmd, cmd, APE_CMD_MAX);
     
-    expanded_cmd = parse_cmd(argv, cmd);
+    expanded_cmd = parse_cmd(argv, MAX_ARGS, cmd);
     begin_full_screen();
     status = spawnvp(P_WAIT, P_ECHO, argv, stdout_file, NULL, NULL);
     check_stat(status, argv[0]);
@@ -349,7 +349,7 @@ out_t   output;
 			ok_button, options);
 	    break;
     }
-    expanded_cmd = parse_cmd(argv, cmd);
+    expanded_cmd = parse_cmd(argv, MAX_ARGS, cmd);
     begin_full_screen();
     err_close(errfile);
     
@@ -529,7 +529,7 @@ opt_t   *options;
 	executable = project->executable;
     if ( *build_cmd != '\0' )
     {
-	expanded_cmd = parse_cmd(argv, build_cmd);
+	expanded_cmd = parse_cmd(argv, MAX_ARGS, build_cmd);
 	err_close(errfile);
 	files[af].lang_rebuild = 0;
 	status = spawn_build_cmd(argv, outfile, errfile, project, executable);
@@ -607,7 +607,7 @@ opt_t *options;
     if ( *cmd != '\0' )
     {
 	begin_full_screen();
-	expanded_cmd = parse_cmd(argv, cmd);
+	expanded_cmd = parse_cmd(argv, MAX_ARGS, cmd);
 	err_close(errfile);
 	/*
 	fprintf(stderr, "In build()...\n");
@@ -670,7 +670,7 @@ opt_t *options;
     }
     
     begin_full_screen();
-    expanded_cmd = parse_cmd(argv, cmd);
+    expanded_cmd = parse_cmd(argv, MAX_ARGS, cmd);
     err_close(errfile);
     stat = spawn_build_cmd(argv, NULL, errfile, project, executable);
     check_stat(stat, cmd);
@@ -722,7 +722,7 @@ opt_t *options;
     prompt_save_all(files, options);
     
     begin_full_screen();
-    expanded_cmd = parse_cmd(argv, cmd);
+    expanded_cmd = parse_cmd(argv, MAX_ARGS, cmd);
     err_close(errfile);
     stat = spawn_build_cmd(argv, NULL, NULL, project, executable);
     check_stat(stat, cmd);
@@ -895,7 +895,7 @@ err_t   *errfile;
 	snprintf(cmd,APE_CMD_MAX, "%s %s %s %s", files[af].lang->compiler_cmd,
 		files[af].lang->syntax_check_flag,
 		files[af].lang->compile_flags, files[af].source);
-	expanded_cmd = parse_cmd(argv, cmd);
+	expanded_cmd = parse_cmd(argv, MAX_ARGS, cmd);
 	err_close(errfile);
 	begin_full_screen();
 	status = spawnvp(P_WAIT,P_ECHO,argv, NULL, errfile->filename, errfile->filename);

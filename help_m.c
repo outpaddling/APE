@@ -132,7 +132,7 @@ void    man(char *str, char *prefix)
 	    snprintf(cmd,APE_CMD_MAX,"%s %s",MAN,str);
 	else
 	    snprintf(cmd,APE_CMD_MAX,"%s -M %s/man %s",MAN,prefix,str);
-	expanded_cmd = parse_cmd(argv,cmd);
+	expanded_cmd = parse_cmd(argv, MAX_ARGS, cmd);
 	begin_full_screen();
 	spawnvp(P_WAIT,P_NOECHO,argv,NULL,NULL,NULL);
 	end_full_screen(EFS_PAUSE);
