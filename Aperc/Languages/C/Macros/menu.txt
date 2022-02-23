@@ -8,3 +8,5 @@ I.Nclude
 .Error check
 New .Main
 New F.Unction
+Open file for .Read
+Open file for wri.Te

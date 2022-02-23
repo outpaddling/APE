@@ -1,13 +1,4 @@
-.If-else
-.While loop
-.Do-while loop
-.Switch
-.For loop
 I.Nclude
-New C.Lass
-.API comment
 .Block comment
-Doxygen Def.Group
-Function .Comment
-New F.Unction
-New .Main()
+New .Structure
+New .Class
