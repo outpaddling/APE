@@ -1,4 +1,4 @@
-p 0 0 193 0 0 0 167 0 193 76:############################################################################
+p 0 0 195 0 0 0 169 0 195 76:############################################################################
 #
 #              Another Programmer's Editor Makefile Template
 #
@@ -58,13 +58,15 @@ OBJS    = file1.o file2.o
 ############################################################################
 # Compile, link, and install options
 
-# Where to find local libraries and headers.  For MacPorts, override
-# with LOCALBASE=/opt/local.
-LOCALBASE   ?= /usr/local
-
 # Install in ../local, unless defined by the parent Makefile, the
 # environment, or a command line option such as PREFIX=/opt/local.
+# FreeBSD ports sets this to /usr/local, MacPorts to /opt/local, etc.
 PREFIX      ?= ../local
+
+# Where to find local libraries and headers.  If you want to use libraries
+# from outside ${PREFIX} (not usually recommended), you can set this
+# independently.
+LOCALBASE   ?= ${PREFIX}
 
 # Allow caller to override either MANPREFIX or MANDIR
 MANPREFIX   ?= ${PREFIX}
@@ -191,7 +193,7 @@ help:
         @printf "\tFC        [currently ${FC}]\n"
         @printf "\tFFLAGS    [currently ${FFLAGS}]\n\n"
         @printf "View Makefile for more tunable variables.\n\n"
-l 0 0 253 0 0 0 227 0 253 76:############################################################################
+l 0 0 255 0 0 0 229 0 255 76:############################################################################
 #
 #              Another Programmer's Editor Makefile Template
 #
@@ -279,13 +281,15 @@ OBJS    = file1.o file2.o
 ############################################################################
 # Compile, link, and install options
 
-# Where to find local libraries and headers.  For MacPorts, override
-# with LOCALBASE=/opt/local.
-LOCALBASE   ?= /usr/local
-
 # Install in ../local, unless defined by the parent Makefile, the
 # environment, or a command line option such as PREFIX=/opt/local.
+# FreeBSD ports sets this to /usr/local, MacPorts to /opt/local, etc.
 PREFIX      ?= ../local
+
+# Where to find local libraries and headers.  If you want to use libraries
+# from outside ${PREFIX} (not usually recommended), you can set this
+# independently.
+LOCALBASE   ?= ${PREFIX}
 
 # Allow caller to override either MANPREFIX or MANDIR
 MANPREFIX   ?= ${PREFIX}
