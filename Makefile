@@ -42,8 +42,8 @@ OBJS    = ${OBJS1} ${OBJS2}
 
 MANPREFIX   ?= ${PREFIX}
 MANDIR      ?= ${MANPREFIX}/man
-LOCALBASE   ?= ../local
-PREFIX      ?= ${LOCALBASE}
+PREFIX      ?= ../local
+LOCALBASE   ?= ${PREFIX}
 DATADIR     ?= ${PREFIX}/share/APE
 DOCSDIR     ?= ${PREFIX}/share/doc/APE
 
