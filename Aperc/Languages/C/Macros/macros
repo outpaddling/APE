@@ -132,17 +132,23 @@ void    usage(char *argv[])
 ()
 
 {
-}r 1 32 39 0 0 22 22 0 7 44:if ( (_stream = fopen(_file, "r")) == NULL )
+}t 1 104 114 0 0 90 90 0 10 36:// Move these to the top of the file
+#include <string.h>
+#include <errno.h>
+if ( (_stream = fopen(_file, "w")) == NULL )
 {
-    fprintf(stderr, ": Could not open %s for read.\n",
-            _file);
-    exit(EX_NOINPUT);
+    fprintf(stderr, ": Could not open %s for write: %s.\n",
+            _file, strerror(errno));
+    exit(EX_CANTCREAT);
 }
 fclose(_stream);
-t 1 40 47 0 0 22 22 0 7 44:if ( (_stream = fopen(_file, "w")) == NULL )
+r 1 104 114 0 0 90 90 0 10 36:// Move these to the top of the file
+#include <string.h>
+#include <errno.h>
+if ( (_stream = fopen(_file, "r")) == NULL )
 {
-    fprintf(stderr, ": Could not open %s for write.\n",
-            _file);
+    fprintf(stderr, ": Could not open %s for read: %s.\n",
+            _file, strerror(errno));
     exit(EX_NOINPUT);
 }
 fclose(_stream);
