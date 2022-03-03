@@ -309,13 +309,13 @@ int     load_options (char *filename, opt_t *options)
 	    *ip = temp_ch;
 	}
 
-	fgetline (fp, options->install_prefix, APE_PATH_MAX);
-	fgetline (fp, options->browser, APE_PATH_MAX);
-	fgetline (fp, options->shell, APE_PATH_MAX);
-	fgetline (fp, options->ishell, APE_PATH_MAX);
-	fgetline (fp, options->file_spec, TWC_SPEC_LEN);
-	fgetline (fp, options->include_path, APE_PATH_MAX);
-	fgetline (fp, options->lib_path, APE_PATH_MAX);
+	xt_fgetline (fp, options->install_prefix, APE_PATH_MAX);
+	xt_fgetline (fp, options->browser, APE_PATH_MAX);
+	xt_fgetline (fp, options->shell, APE_PATH_MAX);
+	xt_fgetline (fp, options->ishell, APE_PATH_MAX);
+	xt_fgetline (fp, options->file_spec, TWC_SPEC_LEN);
+	xt_fgetline (fp, options->include_path, APE_PATH_MAX);
+	xt_fgetline (fp, options->lib_path, APE_PATH_MAX);
 	
 	/* Check for extra stuff */
 	extra = fread (extra_buff, 199, 1, fp);

@@ -393,7 +393,7 @@ int     synhigh_load_opts (char *filename, lang_t *lang)
     do
     {
 	count = fscanf (fp, "%d %d %d\n", &fg, &bg, &modes);
-	fgetline(fp,str,MAX_RE);
+	xt_fgetline(fp,str,MAX_RE);
 	/*
 	printf("Read %d %d %d %s\n",fg,bg,modes,str);
 	   fflush(stdout);

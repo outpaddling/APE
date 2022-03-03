@@ -260,7 +260,7 @@ int     read_lang(char *lang_file, lang_t *lang)
     init_lang(lang);
 
     /* Load from options file */
-    while (!end_language && (fgetline(fp, line, LANG_OPTS_LINE_LEN) != EOF))
+    while (!end_language && (xt_fgetline(fp, line, LANG_OPTS_LINE_LEN) != EOF))
     {
 	p = line;
 	//puts(line);

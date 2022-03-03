@@ -416,7 +416,7 @@ char    *menu_text[];
 	    return -1;
 	
 	for (c=0; (c<MACRO_MAX_MENU_ITEMS) &&
-		  (fgetline(fp,macro[c],TWC_MENU_TEXT_LEN)!=EOF); ++c)
+		  (xt_fgetline(fp,macro[c],TWC_MENU_TEXT_LEN)!=EOF); ++c)
 	{
 	    /* Add text to menu */
 	    menu_text[c] = macro[c];
