@@ -495,7 +495,7 @@ proj_t  *project;
     if ( compiled_language(files[af].lang) )
     {
 	if ( files[af].modified || files[af].lang_rebuild ||
-	    (file_mod_cmp(files[af].source, files[af].executable) > 0) )
+	    (xt_file_mod_cmp(files[af].source, files[af].executable) > 0) )
 	    return 1;
 	else
 	    return 0;
@@ -580,7 +580,7 @@ opt_t *options;
     /* For single file programs, check mod times to avoid unnecessary build */
     if (*project->makefile == '\0')
     {
-	if (file_mod_cmp(files[af].source, files[af].executable) < 0)
+	if (xt_file_mod_cmp(files[af].source, files[af].executable) < 0)
 	{
 	    popup_mesg("\"%s\" is up to date.  Save file to force rebuild.",
 		ok_button, options, files[af].executable);

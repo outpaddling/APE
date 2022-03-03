@@ -375,7 +375,7 @@ void    save_options(char *filename, opt_t *options)
     
     if ( stat(config_dir,&st) != 0 )
     {
-	if ( rmkdir(config_dir,0755) != 0 )
+	if ( xt_rmkdir(config_dir,0755) != 0 )
 	    stat_mesg("save_options(): Cannot create config directory.");
     }
     
@@ -781,7 +781,7 @@ char    *get_config_dir(char *dir,size_t maxlen)
 	    base_version[20],
 	    *p = base_version;  // Just for strsep
     
-    if (get_home_dir(home,APE_PATH_MAX) != NULL)
+    if (xt_get_home_dir(home,APE_PATH_MAX) != NULL)
     {
 	strlcpy(base_version, APE_VERSION, 20);
 	strsep(&p, "-");   // Chop off revisions and commit hashes

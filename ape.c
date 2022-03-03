@@ -206,7 +206,7 @@ int     main (int argc, char *argv[])
 	   soon after, the input must be coming from a paste operation,
 	   and we'll disable autoindent in order to get a clean paste. */
 	gettimeofday(&new_tv, NULL);
-	time_diff = difftimeofday(&new_tv, &old_tv);
+	time_diff = xt_difftimeofday(&new_tv, &old_tv);
 	old_tv = new_tv;
 	
 	/* Set alarm for menu help message */

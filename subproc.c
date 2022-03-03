@@ -145,7 +145,7 @@ int     pause;
     
     /* Empty garbage mouse input that occurred during shell-out */
     if ( MOUSE_FD(Terminal->mouse) != -1 )
-	fd_purge(MOUSE_FD(Terminal->mouse));
+	xt_fd_purge(MOUSE_FD(Terminal->mouse));
 }
 
 

@@ -459,7 +459,7 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
     
     /* Expand ~ to home dir if necessary */
     if (*path_name == '~')
-	snprintf(temp, APE_PATH_MAX, "%s/%s", get_home_dir(home, APE_PATH_MAX), path_name + 1);
+	snprintf(temp, APE_PATH_MAX, "%s/%s", xt_get_home_dir(home, APE_PATH_MAX), path_name + 1);
     else
 	strlcpy(temp, path_name, APE_PATH_MAX);
 
@@ -933,7 +933,7 @@ int     save_file(file_t *file, opt_t   *options)
     /* Back up file before first save */
     if (!file->saved_once)
     {
-	fast_cp(full_path, backup_path);
+	xt_fast_cp(full_path, backup_path);
 	file->saved_once = 1;
     }
 

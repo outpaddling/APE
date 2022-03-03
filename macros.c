@@ -237,7 +237,7 @@ int     macro_new_item(file_t files[],
     {
 	/* Get macro body */
 	if ( stat(macro_dir,&st) == -1 )
-	    rmkdir(macro_dir,0755);
+	    xt_rmkdir(macro_dir,0755);
 	if ( (macrofp = fopen(path_name,"a")) == NULL )
 	{
 	    sprintw(2,TWC_ST_LEN,"Can't write %s.",path_name);
@@ -862,7 +862,7 @@ int     macro_new_submenu(file_t files[],
     {
 	/* Get macro body */
 	if ( stat(macro_dir,&st) == -1 )
-	    rmkdir(macro_dir,0755);
+	    xt_rmkdir(macro_dir,0755);
     
 	snprintf(macro_list,APE_PATH_MAX + 10,"%s/menu.txt",macro_dir);
 	if ( (fp=fopen(macro_list,"a")) != NULL )

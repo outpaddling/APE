@@ -596,7 +596,7 @@ int     install_default_user_config(opt_t *options)
     get_config_dir(config_dir,APE_PATH_MAX);
     if ( stat(config_dir,&st) != 0 )
     {
-	rmkdir(config_dir,0755);
+	xt_rmkdir(config_dir,0755);
 	snprintf(cmd,APE_CMD_MAX,
 	    "cp -R %s/share/APE/Languages %s/share/APE/options.rc %s/share/APE/custom_menu %s",
 	    INSTALL_PREFIX, INSTALL_PREFIX, INSTALL_PREFIX, config_dir);
