@@ -40,10 +40,11 @@ OBJS    = ${OBJS1} ${OBJS2}
 #####################################
 # Compile, link, and install options
 
-MANPREFIX   ?= ${PREFIX}
-MANDIR      ?= ${MANPREFIX}/man
 PREFIX      ?= ../local
 LOCALBASE   ?= ${PREFIX}
+
+MANPREFIX   ?= ${PREFIX}
+MANDIR      ?= ${MANPREFIX}/man
 DATADIR     ?= ${PREFIX}/share/APE
 DOCSDIR     ?= ${PREFIX}/share/doc/APE
 
@@ -51,10 +52,10 @@ DOCSDIR     ?= ${PREFIX}/share/doc/APE
 # by default, so adjust compiler flags as needed. (e.g. gcc -fsigned-char)
 CC          ?= cc
 CFLAGS      ?= -g -Wall
-INCLUDES    = -isystem ${LOCALBASE}/include
+INCLUDES    = -isystem ${PREFIX}/include -isystem ${LOCALBASE}/include
 CFLAGS      += ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\"" -fsigned-char
 CFLAGS      += -DAPE_VERSION=\"`./version.sh | cut -d . -f 1-3`\"
-LDFLAGS     += -L${LOCALBASE}/lib -ltwintk -lpare -lxtend
+LDFLAGS     += -L${PREFIX}/lib -L${LOCALBASE}/lib -ltwintk -lpare -lxtend
 
 INSTALL         ?= install
 INSTALL_PROGRAM ?= install -m 0755
