@@ -123,6 +123,12 @@ event_t *event;
 	    if ( errors(status, errfile) )
 		next_error(files, af_ptr, errfile, options, cut_buff);
 	    break;
+	case 'n':
+	    begin_full_screen();
+	    spawnlp(P_WAIT, P_ECHO, NULL, NULL, NULL,
+			    "make", "depend", NULL);
+	    end_full_screen(EFS_PAUSE);
+	    break;
 	case 'r':
 	    status = run_prog(files, *af_ptr, project, errfile, options, RUN_PROG);
 	    break;
@@ -202,6 +208,7 @@ void    create_build_menu(char *build_text[], proj_t *project, lang_t *lang)
     if ( ACTIVE_PROJ(project) || ((lang != NULL) && compiled_language(lang)) )
     {
 	build_text[c++] = ".Build executable (Esc-x or F7)";
+	build_text[c++] = "Make depe.Nd";
 	build_text[c++] = ".Clean (Esc-c)";
 	build_text[c++] = ".Install";
     }
