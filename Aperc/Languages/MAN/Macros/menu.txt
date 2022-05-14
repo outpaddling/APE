@@ -2,5 +2,5 @@
 .Verbatim text
 .TP
 .Paragraph
-.New man page
 .Comment
+.New man page
