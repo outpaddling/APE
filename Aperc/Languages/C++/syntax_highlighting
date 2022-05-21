@@ -7,6 +7,6 @@
 1 -1 8
 0[Xx][0-9A-Fa-f]+|[0-9]+
 1 -1 16
-char|short|int|long|unsigned|float|double|complex|register|friend
+char|short|int|long|unsigned|float|double|register|friend
 -2 0 0
 end
