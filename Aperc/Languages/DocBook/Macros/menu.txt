@@ -16,7 +16,5 @@ Xinclu.De
 E.Xample
 .Section
 .Chapter
-Image .File
 Comm.And
-Optio.N
-Optio.N
+.Figure
