@@ -68,7 +68,7 @@ u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 
 </chapter>a 0 1 1 0 19 0 0 0 0 19:<command></command>f 1 0 7 0 9 0 0 0 7 8:<figure>
     <title></title>
     <mediaobject>
-        <subscript></subscript>imageobject>
+        <imageobject>
         <imagedata fileref="" width="50%"/>
         </imageobject>
     </mediaobject>
