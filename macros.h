@@ -1,5 +1,5 @@
 /* Macros */
-#define MACRO_MAX_MENU_ITEMS        20
+#define MACRO_MAX_MENU_ITEMS        30
 #define MACRO_END                   '\004'
 #define MACRO_MISSING_ACTION_KEY    -1
 #define MACRO_FIELDS                3
