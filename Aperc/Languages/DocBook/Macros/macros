@@ -1,6 +1,4 @@
-u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 0 0 42:<indexterm><primary></primary></indexterm>_ 0 10 10 0 23 0 0 0 0 23:<subscript></subscript>^ 0 12 12 0 27 0 0 0 0 27:<superscript></superscript>g 0 285 285 16 39 272 272 0 0 23:<glossterm></glossterm>l 1 450 452 0 11 436 436 0 2 10:<listitem>
-
-</listitem>i 1 7 11 0 15 0 0 0 4 14:<itemizedlist>
+u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 0 0 42:<indexterm><primary></primary></indexterm>_ 0 10 10 0 23 0 0 0 0 23:<subscript></subscript>^ 0 12 12 0 27 0 0 0 0 27:<superscript></superscript>g 0 285 285 16 39 272 272 0 0 23:<glossterm></glossterm>i 1 7 11 0 15 0 0 0 4 14:<itemizedlist>
     <listitem>
     
     </listitem>
@@ -74,4 +72,8 @@ u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 
     </mediaobject>
 </figure>n 1 327 329 0 7 315 315 0 2 6:<info>
 
-</info>
+</info>l 1 0 4 0 11 0 0 0 4 10:<listitem>
+<para>
+
+</para>
+</listitem>

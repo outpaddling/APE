@@ -3,7 +3,6 @@ Index Ter.M
 ._ subscript
 .^ superscript
 .Glossterm
-.List Item
 .Itemized List
 .Ordered List
 .Table
@@ -19,3 +18,4 @@ E.Xample
 Comm.And
 .Figure
 I.Nfo
+.List Item
