@@ -1,12 +1,4 @@
-u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 0 0 42:<indexterm><primary></primary></indexterm>_ 0 10 10 0 23 0 0 0 0 23:<subscript></subscript>^ 0 12 12 0 27 0 0 0 0 27:<superscript></superscript>g 0 285 285 16 39 272 272 0 0 23:<glossterm></glossterm>i 1 7 11 0 15 0 0 0 4 14:<itemizedlist>
-    <listitem>
-    
-    </listitem>
-</itemizedlist>o 1 7 11 0 14 0 0 0 4 13:<orderedlist>
-    <listitem>
-    
-    </listitem>
-</orderedlist>t 1 8 28 0 8 2 11 0 20 29:<table xml:id="" frame='all'>
+u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 0 0 42:<indexterm><primary></primary></indexterm>_ 0 10 10 0 23 0 0 0 0 23:<subscript></subscript>^ 0 12 12 0 27 0 0 0 0 27:<superscript></superscript>g 0 285 285 16 39 272 272 0 0 23:<glossterm></glossterm>t 1 8 28 0 8 2 11 0 20 29:<table xml:id="" frame='all'>
     <title></title>
     <tgroup cols='2' align='left' colsep='1' rowsep='1'>
         <colspec colname='c1'/>
@@ -76,4 +68,18 @@ u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 
 <para>
 
 </para>
-</listitem>
+</listitem>o 1 2064 2071 0 0 2054 2054 0 7 13:<orderedlist>
+    <listitem>
+    <para>
+    
+    </para>
+    </listitem>
+</orderedlist>
+i 1 2071 2078 0 0 2054 2054 0 7 14:<itemizedlist>
+    <listitem>
+    <para>
+    
+    </para>
+    </listitem>
+</itemizedlist>
+

@@ -3,8 +3,6 @@ Index Ter.M
 ._ subscript
 .^ superscript
 .Glossterm
-.Itemized List
-.Ordered List
 .Table
 P.Rogram Listing
 Scr.Een shot
@@ -19,3 +17,5 @@ Comm.And
 .Figure
 I.Nfo
 .List Item
+.Ordered List
+.Itemized List
