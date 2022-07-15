@@ -10,7 +10,6 @@ Scr.Een shot
 .Qandaentry
 .Paragraph
 Xinclu.De
-E.Xample
 .Section
 .Chapter
 Comm.And
@@ -19,3 +18,4 @@ I.Nfo
 .List Item
 .Ordered List
 .Itemized List
+E.Xample
