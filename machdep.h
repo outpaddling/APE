@@ -194,7 +194,9 @@
 #define MANOPTS         "-a"
 #define MANPATH         "/opt/man:/usr/share/man:/usr/freeware/man:/usr/local/man"
 
-#elif defined(sun)  /* Sun Solaris cc/gcc */
+#elif defined(__sun__)  /* Sun Solaris cc/gcc */
+
+typedef void (*sig_t) (int);
 
 #define C_COMPILER      "cc"
 #define CPP_COMPILER    "c++"

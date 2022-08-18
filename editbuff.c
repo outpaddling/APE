@@ -289,7 +289,7 @@ int     del_under(file_t *file,opt_t *options,buff_t *cut_buff)
     file->curcol = ACTUAL_COL(file);
     char    *ptr = file->curchar;
 
-#ifdef sun
+#ifdef __sun__
     /*
      *  Solaris has a strange glitch where resetting the SIGWINCH
      *  signal caused a del char every other time.  This is a temporary

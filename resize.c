@@ -54,7 +54,7 @@ void    win_resize()
     int             signal_received;
     
 /* Linux signal() function is old-fashioned, and needs to be reset */
-#if defined(linux) || defined(sun) // sun causes char deletions and termination!
+#if defined(linux) || defined(__sun__) // sun causes char deletions and termination!
     signal(SIGWINCH,(sig_t)win_resize);
 #endif
 
@@ -95,7 +95,11 @@ void    win_resize()
 	sigemptyset(&signals);
 	if (sigaddset(&signals, SIGWINCH) == -1 )
 	    sprintw(2, 50, "Warning: Sigaddset error");
+#if defined(__sun__)
+	sigwait(&signals);
+#else
 	sigwait(&signals, &signal_received);
+#endif
 	return;
     }
 
