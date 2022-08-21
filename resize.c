@@ -51,10 +51,15 @@ void    win_resize()
     int             c, min_lines=24, min_cols=80;
     static char     msg[]="APE: Resize your terminal to at least %d x %d...";
     sigset_t        signals;
+#if ! defined(__sun__)
     int             signal_received;
-    
-/* Linux signal() function is old-fashioned, and needs to be reset */
-#if defined(linux) || defined(__sun__) // sun causes char deletions and termination!
+#endif
+
+/*
+ *  Linux signal() function is old-fashioned, and needs to be reset
+ *  sun causes char deletions and termination!
+ */
+#if defined(linux) || defined(__sun__)
     signal(SIGWINCH,(sig_t)win_resize);
 #endif
 
