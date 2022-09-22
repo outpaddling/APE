@@ -2,6 +2,7 @@
 int main(int argc, char *argv[]);
 void nice_exit(int retval, err_t *errfile, char *message);
 int eat_keys(unsigned long time, char seq[]);
+void err_init(err_t *erffile);
 /* build_m.c */
 int build_menu(file_t files[], int *af_ptr, proj_t *project, opt_t *options, err_t *errfile, buff_t *cut_buff, event_t *event);
 void create_build_menu(char *build_text[], proj_t *project, lang_t *lang);

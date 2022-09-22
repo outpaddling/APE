@@ -77,7 +77,7 @@ int     main (int argc, char *argv[])
 	    help_str[APE_CMD_MAX + 1] = "",
 	   *curchar;
     proj_t  project = PROJ_INIT;        /* Makefile, etc. */
-    err_t   errfile = ERR_INIT; /* Error file information */
+    err_t   errfile;            /* Error file information */
     size_t  curline;            /* For caching files[af].curline */
     extern err_t *Errfile;      /* For kamakaze() signal handler */
     extern char __Syms[];       /* For group char macros */
@@ -93,6 +93,8 @@ int     main (int argc, char *argv[])
 
     /* Initialize - don't mess with the order of these calls! */
     setup_terminal();
+    
+    err_init(&errfile);
 
     check_args (argv);          /* Check for command-line options */
     //set_globals_for_signal(files, &options);
@@ -778,3 +780,11 @@ int     eat_keys (unsigned long time, char seq[])
     return count;
 }
 
+
+void    err_init(err_t *errfile)
+
+{
+    getcwd(errfile->filename, APE_PATH_MAX+1);
+    strlcat(errfile->filename, ".ape-compile-errors.txt", APE_PATH_MAX+1);
+    errfile->fp = NULL;
+}

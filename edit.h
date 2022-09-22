@@ -350,8 +350,6 @@ typedef struct
     FILE    *fp;
 }   err_t;
 
-#define ERR_INIT    { ".ape_compile_errors", NULL }
-
 #include "make.h"
 
 #include "custom.h"
