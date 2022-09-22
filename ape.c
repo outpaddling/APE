@@ -87,14 +87,10 @@ int     main (int argc, char *argv[])
     struct timeval  new_tv, old_tv = {0,0};
     unsigned long   time_diff;
 
-    /******************************************************************
-     * Begin main()
-     ******************************************************************/
+    err_init(&errfile);
 
     /* Initialize - don't mess with the order of these calls! */
     setup_terminal();
-    
-    err_init(&errfile);
 
     check_args (argv);          /* Check for command-line options */
     //set_globals_for_signal(files, &options);
@@ -785,6 +781,6 @@ void    err_init(err_t *errfile)
 
 {
     getcwd(errfile->filename, APE_PATH_MAX+1);
-    strlcat(errfile->filename, ".ape-compile-errors.txt", APE_PATH_MAX+1);
+    strlcat(errfile->filename, "/.ape-compile-errors.txt", APE_PATH_MAX+1);
     errfile->fp = NULL;
 }
