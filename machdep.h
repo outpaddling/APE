@@ -139,6 +139,8 @@
 #define fpurge(s)       __fpurge(s)
 #include <stdio_ext.h>
 
+#include <xtend/string.h>	// strlcat()
+
 #elif defined(__CYGWIN__)
 
 #define C_COMPILER      "cc"
