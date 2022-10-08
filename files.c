@@ -56,11 +56,11 @@ event_t *event;
 {
     extern term_t   *Terminal;
     extern win_t    *File_list;
-    char    path_name[APE_PATH_MAX + 1] = "";
+    //char    path_name[APE_PATH_MAX + 1] = "";
     int     ch, af, cancel, start_row = 1;
     win_t  *file_pop;
     static char *file_text[] = {".New",".Open file",//"Open .Encrypted file",
-				".Close", ".Merge", ".Save (Ctrl+s)",
+				".Close", ".Save (Ctrl+s)",
 				"Save .As", //"Save Encr.Ypted",
 				TWC_HLINE,
 				".Toggle file (Ctrl+t)",
@@ -118,6 +118,7 @@ event_t *event;
 	    toggle_file(files, &af, options, cut_buff);
 	    *af_ptr = af;
 	    break;
+	/* FIXME: Causes corruption
 	case 'm':
 	    File_list = panel_win(TLINES(Terminal)-4, TCOLS(Terminal)-1,
 				2,TWC_CENTER_WIN,options);
@@ -132,6 +133,7 @@ event_t *event;
 	    merge_file(files + af, path_name, options, cut_buff);
 	    chdir(files[af].cwd);
 	    break;
+	*/
 	case 'y':
 	    //files[af].crypt = 1;
 	case 's':

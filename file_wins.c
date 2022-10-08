@@ -514,9 +514,10 @@ opt_t   *options;
 }
 
 
-/*******************************************
+/**********************************************
  * Merge a file into the active file window
- *******************************************/
+ * FIXME: Causes corruption.  Disabled for now
+ **********************************************/
 
 void    merge_file(file, path_name, options, cut_buff)
 file_t *file;
