@@ -55,7 +55,7 @@ event_t *event;
 
 {
     extern term_t   *Terminal;
-    extern win_t    *File_list;
+    //extern win_t    *File_list;
     //char    path_name[APE_PATH_MAX + 1] = "";
     int     ch, af, cancel, start_row = 1;
     win_t  *file_pop;
