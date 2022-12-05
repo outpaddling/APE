@@ -1,24 +1,4 @@
-u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 0 0 42:<indexterm><primary></primary></indexterm>_ 0 10 10 0 23 0 0 0 0 23:<subscript></subscript>^ 0 12 12 0 27 0 0 0 0 27:<superscript></superscript>g 0 285 285 16 39 272 272 0 0 23:<glossterm></glossterm>t 1 8 28 0 8 2 11 0 20 29:<table xml:id="" frame='all'>
-    <title></title>
-    <tgroup cols='2' align='left' colsep='1' rowsep='1'>
-        <colspec colname='c1'/>
-        <colspec colname='c2'/>
-        
-        <thead>
-        <row>
-            <entry></entry>
-            <entry></entry>
-        </row>
-        </thead>
-        
-        <tbody>
-        <row>
-            <entry></entry>
-            <entry></entry>
-        </row>
-        </tbody>
-    </tgroup>
-</table>r 1 10 12 0 17 0 0 0 2 28:<programlisting language="">
+u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 0 0 42:<indexterm><primary></primary></indexterm>_ 0 10 10 0 23 0 0 0 0 23:<subscript></subscript>^ 0 12 12 0 27 0 0 0 0 27:<superscript></superscript>g 0 285 285 16 39 272 272 0 0 23:<glossterm></glossterm>r 1 10 12 0 17 0 0 0 2 28:<programlisting language="">
 
 </programlisting>e 1 14 16 0 9 0 0 0 2 8:<screen>
 
@@ -88,4 +68,25 @@ u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 
     without looking at the text.
     </para>
 </example>
-h 0 127 127 8 29 106 106 0 0 21:<emphasis></emphasis>
+h 0 127 127 8 29 106 106 0 0 21:<emphasis></emphasis>t 1 0 21 0 8 0 0 0 21 29:<table xml:id="" frame='all'>
+    <title></title>
+    <tgroup cols='2' align='left' colsep='1' rowsep='1'>
+        <colspec colname='c1'/>
+        <colspec colname='c2'/>
+        
+        <thead>
+        <row>
+            <entry></entry>
+            <entry></entry>
+        </row>
+        </thead>
+        
+        <tbody>
+        <row>
+            <entry namest="c1" nameend="c2" align="center">Span</entry>
+            <entry></entry>
+            <entry></entry>
+        </row>
+        </tbody>
+    </tgroup>
+</table>

@@ -3,7 +3,6 @@ Index Ter.M
 ._ subscript
 .^ superscript
 .Glossterm
-.Table
 P.Rogram Listing
 Scr.Een shot
 .Book
@@ -20,3 +19,4 @@ I.Nfo
 .Itemized List
 E.Xample
 Emp.Hasis
+.Table

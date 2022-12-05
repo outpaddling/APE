@@ -1,7 +1,7 @@
 name                    C_header
 name_spec               *.h
 id_comment              
-compiler                gcc
+compiler                cc
 compile_flags           -Wall -g
 compile_output_flag     -o
 syntax_check_flag       -fsyntax-only
