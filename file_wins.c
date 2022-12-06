@@ -384,6 +384,8 @@ opt_t *options;
     file->notabs =  (strcmp(ext,".tex") == 0) ||
 		    (strcmp(ext,".dbk") == 0) ||
 		    (strcmp(ext,".py") == 0) ||
+		    (strcmp(ext,".f90") == 0) ||
+		    (strcmp(ext,".F90") == 0) ||
 		    (strcmp(file->source,"Portfile") == 0);
 		    // FIXME: crashes if we replace the ext check with this
 		    // (strcmp(file->lang->lang_name,"Python") == 0);
