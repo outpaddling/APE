@@ -46,6 +46,10 @@
 #include <pare.h>
 #endif
 
+#if !defined(__bool_true_false_are_defined)
+#include <stdbool.h>
+#endif
+
 #define EMPTY_FILE(f) (((f)->total_lines == 1) && ((f)->line[0].length == 0))
 
 /* End full screen shell-out options */
@@ -280,6 +284,7 @@ typedef struct
     size_t  old_col;        /* Most recent previous column */
     size_t  start_line;     /* Starting line for search and replace */
     size_t  start_col;      /* Starting column for search and replace */
+    bool    havent_left_first_line;    /* Still on first line */
     int     search_wrapped; /* 0 on new search, 1 when back to start */
     char    *curchar;       /* Pointer to current char in buff */
     

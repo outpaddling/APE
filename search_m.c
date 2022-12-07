@@ -195,6 +195,7 @@ void    new_search_start(file_t *file)
     file->start_line = file->curline;
     file->start_col = ACTUAL_COL(file);
     file->search_wrapped = 0;
+    file->havent_left_first_line = true;
 }
 
 
@@ -352,6 +353,7 @@ int     resume_old_search;
 		file->line[file->curline].buff[len] = '\0';
 		
 		/* If line has shrunk, start_col may no longer be valid */
+		// FIXME: Properly compute after insertions and deletions
 		if ( file->curline == start_line )
 		    start_col = MIN(start_col, len);
 
@@ -376,9 +378,15 @@ int     resume_old_search;
 		
 		/* Move to end of new insert, not past, or we'll
 		   miss the next match if it comes right after. */
-		file->curchar += new_len;
-		file->curcol = ACTUAL_COL(file);
-		move_left(file, options, cut_buff);
+		if ( options->search_forward )
+		{
+		    file->curchar += new_len;
+		    file->curcol = ACTUAL_COL(file);
+		    // FIXME: Is this needed?
+		    // move_left(file, options, cut_buff);
+		}
+		else
+		    move_left(file, options, cut_buff);
 		SET_MODIFIED(file);
 	    }
 	    else
@@ -457,13 +465,31 @@ void    check_search_wrap(file_t *file, opt_t *options, size_t line, size_t col)
 {
     char    *ok_button[2] = OK_BUTTON;
     
-    if ( (line == file->start_line) && (col == file->start_col) )
+    if ( line == file->start_line )
     {
-	popup_mesg("Search wrapped.", ok_button, options);
-	TW_RESTORE_WIN(file->window);
-	//stat_mesg("Search wrapped.");
-	file->search_wrapped = 1;
+	/*
+	 *  Note whether we're still on the first line or have come
+	 *  back to it.
+	 *  Account for insertions and deletions made by replace_string()
+	 *  by checking for col >= or <=.
+	 *  FIXME: This is imperfect, but prevents running another lap.
+	 *  Should adjust start_col when insertions or deletions occur
+	 */
+	
+	if ( ! file->havent_left_first_line )  // Haven't left first line yet
+	{
+	    if ( ((options->search_forward) && (col >= file->start_col)) ||
+		 ((! options->search_forward) && (col <= file->start_col)) )
+	    {
+		popup_mesg("Search wrapped.", ok_button, options);
+		TW_RESTORE_WIN(file->window);
+		//stat_mesg("Search wrapped.");
+		file->search_wrapped = 1;
+	    }
+	}
     }
+    else
+	file->havent_left_first_line = false;
 }
 
 
