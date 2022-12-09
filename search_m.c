@@ -49,20 +49,18 @@ event_t *event;
     extern term_t   *Terminal;
     win_t  *search_pop;
     int     ch = 'f', start_row = 1;
-    static char search_direction[] = ".Direction: Forward ",
-	case_sensitive[] = ".Case sensitive: No ",
-	*search_text[] = {
-	    ".Find (Esc-/)",
-	    "R.Epeat last find (Ctrl+n or F3)",
-	    ".Search and replace",
-	    ".Resume search and replace (Esc-k)",
-	    TWC_HLINE,
-	    "Search .Header files",
-	    "Search .Libraries",
-	    TWC_HLINE,
-	    NULL,
-	    NULL,
-	""};
+    static char search_direction[] = ".Direction: Forward ", case_sensitive[] = ".Case sensitive: No ", *search_text[] = {
+	".Find (Esc-/)",
+	"R.Epeat last find (Ctrl+n or F3)",
+	".Search and replace",
+	".Resume search and replace (Esc-k)",
+	TWC_HLINE,
+	"Search .Header files",
+	"Search .Libraries",
+	TWC_HLINE,
+	NULL,
+	NULL,
+    ""};
 
     if (search_text[DIREC] == NULL)
     {
@@ -197,7 +195,6 @@ void    new_search_start(file_t *file)
     file->start_line = file->curline;
     file->start_col = ACTUAL_COL(file);
     file->search_wrapped = 0;
-    file->havent_left_first_line = true;
 }
 
 
@@ -246,10 +243,10 @@ int     resume_old_search;
     tw_panel_t panel = TWC_PANEL_INIT;
     int     response, c, old_len, new_len, x, y, start_col,
 	    save, status = 0, cap, choice, len, bytes;
-    static char replace_str[][SEARCH_STR_LEN + 1] = {"","","",""},
+    static char replace_str[4][SEARCH_STR_LEN + 1] = {"","","",""},
 		cap_str[4], prompt[4][28];
-    char    temp[SEARCH_STR_LEN + 1] = "", *yes_no[] = YES_NO_ENUM,
-	    *fl, *buttons[] = {"[ 1 ]","[ 2 ]","[ 3 ]","[ 4 ]",
+    char    temp[SEARCH_STR_LEN + 1] = "", *yes_no[3] = YES_NO_ENUM,
+	    *fl, *buttons[8] = {"[ 1 ]","[ 2 ]","[ 3 ]","[ 4 ]",
 			    "[ Skip ]", "[ All ]", "[ Quit ]", NULL};
     static long start_line;
     static int  capitalize;
@@ -355,7 +352,6 @@ int     resume_old_search;
 		file->line[file->curline].buff[len] = '\0';
 		
 		/* If line has shrunk, start_col may no longer be valid */
-		// FIXME: Properly compute after insertions and deletions
 		if ( file->curline == start_line )
 		    start_col = MIN(start_col, len);
 
@@ -380,15 +376,9 @@ int     resume_old_search;
 		
 		/* Move to end of new insert, not past, or we'll
 		   miss the next match if it comes right after. */
-		if ( options->search_forward )
-		{
-		    file->curchar += new_len;
-		    file->curcol = ACTUAL_COL(file);
-		    // FIXME: Is this needed?
-		    // move_left(file, options, cut_buff);
-		}
-		else
-		    move_left(file, options, cut_buff);
+		file->curchar += new_len;
+		file->curcol = ACTUAL_COL(file);
+		move_left(file, options, cut_buff);
 		SET_MODIFIED(file);
 	    }
 	    else
@@ -465,33 +455,15 @@ opt_t  *options;
 void    check_search_wrap(file_t *file, opt_t *options, size_t line, size_t col)
 
 {
-    char    *ok_button[] = OK_BUTTON;
+    char    *ok_button[2] = OK_BUTTON;
     
-    if ( line == file->start_line )
+    if ( (line == file->start_line) && (col == file->start_col) )
     {
-	/*
-	 *  Note whether we're still on the first line or have come
-	 *  back to it.
-	 *  Account for insertions and deletions made by replace_string()
-	 *  by checking for col >= or <=.
-	 *  FIXME: This is imperfect, but prevents running another lap.
-	 *  Should adjust start_col when insertions or deletions occur
-	 */
-	
-	if ( ! file->havent_left_first_line )  // Haven't left first line yet
-	{
-	    if ( ((options->search_forward) && (col >= file->start_col)) ||
-		 ((! options->search_forward) && (col <= file->start_col)) )
-	    {
-		popup_mesg("Search wrapped.", ok_button, options);
-		TW_RESTORE_WIN(file->window);
-		//stat_mesg("Search wrapped.");
-		file->search_wrapped = 1;
-	    }
-	}
+	popup_mesg("Search wrapped.", ok_button, options);
+	TW_RESTORE_WIN(file->window);
+	//stat_mesg("Search wrapped.");
+	file->search_wrapped = 1;
     }
-    else
-	file->havent_left_first_line = false;
 }
 
 
