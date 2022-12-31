@@ -5,7 +5,6 @@ Index Ter.M
 .Glossterm
 P.Rogram Listing
 Scr.Een shot
-.Book
 .Qandaentry
 .Paragraph
 Xinclu.De
@@ -20,3 +19,4 @@ I.Nfo
 E.Xample
 Emp.Hasis
 .Table
+.Book
