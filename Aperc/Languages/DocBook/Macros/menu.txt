@@ -5,11 +5,9 @@ Index Ter.M
 .Glossterm
 P.Rogram Listing
 Scr.Een shot
-.Qandaentry
 .Paragraph
 Xinclu.De
 .Section
-.Chapter
 Comm.And
 .Figure
 I.Nfo
@@ -20,3 +18,4 @@ E.Xample
 Emp.Hasis
 .Table
 .Book
+.Code

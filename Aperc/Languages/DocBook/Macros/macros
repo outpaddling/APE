@@ -2,22 +2,12 @@ u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 
 
 </programlisting>e 1 14 16 0 9 0 0 0 2 8:<screen>
 
-</screen>q 1 17 25 0 13 5 5 0 8 12:<qandaentry>
-    <question>
-    
-    </question>
-    
-    <answer>
-    
-    </answer>
-</qandaentry>p 1 3 5 0 7 0 0 0 2 6:<para>
+</screen>p 1 3 5 0 7 0 0 0 2 6:<para>
 
 </para>d 1 0 1 0 14 0 0 0 1 54:<xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
     href="" />s 1 7 9 0 10 0 0 0 2 9:<section>
     <title></title>
-</section>c 1 4 6 0 10 0 0 0 2 19:<chapter xml:id="">
-    <title></title>
-</chapter>a 0 1 1 0 19 0 0 0 0 19:<command></command>f 1 0 7 0 9 0 0 0 7 8:<figure>
+</section>a 0 1 1 0 19 0 0 0 0 19:<command></command>f 1 0 7 0 9 0 0 0 7 8:<figure>
     <title></title>
     <mediaobject>
         <imageobject>
@@ -89,4 +79,4 @@ u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 
     <chapter>
         <title></title>
     </chapter>
-</book>
+</book>c 1 3 3 4 17 0 0 0 0 13:<code></code>
