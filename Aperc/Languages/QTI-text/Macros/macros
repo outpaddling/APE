@@ -1,4 +1,36 @@
-e 0 8 11 0 0 0 0 0 3 3:1. 
+e 0 3 8 0 0 0 0 0 5 7:Title: 
+Points: 1
+1. 
 ... General question feedback
 ___
+m 0 9 15 0 0 0 0 0 6 7:Title: 
+Points: 
+1. 
+a)
+b)
+*c)
+a 0 9 15 0 0 0 0 0 6 7:Title: 
+Points: 
+1. 
+[ ] 
+[*] 
+[*] 
+q 2 0 2 0 0 0 0 0 2 14:Quiz title: T1
+Quiz description: First Exam
+n 0 3 7 0 0 0 0 0 4 7:Title: 
+Points: 1
+1. 
+=   1 +- .1
+s 0 3 8 0 0 0 0 0 5 7:Title: 
+Points: 1
+1. 
+*   Ans1
+*   Ans2
+u 0 3 8 0 0 0 0 0 5 7:Title: 
+Points: 1
+1. 
+... General question feedback
+^^^
+t 0 9 11 0 0 0 0 0 2 12:Text title: 
+Text: 
 

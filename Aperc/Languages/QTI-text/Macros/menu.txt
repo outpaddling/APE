@@ -1,1 +1,8 @@
 .Essay question
+.Multiple choice
+Multiple .Answer
+New .Quiz
+.Numeric
+.Short answer
+File .Upload
+.Text region

@@ -1,4 +1,8 @@
-2 -1 8
+6 -1 8
 ^___|^... General question feedback|^[0-9].
+2 -1 8
+^Quiz .*$
+3 -1 8
+^Title:|^Points:
 -2 0 0
 end
