@@ -34,22 +34,6 @@ u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 
     </para>
     </listitem>
 </itemizedlist>
-x 1 143 159 0 0 134 134 0 16 19:<example xml:id="">
-    <title></title>
-    
-    <para>
-    
-    </para>
-    
-    <programlisting language="">
-    
-    </programlisting>
-    
-    <para>
-    Think you got it?  Prove it!  Try doing it yourself
-    without looking at the text.
-    </para>
-</example>
 h 0 127 127 8 29 106 106 0 0 21:<emphasis></emphasis>t 1 0 21 0 8 0 0 0 21 29:<table xml:id="" frame='all'>
     <title></title>
     <tgroup cols='2' align='left' colsep='1' rowsep='1'>
@@ -79,4 +63,20 @@ u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 
     <chapter>
         <title></title>
     </chapter>
-</book>c 1 3 3 4 17 0 0 0 0 13:<code></code>
+</book>c 1 3 3 4 17 0 0 0 0 13:<code></code>x 1 0 16 0 0 0 0 0 16 19:<example xml:id="">
+    <title></title>
+    
+    <para>
+    
+    </para>
+    
+    <programlisting language="">
+    
+    </programlisting>
+    
+    <para>
+    Think you got it?  Prove it: Try doing it yourself
+    without looking at the text.
+    </para>
+</example>
+
