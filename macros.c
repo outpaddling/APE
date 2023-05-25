@@ -41,12 +41,8 @@
 
 /* Macro menu */
 
-int     macro_menu(files,af_ptr,options,event,expand)
-file_t  files[];
-int     *af_ptr;
-opt_t   *options;
-event_t *event;
-macro_expand_t expand;
+int     macro_menu(file_t files[], int *af_ptr, opt_t *options,
+		   event_t *event, macro_expand_t expand)
 
 {
     int     ch;

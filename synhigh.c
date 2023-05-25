@@ -206,11 +206,8 @@ synhigh_check_pattern_color (file_t *file, size_t line, char *ptr, char **end_pa
  *
  ****************************************************************************/
 
-int     synhigh_check_patterns (file, line, ptr, end)
-file_t *file;
-size_t  line;
-char   *ptr;
-reloc_t *end;
+int     synhigh_check_patterns (file_t *file, size_t line,
+				char *ptr, reloc_t *end)
 
 {
     pattern_t **pattern;
@@ -398,13 +395,11 @@ synhigh_add_pattern (pattern_t *patterns[], char *re, int fg, int bg, int modes)
 
 {
     int     p;
-    static int count = 0;
 
     /* Don't add end marker as a pattern */
     if (fg == END_PATTERNS)
 	return 0;
 
-    ++count;
     for (p = 0; (patterns[p] != NULL) && (p <= MAX_PATTERNS); ++p)
 	;
 
