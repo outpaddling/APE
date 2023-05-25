@@ -41,8 +41,8 @@
 #include "protos.h"
 
 
-void    load_keymap(terminal)
-term_t *terminal;
+void 
+load_keymap (term_t *terminal)
 
 {
     char    *term_type;
@@ -100,11 +100,8 @@ term_t *terminal;
  * Process command line arguments
  */
  
-int     do_args(argc, argv, files, options)
-int     argc;
-char   *argv[];
-file_t  files[];
-opt_t  *options;
+int 
+do_args (int argc, char *argv[], file_t files[], opt_t *options)
 
 {
     extern int  errno;
@@ -140,11 +137,8 @@ opt_t  *options;
  * Check for a makefile and offer to set up the project
  */
  
-int     check_makefile(project,makefile,file,options)
-proj_t  *project;
-char    *makefile;
-file_t  *file;
-opt_t   *options;
+int 
+check_makefile (proj_t *project, char *makefile, file_t *file, opt_t *options)
 
 {
     struct stat st;
@@ -175,7 +169,8 @@ opt_t   *options;
  * See if APE is running on the proper host
  */
  
-void    check_hostname()
+void 
+check_hostname (void)
 
 {
     static char legal_host[APE_PATH_MAX + 1] = "Change this";
@@ -193,8 +188,8 @@ void    check_hostname()
 }
 
 
-void    check_args(argv)
-char    *argv[];
+void 
+check_args (char *argv[])
 
 {
     char    **p;
@@ -215,7 +210,8 @@ char    *argv[];
 }
 
 
-int     init_xterm()
+int 
+init_xterm (void)
 
 {
     char    *display_name, *window_str, home[APE_PATH_MAX+1],
@@ -246,7 +242,8 @@ int     init_xterm()
 }
 
 
-void    register_signal_handlers()
+void 
+register_signal_handlers (void)
 
 {
     /* Request notification when background jobs end */
@@ -268,7 +265,8 @@ void    register_signal_handlers()
 }
 
 
-void    setup_terminal()
+void 
+setup_terminal (void)
 
 {
     extern term_t   *Terminal;
@@ -307,8 +305,8 @@ void    setup_terminal()
 
 
 #if 0
-void    define_cursor(cursor_font)
-int     cursor_font;
+void 
+define_cursor (int cursor_font)
 
 {
     char    font[10];
@@ -321,9 +319,8 @@ int     cursor_font;
 #endif
 
 
-void    init_compiler_lines(files,options)
-file_t  files[];
-opt_t   *options;
+void 
+init_compiler_lines (file_t files[], opt_t *options)
 
 {
     size_t  c, f;

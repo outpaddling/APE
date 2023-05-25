@@ -45,10 +45,8 @@ char    __Syms[256] = {
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 		};
 
-void    match_group(file,options,cut_buff)
-file_t  *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+match_group (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     char    *p = file->curchar;
@@ -149,10 +147,8 @@ void    set_group_standout(file_t *file,opt_t *options)
 }
 
 
-void    unmatch_group(file,options,cut_buff)
-file_t  *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+unmatch_group (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     /* Erase old highlighting */
@@ -180,12 +176,8 @@ buff_t  *cut_buff;
 }
 
 
-void    highlight_char(file,p,line,options,cut_buff)
-file_t  *file;
-char    *p;
-size_t  line;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+highlight_char (file_t *file, char *p, size_t line, opt_t *options, buff_t *cut_buff)
 
 {
     int     win_line, win_col;

@@ -42,10 +42,8 @@
  * Update the text window with the current file view
  ****************************************************/
 
-void    update_win(file,options,cut_buff)
-file_t  *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+update_win (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     win_t   *text = file->text;
@@ -70,12 +68,8 @@ buff_t  *cut_buff;
  * file buffer.
  ******************************************************************/
  
-void        update_line(file,options,cut_buff,line,start_col)
-opt_t       *options;
-buff_t      *cut_buff;
-file_t      *file;
-buff_len_t  start_col;
-size_t      line;
+void 
+update_line (file_t *file, opt_t *options, buff_t *cut_buff, size_t line, int start_col)
 
 {
     int     c,win_col,cols = TW_COLS(file->text) - 1, /* -1 for auto margin */
@@ -162,11 +156,8 @@ size_t      line;
  * respectively.
  */
  
-void    check_highlight(file,options,line,col,line1,col1,line2,col2)
-file_t  *file;
-opt_t   *options;
-size_t  line,line1,line2;
-buff_len_t   col,col1,col2;
+void 
+check_highlight (file_t *file, opt_t *options, size_t line, int col, size_t line1, int col1, size_t line2, int col2)
 
 {
     if ( (line == line2) && (col == col2) )
@@ -175,9 +166,8 @@ buff_len_t   col,col1,col2;
 	set_highlight(file,options);    /* Turn on highlighting */
 }
 
-void    set_color(file,no_color,fg,bg)
-file_t  *file;
-int     no_color,fg,bg;
+void 
+set_color (file_t *file, int no_color, int fg, int bg)
 
 {
     extern term_t   *Terminal;
@@ -199,9 +189,8 @@ int     no_color,fg,bg;
  * Draw border on file edit window
  **********************************/
 
-void    edit_border(file,options)
-file_t *file;
-opt_t *options;
+void 
+edit_border (file_t *file, opt_t *options)
 
 {
     extern term_t   *Terminal;
@@ -308,11 +297,8 @@ opt_t *options;
  * Switch active file to next open file
  ***************************************/
 
-void    toggle_file(file, af_ptr,options,cut_buff)
-file_t  file[];
-int    *af_ptr;
-opt_t *options;
-buff_t  *cut_buff;
+void 
+toggle_file (file_t file[], int *af_ptr, opt_t *options, buff_t *cut_buff)
 
 {
     int     af;
@@ -365,9 +351,8 @@ const char    *find_ext(const char *filename)
  * Set up compiler and options for an open file
  ***********************************************/
 
-void    select_compiler(file, options)
-file_t *file;
-opt_t *options;
+void 
+select_compiler (file_t *file, opt_t *options)
 
 {
     const char   *ext;
@@ -410,8 +395,8 @@ opt_t *options;
  * Set name of executable
  *************************/
 
-void    set_exe(file)
-file_t  *file;
+void 
+set_exe (file_t *file)
 
 {
     char    *src, *dest, *s2, *ext;
@@ -456,8 +441,8 @@ file_t  *file;
  * essential information.
  */
 
-int     blank_opts(opt)
-lang_t *opt;
+int 
+blank_opts (lang_t *opt)
 
 {
     if ( (*opt->name_spec == '\0') && (*opt->syntax_check_flag == '\0')
@@ -475,10 +460,8 @@ lang_t *opt;
  * Select the first available free window
  *****************************************/
 
-int     get_free_win(file, dir_name, file_name, options)
-file_t  file[];
-char   *file_name,*dir_name;
-opt_t *options;
+int 
+get_free_win (file_t file[], char *dir_name, char *file_name, opt_t *options)
 
 {
     int     af;
@@ -497,10 +480,8 @@ opt_t *options;
  * Determine if a file given by path dirname/filename is already loaded
  */
  
-int     open_in_aw(files,filename,dirname,options)
-file_t  files[];
-char    *filename,*dirname;
-opt_t   *options;
+int 
+open_in_aw (file_t files[], char *filename, char *dirname, opt_t *options)
 
 {
     int     c;
@@ -521,11 +502,8 @@ opt_t   *options;
  * FIXME: Causes corruption.  Disabled for now
  **********************************************/
 
-void    merge_file(file, path_name, options, cut_buff)
-file_t *file;
-opt_t   *options;
-buff_t  *cut_buff;
-char   *path_name;
+void 
+merge_file (file_t *file, char *path_name, opt_t *options, buff_t *cut_buff)
 
 {
     extern win_t    *Swin;
@@ -575,8 +553,8 @@ char   *path_name;
 }
 
 
-int     more_lines(file)
-file_t *file;
+int 
+more_lines (file_t *file)
 
 {
     line_t  *temp;

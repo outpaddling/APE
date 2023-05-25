@@ -42,7 +42,8 @@ win_t           *File_list;
 extern int      Shelled_out;
 int             Resized = 0;
 
-void    win_resize()
+void 
+win_resize (void)
 
 {
     extern win_t    *Swin, *Bar_win;
@@ -171,11 +172,8 @@ void    win_resize()
 }
 
 
-void    setup_resize(file,aw,options,cut_buff)
-file_t  file[];
-int     *aw;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+setup_resize (file_t file[], int *aw, opt_t *options, buff_t *cut_buff)
 
 {
     File = file;

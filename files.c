@@ -46,12 +46,8 @@ extern term_t   *Terminal;
  * Display file pop-down menu and get a selection
  *************************************************/
 
-int     file_menu(files, af_ptr, options, cut_buff, event)
-file_t  files[];
-buff_t  *cut_buff;
-int    *af_ptr;
-opt_t  *options;
-event_t *event;
+int 
+file_menu (file_t files[], int *af_ptr, opt_t *options, buff_t *cut_buff, event_t *event)
 
 {
     extern term_t   *Terminal;
@@ -209,10 +205,8 @@ int     load_new_file(int ch, file_t files[], opt_t *options, unsigned int flags
 }
 
 
-int     save_as(files, af, options)
-file_t  files[];
-int     af;
-opt_t  *options;
+int 
+save_as (file_t files[], int af, opt_t *options)
 
 {
     char    filename[APE_PATH_MAX + 1] = "", temp[APE_PATH_MAX+1] = "",
@@ -372,10 +366,8 @@ int     prompt_save_all(file_t files[], opt_t *options)
  * Prompt the user to save a particular file
  ********************************************/
 
-int     prompt_save(files,af,options)
-file_t  files[];
-int     af;
-opt_t   *options;
+int 
+prompt_save (file_t files[], int af, opt_t *options)
 
 {
     int     sv = 'n', status;
@@ -571,8 +563,8 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
 }
 
 
-int     new_file(file)
-file_t *file;
+int 
+new_file (file_t *file)
 
 {
     ALLOC_LINE(file,0,1);
@@ -589,9 +581,8 @@ file_t *file;
 }
 
 
-int     init_file(file, options)
-file_t *file;
-opt_t  *options;
+int 
+init_file (file_t *file, opt_t *options)
 
 {
     file->insert = 1;
@@ -621,9 +612,8 @@ opt_t  *options;
 }
 
 
-void    create_edit_win(file,options)
-file_t  *file;
-opt_t   *options;
+void 
+create_edit_win (file_t *file, opt_t *options)
 
 {
     extern term_t   *Terminal;
@@ -646,9 +636,8 @@ opt_t   *options;
 }
 
 
-void    set_colors(file, options)
-file_t *file;
-opt_t  *options;
+void 
+set_colors (file_t *file, opt_t *options)
 
 {
     extern term_t   *Terminal;
@@ -665,8 +654,8 @@ opt_t  *options;
 }
 
 
-int     get_dirname(full_name, dir_name, base_name)
-char    full_name[], dir_name[], base_name[];
+int 
+get_dirname (char full_name[], char dir_name[], char base_name[])
 
 {
     char   *end_dir, temp_path[APE_PATH_MAX + 1], start_dir[APE_PATH_MAX + 1], *new_dir;
@@ -1058,8 +1047,8 @@ int     write_line(FILE *fp,file_t *file,size_t l,opt_t *options)
 
 
 
-void    make_exe(file)
-char   *file;
+void 
+make_exe (char *file)
 
 {
     struct stat st;

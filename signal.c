@@ -40,7 +40,8 @@ extern opt_t   *Options;
   * Die with honor
   */
 
-void    kamakaze()
+void 
+kamakaze (void)
 
 {
     extern term_t   *Terminal;
@@ -58,7 +59,8 @@ void    kamakaze()
   * Print notification that a background job has ended
   */
 
-void    notify()
+void 
+notify (void)
 
 {
     int     pid, status;
@@ -77,7 +79,8 @@ void    notify()
 }
 
 
-void    restore_help()
+void 
+restore_help (void)
 
 {
     stat_mesg(BAR_HELP);

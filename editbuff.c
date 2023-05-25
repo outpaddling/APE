@@ -247,10 +247,8 @@ int     expand_buff_if_needed(file_t *file, size_t line, unsigned newlen)
 }
 
 
-void    insert_expanded_tab(file, options, cut_buff)
-file_t *file;
-opt_t  *options;
-buff_t  *cut_buff;
+void 
+insert_expanded_tab (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     int     repeat, len, c, save_mode = file->insert;
@@ -436,10 +434,8 @@ int     del_under_expand_tabs(file_t *file,opt_t *options,buff_t *cut_buff)
 }
 
 
-void    combine_lines(file,options,cut_buff)
-file_t  *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+combine_lines (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     buff_len_t   len;
@@ -564,11 +560,8 @@ void    del_left_expand_tabs(file_t *file, opt_t *options,
  * or pasting a cut area.
  *******************************************************************/
 
-void    new_line(file, options, cut_buff, time_diff)
-file_t *file;
-opt_t  *options;
-buff_t  *cut_buff;
-unsigned long   time_diff;
+void 
+new_line (file_t *file, opt_t *options, buff_t *cut_buff, unsigned long time_diff)
 
 {
     int     line, col, already_inserted = 0;
@@ -628,11 +621,8 @@ unsigned long   time_diff;
 }
 
 
-int     new_line_buff(file,curline,options,time_diff)
-file_t  *file;
-size_t  curline;
-opt_t   *options;
-unsigned long   time_diff;
+int 
+new_line_buff (file_t *file, size_t curline, opt_t *options, unsigned long time_diff)
 
 {
     buff_len_t   indent, len;
@@ -690,10 +680,8 @@ unsigned long   time_diff;
 }
 
 
-void    cut_line(file,options,cut_buff)
-file_t *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+cut_line (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     char    *ok_button[2] = OK_BUTTON;
@@ -717,10 +705,8 @@ buff_t  *cut_buff;
 }
 
 
-void    del_word(file, options, cut_buff)
-file_t *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+del_word (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     begin_area(file, cut_buff);
@@ -756,11 +742,8 @@ void    cut_to_end(file_t *file, opt_t *options, buff_t *cut_buff)
 }
 
 
-void    indent_area(file,options,cut_buff,cols)
-file_t  *file;
-opt_t   *options;
-buff_t  *cut_buff;
-int     cols;
+void 
+indent_area (file_t *file, opt_t *options, buff_t *cut_buff, int cols)
 
 {
     long    line, start_line, end_line;
@@ -803,11 +786,8 @@ int     cols;
 }
 
 
-void    unindent_area(file,options,cut_buff,cols)
-file_t  *file;
-opt_t   *options;
-buff_t  *cut_buff;
-int     cols;
+void 
+unindent_area (file_t *file, opt_t *options, buff_t *cut_buff, int cols)
 
 {
     int     line, start_line, end_line, len, actual_cols;
@@ -874,10 +854,8 @@ int     cols;
 }
 
 
-void    auto_wrap(file,options,cut_buff)
-file_t  *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+auto_wrap (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     char    *p, *start_line, *end_line;
@@ -908,10 +886,8 @@ buff_t  *cut_buff;
 }
 
 
-void    join_lines(file,options,cut_buff)
-file_t  *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+join_lines (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     int     col = ACTUAL_COL(file);
@@ -922,10 +898,8 @@ buff_t  *cut_buff;
 }
 
 
-int     get_next_word(file,line,pp,word)
-file_t  *file;
-size_t  *line;
-char    **pp, **word;
+int 
+get_next_word (file_t *file, size_t *line, char **pp, char **word)
 
 {
     int     len;
@@ -966,10 +940,8 @@ char    **pp, **word;
 
 /* FIXME: This feature is badly broken. */
 
-int     format_paragraph(file,options,cut_buff)
-file_t  *file;
-opt_t   *options;
-buff_t  *cut_buff;
+int 
+format_paragraph (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     int     indent, right_margin, c, needspace;

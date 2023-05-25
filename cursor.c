@@ -33,11 +33,8 @@
 #include "protos.h"
 
 
-void    scroll_file(file, options, cut_buff, direction)
-file_t *file;
-opt_t *options;
-buff_t  *cut_buff;
-direc_t direction;
+void 
+scroll_file (file_t *file, opt_t *options, buff_t *cut_buff, direc_t direction)
 
 {
     int     lines;
@@ -78,10 +75,8 @@ direc_t direction;
 }
 
 
-void    move_up(file,options,cut_buff)
-file_t *file;
-opt_t *options;
-buff_t  *cut_buff;
+void 
+move_up (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     int     newcol;
@@ -102,10 +97,8 @@ buff_t  *cut_buff;
 }
 
 
-void    move_down(file,options,cut_buff)
-file_t *file;
-opt_t *options;
-buff_t  *cut_buff;
+void 
+move_down (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     int     curline, newcol;
@@ -141,10 +134,8 @@ void    move_to_left_of_tab(file_t *file)
 }
 
 
-void    move_left(file,options,cut_buff)
-file_t *file;
-opt_t *options;
-buff_t  *cut_buff;
+void 
+move_left (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     synhigh_update(file,file->curline,options,cut_buff);
@@ -177,10 +168,8 @@ void    end_line_no_redraw(file_t *file)
 }
 
 
-void    end_line(file,options,cut_buff)
-file_t *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+end_line (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     synhigh_update(file,file->curline,options,cut_buff);
@@ -189,10 +178,8 @@ buff_t  *cut_buff;
 }
 
 
-void    move_right(file,options,cut_buff)
-file_t *file;
-opt_t *options;
-buff_t  *cut_buff;
+void 
+move_right (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     synhigh_update(file,file->curline,options,cut_buff);
@@ -210,10 +197,8 @@ buff_t  *cut_buff;
 }
 
 
-void    move_ret(file,options,cut_buff)
-file_t *file;
-opt_t *options;
-buff_t  *cut_buff;
+void 
+move_ret (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     char   *lptr;
@@ -235,10 +220,8 @@ buff_t  *cut_buff;
 }
 
 
-void    move_unret(file,options,cut_buff)
-file_t *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+move_unret (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     synhigh_update(file,file->curline,options,cut_buff);
@@ -262,10 +245,8 @@ void    home_file_no_redraw(file_t *file, opt_t *options, buff_t *cut_buff)
 }
 
 
-void    home_file(file,options,cut_buff)
-file_t *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+home_file (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     home_file_no_redraw(file, options, cut_buff);
@@ -284,10 +265,8 @@ void    end_file_no_redraw(file_t *file)
 }
 
 
-void    end_file(file,options,cut_buff)
-file_t *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+end_file (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     end_file_no_redraw(file);
@@ -296,10 +275,8 @@ buff_t  *cut_buff;
 }
 
 
-void    begin_line(file,options,cut_buff)
-file_t *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+begin_line (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     synhigh_update(file,file->curline,options,cut_buff);
@@ -309,10 +286,8 @@ buff_t  *cut_buff;
 }
 
 
-void    page_up(file,options,cut_buff)
-file_t *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+page_up (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     int     lines_up;
@@ -328,10 +303,8 @@ buff_t  *cut_buff;
 }
 
 
-void    page_down(file,options,cut_buff)
-file_t *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+page_down (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     int     lines;
@@ -352,10 +325,8 @@ buff_t  *cut_buff;
 }
 
 
-void    next_word(file,options,cut_buff)
-file_t *file;
-opt_t *options;
-buff_t  *cut_buff;
+void 
+next_word (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     if (isalnum(*file->curchar))
@@ -369,10 +340,8 @@ buff_t  *cut_buff;
 }
 
 
-void    last_word(file,options,cut_buff)
-file_t *file;
-opt_t *options;
-buff_t  *cut_buff;
+void 
+last_word (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     move_left(file,options,cut_buff);
@@ -388,10 +357,8 @@ buff_t  *cut_buff;
 }
 
 
-void    page_top(file,options,cut_buff)
-file_t *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+page_top (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     file->topline = file->curline;
@@ -400,10 +367,8 @@ buff_t  *cut_buff;
 }
 
 
-void    back_tab(file,options,cut_buff)
-file_t  *file;
-opt_t *options;
-buff_t  *cut_buff;
+void 
+back_tab (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     do
@@ -412,10 +377,8 @@ buff_t  *cut_buff;
 }
 
 
-void    gotoline(file,options,cut_buff)
-file_t *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+gotoline (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     int     status;
@@ -439,11 +402,8 @@ buff_t  *cut_buff;
 }
 
 
-void    move_to(file,options,cut_buff,linenum,col)
-file_t  *file;
-opt_t   *options;
-buff_t  *cut_buff;
-long    linenum,col;
+void 
+move_to (file_t *file, opt_t *options, buff_t *cut_buff, long linenum, long col)
 
 {
     file->curline = MIN(linenum,file->total_lines-1);
@@ -462,10 +422,8 @@ long    linenum,col;
  * Place cursor in correct screen location, assuming topline hasn't changed.
  */
  
-void    update_cursor(file,options,cut_buff)
-file_t  *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+update_cursor (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     check_column(file,options,cut_buff);
@@ -479,10 +437,8 @@ buff_t  *cut_buff;
  * Place cursor in correct screen location, assuming topline hasn't changed.
  */
  
-void    update_cursor_no_snap(file,options,cut_buff)
-file_t  *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+update_cursor_no_snap (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     check_column_no_snap(file,options,cut_buff);
@@ -507,10 +463,8 @@ void    snap_to_tab(file_t *file)
 }
 
 
-int     check_column(file,options,cut_buff)
-file_t *file;
-opt_t   *options;
-buff_t  *cut_buff;
+int 
+check_column (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     snap_to_tab(file);
@@ -522,10 +476,8 @@ buff_t  *cut_buff;
  * Page left or right if the new column requires it
  */
 
-int     check_column_no_snap(file,options,cut_buff)
-file_t *file;
-opt_t   *options;
-buff_t  *cut_buff;
+int 
+check_column_no_snap (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     int     cur_col,

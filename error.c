@@ -192,11 +192,8 @@ void    remove_linefeed(char *line)
  * Read next error message and determine line number
  */
  
-int     read_error_msg(errfile,mesg,source_file,text,file, options)
-err_t   *errfile;
-char    mesg[],source_file[],**text;
-file_t  *file;
-opt_t   *options;
+int 
+read_error_msg (err_t *errfile, char mesg[], char source_file[], char **text, file_t *file, opt_t *options)
 
 {
     int     line, have_line, have_name, have_text, mismatch;
@@ -364,8 +361,8 @@ int     display_error(file_t *file, size_t line, char *msg, opt_t *options)
  * Close error file and re-initialize structure
  */
  
-void    err_close(errfile)
-err_t   *errfile;
+void 
+err_close (err_t *errfile)
 
 {
     if ( errfile->fp != NULL )
@@ -393,9 +390,8 @@ err_t   *errfile;
  *      compiles.
  ****************************************************************************/
  
-long    get_current_line(file,compiler_line)
-file_t  *file;
-size_t  compiler_line;
+long 
+get_current_line (file_t *file, size_t compiler_line)
 
 {
     long    line = compiler_line;

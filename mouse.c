@@ -50,9 +50,8 @@ int     col_to_menu(int col, term_t *term)
 }
 
 
-int     button1_press(event,options)
-event_t *event;
-opt_t   *options;
+int 
+button1_press (event_t *event, opt_t *options)
 
 {
     extern term_t   *Terminal;

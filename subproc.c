@@ -41,7 +41,8 @@ int     Shelled_out;
  * ( Prepare to shell out )
  ****************************************************************/
 
-void    begin_full_screen()
+void 
+begin_full_screen (void)
 
 {
     extern term_t   *Terminal;
@@ -80,8 +81,8 @@ void    begin_full_screen()
  * Restore the terminal screen to edit mode after a shell out
  *************************************************************/
 
-void    end_full_screen(pause)
-int     pause;
+void 
+end_full_screen (int pause)
 
 {
     extern term_t   *Terminal;
@@ -149,8 +150,8 @@ int     pause;
 }
 
 
-void    more(filename)
-char    *filename;
+void 
+more (char *filename)
 
 {
     struct stat st;
@@ -165,9 +166,8 @@ char    *filename;
  * Shell out - run any command in cooked mode starting with a clear screen
  **************************************************************************/
 
-int     run_command(parent_action,echo,cmd,shell)
-int     parent_action,echo;
-char   *cmd,*shell;
+int 
+run_command (int parent_action, int echo, char *cmd, char *shell)
 
 {
     extern pid_t    Pid;

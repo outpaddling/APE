@@ -268,11 +268,8 @@ int     macro_new_item(file_t files[],
 }
 
 
-int     macro_remove(file,options,event,selected_text)
-file_t  *file;
-opt_t   *options;
-event_t *event;
-char    selected_text[];
+int 
+macro_remove (file_t *file, opt_t *options, event_t *event, char selected_text[])
 
 {
     int     ch;
@@ -331,10 +328,8 @@ char    selected_text[];
 }
 
 
-int     macro_remove_body(path_name,remove_ch,options)
-char    *path_name;
-int     remove_ch;
-opt_t   *options;
+int 
+macro_remove_body (char *path_name, int remove_ch, opt_t *options)
 
 {
     FILE    *infp, *outfp, *tempfp;
@@ -394,9 +389,8 @@ opt_t   *options;
 }
 
 
-int     read_macros(file,menu_text)
-file_t  *file;
-char    *menu_text[];
+int 
+read_macros (file_t *file, char *menu_text[])
 
 {
     char    macro_dir[APE_PATH_MAX+1], macro_list[APE_PATH_MAX+11];
@@ -669,9 +663,8 @@ int     macro_key(char *menu_text)
  * Description:
  *************************************************************************/
  
-int     macro_key_taken(file,key)
-file_t  *file;
-int     key;
+int 
+macro_key_taken (file_t *file, int key)
 
 {
     char    *menu_text[MACRO_MAX_MENU_ITEMS+2], **item;
@@ -688,11 +681,8 @@ int     key;
 }
 
 
-int     macro_read_header(infile,macro_key,flags,macro_buff)
-FILE    *infile;
-char    *macro_key;
-int     *flags;
-buff_t  *macro_buff;
+int 
+macro_read_header (FILE *infile, char *macro_key, int *flags, buff_t *macro_buff)
 
 {
     unsigned long   start_line, end_line, start_top, end_top,
@@ -716,10 +706,8 @@ buff_t  *macro_buff;
 }
 
     
-int     macro_write_header(outfile,macro_key,flags,macro_buff)
-FILE    *outfile;
-int     macro_key,flags;
-buff_t  *macro_buff;
+int 
+macro_write_header (FILE *outfile, int macro_key, int flags, buff_t *macro_buff)
 
 {
     return fprintf(outfile,"%c %d %lu %lu %hu %hu %lu %lu %d %lu %lu:",

@@ -71,9 +71,8 @@ int     check_first_ext(lang_t *old_lang, lang_t *new_lang)
 }
 
 
-int     language_options(file, options)
-file_t *file;
-opt_t  *options;
+int 
+language_options (file_t *file, opt_t *options)
 
 {
     int     options_ok,
@@ -229,8 +228,7 @@ void    check_compiler_options(lang_t * lang, lang_t * old)
 
 
 lang_t *
-	check_build_opts(file)
-file_t *file;
+check_build_opts (file_t *file)
 
 {
     if (file->lang == NULL)
@@ -513,9 +511,8 @@ lang_t *get_bop(file_t * file, lang_t * head)
 }
 
 
-lang_t *new_bop(head, filename)
-lang_t **head;
-char   *filename;
+lang_t *
+new_bop (lang_t **head, char *filename)
 
 {
     lang_t *lang;
@@ -591,9 +588,8 @@ lang_t *add_language(
 }
 
 
-void
-	destroy_bop_list(head)
-lang_t **head;
+void 
+destroy_bop_list (lang_t **head)
 
 {
     lang_t *lang = *head, *prev;

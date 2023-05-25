@@ -77,8 +77,8 @@ void    sprintw(int start_col, int field_len, char *format,...)
 }
 
 
-void    stat_mesg(mesg)
-char    *mesg;
+void 
+stat_mesg (char *mesg)
 
 {
     sprintw(2,TWC_ST_LEN,mesg);
@@ -89,8 +89,8 @@ char    *mesg;
  * Create global windows for edit status, etc.
  **********************************************/
 
-void    global_wins(options)
-opt_t *options;
+void 
+global_wins (opt_t *options)
 
 {
     extern win_t    *Swin, *Bar_win;
@@ -108,8 +108,8 @@ opt_t *options;
 }
 
 
-void    draw_menu_bar(options)
-opt_t *options;
+void 
+draw_menu_bar (opt_t *options)
 
 {
     char    menu_bar[256];

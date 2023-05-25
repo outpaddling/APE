@@ -45,9 +45,8 @@
  *  whichever is further.
  *******************************************************************/
 
-void    synhigh_tag_which_lines(file, first_guess, last_guess, first_line,last_line)
-file_t  *file;
-size_t  first_guess, last_guess, *first_line, *last_line;
+void 
+synhigh_tag_which_lines (file_t *file, size_t first_guess, size_t last_guess, size_t *first_line, size_t *last_line)
 
 {
     //extern term_t   *Terminal;
@@ -90,9 +89,8 @@ size_t  first_guess, last_guess, *first_line, *last_line;
  *
  ****************************************************************************/
 
-int     synhigh_tag_lines (file, first_line, last_line)
-file_t *file;
-size_t  first_line, last_line;
+int 
+synhigh_tag_lines (file_t *file, size_t first_line, size_t last_line)
 
 {
     size_t  line = first_line, c, next_line;
@@ -151,12 +149,8 @@ size_t  first_line, last_line;
 }
 
 
-void    synhigh_check_pattern_color (file, line, ptr, end_pattern, options, in_pattern)
-file_t *file;
-size_t  line;
-char   *ptr, **end_pattern;
-opt_t  *options;
-int    *in_pattern;
+void 
+synhigh_check_pattern_color (file_t *file, size_t line, char *ptr, char **end_pattern, opt_t *options, int *in_pattern)
 
 {
     int     pattern_num;
@@ -249,10 +243,8 @@ reloc_t *end;
  *
  ****************************************************************************/
 
-void    synhigh_set_pattern_color (file, options, pattern)
-file_t *file;
-opt_t  *options;
-pattern_t *pattern;
+void 
+synhigh_set_pattern_color (file_t *file, opt_t *options, pattern_t *pattern)
 
 {
     extern term_t *Terminal;
@@ -283,8 +275,8 @@ pattern_t *pattern;
 }
 
 
-void    synhigh_clear_tags (file)
-file_t *file;
+void 
+synhigh_clear_tags (file_t *file)
 
 {
     size_t  line;
@@ -294,11 +286,8 @@ file_t *file;
 }
 
 
-void    synhigh_update (file, line, options, cut_buff)
-file_t *file;
-size_t  line;
-opt_t  *options;
-buff_t *cut_buff;
+void 
+synhigh_update (file_t *file, size_t line, opt_t *options, buff_t *cut_buff)
 
 {
     size_t  start_line, end_line;
@@ -329,10 +318,8 @@ buff_t *cut_buff;
 }
 
 
-void    check_language(file,options,cut_buff)
-file_t  *file;
-opt_t   *options;
-buff_t  *cut_buff;
+void 
+check_language (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     /* Check for new info on language type */
@@ -406,10 +393,8 @@ int     synhigh_load_opts (char *filename, lang_t *lang)
 }
 
 
-int     synhigh_add_pattern (patterns, re, fg, bg, modes)
-pattern_t *patterns[];
-char   *re;
-int     fg, bg, modes;
+int 
+synhigh_add_pattern (pattern_t *patterns[], char *re, int fg, int bg, int modes)
 
 {
     int     p;
@@ -483,8 +468,8 @@ int     synhigh_save_opts (char *lang_dir, lang_t *lang)
 }
 
 
-int     synhigh_compile_pattern (pattern)
-pattern_t *pattern;
+int 
+synhigh_compile_pattern (pattern_t *pattern)
 
 {
     pare_compile (&pattern->compiled_re, pattern->re);
@@ -492,9 +477,8 @@ pattern_t *pattern;
 }
 
 
-void    draw_modes_bar (win, line, col)
-win_t  *win;
-int     line, col;
+void 
+draw_modes_bar (win_t *win, int line, int col)
 
 {
     int     mode, save_modes = TW_CUR_MODES (win), save_fg = TW_CUR_FOREGROUND (win),
@@ -515,10 +499,8 @@ int     line, col;
 }
 
 
-int     synhigh_options (file, options, cut_buff)
-file_t *file;
-opt_t  *options;
-buff_t *cut_buff;
+int 
+synhigh_options (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     extern term_t *Terminal;
@@ -599,8 +581,8 @@ buff_t *cut_buff;
 }
 
 
-void    synhigh_free_patterns(patterns)
-pattern_t   *patterns[];
+void 
+synhigh_free_patterns (pattern_t *patterns[])
 
 {
     int     c;
@@ -614,11 +596,8 @@ pattern_t   *patterns[];
 }
 
 
-void    update_lines(file,options,cut_buff,first,last)
-file_t  *file;
-opt_t   *options;
-buff_t  *cut_buff;
-size_t  first, last;
+void 
+update_lines (file_t *file, opt_t *options, buff_t *cut_buff, size_t first, size_t last)
 
 {
     size_t  line;

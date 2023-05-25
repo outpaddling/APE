@@ -41,8 +41,8 @@
  * Set default syntax patterns for C language
  */
 
-void    add_c_cpp_patterns (patterns)
-pattern_t *patterns[];
+void 
+add_c_cpp_patterns (pattern_t *patterns[])
 
 {
     synhigh_add_pattern (patterns, "(/*).*(*/)|//.*$", YELLOW, TEXT_BG, BOLD_MODE);
@@ -53,8 +53,8 @@ pattern_t *patterns[];
 }
 
 
-void    add_c_patterns (patterns)
-pattern_t *patterns[];
+void 
+add_c_patterns (pattern_t *patterns[])
 
 {
     add_c_cpp_patterns (patterns);
@@ -63,8 +63,8 @@ pattern_t *patterns[];
 }
 
 
-void    add_cpp_patterns (patterns)
-pattern_t *patterns[];
+void 
+add_cpp_patterns (pattern_t *patterns[])
 
 {
     add_c_cpp_patterns (patterns);
@@ -73,8 +73,8 @@ pattern_t *patterns[];
 }
 
 
-void    add_csh_patterns (patterns)
-pattern_t *patterns[];
+void 
+add_csh_patterns (pattern_t *patterns[])
 
 {
     synhigh_add_pattern (patterns, "\\$#?{?[a-zA-Z_][a-zA-Z0-9_]*}?|\\$<|\\$[0-9]+", RED, TEXT_BG, DIM_MODE);
@@ -85,8 +85,8 @@ pattern_t *patterns[];
 }
 
 
-void    add_sh_patterns (patterns)
-pattern_t *patterns[];
+void 
+add_sh_patterns (pattern_t *patterns[])
 
 {
     synhigh_add_pattern (patterns, "\\$?[a-zA-Z_][a-zA-Z0-9_]*", RED, TEXT_BG, DIM_MODE);
@@ -97,8 +97,8 @@ pattern_t *patterns[];
 }
 
 
-void    add_fortran_patterns (patterns)
-pattern_t *patterns[];
+void 
+add_fortran_patterns (pattern_t *patterns[])
 
 {
     synhigh_add_pattern (patterns, "^[!Cc*].*$", YELLOW, TEXT_BG, BOLD_MODE);
@@ -121,8 +121,8 @@ pattern_t *patterns[];
  * FIXME: Update to include latest structure members
  */
 
-void    init_options (options)
-opt_t  *options;
+void 
+init_options (opt_t *options)
 
 {
     /* Patched during setup - must be static initialized array fixed size */

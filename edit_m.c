@@ -38,12 +38,8 @@
 
 extern term_t   *Terminal;
 
-int     edit_menu (files, aw, cut_buff, options, event)
-file_t  files[];
-int    *aw;
-buff_t *cut_buff;
-opt_t  *options;
-event_t *event;
+int 
+edit_menu (file_t files[], int *aw, buff_t *cut_buff, opt_t *options, event_t *event)
 
 {
     extern term_t   *Terminal;
@@ -141,9 +137,8 @@ event_t *event;
  * Mark beginning of an area for later cut and paste operations
  ***************************************************************/
 
-void    begin_area (file, cut_buff)
-file_t *file;
-buff_t *cut_buff;
+void 
+begin_area (file_t *file, buff_t *cut_buff)
 
 {
     cut_buff->old_line = cut_buff->start_line = file->curline;
@@ -160,10 +155,8 @@ buff_t *cut_buff;
  * pasting.
  **********************************************************************/
 
-void    end_area (file, options, cut_buff)
-file_t *file;
-buff_t *cut_buff;
-opt_t   *options;
+void 
+end_area (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     char    *ok_button[2] = OK_BUTTON;
@@ -200,9 +193,8 @@ opt_t   *options;
  * with the '\n' character.
  ***********************************************************************/
 
-void    pull_area (file, cut_buff)
-file_t *file;
-buff_t *cut_buff;
+void 
+pull_area (file_t *file, buff_t *cut_buff)
 
 {
     char   *cur_ptr, *end_ptr;
@@ -250,8 +242,8 @@ buff_t *cut_buff;
  * to deal with.
  ***********************************************************************/
 
-void    arrange_ends (cut_buff)
-buff_t *cut_buff;
+void 
+arrange_ends (buff_t *cut_buff)
 
 {
     int     swap_needed, temp;
@@ -284,10 +276,8 @@ buff_t *cut_buff;
  * cut buffer.
  *************************************************************************/
 
-void    cut_area (file, options, cut_buff)
-file_t *file;
-opt_t  *options;
-buff_t *cut_buff;
+void 
+cut_area (file_t *file, opt_t *options, buff_t *cut_buff)
 
 {
     char   *start_point, *end_point, *ok_button[2] = OK_BUTTON;
@@ -349,9 +339,8 @@ buff_t *cut_buff;
 }
 
 
-void    delete_lines (file, first, last)
-file_t *file;
-int     first, last;
+void 
+delete_lines (file_t *file, int first, int last)
 
 {
     int     lines = last - first + 1, l;
@@ -373,9 +362,8 @@ int     first, last;
  * due to memory limits.
  ************************************************************************/
 
-void    restore_buff (file, new_lines)
-file_t *file;
-int     new_lines;
+void 
+restore_buff (file_t *file, int new_lines)
 
 {
     stat_mesg ("Cannot paste: Out of memory.");
@@ -390,9 +378,8 @@ int     new_lines;
  * insert area down, and allocate memory for new lines.
  ******************************************************************/
 
-int     make_room (file, start_line, new_lines)
-file_t *file;
-int     start_line, new_lines;
+int 
+make_room (file_t *file, int start_line, int new_lines)
 
 {
     int     c;
@@ -421,9 +408,8 @@ int     start_line, new_lines;
  * and is not suitable for calling from new_line().
  **************************************************************/
 
-void    split_curline (file, new_lines)
-file_t *file;
-int     new_lines;
+void 
+split_curline (file_t *file, int new_lines)
 
 {
     int     len, lastline = file->curline + new_lines;
@@ -448,10 +434,8 @@ int     new_lines;
  * allocated.
  *******************************************************************/
 
-void    insert_lines (file, cut_buff, indent)
-file_t *file;
-buff_t *cut_buff;
-int     indent;
+void 
+insert_lines (file_t *file, buff_t *cut_buff, int indent)
 
 {
     FILE   *fp = cut_buff->fp;
@@ -509,10 +493,8 @@ int     indent;
  * Insert part of a line from cut_buff
  */
 
-void    insert_partial_line (file, cut_buff, line, col, indent)
-file_t *file;
-buff_t *cut_buff;
-int     line, col, indent;
+void 
+insert_partial_line (file_t *file, buff_t *cut_buff, int line, int col, int indent)
 
 {
     int     c, ch;
@@ -546,11 +528,8 @@ int     line, col, indent;
  * will be converted to a single-shift and direct insert method.
  *******************************************************************/
 
-void    paste_area (file, options, cut_buff, auto_indent)
-file_t *file;
-opt_t  *options;
-buff_t *cut_buff;
-int     auto_indent;
+void 
+paste_area (file_t *file, opt_t *options, buff_t *cut_buff, int auto_indent)
 
 {
     int     len1, len2, indent = 0;
@@ -630,10 +609,8 @@ int     auto_indent;
 }
 
 
-void    append_partial_first_line (file, cut_buff, indent)
-file_t *file;
-buff_t *cut_buff;
-int     indent;
+void 
+append_partial_first_line (file_t *file, buff_t *cut_buff, int indent)
 
 {
     int     curline = file->curline, ch, c;
@@ -668,8 +645,8 @@ int     indent;
 }
 
 
-void    unmark_area (cut_buff)
-buff_t *cut_buff;
+void 
+unmark_area (buff_t *cut_buff)
 
 {
     cut_buff->start_line = cut_buff->end_line = -1;
@@ -682,10 +659,8 @@ buff_t *cut_buff;
  * Re-initialize the cut-buffer.
  ********************************/
 
-void    cancel_area (file, cut_buff, options)
-file_t  *file;
-buff_t *cut_buff;
-opt_t  *options;
+void 
+cancel_area (file_t *file, buff_t *cut_buff, opt_t *options)
 {
     if (cut_buff->fp != NULL)
     {
@@ -704,8 +679,8 @@ opt_t  *options;
  * Return true if an area has been started.
  *******************************************/
 
-int     area_started (cut_buff)
-buff_t *cut_buff;
+int 
+area_started (buff_t *cut_buff)
 
 {
     return ((long)cut_buff->start_line != -1);
@@ -716,8 +691,8 @@ buff_t *cut_buff;
  * Return true if an area has been marked off (ended).
  ******************************************************/
 
-int     area_ended (cut_buff)
-buff_t *cut_buff;
+int 
+area_ended (buff_t *cut_buff)
 
 {
     return ((long)cut_buff->end_line != -1);
@@ -728,8 +703,8 @@ buff_t *cut_buff;
  * Initialize a cut-buffer.
  ***************************/
 
-void    init_cut_buff (cut_buff)
-buff_t *cut_buff;
+void 
+init_cut_buff (buff_t *cut_buff)
 
 {
     cut_buff->start_line = cut_buff->end_line = -1;
@@ -745,9 +720,8 @@ buff_t *cut_buff;
  * cut buffer.  Return > 0 if further, 0 if the same, < 0 if closer.
  */
 
-int     further (cut_buff, new_line, new_col)
-buff_t *cut_buff;
-int     new_line, new_col;
+int 
+further (buff_t *cut_buff, int new_line, int new_col)
 
 {
     int     dol = ABS ((int) (cut_buff->old_line - cut_buff->start_line)),
@@ -770,10 +744,8 @@ int     new_line, new_col;
  * cursor movement.
  */
 
-void    adjust_highlight (file, cut_buff, options)
-file_t *file;
-buff_t *cut_buff;
-opt_t  *options;
+void 
+adjust_highlight (file_t *file, buff_t *cut_buff, opt_t *options)
 
 {
     int     stat;
@@ -813,9 +785,8 @@ opt_t  *options;
 }
 
 
-void    set_highlight (file, options)
-file_t *file;
-opt_t  *options;
+void 
+set_highlight (file_t *file, opt_t *options)
 
 {
     if (TCOLOR_TERM (file->text->terminal) && !MONO_MODE(options))
@@ -828,9 +799,8 @@ opt_t  *options;
 }
 
 
-void    unset_highlight (file, options)
-file_t *file;
-opt_t  *options;
+void 
+unset_highlight (file_t *file, opt_t *options)
 
 {
     if (TCOLOR_TERM (file->text->terminal) && !MONO_MODE(options))
@@ -847,12 +817,9 @@ opt_t  *options;
  * Can probably eliminate line1 & col1 since they come from cut_buff
  */
 
-void    rewrite (file, options, cut_buff, line1, col1, line2, col2)
-file_t *file;
-opt_t  *options;
-buff_t *cut_buff;
-size_t  line1, line2;
-buff_len_t   col1, col2;
+void 
+rewrite (file_t *file, opt_t *options, buff_t *cut_buff, size_t line1,
+	 buff_len_t col1, size_t line2, buff_len_t col2)
 
 {
     int     l, ch;
@@ -924,9 +891,8 @@ buff_len_t   col1, col2;
  * Rearrange line and col pairs so line1,col1 is the earlier position
  */
 
-void    rearrange (line1, col1, line2, col2)
-size_t *line1, *line2;
-buff_len_t  *col1, *col2;
+void 
+rearrange (size_t *line1, buff_len_t *col1, size_t *line2, buff_len_t *col2)
 
 {
     int     temp;
@@ -947,11 +913,8 @@ buff_len_t  *col1, *col2;
  * Turn highlighting on or off when entering or leaving a marked area.
  */
 
-int     get_area (file, cut_buff, line1, col1, line2, col2)
-file_t *file;
-buff_t *cut_buff;
-size_t *line1, *line2;
-buff_len_t  *col1, *col2;
+int 
+get_area (file_t *file, buff_t *cut_buff, size_t *line1, buff_len_t *col1, size_t *line2, buff_len_t *col2)
 
 {
     /* See if an area is started */
@@ -986,11 +949,8 @@ buff_len_t  *col1, *col2;
  * line1,col1 and line2,col2
  */
 
-int     in_area (file, cut_buff, line, col, line1, col1, line2, col2)
-file_t *file;
-buff_t *cut_buff;
-size_t  line, *line1, *line2;
-buff_len_t   col, *col1, *col2;
+int 
+in_area (file_t *file, buff_t *cut_buff, size_t line, int col, size_t *line1, buff_len_t *col1, size_t *line2, buff_len_t *col2)
 
 {
     int     status = 0;
@@ -1014,11 +974,8 @@ buff_len_t   col, *col1, *col2;
 }
 
 
-int     in_marked_area(file,cut_buff,line,col)
-file_t  *file;
-buff_t  *cut_buff;
-size_t  line;
-buff_len_t   col;
+int 
+in_marked_area (file_t *file, buff_t *cut_buff, size_t line, int col)
 
 {
     size_t  l1, l2;
@@ -1028,9 +985,8 @@ buff_len_t   col;
 }
 
 
-int     cursor_in_area(file,cut_buff)
-file_t  *file;
-buff_t  *cut_buff;
+int 
+cursor_in_area (file_t *file, buff_t *cut_buff)
 
 {
     size_t  l1,l2;

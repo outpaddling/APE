@@ -38,12 +38,8 @@
 #define CSENS   9
 
 
-int     search_menu(file, string, options, cut_buff, event)
-file_t *file;
-char   *string;
-opt_t  *options;
-buff_t *cut_buff;
-event_t *event;
+int 
+search_menu (file_t *file, char *string, opt_t *options, buff_t *cut_buff, event_t *event)
 
 {
     extern term_t   *Terminal;
@@ -152,9 +148,8 @@ event_t *event;
 }
 
 
-void    display_case_sens(search_pop, options)
-win_t  *search_pop;
-opt_t  *options;
+void 
+display_case_sens (win_t *search_pop, opt_t *options)
 
 {
     imove_to(&search_pop->image, CSENS + 1, 2);
@@ -172,9 +167,8 @@ opt_t  *options;
  * Show search direction in the search_menu
  */
 
-void    display_search_direction(search_pop, options)
-win_t  *search_pop;
-opt_t  *options;
+void 
+display_search_direction (win_t *search_pop, opt_t *options)
 
 {
     imove_to(&search_pop->image, DIREC + 1, 2);
@@ -230,12 +224,8 @@ void    find_string(file_t *file, char *string, opt_t *options, buff_t *cut_buff
 #define RESP_WIN_LINES  8
 
 
-void    replace_string(file, string, options, cut_buff, resume_old_search)
-file_t *file;
-char   *string;
-opt_t  *options;
-buff_t *cut_buff;
-int     resume_old_search;
+void 
+replace_string (file_t *file, char *string, opt_t *options, buff_t *cut_buff, int resume_old_search)
 
 {
     extern term_t   *Terminal;
@@ -410,12 +400,8 @@ int     resume_old_search;
  * window, scroll as necessary.
  */
  
-int     move_search(file, string, options, cut_buff, start_line, start_col, visible_lines)
-file_t *file;
-char   *string;
-opt_t  *options;
-buff_t *cut_buff;
-int     start_line, start_col, visible_lines;
+int 
+move_search (file_t *file, char *string, opt_t *options, buff_t *cut_buff, int start_line, int start_col, int visible_lines)
 
 {
     int     len = 0;
@@ -440,9 +426,8 @@ int     start_line, start_col, visible_lines;
 }
 
 
-int     compare(cur, search_str, options)
-char   *cur, *search_str; 
-opt_t  *options;
+int 
+compare (char *cur, char *search_str, opt_t *options)
 
 {
     if (options->case_sensitive)
@@ -472,12 +457,8 @@ void    check_search_wrap(file_t *file, opt_t *options, size_t line, size_t col)
  * start_line, column 0.
  */
 
-int     search_forward(file, string, options, start_line, start_col, visible_lines, cut_buff)
-file_t *file;
-char   *string;
-int     start_line, start_col, visible_lines;
-opt_t  *options;
-buff_t *cut_buff;
+int 
+search_forward (file_t *file, char *string, opt_t *options, int start_line, int start_col, int visible_lines, buff_t *cut_buff)
 
 {
     int     line = file->curline, len=0;
@@ -525,12 +506,8 @@ buff_t *cut_buff;
  * start_line, column 0.
  */
 
-int     search_backward(file, string, options, start_line, start_col, visible_lines, cut_buff)
-file_t *file;
-char   *string;
-int     start_line, start_col, visible_lines;
-opt_t  *options;
-buff_t *cut_buff;
+int 
+search_backward (file_t *file, char *string, opt_t *options, int start_line, int start_col, int visible_lines, buff_t *cut_buff)
 
 {
     int     line = file->curline, len=0;
@@ -640,9 +617,8 @@ void    search_libs(file_t *file, opt_t *options)
 }
 
 
-void    set_popup_color(win, options)
-win_t  *win;
-opt_t  *options;
+void 
+set_popup_color (win_t *win, opt_t *options)
 
 {
     if (TCOLOR_TERM(win->terminal) && !MONO_MODE(options))
@@ -658,10 +634,8 @@ opt_t  *options;
 }
 
 
-int     set_search(search_string, cut_buff, str_max)
-char   *search_string;
-buff_t *cut_buff;
-size_t  str_max;
+int 
+set_search (char *search_string, buff_t *cut_buff, size_t str_max)
 
 {
     if (cut_buff->marked_lines > 0)

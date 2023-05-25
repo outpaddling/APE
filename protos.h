@@ -113,7 +113,8 @@ int further(buff_t *cut_buff, int new_line, int new_col);
 void adjust_highlight(file_t *file, buff_t *cut_buff, opt_t *options);
 void set_highlight(file_t *file, opt_t *options);
 void unset_highlight(file_t *file, opt_t *options);
-void rewrite(file_t *file, opt_t *options, buff_t *cut_buff, size_t line1, int col1, size_t line2, int col2);
+void rewrite(file_t *file, opt_t *options, buff_t *cut_buff, size_t line1,
+	     buff_len_t col1, size_t line2, buff_len_t col2);
 void rearrange(size_t *line1, buff_len_t *col1, size_t *line2, buff_len_t *col2);
 int get_area(file_t *file, buff_t *cut_buff, size_t *line1, buff_len_t *col1, size_t *line2, buff_len_t *col2);
 int in_area(file_t *file, buff_t *cut_buff, size_t line, int col, size_t *line1, buff_len_t *col1, size_t *line2, buff_len_t *col2);

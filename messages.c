@@ -39,9 +39,8 @@
   * Display a message for an invalid keystroke
   */
 
-void    invalid_key(key, key_seq)
-int     key;
-char    key_seq[];
+void 
+invalid_key (int key, char key_seq[])
 
 {
     extern win_t    *Swin;
@@ -55,9 +54,8 @@ char    key_seq[];
  * Print a character sequence with non-printable chars shown as octal escape sequences
  */
  
-void    print_seq(win, key_seq)
-win_t  *win;
-char   *key_seq;
+void 
+print_seq (win_t *win, char *key_seq)
 
 {
     char   *p;
@@ -100,8 +98,8 @@ void    trap_noise()
  * Display current editing mode
  */
  
-void    display_mode(file)
-file_t *file;
+void 
+display_mode (file_t *file)
 
 {
     extern win_t    *Swin;
@@ -113,9 +111,8 @@ file_t *file;
 }
 
 
-void    show_cursor_pos(options,file)
-opt_t   *options;
-file_t  *file;
+void 
+show_cursor_pos (opt_t *options, file_t *file)
 
 {
     extern win_t    *Swin;

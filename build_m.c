@@ -45,14 +45,8 @@
  * Display the build pop-down menu and select an option
  *******************************************************/
 
-int     build_menu(files, af_ptr, project, options, errfile, cut_buff, event)
-file_t  files[];
-int     *af_ptr;
-proj_t  *project;
-opt_t *options;
-err_t   *errfile;
-buff_t  *cut_buff;
-event_t *event;
+int 
+build_menu (file_t files[], int *af_ptr, proj_t *project, opt_t *options, err_t *errfile, buff_t *cut_buff, event_t *event)
 
 {
     extern term_t   *Terminal;
@@ -248,11 +242,8 @@ void    create_build_menu(char *build_text[], proj_t *project, lang_t *lang)
 }
 
 
-void    debug(file, project, trace_cmd, options)
-file_t  *file;
-proj_t  *project;
-char    *trace_cmd;
-opt_t   *options;
+void 
+debug (file_t *file, proj_t *project, char *trace_cmd, opt_t *options)
 
 {
     char    cmd[APE_CMD_MAX+1], *expanded_cmd, *argv[MAX_ARGS], *exe,
@@ -317,12 +308,8 @@ opt_t   *options;
 }
 
 
-int     compile_prog(files, af, errfile, options, output)
-file_t  files[];
-int     af;
-err_t   *errfile;
-opt_t *options;
-out_t   output;
+int 
+compile_prog (file_t files[], int af, err_t *errfile, opt_t *options, out_t output)
 
 {
     char    *argv[MAX_ARGS],
@@ -383,13 +370,8 @@ out_t   output;
  * Compile and run the program in the active window
  ***************************************************/
 
-int     run_prog(files, af, project, errfile, options, flags)
-file_t  files[];
-int     af;
-proj_t  *project;
-err_t   *errfile;
-opt_t *options;
-int     flags;
+int 
+run_prog (file_t files[], int af, proj_t *project, err_t *errfile, opt_t *options, int flags)
 
 {
     extern term_t   *Terminal;
@@ -483,10 +465,8 @@ int     flags;
 }
 
 
-int     rebuild_needed(files, af, project)
-file_t  files[];
-int     af;
-proj_t  *project;
+int 
+rebuild_needed (file_t files[], int af, proj_t *project)
 
 {
     if ( project->makefile[0] != '\0' )
@@ -512,12 +492,8 @@ proj_t  *project;
 }
 
 
-int     build_it(project, files, af, errfile, options)
-proj_t  *project;
-file_t  files[];
-int     af;
-err_t   *errfile;
-opt_t   *options;
+int 
+build_it (proj_t *project, file_t files[], int af, err_t *errfile, opt_t *options)
 
 {
     char    build_cmd[APE_CMD_MAX + 1] = "",
@@ -568,12 +544,8 @@ opt_t   *options;
  * Compile and link the program in the active window 
  ****************************************************/
 
-int     build(files, af, project, errfile, options)
-file_t files[];
-int     af;
-proj_t  *project;
-err_t   *errfile;
-opt_t *options;
+int 
+build (file_t files[], int af, proj_t *project, err_t *errfile, opt_t *options)
 
 {
     char    cmd[APE_CMD_MAX + 1] = "",
@@ -644,12 +616,8 @@ opt_t *options;
  * Compile and link the program in the active window 
  ****************************************************/
 
-int     clean(files, af, project, errfile, options)
-file_t  files[];
-int     af;
-proj_t  *project;
-err_t   *errfile;
-opt_t *options;
+int 
+clean (file_t files[], int af, proj_t *project, err_t *errfile, opt_t *options)
 
 {
     char    cmd[APE_CMD_MAX + 1] = "",
@@ -699,12 +667,8 @@ opt_t *options;
  *
  ***************************************************************************/
 
-int     install(files, af, project, errfile, options)
-file_t  files[];
-int     af;
-proj_t  *project;
-err_t   *errfile;
-opt_t *options;
+int 
+install (file_t files[], int af, proj_t *project, err_t *errfile, opt_t *options)
 
 {
     char    cmd[APE_CMD_MAX + 1] = "",
@@ -880,11 +844,8 @@ void    set_project_run_cmd(proj_t *project,file_t *file)
 }
 
 
-int     syntax_check(files,af,options,errfile)
-file_t  files[];
-int     af;
-opt_t *options;
-err_t   *errfile;
+int 
+syntax_check (file_t files[], int af, opt_t *options, err_t *errfile)
 
 {
     char    cmd[APE_CMD_MAX+1],

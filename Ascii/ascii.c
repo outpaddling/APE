@@ -33,7 +33,8 @@
 #include "ascii.h"
 #include "protos.h"
 
-int     main()
+int 
+main (void)
 
 {
     term_t  *term;
@@ -54,9 +55,8 @@ int     main()
 }
 
 
-void    show_chars(term,mode)
-term_t  *term;
-charmode_t  mode;
+void 
+show_chars (term_t *term, charmode_t mode)
 
 {
     unsigned int     c,i;
@@ -106,9 +106,8 @@ charmode_t  mode;
 }
 
 
-void    pause(term,mode)
-term_t  *term;
-int     mode;
+void 
+pause (term_t *term, int mode)
 
 {
     int     ch;

@@ -141,9 +141,8 @@ void    man(char *str, char *prefix)
 }
 
 
-void    get_word_at_cursor(file,word)
-file_t  *file;
-char    *word;
+void 
+get_word_at_cursor (file_t *file, char *word)
 
 {
     char    *ptr = file->curchar, *start = file->line[file->curline].buff;
@@ -157,8 +156,8 @@ char    *word;
 }
 
 
-void    apropos(topic)
-char    *topic;
+void 
+apropos (char *topic)
 
 {
     if ( *topic != '\0' )
@@ -170,9 +169,8 @@ char    *topic;
 }
 
 
-void    browse(file,options)
-char    *file;
-opt_t   *options;
+void 
+browse (char *file, opt_t *options)
 
 {
     int     stat,
