@@ -26,4 +26,16 @@ class
     private:
         
 };
-
+h 2 0 12 0 6 0 0 0 12 11:#ifdef __H_
+
+#ifdef  __cplusplus
+extern "C" {
+#endif
+
+
+
+#ifdef  __cplusplus
+}
+#endif
+
+#endif
