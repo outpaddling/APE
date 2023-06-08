@@ -34,6 +34,7 @@
 #include <sys/stat.h>
 #include <twintk.h>
 #include <xtend/string.h>
+#include <xtend/proc.h>
 #include <xtend/file.h>
 #include "edit.h"
 #include "protos.h"
