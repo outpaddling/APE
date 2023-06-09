@@ -600,11 +600,11 @@ int     install_default_user_config(opt_t *options)
 	snprintf(cmd,APE_CMD_MAX,
 	    "cp -R %s/share/APE/Languages %s/share/APE/options.rc %s/share/APE/custom_menu %s",
 	    INSTALL_PREFIX, INSTALL_PREFIX, INSTALL_PREFIX, config_dir);
-	if ( spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"sh","-c",cmd,NULL) != 0 )
+	if ( xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"sh","-c",cmd,NULL) != 0 )
 	{
 	    popup_mesg("Can't find default Languages in share directory!",
 			ok_button, options);
-	    spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"rm","-rf",config_dir,NULL);
+	    xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"rm","-rf",config_dir,NULL);
 	    return 0;
 	}
 	else

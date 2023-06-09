@@ -528,7 +528,7 @@ void    suspend(opt_t *options)
     begin_full_screen();
     puts("Type \"exit\" to return to APE.");
     fflush(stdout);
-    spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,options->ishell,NULL);
+    xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,options->ishell,NULL);
 
 /* Works only if parent is a shell
 #else

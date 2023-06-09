@@ -101,13 +101,13 @@ int     help_menu(file_t *file, opt_t *options, event_t *event)
 	case 'a':
 	    begin_full_screen();
 	    /* Don't use man() here.  We need to stay shelled out for the ascii command. */
-	    spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"man","-M",INSTALL_PREFIX"/man","apeascii",NULL);
-	    spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"ascii",NULL);
+	    xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"man","-M",INSTALL_PREFIX"/man","apeascii",NULL);
+	    xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"ascii",NULL);
 	    end_full_screen(EFS_PAUSE);
 	    break;
 	case 'i':
 	    begin_full_screen();
-	    spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"info",NULL);
+	    xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"info",NULL);
 	    end_full_screen(EFS_PAUSE);
 	    break;
 	default:
@@ -132,9 +132,9 @@ void    man(char *str, char *prefix)
 	    snprintf(cmd,APE_CMD_MAX,"%s %s",MAN,str);
 	else
 	    snprintf(cmd,APE_CMD_MAX,"%s -M %s/man %s",MAN,prefix,str);
-	expanded_cmd = parse_cmd(argv, MAX_ARGS, cmd);
+	expanded_cmd = xt_parse_cmd(argv, MAX_ARGS, cmd);
 	begin_full_screen();
-	spawnvp(P_WAIT,P_NOECHO,argv,NULL,NULL,NULL);
+	xt_spawnvp(P_WAIT,P_NOECHO,argv,NULL,NULL,NULL);
 	end_full_screen(EFS_PAUSE);
 	free(expanded_cmd);
     }
@@ -163,7 +163,7 @@ apropos (char *topic)
     if ( *topic != '\0' )
     {
 	begin_full_screen();
-	spawnlp(P_WAIT,P_ECHO,NULL,NULL,NULL,"apropos",topic,NULL);
+	xt_spawnlp(P_WAIT,P_ECHO,NULL,NULL,NULL,"apropos",topic,NULL);
 	end_full_screen(EFS_PAUSE);
     }
 }
@@ -183,7 +183,7 @@ browse (char *file, opt_t *options)
 	close(fd);
     snprintf(full_path,FULL_PATH_MAX,"%s/share/doc/ape/%s",
 	    options->install_prefix, file);
-    stat = spawnlp(P_NOWAIT,P_NOECHO,NULL,errors,errors,
+    stat = xt_spawnlp(P_NOWAIT,P_NOECHO,NULL,errors,errors,
 		    options->browser,full_path,NULL);
     check_stat(stat,options->browser);
     unlink(errors);

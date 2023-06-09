@@ -202,7 +202,7 @@ check_args (char *argv[])
 	    {
 		case    'h':
 		default:
-		    va_usage("%s [-h[elp]] [filespec]\n",*argv);
+		    xt_va_usage("%s [-h[elp]] [filespec]\n",*argv);
 		    break;
 	    }
 	}
@@ -222,7 +222,7 @@ init_xterm (void)
     xt_get_home_dir(home,APE_PATH_MAX);
     snprintf(xdefaults,APE_PATH_MAX + 12,"%s/.Xdefaults",home);
     if ( stat(xdefaults,&st) == -1 )
-	if ( spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"xapedefaults",NULL) != 0 )
+	if ( xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"xapedefaults",NULL) != 0 )
 	{
 	    fprintf(stderr,
 		"Installation problem: Unable to run \"xapedefaults\".\nPress return to continue...\n");
@@ -314,7 +314,7 @@ define_cursor (int cursor_font)
     snprintf(font,9,"%d",cursor_font);
     
     /* Change mouse cursor appearance */
-    spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"defcursor",font,NULL);
+    xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"defcursor",font,NULL);
 }
 #endif
 

@@ -741,7 +741,7 @@ void    nice_exit (int retval, err_t *errfile, char *message)
     if (*message)
 	puts (message);
     
-    // spawnlp(P_WAIT, P_NOECHO, NULL, NULL, NULL, "reset", "-Q", NULL);
+    // xt_spawnlp(P_WAIT, P_NOECHO, NULL, NULL, NULL, "reset", "-Q", NULL);
     
     /* tclose_mouse_server (Terminal); */
     exit (retval);

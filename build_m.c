@@ -119,7 +119,7 @@ build_menu (file_t files[], int *af_ptr, proj_t *project, opt_t *options, err_t 
 	    break;
 	case 'n':
 	    begin_full_screen();
-	    spawnlp(P_WAIT, P_ECHO, NULL, NULL, NULL,
+	    xt_spawnlp(P_WAIT, P_ECHO, NULL, NULL, NULL,
 			    "make", "depend", NULL);
 	    end_full_screen(EFS_PAUSE);
 	    break;
@@ -294,9 +294,9 @@ debug (file_t *file, proj_t *project, char *trace_cmd, opt_t *options)
 	exe = file->executable;
     expand_command(file->source, exe, debugger_cmd, cmd, APE_CMD_MAX);
     
-    expanded_cmd = parse_cmd(argv, MAX_ARGS, cmd);
+    expanded_cmd = xt_parse_cmd(argv, MAX_ARGS, cmd);
     begin_full_screen();
-    status = spawnvp(P_WAIT, P_ECHO, argv, stdout_file, NULL, NULL);
+    status = xt_spawnvp(P_WAIT, P_ECHO, argv, stdout_file, NULL, NULL);
     check_stat(status, argv[0]);
     if ( *command_file != '\0' )
     {
@@ -343,18 +343,18 @@ compile_prog (file_t files[], int af, err_t *errfile, opt_t *options, out_t outp
 			ok_button, options);
 	    break;
     }
-    expanded_cmd = parse_cmd(argv, MAX_ARGS, cmd);
+    expanded_cmd = xt_parse_cmd(argv, MAX_ARGS, cmd);
     begin_full_screen();
     err_close(errfile);
     
     mkfifo(APE_FIFO, 0700);
     /*
-    stat = spawnvp(P_WAIT, P_ECHO, argv, NULL, errfile->filename,
+    stat = xt_spawnvp(P_WAIT, P_ECHO, argv, NULL, errfile->filename,
 		errfile->filename);
     */
-    spawnlp(P_NOWAIT, P_NOECHO, APE_FIFO, NULL, NULL,
+    xt_spawnlp(P_NOWAIT, P_NOECHO, APE_FIFO, NULL, NULL,
 	    "tee", errfile->filename, NULL);
-    stat = spawnvp(P_WAIT, P_ECHO, argv, NULL, APE_FIFO, APE_FIFO);
+    stat = xt_spawnvp(P_WAIT, P_ECHO, argv, NULL, APE_FIFO, APE_FIFO);
     unlink(APE_FIFO);
     
     check_stat(stat, cmd);
@@ -439,7 +439,7 @@ run_prog (file_t files[], int af, proj_t *project, err_t *errfile, opt_t *option
     if ( (build_status == 0) && 
 	(strcmp(upload_cmd, "exec ") != 0) && !strblank(upload_cmd) )
     {
-	upload_status = spawnlp(P_WAIT, P_ECHO, NULL, NULL, NULL,
+	upload_status = xt_spawnlp(P_WAIT, P_ECHO, NULL, NULL, NULL,
 			    options->shell, "-c", upload_cmd, NULL);
 	status = upload_status;
     }
@@ -448,7 +448,7 @@ run_prog (file_t files[], int af, proj_t *project, err_t *errfile, opt_t *option
     if ( (build_status == 0) && (upload_status == 0) && (flags != UPLOAD_PROG)
 	&& (strcmp(run_cmd, "exec ") != 0) && !strblank(run_cmd) )
     {
-	run_status = spawnlp(P_WAIT, P_ECHO, NULL, NULL, NULL,
+	run_status = xt_spawnlp(P_WAIT, P_ECHO, NULL, NULL, NULL,
 			    options->shell, "-c", run_cmd, NULL);
 	status = run_status;
     }
@@ -512,7 +512,7 @@ build_it (proj_t *project, file_t files[], int af, err_t *errfile, opt_t *option
 	executable = project->executable;
     if ( *build_cmd != '\0' )
     {
-	expanded_cmd = parse_cmd(argv, MAX_ARGS, build_cmd);
+	expanded_cmd = xt_parse_cmd(argv, MAX_ARGS, build_cmd);
 	err_close(errfile);
 	files[af].lang_rebuild = 0;
 	status = spawn_build_cmd(argv, outfile, errfile, project, executable);
@@ -586,7 +586,7 @@ build (file_t files[], int af, proj_t *project, err_t *errfile, opt_t *options)
     if ( *cmd != '\0' )
     {
 	begin_full_screen();
-	expanded_cmd = parse_cmd(argv, MAX_ARGS, cmd);
+	expanded_cmd = xt_parse_cmd(argv, MAX_ARGS, cmd);
 	err_close(errfile);
 	/*
 	fprintf(stderr, "In build()...\n");
@@ -645,7 +645,7 @@ clean (file_t files[], int af, proj_t *project, err_t *errfile, opt_t *options)
     }
     
     begin_full_screen();
-    expanded_cmd = parse_cmd(argv, MAX_ARGS, cmd);
+    expanded_cmd = xt_parse_cmd(argv, MAX_ARGS, cmd);
     err_close(errfile);
     stat = spawn_build_cmd(argv, NULL, errfile, project, executable);
     check_stat(stat, cmd);
@@ -693,7 +693,7 @@ install (file_t files[], int af, proj_t *project, err_t *errfile, opt_t *options
     prompt_save_all(files, options);
     
     begin_full_screen();
-    expanded_cmd = parse_cmd(argv, MAX_ARGS, cmd);
+    expanded_cmd = xt_parse_cmd(argv, MAX_ARGS, cmd);
     err_close(errfile);
     stat = spawn_build_cmd(argv, NULL, NULL, project, executable);
     check_stat(stat, cmd);
@@ -863,10 +863,10 @@ syntax_check (file_t files[], int af, opt_t *options, err_t *errfile)
 	snprintf(cmd,APE_CMD_MAX, "%s %s %s %s", files[af].lang->compiler_cmd,
 		files[af].lang->syntax_check_flag,
 		files[af].lang->compile_flags, files[af].source);
-	expanded_cmd = parse_cmd(argv, MAX_ARGS, cmd);
+	expanded_cmd = xt_parse_cmd(argv, MAX_ARGS, cmd);
 	err_close(errfile);
 	begin_full_screen();
-	status = spawnvp(P_WAIT,P_ECHO,argv, NULL, errfile->filename, errfile->filename);
+	status = xt_spawnvp(P_WAIT,P_ECHO,argv, NULL, errfile->filename, errfile->filename);
 	more(errfile->filename);
 	init_compiler_lines(files,options);
 	end_full_screen(EFS_PAUSE);
@@ -928,14 +928,14 @@ int     spawn_build_cmd(char *argv[], char *outfile, err_t *errfile,
     if ( outfile == NULL )
 	outfile = errfile->filename;
     
-    status = spawnvp(P_WAIT,P_ECHO,argv, NULL, outfile, errfile->filename);
+    status = xt_spawnvp(P_WAIT,P_ECHO,argv, NULL, outfile, errfile->filename);
 
     /* FIXME: Kills output from subprocesses, e.g. vexctl.  Find another way...
     mkfifo(APE_FIFO, 0700);
     printf("tee %s\n", errfile->filename);
-    spawnlp(P_NOWAIT, P_NOECHO, APE_FIFO, NULL, NULL,
+    xt_spawnlp(P_NOWAIT, P_NOECHO, APE_FIFO, NULL, NULL,
 	"tee", errfile->filename, NULL);
-    status = spawnvp(P_WAIT, P_ECHO, argv, NULL, APE_FIFO, APE_FIFO);
+    status = xt_spawnvp(P_WAIT, P_ECHO, argv, NULL, APE_FIFO, APE_FIFO);
     
     unlink(APE_FIFO);
     */

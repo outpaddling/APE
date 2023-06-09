@@ -158,7 +158,7 @@ more (char *filename)
     
     if ( stat(filename,&st) != -1 )
 	if ( (int)st.st_size )
-	    spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"more",filename,NULL);
+	    xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"more",filename,NULL);
 }
 
 
@@ -176,7 +176,7 @@ run_command (int parent_action, int echo, char *cmd, char *shell)
     begin_full_screen();
     
     /* Run the command */
-    stat = spawnlp(parent_action,echo,NULL,NULL,NULL,shell,"-c",cmd,NULL);
+    stat = xt_spawnlp(parent_action,echo,NULL,NULL,NULL,shell,"-c",cmd,NULL);
     if ( parent_action == P_NOWAIT )
 	Pid = stat;     /* For notification when child terminates */
     check_stat(stat,cmd);
@@ -187,11 +187,11 @@ run_command (int parent_action, int echo, char *cmd, char *shell)
 
 /****************************************************************************
  * Name:
- *  Quick check the return status from spawnlp() or spawnvp().
+ *  Quick check the return status from xt_spawnlp() or xt_spawnvp().
  *
  * Description: 
  *  This function performs a quick check on the return value from
- *  spawnlp(3) or spawnvp(3), printing error messages to stderr
+ *  xt_spawnlp(3) or xt_spawnvp(3), printing error messages to stderr
  *  for common failures, and the raw exit status for others.
  * 
  * Author: 
@@ -199,7 +199,7 @@ run_command (int parent_action, int echo, char *cmd, char *shell)
  *
  * Returns: 
  *  The value of stat, unaltered.  This allows compact usage such as
- *  if ( check_stat(spawnvp(...),cmd) )
+ *  if ( check_stat(xt_spawnvp(...),cmd) )
  ****************************************************************************/
 
 
@@ -211,7 +211,7 @@ int     check_stat(
 {
     if ( P_EXEC_FAILED(stat) )
     {
-	switch( (stat>>8) & 0x7f )  /* Extract errno returned by spawnvp */
+	switch( (stat>>8) & 0x7f )  /* Extract errno returned by xt_spawnvp */
 	{
 	    case    EPERM:
 	    case    EACCES:

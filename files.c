@@ -336,9 +336,9 @@ void    view_header(file_t *file, opt_t *options)
 		"find /usr/include %s %s %s -name %s -exec more {} ;",
 		x11_include, LOCAL_INCLUDE, options->include_path, path_name);
     }
-    expanded_cmd = parse_cmd(argv, MAX_ARGS, cmd);
+    expanded_cmd = xt_parse_cmd(argv, MAX_ARGS, cmd);
     begin_full_screen();
-    spawnvp(P_WAIT, P_NOECHO, argv, NULL, NULL, NULL);
+    xt_spawnvp(P_WAIT, P_NOECHO, argv, NULL, NULL, NULL);
     end_full_screen(EFS_PAUSE);
     free(expanded_cmd);
 }

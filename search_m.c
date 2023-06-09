@@ -589,7 +589,7 @@ void    grep_headers(file_t *file, opt_t *options)
 	snprintf(cmd, APE_CMD_MAX,
 		 "find /usr/include %s %s %s -type d -exec search_headers '%s' '{}' \\; 2>&1 | more",
 		 x11_include, LOCAL_INCLUDE, options->include_path, grep_str);
-	spawnlp(P_WAIT, P_ECHO, NULL, NULL, NULL, "sh", "-c", cmd, NULL);
+	xt_spawnlp(P_WAIT, P_ECHO, NULL, NULL, NULL, "sh", "-c", cmd, NULL);
 	end_full_screen(EFS_PAUSE);
     }
 }

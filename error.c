@@ -57,7 +57,7 @@ void    view_errors(char *file)
 	argv[1] = file;
 	argv[2] = NULL;
 	begin_full_screen();
-	status = spawnvp(P_WAIT,P_NOECHO,argv,NULL,NULL,NULL);
+	status = xt_spawnvp(P_WAIT,P_NOECHO,argv,NULL,NULL,NULL);
 	check_stat(status,argv[0]);
 	end_full_screen(EFS_PAUSE);
     }
