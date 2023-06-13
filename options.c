@@ -314,6 +314,9 @@ int     load_options (char *filename, opt_t *options)
 	xt_fgetline (fp, options->browser, APE_PATH_MAX);
 	xt_fgetline (fp, options->shell, APE_PATH_MAX);
 	xt_fgetline (fp, options->ishell, APE_PATH_MAX);
+	// Override stored ishell if SHELL set in env
+	if ( getenv("SHELL") != NULL )
+	    strlcpy(options->ishell, getenv("SHELL"), APE_PATH_MAX);
 	xt_fgetline (fp, options->file_spec, TWC_SPEC_LEN);
 	xt_fgetline (fp, options->include_path, APE_PATH_MAX);
 	xt_fgetline (fp, options->lib_path, APE_PATH_MAX);
