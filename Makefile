@@ -52,6 +52,7 @@ DOCSDIR     ?= ${PREFIX}/share/doc/APE
 # by default, so adjust compiler flags as needed. (e.g. gcc -fsigned-char)
 CC          ?= cc
 CFLAGS      ?= -g -Wall
+CFLAGS      += -Wno-char-subscripts
 INCLUDES    = -isystem ${PREFIX}/include -isystem ${LOCALBASE}/include
 CFLAGS      += ${INCLUDES} -DINSTALL_PREFIX="\"${PREFIX}\"" -fsigned-char
 CFLAGS      += -DAPE_VERSION=\"`./version.sh | cut -d . -f 1-3`\"
