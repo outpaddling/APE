@@ -1,5 +1,4 @@
 I.Nclude
 .Block comment
 New .Structure
-New .Class
 New .Header
