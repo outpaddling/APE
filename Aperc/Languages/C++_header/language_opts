@@ -1,0 +1,20 @@
+name                    C++_header
+name_spec               *.hpp
+id_comment              
+compiler                cpp
+compile_flags           -Wall -g
+compile_output_flag     -o
+syntax_check_flag       -fsyntax-only
+compile_only_flag       -c
+compile_to_asm_flag     -S
+preprocess_only_flag    -E -C
+link_flags              
+debugger                gdb
+debugger_backtrace_cmd  where
+run_prefix              
+upload_prefix           
+executable_name         \st
+executable_source       Command Line Flag
+error_msg_format        \fn: \ln: \te
+auto_wrap               0
+end_language
