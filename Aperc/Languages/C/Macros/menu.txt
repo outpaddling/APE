@@ -7,6 +7,6 @@ I.Nclude
 .Block comment
 .Error check
 New .Main
-New F.Unction
 Open file for wri.Te
 Open file for .Read
+New F.Unction

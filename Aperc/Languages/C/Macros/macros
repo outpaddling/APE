@@ -101,10 +101,33 @@ void    usage(char *argv[])
 {
     fprintf(stderr, "Usage: %s\n", argv[0]);
     exit(EX_USAGE);
-}u 0 0 31 0 1 0 5 0 31 0:
+}t 1 104 114 0 0 90 90 0 10 36:// Move these to the top of the file
+#include <string.h>
+#include <errno.h>
+if ( (_stream = fopen(_file, "w")) == NULL )
+{
+    fprintf(stderr, ": Could not open %s for write: %s.\n",
+            _file, strerror(errno));
+    exit(EX_CANTCREAT);
+}
+fclose(_stream);
+r 1 104 114 0 0 90 90 0 10 36:// Move these to the top of the file
+#include <string.h>
+#include <errno.h>
+if ( (_stream = fopen(_file, "r")) == NULL )
+{
+    fprintf(stderr, ": Could not open %s for read: %s.\n",
+            _file, strerror(errno));
+    exit(EX_NOINPUT);
+}
+fclose(_stream);
+u 0 0 34 0 1 0 8 0 34 0:
 
 /***************************************************************************
  *  Use auto-c2man to generate a man page from this comment
+ *
+ *  Name:
+ *      -
  *
  *  Library:
  *      #include <>
@@ -132,24 +155,4 @@ void    usage(char *argv[])
 ()
 
 {
-}t 1 104 114 0 0 90 90 0 10 36:// Move these to the top of the file
-#include <string.h>
-#include <errno.h>
-if ( (_stream = fopen(_file, "w")) == NULL )
-{
-    fprintf(stderr, ": Could not open %s for write: %s.\n",
-            _file, strerror(errno));
-    exit(EX_CANTCREAT);
-}
-fclose(_stream);
-r 1 104 114 0 0 90 90 0 10 36:// Move these to the top of the file
-#include <string.h>
-#include <errno.h>
-if ( (_stream = fopen(_file, "r")) == NULL )
-{
-    fprintf(stderr, ": Could not open %s for read: %s.\n",
-            _file, strerror(errno));
-    exit(EX_NOINPUT);
-}
-fclose(_stream);
-
+}
