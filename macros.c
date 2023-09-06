@@ -193,7 +193,7 @@ int     macro_new_item(file_t files[],
     {
 	status = tw_input_panel(win,&panel,TW_LINES(win)-3);
 	if ( (TW_EXIT_KEY(status) == TWC_INPUT_CANCEL) ||
-	    strblank(menu_text) )
+	    xt_strblank(menu_text) )
 	{
 	    cancel_area(files+*af_ptr,cut_buff,options);
 	    done = 1;
@@ -229,7 +229,7 @@ int     macro_new_item(file_t files[],
     
     tw_del_win(&win);
 	
-    if ( (TW_EXIT_KEY(status) != TWC_INPUT_CANCEL) && ! strblank(menu_text) )
+    if ( (TW_EXIT_KEY(status) != TWC_INPUT_CANCEL) && ! xt_strblank(menu_text) )
     {
 	/* Get macro body */
 	if ( stat(macro_dir,&st) == -1 )
@@ -806,7 +806,7 @@ int     macro_new_submenu(file_t files[],
     {
 	status = tw_input_panel(win,&panel,TW_LINES(win)-3);
 	if ( (TW_EXIT_KEY(status) == TWC_INPUT_CANCEL) ||
-	    strblank(menu_text) )
+	    xt_strblank(menu_text) )
 	{
 	    cancel_area(files+*af_ptr,cut_buff,options);
 	    done = 1;
@@ -842,7 +842,7 @@ int     macro_new_submenu(file_t files[],
     
     tw_del_win(&win);
 	
-    if ( (TW_EXIT_KEY(status) != TWC_INPUT_CANCEL) && ! strblank(menu_text) )
+    if ( (TW_EXIT_KEY(status) != TWC_INPUT_CANCEL) && ! xt_strblank(menu_text) )
     {
 	/* Get macro body */
 	if ( stat(macro_dir,&st) == -1 )

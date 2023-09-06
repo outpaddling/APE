@@ -320,7 +320,7 @@ cut_area (file_t *file, opt_t *options, buff_t *cut_buff)
     start_point = file->line[start_line].buff + cut_buff->start_col;
 
     /* Concatenate portions of first and last lines */
-    strlbasecpy (start_point, file->line[start_line].buff, end_point, LINE_BUFF_SIZE (len));
+    xt_strlbasecpy (start_point, file->line[start_line].buff, end_point, LINE_BUFF_SIZE (len));
     file->line[start_line].length = strlen (file->line[start_line].buff);
 
     /* Delete lines between */
@@ -638,7 +638,7 @@ append_partial_first_line (file_t *file, buff_t *cut_buff, int indent)
     {
 	len = col + c;
 	expand_buff_if_needed (file, curline, len);
-	strlbasecpy (file->curchar, file->line[curline].buff, temp, LINE_BUFF_SIZE (len));
+	xt_strlbasecpy (file->curchar, file->line[curline].buff, temp, LINE_BUFF_SIZE (len));
     }
     file->curcol = col;
     file->line[curline].length = len;

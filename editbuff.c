@@ -316,7 +316,7 @@ int     del_under(file_t *file,opt_t *options,buff_t *cut_buff)
 	    needspace = (ptr != file->line[file->curline].buff) &&
 			!isspace(ptr[-1]) &&
 			(file->curline < file->total_lines - 1) &&
-			!strblank(file->line[file->curline+1].buff);
+			!xt_strblank(file->line[file->curline+1].buff);
 	    if ( needspace )
 		insert_char(file,' ',options,cut_buff);
 	    combine_lines(file,options,cut_buff);
@@ -418,7 +418,7 @@ int     del_under_expand_tabs(file_t *file,opt_t *options,buff_t *cut_buff)
     int     len, last, y, x;
 
     len = --file->line[file->curline].length;
-    strlbasecpy(ptr, file->line[file->curline].buff, ptr + 1,
+    xt_strlbasecpy(ptr, file->line[file->curline].buff, ptr + 1,
 	       LINE_BUFF_SIZE(len + 1));
     last = file->leftcol + TW_COLS(file->text) - 2;
     tw_del_ch(file->text);
@@ -457,7 +457,7 @@ combine_lines (file_t *file, opt_t *options, buff_t *cut_buff)
 	if ( expand_buff_if_needed(file, curline, len) )
 	    file->curcol = file->curchar - file->line[curline].buff;
 
-	strlbasecpy(file->curchar, file->line[curline].buff, next, LINE_BUFF_SIZE(len));
+	xt_strlbasecpy(file->curchar, file->line[curline].buff, next, LINE_BUFF_SIZE(len));
 	file->line[curline].length = len;
 	delete_lines(file, curline + 1, curline + 1);
 
@@ -671,7 +671,7 @@ new_line_buff (file_t *file, size_t curline, opt_t *options, unsigned long time_
 	;
 
     /* Copy part of current line to new line */
-    strlbasecpy(newptr, file->line[curline + 1].buff, oldptr, LINE_BUFF_SIZE(len));
+    xt_strlbasecpy(newptr, file->line[curline + 1].buff, oldptr, LINE_BUFF_SIZE(len));
     *(file->curchar) = '\0';    /* Mark new end of old line */
     file->curcol = file->curchar - file->line[curline].buff;
     file->line[curline].length = file->curcol;
@@ -953,14 +953,14 @@ format_paragraph (file_t *file, opt_t *options, buff_t *cut_buff)
     right_margin = MIN(indent,4);
     
     /* Combine and trim lines to end of paragraph */
-    while ( !strblank(file->line[file->curline].buff) &&
+    while ( !xt_strblank(file->line[file->curline].buff) &&
 	    (file->curline < file->total_lines - 1) )
     {
 	curline = file->curline;
 	/* Fill up the current line */
 	while ( (file->line[curline].length < TW_COLS(file->text) - right_margin) &&
 		(curline < file->total_lines-1) &&
-		!strblank(file->line[curline+1].buff) )
+		!xt_strblank(file->line[curline+1].buff) )
 	{
 	    end_line(file,options,cut_buff);
 	    /* Add a space between the lines being joined */

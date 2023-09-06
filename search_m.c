@@ -606,7 +606,7 @@ void    search_libs(file_t *file, opt_t *options)
 			    "Enter egrep pattern: ", "", TWC_VERBATIM, symbol);
     if ( (status != TWC_INPUT_CANCEL) && (symbol[0] != '\0') )
     {
-	if (strblank(options->lib_path))
+	if (xt_strblank(options->lib_path))
 	    snprintf(cmd, APE_CMD_MAX, "search_libs %s",
 		     symbol);
 	else

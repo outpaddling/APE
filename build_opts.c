@@ -156,7 +156,7 @@ language_options (file_t *file, opt_t *options)
     {
 	status = tw_input_panel(win, &panel, TW_LINES(win) - 3);
 	if ( (TW_EXIT_KEY(status) == TWC_INPUT_CANCEL) ||
-	      strblank(file->lang->error_msg_format) ||
+	      xt_strblank(file->lang->error_msg_format) ||
 	      ( strstr(file->lang->error_msg_format,"\\ln") &&
 		strstr(file->lang->error_msg_format,"\\fn") &&
 		strstr(file->lang->error_msg_format,"\\te") ) )

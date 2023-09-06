@@ -90,7 +90,7 @@ build_menu (file_t files[], int *af_ptr, proj_t *project, opt_t *options, err_t 
 		    /* Open assembly file */
 		    strlcpy(out_filename, files[*af_ptr].source, APE_PATH_MAX);
 		    if ( (p=strrchr(out_filename, '.')) != NULL )
-			strlbasecpy(p, out_filename, ".s", APE_PATH_MAX);
+			xt_strlbasecpy(p, out_filename, ".s", APE_PATH_MAX);
 		    if ( (c = open_file(files+*af_ptr, out_filename, options, OPEN_FLAG_NORMAL)) >= 0 )
 			*af_ptr = c;
 		}
@@ -177,7 +177,7 @@ void    create_build_menu(char *build_text[], proj_t *project, lang_t *lang)
     
     if ( ACTIVE_PROJ(project) || compiled_language(lang) )
     {
-	if ( (lang != NULL) && !strblank(lang->upload_prefix) )
+	if ( (lang != NULL) && !xt_strblank(lang->upload_prefix) )
 	    build_text[c++] = "Build, Upload and .Run (Esc-r or F5)";
 	else
 	    build_text[c++] = "Build and .Run (Esc-r or F5)";
@@ -185,7 +185,7 @@ void    create_build_menu(char *build_text[], proj_t *project, lang_t *lang)
     else
 	build_text[c++] = ".Run (Esc-r or F5)";
     
-    if ( (lang != NULL) && !strblank(lang->upload_prefix) ) 
+    if ( (lang != NULL) && !xt_strblank(lang->upload_prefix) ) 
     {
 	if ( compiled_language(lang) )
 	    build_text[c++] = "Build and .Upload (Esc-w)";
@@ -193,10 +193,10 @@ void    create_build_menu(char *build_text[], proj_t *project, lang_t *lang)
 	    build_text[c++] = ".Upload";
     }
     
-    if ( (lang != NULL) && !strblank(lang->syntax_check_flag) )
+    if ( (lang != NULL) && !xt_strblank(lang->syntax_check_flag) )
 	build_text[c++] = ".Syntax check (Esc-y or F8)";
     
-    if ( (lang != NULL) && !strblank(lang->compile_only_flag) )
+    if ( (lang != NULL) && !xt_strblank(lang->compile_only_flag) )
 	build_text[c++] = "Compile to .Object (Esc-i or F6)";
 
     if ( ACTIVE_PROJ(project) || ((lang != NULL) && compiled_language(lang)) )
@@ -207,29 +207,29 @@ void    create_build_menu(char *build_text[], proj_t *project, lang_t *lang)
 	build_text[c++] = ".Install";
     }
     
-    if ( (lang != NULL) && !strblank(lang->compile_to_asm_flag) )
+    if ( (lang != NULL) && !xt_strblank(lang->compile_to_asm_flag) )
 	build_text[c++] = "Translate to .Assembly language";
     
-    if ( (lang != NULL) && !strblank(lang->preprocess_only_flag) )
+    if ( (lang != NULL) && !xt_strblank(lang->preprocess_only_flag) )
 	build_text[c++] = "View .Preprocessor output";
     
     build_text[c++] = TWC_HLINE;
     line_c = c;
     
     /* Feature: Make this work while viewing a non-source file */
-    if ( (lang != NULL) && !strblank(lang->error_msg_format) )
+    if ( (lang != NULL) && !xt_strblank(lang->error_msg_format) )
 	build_text[c++] = ".Goto next error (Esc-n)";
     
     if ( ACTIVE_PROJ(project) || ((lang != NULL) && compiled_language(lang)) )
 	build_text[c++] = ".View compiler errors";
     
-    if ( (lang != NULL) && !strblank(lang->debugger_cmd) )
+    if ( (lang != NULL) && !xt_strblank(lang->debugger_cmd) )
 	build_text[c++] = "Run .Debugger";
     
-    if ( (lang != NULL) && !strblank(lang->debugger_backtrace_cmd) )
+    if ( (lang != NULL) && !xt_strblank(lang->debugger_backtrace_cmd) )
 	build_text[c++] = "View function call .trace";
     
-    if ( (lang != NULL) && !strblank(lang->debugger_cmd) )
+    if ( (lang != NULL) && !xt_strblank(lang->debugger_cmd) )
 	build_text[c++] = "View e.Xecution profile";
     
     if ( line_c != c )
@@ -395,7 +395,7 @@ run_prog (file_t files[], int af, proj_t *project, err_t *errfile, opt_t *option
     {
 	strlcpy(run_cmd, project->run_cmd, APE_CMD_MAX);
 	if ( (check_build_opts(files+af) != NULL) &&
-	    !strblank(files[af].lang->upload_prefix) )
+	    !xt_strblank(files[af].lang->upload_prefix) )
 	{
 	    snprintf(upload_cmd, APE_CMD_MAX, "%s %s",
 		files[af].lang->upload_prefix, project->executable);
@@ -413,7 +413,7 @@ run_prog (file_t files[], int af, proj_t *project, err_t *errfile, opt_t *option
 	if ( check_build_opts(files+af) == NULL )
 	    return 0;
 	strlcpy(run_cmd, files[af].run_cmd, APE_CMD_MAX);
-	if ( !strblank(files[af].lang->upload_prefix) )
+	if ( !xt_strblank(files[af].lang->upload_prefix) )
 	{
 	    snprintf(upload_cmd, APE_CMD_MAX, "%s %s",
 		files[af].lang->upload_prefix, files[af].executable);
@@ -437,7 +437,7 @@ run_prog (file_t files[], int af, proj_t *project, err_t *errfile, opt_t *option
 
     /* Upload the program if appropriate */
     if ( (build_status == 0) && 
-	(strcmp(upload_cmd, "exec ") != 0) && !strblank(upload_cmd) )
+	(strcmp(upload_cmd, "exec ") != 0) && !xt_strblank(upload_cmd) )
     {
 	upload_status = xt_spawnlp(P_WAIT, P_ECHO, NULL, NULL, NULL,
 			    options->shell, "-c", upload_cmd, NULL);
@@ -446,7 +446,7 @@ run_prog (file_t files[], int af, proj_t *project, err_t *errfile, opt_t *option
     
     /* Run the program */
     if ( (build_status == 0) && (upload_status == 0) && (flags != UPLOAD_PROG)
-	&& (strcmp(run_cmd, "exec ") != 0) && !strblank(run_cmd) )
+	&& (strcmp(run_cmd, "exec ") != 0) && !xt_strblank(run_cmd) )
     {
 	run_status = xt_spawnlp(P_WAIT, P_ECHO, NULL, NULL, NULL,
 			    options->shell, "-c", run_cmd, NULL);
@@ -891,7 +891,7 @@ int     preprocess(file_t files[], int af, opt_t *options)
 	snprintf(cmd,APE_CMD_MAX,"%s %s %s %s | uniq | more",    /* more -s? */
 	    files[af].lang->compiler_cmd, PP_OPTIONS,
 	    files[af].lang->compile_flags, files[af].source);
-	strshellcpy(cmd2,cmd,APE_CMD_MAX);
+	xt_strshellcpy(cmd2,cmd,APE_CMD_MAX);
 	status = run_command(P_WAIT,P_ECHO,cmd2,"sh");
 	init_compiler_lines(files,options);
 	return status;

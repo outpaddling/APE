@@ -226,7 +226,7 @@ save_as (file_t files[], int af, opt_t *options)
 	stat_mesg("File not saved.");
 	return CANT_SAVE;
     }
-    strshellcpy(filename,temp,APE_PATH_MAX);
+    xt_strshellcpy(filename,temp,APE_PATH_MAX);
 
     /* Split filename into base name and directory */
     if (get_dirname(filename, dir_name, base_name) == NO_DIR)
@@ -251,7 +251,7 @@ save_as (file_t files[], int af, opt_t *options)
     {
 	snprintf(msg, APE_PATH_MAX + 63,
 		"File \"%s\" exists.  Overwrite?",base_name);
-	strsqueeze(squeezed, msg, 127);
+	xt_strsqueeze(squeezed, msg, 127);
 	if( tolower(popup_mesg(squeezed,buttons,options)) != 'y' )
 	    return CANT_SAVE;
     }
@@ -279,7 +279,7 @@ save_as (file_t files[], int af, opt_t *options)
 	if ( stat(save_source,&st) == 0 )
 	{
 	    snprintf(msg, APE_PATH_MAX + 64, "Remove %s?", save_source);
-	    strsqueeze(squeezed, msg, 127);
+	    xt_strsqueeze(squeezed, msg, 127);
 	    remove = popup_mesg(squeezed,buttons,options);
 	    if ( tolower(remove) == 'y' )
 	    {
@@ -375,11 +375,11 @@ prompt_save (file_t files[], int af, opt_t *options)
 	    msg[APE_PATH_MAX + 64], squeezed[128],
 	    sfile[102];
 
-    strsqueeze(sfile, files[af].source, 102);
+    xt_strsqueeze(sfile, files[af].source, 102);
     if (files[af].modified)
     {
 	snprintf(msg, APE_PATH_MAX + 63, "File \"%s\" has changed. Save?",sfile);
-	strsqueeze(squeezed, msg, 127);
+	xt_strsqueeze(squeezed, msg, 127);
 	sv = popup_mesg(squeezed,buttons,options);
 	if (sv == 'y')
 	{
@@ -416,7 +416,7 @@ int     prompt_tabs(file_t *file, opt_t *options)
     
     if ( options->prompt_tabs )
     {
-	strsqueeze(name, file->source, TABS_FILENAME_MAX + 1);
+	xt_strsqueeze(name, file->source, TABS_FILENAME_MAX + 1);
 	snprintf(msg, TABS_WARNING_MAX,
 		 "\"%s\" contains non-leading TAB characters.  APE is a\n"
 		 "soft-TABs editor which will replace non-leading TABs with spaces and\n"

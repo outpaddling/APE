@@ -611,7 +611,7 @@ int     install_default_user_config(opt_t *options)
 	{
 	    snprintf(msg, APE_PATH_MAX + 63,
 		    "Default options installed in %s.\n", config_dir);
-	    strsqueeze(squeezed, msg, 127);
+	    xt_strsqueeze(squeezed, msg, 127);
 	    popup_mesg(squeezed, ok_button, options);
 	    return 1;
 	}

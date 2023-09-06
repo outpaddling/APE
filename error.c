@@ -255,7 +255,7 @@ read_error_msg (err_t *errfile, char mesg[], char source_file[], char **text, fi
 		{
 		    format_ptr += 3;
 		    *text = mesg_ptr;
-		    if ( !strblank(*text) )
+		    if ( !xt_strblank(*text) )
 			have_text = 1;
 		    /*sprintw(2, 50, "text = '%s'  have_text = %d",
 			*text, have_text);
