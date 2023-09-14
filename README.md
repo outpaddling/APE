@@ -13,6 +13,5 @@ languages.
 As a terminal-based editor, it functions as efficiently in a PuTTY terminal as
 it does on a graphical console.
 
-It offers user-configurable language support including regular-expression-based syntax highlighting.
-
-https://acadix.biz/ape.php
+It offers user-configurable language support including
+regular expression-based syntax highlighting.
