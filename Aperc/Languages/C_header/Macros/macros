@@ -9,7 +9,7 @@ n 1 0 1 0 0 0 0 0 1 11:#include <>
 typedef struct
 {
 }   _t;
-h 2 0 13 0 6 0 0 0 13 12:#ifndef __H_
+h 2 0 13 0 23 0 0 0 13 12:#ifndef __H_
 #define __H_
 
 #ifdef  __cplusplus
@@ -22,4 +22,4 @@ extern "C" {
 }
 #endif
 
-#endif
+#endif  // #ifndef __H_

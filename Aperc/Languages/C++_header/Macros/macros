@@ -26,8 +26,8 @@ class
     private:
         
 };
-h 2 0 4 0 6 0 0 0 4 12:#ifndef __H_
+h 2 0 4 0 23 0 0 0 4 12:#ifndef __H_
 #define __H_
 
 
-#endif
+#endif  // #ifndef __H_
