@@ -12,6 +12,7 @@
 ##########################################################################
 
 # Default to ../local if LOCALBASE is not set
+: ${PREFIX:=../local}
 : ${LOCALBASE:=../local}
 
 # OS-dependent tricks
@@ -22,7 +23,6 @@ case $(uname) in
     export CFLAGS="-Wall -g -O"
     LIBDIR=$(realpath $LOCALBASE/lib)
     LOCALBASE=$(realpath $LOCALBASE)
-    PREFIX=$LOCALBASE
     export PREFIX LOCALBASE
     export LDFLAGS="-L. -L$LIBDIR -Wl,-rpath,$LIBDIR:/usr/lib:/lib"
     ;;
