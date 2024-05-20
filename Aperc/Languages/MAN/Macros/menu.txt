@@ -4,3 +4,4 @@
 .Paragraph
 .Comment
 .New man page
+.Option

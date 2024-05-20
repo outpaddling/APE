@@ -235,7 +235,13 @@ pause()
     printf "Press return to continue..."
     read junk
 }
-m 0 0 35 0 2 0 9 0 35 74:##########################################################################
+m 0 2 44 0 0 0 20 0 42 74:##########################################################################
+#   Title:
+#       Optional, defaults to the name of the script sans extention
+#
+#   Section:
+#       Optional, defaults to 1
+#
 #   Synopsis:
 #       
 #   Description:
@@ -270,4 +276,5 @@ usage()
 
 if [ $# != 0 ]; then
     usage
-fi
+fi
+
