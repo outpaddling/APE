@@ -1,0 +1,12 @@
+3 -1 8
+(/*).*(*/)|//.*$
+6 -1 8
+".*["$]|'.*['$]
+2 -1 8
+#ifdef|#ifndef|#if|#include|#else|#elif|#endif|#define|defined|#undef|#error|#pragma|inline|typedef|switch|case|default|break|if|else|while|for|do|continue|goto|return|main
+1 -1 8
+0[Xx][0-9A-Fa-f]+|[0-9]+
+1 -1 16
+task|char|short|int|long|signed|unsigned|float|double|complex|void|struct|enum|static|register|auto|extern|const|volatile
+-2 0 0
+end
