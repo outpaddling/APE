@@ -2,7 +2,7 @@ name                    C99
 name_spec               *_c
 id_comment              
 compiler                c99
-compile_flags           
+compile_flags           --c-text --assembly-comments --r-prefix
 compile_output_flag     
 syntax_check_flag       
 compile_only_flag       
@@ -13,8 +13,8 @@ debugger
 debugger_backtrace_cmd  
 run_prefix              
 upload_prefix           
-executable_name         \st_s
-executable_source       Command Line Flag
+executable_name         
+executable_source       Fixed
 error_msg_format        
 auto_wrap               0
 end_language
