@@ -19,6 +19,8 @@ for a variety of languages.  No major features have been added since the
 configuration files.  APE provides basic compiler/interpreter and debugger
 interfacing, as well as regular expression based syntax highlighting for
 most popular languages, as well as a few you've probably never heard of.
+Support for new languages can be added by the user via dialogs under
+the Options menu.
 
 As a terminal-based editor, APE functions as efficiently in a PuTTY
 terminal as it does on a graphical console.  So, while APE does not have
