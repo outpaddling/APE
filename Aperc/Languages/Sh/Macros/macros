@@ -235,7 +235,7 @@ pause()
     printf "Press return to continue..."
     read junk
 }
-m 0 2 44 0 0 0 20 0 42 74:##########################################################################
+m 0 0 42 0 0 0 16 0 42 74:##########################################################################
 #   Title:
 #       Optional, defaults to the name of the script sans extention
 #
@@ -266,7 +266,7 @@ pause()
 usage()
 {
     printf "Usage: $0\n"
-    exit 1
+    exit 64     # sysexits(3) EX_USAGE
 }
 
 
