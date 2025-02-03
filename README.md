@@ -10,8 +10,9 @@ Unix-like system from the Mark Williams Company.  Development shifted
 primarily to FreeBSD by the mid-1990s, as affordable 32-bit hardware
 became available, and open source operating systems came of age.
 
-The goal of APE was to combine the efficient workflow of DOS-based IDEs such
-as Borland C and Microsoft QuickC with the power and stability of Unix.
+The original goal of APE was to combine the efficient workflow of
+DOS-based IDEs such as Borland C and Microsoft QuickC with the power
+and stability of Unix.
 
 APE is still actively maintained today as a common programming editor
 for a variety of languages.  No major features have been added since the
