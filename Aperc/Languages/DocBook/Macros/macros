@@ -7,14 +7,7 @@ u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 
 </para>d 1 0 1 0 14 0 0 0 1 54:<xi:include xmlns:xi="http://www.w3.org/2001/XInclude"
     href="" />s 1 7 9 0 10 0 0 0 2 9:<section>
     <title></title>
-</section>a 0 1 1 0 19 0 0 0 0 19:<command></command>f 1 0 7 0 9 0 0 0 7 8:<figure>
-    <title></title>
-    <mediaobject>
-        <imageobject>
-        <imagedata fileref="" width="50%"/>
-        </imageobject>
-    </mediaobject>
-</figure>n 1 327 329 0 7 315 315 0 2 6:<info>
+</section>a 0 1 1 0 19 0 0 0 0 19:<command></command>n 1 327 329 0 7 315 315 0 2 6:<info>
 
 </info>l 1 0 4 0 11 0 0 0 4 10:<listitem>
 <para>
@@ -79,4 +72,13 @@ u 1 582 582 0 22 576 576 0 0 22:<ulink url=""></ulink>m 1 583 583 0 42 568 568 
     without looking at the text.
     </para>
 </example>
+f 1 490 499 0 0 479 479 0 9 0:
+<figure xml:id="">
+    <title></title>
+    <mediaobject>
+        <imageobject>
+        <imagedata fileref="" width="60%"/>
+        </imageobject>
+    </mediaobject>
+</figure>
 

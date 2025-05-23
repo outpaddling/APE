@@ -9,7 +9,6 @@ Scr.Een shot
 Xinclu.De
 .Section
 Comm.And
-.Figure
 I.Nfo
 .List Item
 .Ordered List
@@ -19,3 +18,4 @@ Emp.Hasis
 .Book
 .Code
 E.Xample
+.Figure
