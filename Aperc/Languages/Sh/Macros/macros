@@ -235,7 +235,7 @@ pause()
     printf "Press return to continue..."
     read junk
 }
-m 0 0 42 0 0 0 16 0 42 74:##########################################################################
+m 0 0 39 0 0 0 13 0 39 74:##########################################################################
 #   Title:
 #       Optional, defaults to the name of the script sans extention
 #
@@ -249,6 +249,7 @@ pause()
 #   Arguments:
 #       
 #   Returns:
+#       0 on success, non-zero error codes otherwise
 #
 #   Examples:
 #
@@ -257,10 +258,6 @@ pause()
 #   Environment:
 #
 #   See also:
-#       
-#   History:
-#   Date        Name        Modification
-#   \date(12)\gecos(12)Begin
 ##########################################################################
 
 usage()
