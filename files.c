@@ -884,6 +884,7 @@ int     save_file(file_t *file, opt_t   *options)
 	    key[MCRYPT_KEY_LEN+1] = "",
 	    key2[MCRYPT_KEY_LEN+1] = "",
 	    algo[MCRYPT_ALGO_LEN+1],
+	    // FIXME: Update or remove these
 	    *encryption_algorithms[] = { \
 		"cast-128", "gost", "rijndael-128", "twofish", "arcfour",
 		"cast-256", "loki97", "rijndael-192", "saferplus",

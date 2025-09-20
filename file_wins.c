@@ -371,6 +371,11 @@ select_compiler (file_t *file, opt_t *options)
 		    (strcmp(ext,".py") == 0) ||
 		    (strcmp(ext,".f90") == 0) ||
 		    (strcmp(ext,".F90") == 0) ||
+		    (strcmp(ext,".c") == 0) ||
+		    (strcmp(ext,".cc") == 0) ||
+		    (strcmp(ext,".c++") == 0) ||
+		    (strcmp(ext,".cxx") == 0) ||
+		    (strcmp(ext,".C") == 0) ||
 		    (strcmp(file->source,"Portfile") == 0);
 		    // FIXME: crashes if we replace the ext check with this
 		    // (strcmp(file->lang->lang_name,"Python") == 0);
