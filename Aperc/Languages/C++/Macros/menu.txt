@@ -4,8 +4,10 @@
 .Switch
 .For loop
 I.Nclude
-New C.Lass
 .Block comment
-.Exception
-New .Main
 New F.Unction
+New .Main
+New C.Lass
+.Template class
+E.Xception
+.Enum

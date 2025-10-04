@@ -45,70 +45,10 @@ for ( ; ; )
 {
 }
 n 1 0 1 0 0 0 0 0 1 11:#include <>
-l 0 10 23 0 0 4 4 0 13 5:class
-{
-    public:
-        ()
-        {
-        }
-        ~()
-        {
-        }
-    
-    private:
-        
-};
 b 1 7 10 0 0 0 0 0 3 2:/*
  *
  */
-e 1 16 24 0 0 4 4 0 8 3:try
-{
-    if ()
-        throw
-}
-catch()
-{
-}
-m 0 0 39 0 1 0 13 0 39 76:/***************************************************************************
- *  Description:
- *  
- *  Arguments:
- *
- *  Returns:
- *
- *  History: 
- *  Date        Name        Modification
- *  \date(12)\gecos(12)Begin
- ***************************************************************************/
-
-#include <stdio.h>
-#include <sysexits.h>
-#include <stdlib.h>
-
-void    usage(char *argv[]);
-
-int     main(int argc,char *argv[])
-
-{
-    switch(argc)
-    {
-        case 1:
-            break;
-        
-        default:
-            usage(argv);
-    }
-    
-    return EX_OK;
-}
-
-
-void    usage(char *argv[])
-
-{
-    fprintf(stderr, "Usage: %s\n", argv[0]);
-    exit(EX_USAGE);
-}u 0 0 34 0 1 0 8 0 34 0:
+u 0 0 34 0 1 0 8 0 34 0:
 
 /***************************************************************************
  *  Use auto-c2man to generate a man page from this comment
@@ -142,4 +82,63 @@ void    usage(char *argv[])
 ()
 
 {
-}
+}m 0 0 27 0 1 0 3 0 27 19:#include <iostream>
+#include <cstdlib>
+#include <sysexits.h>
+
+void    usage(char *argv[]);
+
+int     main(int argc,char *argv[])
+
+{
+    switch(argc)
+    {
+        case 1:
+            break;
+        
+        default:
+            usage(argv);
+    }
+    
+    return EX_OK;
+}
+
+
+void    usage(char *argv[])
+
+{
+    std::cerr << "Usage: " << argv[0] << std::endl;
+    exit(EX_USAGE);
+}l 1 0 9 0 0 0 0 0 9 5:class
+{
+    public:
+        () { }
+        ~() { }
+    
+    private:
+        
+};
+t 1 0 12 0 0 0 0 0 12 21:template <typename T>
+template <typename T, int N>    // Value argument, must be a constant
+template <element T>            // Constrained template, C++20
+class
+{
+    public:
+        () { }
+        ~() { }
+    
+    private:
+        
+};
+x 1 7 15 0 0 0 0 0 8 3:try
+{
+    if ()
+        throw
+}
+catch()
+{
+}
+e 1 4 7 0 0 0 0 0 3 10:enum class
+{
+};
+

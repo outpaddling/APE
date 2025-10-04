@@ -5,8 +5,9 @@
 .For loop
 I.Nclude
 .Block comment
-.Error check
 Open file for wri.Te
 Open file for .Read
 New F.Unction
 New .Main
+Error .Check
+.Enum
