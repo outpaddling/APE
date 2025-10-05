@@ -1,13 +1,13 @@
-.If-else
-.While loop
-.Do-while loop
 .Switch
-.For loop
-I.Nclude
 .Block comment
-Open file for wri.Te
-Open file for .Read
-New F.Unction
 New .Main
 Error .Check
 .Enum
+New F.Unction
+.Do-while loop
+.For loop
+.If-else
+I.Nclude
+Open file for .Read
+Open file for wri.Te
+.While loop

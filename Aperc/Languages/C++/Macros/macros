@@ -1,31 +1,4 @@
-i 1 0 11 0 0 0 0 0 11 0:
-/*
- *
- */
-
-if ()
-{
-}
-else
-{
-}
-w 1 0 8 0 0 0 0 0 8 0:
-/*
- *
- */
-
-while ()
-{
-}
-d 1 0 8 0 0 0 0 0 8 0:
-/*
- *
- */
-
-do
-{
-}   while ();
-s 1 0 11 0 0 0 0 0 11 2:/*
+s 1 0 11 0 0 0 0 0 11 2:/*
  *
  */
 
@@ -35,14 +8,6 @@ switch()
         break;
     default:
         break;
-}
-f 1 0 8 0 0 0 0 0 8 0:
-/*
- *
- */
-
-for ( ; ; )
-{
 }
 n 1 0 1 0 0 0 0 0 1 11:#include <>
 b 1 7 10 0 0 0 0 0 3 2:/*
@@ -154,27 +119,49 @@ catch(replace_me & err)
 {
     return ;
 }
-a 1 5 16 0 0 0 0 0 11 61:class replace_me    // Replace replace_me with the class name
+r 1 18 37 0 0 15 15 0 19 41:// Replace class_name with the class name
+// Replace abstract_class with the abstract class from which this is derived
+class class_name : public abstract_class
+{
+    // Interface functions (a.k.a. methods in some languages)
+    public:
+        // Constructor should establish invariants (assumptions) for the class
+        class_name() { }
+        // Destructor should free all allocated resources
+        ~class_name() { }
+        // Other member functions should ensure that the invariants still hold
+    
+    // Accessible by members of derived classes and friend classes
+    protected:
+    
+    // Implementation (mostly data members)
+    // Accessible only by members functions of this class
+    private:
+};
+a 1 38 53 0 0 27 27 0 15 41:// Replace class_name with the class name
+class class_name
 {
     // Interface functions (a.k.a. methods in some languages)
     public:
         // Destructor should free all allocated resources
-        ~replace_me() {}
+        ~class_name() {}
         // Might be overridden by derived class
         virtual type func() {};
         // Pure virtual: MUST be overridden by derived classes
         virtual type func() = 0;    
+
+    // Accessible by members of derived classes and friend classes
+    protected:
 };
-r 1 4 23 0 0 1 1 0 19 41:// Replace replace_me with the class name
-// Replace abstract-class with the abstract class from which this is derived
-class replace_me : public abstract-class
+c 1 0 18 0 0 0 0 0 18 41:// Replace class_name with the class name
+class class_name
 {
     // Interface functions (a.k.a. methods in some languages)
     public:
         // Constructor should establish invariants (assumptions) for the class
-        replace_me() { }
+        class_name() { }
         // Destructor should free all allocated resources
-        ~replace_me() { }
+        ~class_name() { }
         // Other member functions should ensure that the invariants still hold
     
     // Accessible by members of derived classes and friend classes
@@ -184,21 +171,35 @@ class replace_me : public abstract-class
     // Accessible only by members functions of this class
     private:
 };
-c 1 4 21 0 0 0 0 0 17 61:class replace_me    // Replace replace_me with the class name
+d 1 1 8 0 0 0 0 0 7 2:/*
+ *
+ */
+
+do
 {
-    // Interface functions (a.k.a. methods in some languages)
-    public:
-        // Constructor should establish invariants (assumptions) for the class
-        replace_me() { }
-        // Destructor should free all allocated resources
-        ~replace_me() { }
-        // Other member functions should ensure that the invariants still hold
-    
-    // Accessible by members of derived classes and friend classes
-    protected:
-    
-    // Implementation (mostly data members)
-    // Accessible only by members functions of this class
-    private:
-};
+}   while ();
+f 1 1 8 0 0 0 0 0 7 2:/*
+ *
+ */
+
+for ( ; ; )
+{
+}
+i 1 1 11 0 0 0 0 0 10 2:/*
+ *
+ */
+
+if ()
+{
+}
+else
+{
+}
+w 1 60 67 0 0 41 41 0 7 2:/*
+ *
+ */
+
+while ()
+{
+}
 

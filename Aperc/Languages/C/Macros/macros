@@ -1,31 +1,4 @@
-i 1 0 11 0 0 0 0 0 11 0:
-/*
- *
- */
-
-if ()
-{
-}
-else
-{
-}
-w 1 0 8 0 0 0 0 0 8 0:
-/*
- *
- */
-
-while ()
-{
-}
-d 1 0 8 0 0 0 0 0 8 0:
-/*
- *
- */
-
-do
-{
-}   while ();
-s 1 0 11 0 0 0 0 0 11 2:/*
+s 1 0 11 0 0 0 0 0 11 2:/*
  *
  */
 
@@ -36,15 +9,7 @@ switch()
     default:
         break;
 }
-f 1 0 8 0 0 0 0 0 8 0:
-/*
- *
- */
-
-for ( ; ; )
-{
-}
-n 0 33 33 0 13 19 19 0 0 13:#include <.h>b 1 0 3 0 0 0 0 0 3 2:/*
+b 1 0 3 0 0 0 0 0 3 2:/*
  *
  */
 
@@ -55,61 +20,7 @@ for ( ; ; )
 else
 {
 }
-t 1 104 114 0 0 90 90 0 10 36:// Move these to the top of the file
-#include <string.h>
-#include <errno.h>
-if ( (_stream = fopen(_file, "w")) == NULL )
-{
-    fprintf(stderr, ": Could not open %s for write: %s.\n",
-            _file, strerror(errno));
-    exit(EX_CANTCREAT);
-}
-fclose(_stream);
-r 1 104 114 0 0 90 90 0 10 36:// Move these to the top of the file
-#include <string.h>
-#include <errno.h>
-if ( (_stream = fopen(_file, "r")) == NULL )
-{
-    fprintf(stderr, ": Could not open %s for read: %s.\n",
-            _file, strerror(errno));
-    exit(EX_NOINPUT);
-}
-fclose(_stream);
-u 0 0 34 0 1 0 8 0 34 0:
-
-/***************************************************************************
- *  Use auto-c2man to generate a man page from this comment
- *
- *  Name:
- *      -
- *
- *  Library:
- *      #include <>
- *      -l
- *
- *  Description:
- *  
- *  Arguments:
- *
- *  Returns:
- *
- *  Examples:
- *
- *  Files:
- *
- *  Environment
- *
- *  See also:
- *
- *  History: 
- *  Date        Name        Modification
- *  \date(12)\gecos(12)Begin
- ***************************************************************************/
-
-()
-
-{
-}m 0 0 40 0 1 0 14 0 40 76:/***************************************************************************
+m 0 0 40 0 1 0 14 0 40 76:/***************************************************************************
  *  Description:
  *  
  *  Arguments:
@@ -159,4 +70,91 @@ else
 e 1 25 28 0 0 18 18 0 3 12:typedef enum
 {
 } ;
+u 1 0 33 0 0 0 7 0 33 76:/***************************************************************************
+ *  Use auto-c2man to generate a man page from this comment
+ *
+ *  Name:
+ *      -
+ *
+ *  Library:
+ *      #include <>
+ *      -l
+ *
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  Examples:
+ *
+ *  Files:
+ *
+ *  Environment
+ *
+ *  See also:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  2025-10-05  Jason Bacon Begin
+ ***************************************************************************/
+
+()
+
+{
+}
+d 1 11 18 0 0 0 0 0 7 2:/*
+ *
+ */
+
+do
+{
+}   while ();
+f 1 19 26 0 0 0 0 0 7 2:/*
+ *
+ */
+
+for ( ; ; )
+{
+}
+i 1 30 40 0 0 14 14 0 10 2:/*
+ *
+ */
+
+if ()
+{
+}
+else
+{
+}
+n 1 40 41 0 0 15 15 0 1 13:#include <.h>
+r 1 41 52 0 0 25 26 0 11 36:// Move these to the top of the file
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+if ( (_stream = fopen(_file, "r")) == NULL )
+{
+    fprintf(stderr, ": Could not open %s for read: %s.\n",
+            _file, strerror(errno));
+    exit(EX_NOINPUT);
+}
+fclose(_stream);
+t 1 63 74 0 0 47 48 0 11 36:// Move these to the top of the file
+#include <stdio.h>
+#include <string.h>
+#include <errno.h>
+if ( (_stream = fopen(_file, "w")) == NULL )
+{
+    fprintf(stderr, ": Could not open %s for write: %s.\n",
+            _file, strerror(errno));
+    exit(EX_CANTCREAT);
+}
+fclose(_stream);
+w 1 75 82 0 0 56 56 0 7 2:/*
+ *
+ */
+
+while ()
+{
+}
 

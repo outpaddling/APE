@@ -1,8 +1,4 @@
-.If-else
-.While loop
-.Do-while loop
 .Switch
-.For loop
 I.Nclude
 .Block comment
 New .Main
@@ -10,6 +6,10 @@ New .Main
 .Template class
 E.Xception
 New F.Unction
-.Abstract class
 De.Rived class
+.Abstract class
 .Concrete class
+.Do-while loop
+.For loop
+.If-else
+.While loop
