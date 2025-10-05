@@ -224,6 +224,7 @@ void white_scheme(opt_t *options);
 void blue_scheme(opt_t *options);
 void black_scheme(opt_t *options);
 void cyan_scheme(opt_t *options);
+int check_missing_user_config(opt_t *options);
 int install_default_user_config(opt_t *options);
 /* macros.c */
 int macro_menu(file_t files[], int *af_ptr, opt_t *options, event_t *event, macro_expand_t expand);

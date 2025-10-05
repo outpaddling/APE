@@ -48,7 +48,7 @@ add_c_cpp_patterns (pattern_t *patterns[])
     synhigh_add_pattern (patterns, "(/*).*(*/)|//.*$", YELLOW, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "\".*[\"$]|'.*['$]", CYAN, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "#ifdef|#ifndef|#if|#include|#else|#elif|#endif|#define|defined|#undef|#error|inline|typedef|switch|case|default|break|if|else|while|for|do|continue|goto|return|main",
-		GREEN, TEXT_BG, BOLD_MODE);
+                GREEN, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "0[Xx][0-9A-Fa-f]+|[0-9]+", RED, TEXT_BG, BOLD_MODE);
 }
 
@@ -59,7 +59,7 @@ add_c_patterns (pattern_t *patterns[])
 {
     add_c_cpp_patterns (patterns);
     synhigh_add_pattern (patterns, "task|char|short|int|long|unsigned|float|double|void|struct|enum|static|register|auto|extern|const|volatile",
-		 RED, TEXT_BG, DIM_MODE);
+                 RED, TEXT_BG, DIM_MODE);
 }
 
 
@@ -69,7 +69,7 @@ add_cpp_patterns (pattern_t *patterns[])
 {
     add_c_cpp_patterns (patterns);
     synhigh_add_pattern (patterns, "char|short|int|long|unsigned|float|double|void|struct|enum|static|register|auto|extern|const|class|public|private|operator|friend|volatile",
-		 RED, TEXT_BG, DIM_MODE);
+                 RED, TEXT_BG, DIM_MODE);
 }
 
 
@@ -81,7 +81,7 @@ add_csh_patterns (pattern_t *patterns[])
     synhigh_add_pattern (patterns, "#.*$", YELLOW, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "\".*[\"$]|'.*['$]", CYAN, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "set|unset|setenv|unsetenv|alias|umask|echo|cd|source|rehash|switch|case|default|breaksw|endsw|if|then|else|endif|while|foreach|end|goto|exit",
-		 GREEN, TEXT_BG, BOLD_MODE);
+                 GREEN, TEXT_BG, BOLD_MODE);
 }
 
 
@@ -104,11 +104,11 @@ add_fortran_patterns (pattern_t *patterns[])
     synhigh_add_pattern (patterns, "^[!Cc*].*$", YELLOW, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "\".*[\"$]|'.*['$]", CYAN, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "do|enddo|end|if|else|elseif|endif|continue|goto|go to|stop|call|pause|return|data|parameter|entry|format|program|function|subroutine|block +data",
-		 GREEN, TEXT_BG, BOLD_MODE);
+                 GREEN, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "integer|real|double +precision|character|logical|complex|common|equivalence|external|intrinsic|save",
-		 RED, TEXT_BG, DIM_MODE);
+                 RED, TEXT_BG, DIM_MODE);
     synhigh_add_pattern (patterns, "write|print|read|open|close|abs|acos|aint|anint|asin|atan|atan2|cmplx|cosh|cos|dble|dim|exp|int|log|log10|max|min|mod|nint|real|sign|sinh|sin|sqrt|tanh|tan|char|ichar|index|len|lge|lgt",
-		 MAGENTA, TEXT_BG, BOLD_MODE);
+                 MAGENTA, TEXT_BG, BOLD_MODE);
 }
 
 
@@ -119,6 +119,7 @@ add_fortran_patterns (pattern_t *patterns[])
  * Arguments:
  * Return values:
  * FIXME: Update to include latest structure members
+ * FIXME: Is init_options() even needed anymore?
  */
 
 void 
@@ -159,9 +160,9 @@ init_options (opt_t *options)
     strlcpy (options->file_spec, "*", TWC_SPEC_LEN);
     strlcpy (options->shell, "sh", APE_PATH_MAX);
     if ((user_shell = getenv ("SHELL")) != NULL)
-	strlcpy (options->ishell, user_shell, APE_PATH_MAX);
+        strlcpy (options->ishell, user_shell, APE_PATH_MAX);
     else
-	strlcpy (options->ishell, ISHELL, APE_PATH_MAX);
+        strlcpy (options->ishell, ISHELL, APE_PATH_MAX);
     options->include_path[0] = '\0';
     options->lib_path[0] = '\0';
 
@@ -180,13 +181,13 @@ init_options (opt_t *options)
 
     /* Matlab */
     options->lang_head = add_language (options->lang_head,"Matlab",
-	"*.m", "", "",
-	"", "", "", "", "", "", "matlab -nosplash -nodesktop -r", "",
-	"\\fn", "", "", 
-	NO_AUTO_WRAP,"","","","");
+        "*.m", "", "",
+        "", "", "", "", "", "", "matlab -nosplash -nodesktop -r", "",
+        "\\fn", "", "", 
+        NO_AUTO_WRAP,"","","","");
     patterns = options->lang_head->patterns;
     synhigh_add_pattern (patterns, "if|else|elseif|end|for|while|return|function",
-		GREEN, TEXT_BG, BOLD_MODE);
+                GREEN, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "'.*['$]", CYAN, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "%.*$", YELLOW, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "[0-9]*\\.[0-9]+|[0-9]+", RED, TEXT_BG, BOLD_MODE);
@@ -204,27 +205,27 @@ init_options (opt_t *options)
 
     /* Postscript */
     options->lang_head = add_language (options->lang_head,"Postscript",
-	"*.ps", "", "", "", "", "", "", "", "",
-	"gv", "", "\\fn", "", "Fixed", 
-	NO_AUTO_WRAP,"","","","");
+        "*.ps", "", "", "", "", "", "", "", "",
+        "gv", "", "\\fn", "", "Fixed", 
+        NO_AUTO_WRAP,"","","","");
     patterns = options->lang_head->patterns;
     synhigh_add_pattern (patterns, "/[a-zA-Z.\\-]+", GREEN, TEXT_BG, DIM_MODE);
     synhigh_add_pattern (patterns, "%.*$", YELLOW, TEXT_BG, DIM_MODE);
     
     /* html */
     options->lang_head = add_language (options->lang_head,"HTML",
-	"*.html .htm", "", "", "", "", "", "", "", "",
-	"webbrowser", "", "\\fn", "", "Fixed", 
-	NO_AUTO_WRAP,"","","","");
+        "*.html .htm", "", "", "", "", "", "", "", "",
+        "webbrowser", "", "\\fn", "", "Fixed", 
+        NO_AUTO_WRAP,"","","","");
     patterns = options->lang_head->patterns;
     synhigh_add_pattern (patterns, "</?[a-zA-Z].*>", GREEN, TEXT_BG, DIM_MODE);
     synhigh_add_pattern (patterns, "<!.*>", YELLOW, TEXT_BG, DIM_MODE);
     
     /* html with embedded m4 macros */
     options->lang_head = add_language (options->lang_head,"M4HTML",
-	"*.m4html", "", "m4", "", "", "", "", "", "",
-	"webbrowser", "", "\\st.html", "", "Standard Output", 
-	NO_AUTO_WRAP,"","","","");
+        "*.m4html", "", "m4", "", "", "", "", "", "",
+        "webbrowser", "", "\\st.html", "", "Standard Output", 
+        NO_AUTO_WRAP,"","","","");
     patterns = options->lang_head->patterns;
     synhigh_add_pattern (patterns, "</?[a-zA-Z].*>", GREEN, TEXT_BG, DIM_MODE);
     synhigh_add_pattern (patterns, "<!.*>", YELLOW, TEXT_BG, DIM_MODE);
@@ -232,22 +233,22 @@ init_options (opt_t *options)
 
     /* Java */
     options->lang_head = add_language (options->lang_head,"Java",
-	"*.java", "", "javac", "", "", "", "", "jdb", "",
-	"time runjava", "\\fn: \\ln: \\te", "\\st.class", 
-	"", "Fixed", NO_AUTO_WRAP,"","","","");
+        "*.java", "", "javac", "", "", "", "", "jdb", "",
+        "time runjava", "\\fn: \\ln: \\te", "\\st.class", 
+        "", "Fixed", NO_AUTO_WRAP,"","","","");
     patterns = options->lang_head->patterns;
     synhigh_add_pattern (patterns, "(/*).*(*/)|//.*$", YELLOW, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "\".*[\"$]|'.*['$]", CYAN, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "import|native|package|break|continue|if|else|switch|while|for|do|true|false|null|this|super|new|instanceof|return|default",
-		 GREEN, TEXT_BG, BOLD_MODE);
+                 GREEN, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "boolean|char|byte|short|int|long|float|double|void|static|class|synchronized|transient|volatile|final|throws|extends|implements|interface|public|protected|private|abstract",
-		 RED, TEXT_BG, DIM_MODE);
+                 RED, TEXT_BG, DIM_MODE);
 
     /* bc */
     options->lang_head = add_language (options->lang_head,"Bc",
-	"*.bc", "", "", "", "", "", "", "", "",
-	"bc -l", "", "\\fn", "", "Fixed", 
-	NO_AUTO_WRAP,"","","","");
+        "*.bc", "", "", "", "", "", "", "", "",
+        "bc -l", "", "\\fn", "", "Fixed", 
+        NO_AUTO_WRAP,"","","","");
     patterns = options->lang_head->patterns;
     synhigh_add_pattern (patterns, "(/*).*(*/)|//.*$", YELLOW, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "\".*[\"$]", CYAN, TEXT_BG, DIM_MODE);
@@ -255,10 +256,10 @@ init_options (opt_t *options)
 
     /* Pascal */
     options->lang_head = add_language (options->lang_head,"Pascal",
-	"*.p *.pas", "", "fpc", "", "", "", "", DEBUGGER, "",
-	"time", "", "\\st", "-o ", 
-	"Command Line Flag", 
-	NO_AUTO_WRAP,"","","",BACKTRACE_CMD);
+        "*.p *.pas", "", "fpc", "", "", "", "", DEBUGGER, "",
+        "time", "", "\\st", "-o ", 
+        "Command Line Flag", 
+        NO_AUTO_WRAP,"","","",BACKTRACE_CMD);
     patterns = options->lang_head->patterns;
     synhigh_add_pattern (patterns, "'.*['$]|\".*[\"$]", CYAN, TEXT_BG, DIM_MODE);
     synhigh_add_pattern (patterns, "{.*}", YELLOW, TEXT_BG, BRIGHT_MODE);
@@ -268,9 +269,9 @@ init_options (opt_t *options)
 
     /* Assembly */
     options->lang_head = add_language (options->lang_head,"ASM386",
-	"*.s", "", "as", "-c", "-a", "", "", DEBUGGER, "",
-	"time", "\\fn: \\ln: \\te", "\\st", "-o ", 
-	"Command Line Flag", NO_AUTO_WRAP,"","","","");
+        "*.s", "", "as", "-c", "-a", "", "", DEBUGGER, "",
+        "time", "\\fn: \\ln: \\te", "\\st", "-o ", 
+        "Command Line Flag", NO_AUTO_WRAP,"","","","");
     patterns = options->lang_head->patterns;
     synhigh_add_pattern (patterns, "\".*[\"$]", CYAN, TEXT_BG, DIM_MODE);
     synhigh_add_pattern (patterns, "%[a-zA-Z][a-zA-Z0-9]*", RED, TEXT_BG, DIM_MODE);
@@ -278,128 +279,128 @@ init_options (opt_t *options)
 
     /* Fortran 77 */
     options->lang_head = add_language (options->lang_head,"Fortran77",
-	"*.f", "", "g77", "-c", "", "", "-c", DEBUGGER, "",
-	"time", "\\ig on line \\ln of \\fn: \\te",
-	"\\st", "-o ", 
-	"Command Line Flag", 
-	NO_AUTO_WRAP,"","","",BACKTRACE_CMD);
+        "*.f", "", "g77", "-c", "", "", "-c", DEBUGGER, "",
+        "time", "\\ig on line \\ln of \\fn: \\te",
+        "\\st", "-o ", 
+        "Command Line Flag", 
+        NO_AUTO_WRAP,"","","",BACKTRACE_CMD);
     add_fortran_patterns (options->lang_head->patterns);
 
     /* Fortran 90 */
     options->lang_head = add_language (options->lang_head,"Fortran90",
-	"*.f90 .F90", "", FORTRAN_COMPILER, "-c", "", "", "-c", DEBUGGER,
-	"", "time", "", "\\st", "-o ", 
-	"Command Line Flag", 
-	NO_AUTO_WRAP,"","","",BACKTRACE_CMD);
+        "*.f90 .F90", "", FORTRAN_COMPILER, "-c", "", "", "-c", DEBUGGER,
+        "", "time", "", "\\st", "-o ", 
+        "Command Line Flag", 
+        NO_AUTO_WRAP,"","","",BACKTRACE_CMD);
     add_fortran_patterns (options->lang_head->patterns);
 
     /* Fortran 95 */
     options->lang_head = add_language (options->lang_head,"Fortran95",
-	"*.f95 .F95", "", "g95", "-c", "", "", "-c", DEBUGGER,
-	"", "time", "", "\\st", "-o ", 
-	"Command Line Flag", 
-	NO_AUTO_WRAP,"","","",BACKTRACE_CMD);
+        "*.f95 .F95", "", "g95", "-c", "", "", "-c", DEBUGGER,
+        "", "time", "", "\\st", "-o ", 
+        "Command Line Flag", 
+        NO_AUTO_WRAP,"","","",BACKTRACE_CMD);
     add_fortran_patterns (options->lang_head->patterns);
 
     /* Yacc */
     options->lang_head = add_language (options->lang_head,"Yacc",
-	"*.y", "", "yacc", "", "", "", "", "", "",
-	"", "", "y.tab.c", "", "Fixed", 
-	NO_AUTO_WRAP,"","","","");
+        "*.y", "", "yacc", "", "", "", "", "", "",
+        "", "", "y.tab.c", "", "Fixed", 
+        NO_AUTO_WRAP,"","","","");
 
     /* Lex */
     options->lang_head = add_language (options->lang_head,"Lex",
-	"*.l", "", "lex", "", "", "", "", "", "",
-	"", "", "lex.yy.c", "", "Fixed", 
-	NO_AUTO_WRAP,"","","","");
+        "*.l", "", "lex", "", "", "", "", "", "",
+        "", "", "lex.yy.c", "", "Fixed", 
+        NO_AUTO_WRAP,"","","","");
 
     /* Perl */
     options->lang_head = add_language (options->lang_head,"Perl",
-	"*.pl", "#!/usr/bin/perl",
-	"", "", "", "", "", "", "", "perl",
-	"", "\\fn", "", "Fixed", 
-	NO_AUTO_WRAP,"","","","");
+        "*.pl", "#!/usr/bin/perl",
+        "", "", "", "", "", "", "", "perl",
+        "", "\\fn", "", "Fixed", 
+        NO_AUTO_WRAP,"","","","");
     patterns = options->lang_head->patterns;
     synhigh_add_pattern (patterns, "\\$?[a-zA-Z_][a-zA-Z0-9_]*|<stdin>", RED, TEXT_BG, DIM_MODE);
     synhigh_add_pattern (patterns, "#.*$", YELLOW, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "\".*[\"$]|'.*['$]", CYAN, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "switch|case|default|break|if|else|elsif|while|for|do|continue|goto|return",
-		 GREEN, TEXT_BG, BOLD_MODE);
+                 GREEN, TEXT_BG, BOLD_MODE);
 
     /* Awk script */
     options->lang_head = add_language (options->lang_head,"Awk",
-	"*.awk", "", "", "", "", "", "", "", "", "awk -f",
-	"", "\\fn", "", "Fixed", 
-	NO_AUTO_WRAP,"","","","");
+        "*.awk", "", "", "", "", "", "", "", "", "awk -f",
+        "", "\\fn", "", "Fixed", 
+        NO_AUTO_WRAP,"","","","");
     patterns = options->lang_head->patterns;
     synhigh_add_pattern (patterns, "(/*).*(*/)|#.*$", YELLOW, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "\".*[\"$]|'.*['$]", CYAN, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "NR|NF|FS|OFS|RS|ORS|FILENAME|BEGIN|END|for|do|while|if|else|case|switch|default",
-		 GREEN, TEXT_BG, BOLD_MODE);
+                 GREEN, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "length|int|index|split|sprintf|substr|printf|print",
-		 MAGENTA, TEXT_BG, DIM_MODE);
+                 MAGENTA, TEXT_BG, DIM_MODE);
 
     /* Sed script */
     options->lang_head = add_language (options->lang_head,"Sed",
-	"*.sed", "", "", "", "", "", "", "", "", "sed -f",
-	"", "\\fn", "", "Fixed", 
-	NO_AUTO_WRAP,"","","","");
+        "*.sed", "", "", "", "", "", "", "", "", "sed -f",
+        "", "\\fn", "", "Fixed", 
+        NO_AUTO_WRAP,"","","","");
 
     /* C-shell */
     options->lang_head = add_language (options->lang_head,"Csh",
-	"*.csh *.cshrc *.login",
-	"#!/bin/csh", "", "", "", "", "", "", "", "",
-	"", "\\fn", "", "Fixed", 
-	NO_AUTO_WRAP,"","","","");
+        "*.csh *.cshrc *.login",
+        "#!/bin/csh", "", "", "", "", "", "", "", "",
+        "", "\\fn", "", "Fixed", 
+        NO_AUTO_WRAP,"","","","");
     add_csh_patterns (options->lang_head->patterns);
 
     /* T-shell */
     options->lang_head = add_language (options->lang_head,"Tcsh",
-	"*.tcsh *.tcshrc",
-	"#!/bin/tcsh", "", "", "", "", "", "", "", "",
-	"", "\\fn", "", "Fixed", 
-	NO_AUTO_WRAP,"","","","");
+        "*.tcsh *.tcshrc",
+        "#!/bin/tcsh", "", "", "", "", "", "", "", "",
+        "", "\\fn", "", "Fixed", 
+        NO_AUTO_WRAP,"","","","");
     add_csh_patterns (options->lang_head->patterns);
 
     /* Bourne-shell */
     options->lang_head = add_language (options->lang_head,"Sh",
-	"*.sh *.profile",
-	"#!/bin/sh", "", "", "", "", "", "", "", "",
-	"", "\\fn", "", "Fixed", 
-	NO_AUTO_WRAP,"","","","");
+        "*.sh *.profile",
+        "#!/bin/sh", "", "", "", "", "", "", "", "",
+        "", "\\fn", "", "Fixed", 
+        NO_AUTO_WRAP,"","","","");
     add_sh_patterns (options->lang_head->patterns);
 
     /* Korn-shell */
     options->lang_head = add_language (options->lang_head,"Ksh",
-	"*.ksh *.kshrc",
-	"#!/usr/bin/ksh", "", "", "", "", "", "", "", "",
-	"", "\\fn", "", "Fixed", 
-	NO_AUTO_WRAP,"","","","");
+        "*.ksh *.kshrc",
+        "#!/usr/bin/ksh", "", "", "", "", "", "", "", "",
+        "", "\\fn", "", "Fixed", 
+        NO_AUTO_WRAP,"","","","");
     add_sh_patterns (options->lang_head->patterns);
 
     /* Bourne-again shell */
     options->lang_head = add_language (options->lang_head,"Bash",
-	"*.bash *.bashrc",
-	"#!/bin/bash", "", "", "", "", "", "", "", "",
-	"", "\\fn", "", "Fixed", 
-	NO_AUTO_WRAP,"","","","");
+        "*.bash *.bashrc",
+        "#!/bin/bash", "", "", "", "", "", "", "", "",
+        "", "\\fn", "", "Fixed", 
+        NO_AUTO_WRAP,"","","","");
     add_sh_patterns (options->lang_head->patterns);
 
     /* TCL */
     options->lang_head = add_language (options->lang_head,"TCL",
-	"*.tcl",
-	"", "", "", "", "", "", "", "", "",
-	"", "\\fn", "", "Fixed", 
-	NO_AUTO_WRAP,"","","","");
+        "*.tcl",
+        "", "", "", "", "", "", "", "", "",
+        "", "\\fn", "", "Fixed", 
+        NO_AUTO_WRAP,"","","","");
 
     /* LaTeX */
     options->lang_head = add_language (options->lang_head,"LaTeX",
-	"*.tex .sty", "", "latex", "", "", "", "", "",
-	"", "xdvi", "", "\\st.dvi", "", "Fixed", 
-	AUTO_WRAP,"","","","");
+        "*.tex .sty", "", "latex", "", "", "", "", "",
+        "", "xdvi", "", "\\st.dvi", "", "Fixed", 
+        AUTO_WRAP,"","","","");
     patterns = options->lang_head->patterns;
     synhigh_add_pattern (patterns, "\\\\[A-Za-z]+",
-		 GREEN, TEXT_BG, BOLD_MODE);    /* Primitives and macros */
+                 GREEN, TEXT_BG, BOLD_MODE);    /* Primitives and macros */
     synhigh_add_pattern (patterns, "%.*$", YELLOW, TEXT_BG, BOLD_MODE);         /* Comments */
     synhigh_add_pattern (patterns, "\\\\[\\=<>]", RED, TEXT_BG, DIM_MODE);
     /* Override comments where % is escaped */
@@ -407,95 +408,95 @@ init_options (opt_t *options)
 
     /* Nroff */
     options->lang_head = add_language (options->lang_head,"Nroff",
-	"*.r *.n *.1 *.2 *.3 *.4 *.5 *.6 *.7 *.8 *.9", "",
-	"nroff", "", "-man", "", "", "",
-	"", "more", "nroff: \\fn: \\ln: \\te", "\\st.nr",
-	"", "Standard Output", 
-	AUTO_WRAP,"","","","");
+        "*.r *.n *.1 *.2 *.3 *.4 *.5 *.6 *.7 *.8 *.9", "",
+        "nroff", "", "-man", "", "", "",
+        "", "more", "nroff: \\fn: \\ln: \\te", "\\st.nr",
+        "", "Standard Output", 
+        AUTO_WRAP,"","","","");
     patterns = options->lang_head->patterns;
     synhigh_add_pattern (patterns, "\\\\\".*$", YELLOW, TEXT_BG, BOLD_MODE);    /* Comments */
     synhigh_add_pattern (patterns, "\".*[\"$]", CYAN, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "^\\.[a-z][a-z]?",   /* Primtives */
-		 GREEN, TEXT_BG, BOLD_MODE);
+                 GREEN, TEXT_BG, BOLD_MODE);
     synhigh_add_pattern (patterns, "^\\.[A-Z][A-Z]?",   /* Macros */
-		 RED, TEXT_BG, DIM_MODE);
+                 RED, TEXT_BG, DIM_MODE);
 
     /* NQC */
     options->lang_head = add_language (options->lang_head,"NQC",
-	"*.nqc", "", "nqc", "", "",
-	"", "", "", "",
-	"nqc -run", "File \"\\fn\" ; line \\ln", "\\st.rcx", "",
-	"Fixed", NO_AUTO_WRAP,"","",
-	"nqc -d","");
+        "*.nqc", "", "nqc", "", "",
+        "", "", "", "",
+        "nqc -run", "File \"\\fn\" ; line \\ln", "\\st.rcx", "",
+        "Fixed", NO_AUTO_WRAP,"","",
+        "nqc -d","");
     add_c_patterns (options->lang_head->patterns);
 
     /* NXC */
     options->lang_head = add_language (options->lang_head,"NXC",
-	"*.nxc", "", "nbc", "", "",
-	"", "", "", "",
-	"legoctl start", "File \"\\fn\" ; line \\ln", "\\st.rxe", "-O=", 
-	"Command Line Flag", NO_AUTO_WRAP,"","",
-	"legoctl --overwrite upload","");
+        "*.nxc", "", "nbc", "", "",
+        "", "", "", "",
+        "legoctl start", "File \"\\fn\" ; line \\ln", "\\st.rxe", "-O=", 
+        "Command Line Flag", NO_AUTO_WRAP,"","",
+        "legoctl --overwrite upload","");
     add_c_patterns (options->lang_head->patterns);
 
     /* NBC */
     options->lang_head = add_language (options->lang_head,"NBC",
-	"*.nbc", "", "nbc", "", "",
-	"", "", "", "",
-	"legoctl start", "File \"\\fn\" ; line \\ln", "\\st.rxe", "-O=", 
-	"Command Line Flag", NO_AUTO_WRAP,"","","legoctl --overwrite upload","");
+        "*.nbc", "", "nbc", "", "",
+        "", "", "", "",
+        "legoctl start", "File \"\\fn\" ; line \\ln", "\\st.rxe", "-O=", 
+        "Command Line Flag", NO_AUTO_WRAP,"","","legoctl --overwrite upload","");
     add_c_patterns (options->lang_head->patterns);
 
     /* NQC header files */
     options->lang_head = add_language (options->lang_head,"NQH",
-	"*.nqh", "", "", "", "",
-	"", "", DEBUGGER, "",
-	"", ERROR_FORMAT, "", "", "", 
-	NO_AUTO_WRAP,"","","","");
+        "*.nqh", "", "", "", "",
+        "", "", DEBUGGER, "",
+        "", ERROR_FORMAT, "", "", "", 
+        NO_AUTO_WRAP,"","","","");
     add_c_patterns (options->lang_head->patterns);
 
     /* C++ */
 #ifdef SCO_SV   /* OS5 binary runs on UnixWare also, so sense OS */
     uname(&name);
     if ( strcmp(name.sysname,"UNIX_SV") == 0 )
-	options->lang_head = add_language (options->lang_head,"C++",
-	    "*.cc *.C *.cpp *.cxx *.c++", "", CPP_COMPILER, CCOMPILE_ONLY,
-	    UW7_CCOMPILE_OPTS, CLINK_OPTS, CSYNTAX_ONLY, UW7_DEBUGGER, "",
-	    RUN_PREFIX, UW7_ERROR_FORMAT, "\\st", "-o ", 
-	    "Command Line Flag", NO_AUTO_WRAP,"","","","");
+        options->lang_head = add_language (options->lang_head,"C++",
+            "*.cc *.C *.cpp *.cxx *.c++", "", CPP_COMPILER, CCOMPILE_ONLY,
+            UW7_CCOMPILE_OPTS, CLINK_OPTS, CSYNTAX_ONLY, UW7_DEBUGGER, "",
+            RUN_PREFIX, UW7_ERROR_FORMAT, "\\st", "-o ", 
+            "Command Line Flag", NO_AUTO_WRAP,"","","","");
     else
 #endif
-	options->lang_head = add_language (options->lang_head,"C++",
-	    "*.cc *.C *.cpp *.cxx *.c++", "", CPP_COMPILER, CCOMPILE_ONLY,
-	    CCOMPILE_OPTS, CLINK_OPTS, CSYNTAX_ONLY, DEBUGGER, "",
-	    RUN_PREFIX, CPP_ERROR_FORMAT, "\\st", "-o ", 
-	    "Command Line Flag", NO_AUTO_WRAP,"-S",PP_OPTIONS,"",BACKTRACE_CMD);
+        options->lang_head = add_language (options->lang_head,"C++",
+            "*.cc *.C *.cpp *.cxx *.c++", "", CPP_COMPILER, CCOMPILE_ONLY,
+            CCOMPILE_OPTS, CLINK_OPTS, CSYNTAX_ONLY, DEBUGGER, "",
+            RUN_PREFIX, CPP_ERROR_FORMAT, "\\st", "-o ", 
+            "Command Line Flag", NO_AUTO_WRAP,"-S",PP_OPTIONS,"",BACKTRACE_CMD);
     add_cpp_patterns (options->lang_head->patterns);
 
     /* C */
 #ifdef SCO_SV   /* OS5 binary runs on UnixWare also, so sense OS */
     uname(&name);
     if ( strcmp(name.sysname,"UNIX_SV") == 0 )
-	options->lang_head = add_language (options->lang_head,"C",
-	    "*.c", "", C_COMPILER, CCOMPILE_ONLY,
-	    UW7_CCOMPILE_OPTS, CLINK_OPTS, CSYNTAX_ONLY, UW7_DEBUGGER, "",
-	    RUN_PREFIX, UW7_ERROR_FORMAT, "\\st", "-o ", 
-	    "Command Line Flag", NO_AUTO_WRAP,"","","","");
+        options->lang_head = add_language (options->lang_head,"C",
+            "*.c", "", C_COMPILER, CCOMPILE_ONLY,
+            UW7_CCOMPILE_OPTS, CLINK_OPTS, CSYNTAX_ONLY, UW7_DEBUGGER, "",
+            RUN_PREFIX, UW7_ERROR_FORMAT, "\\st", "-o ", 
+            "Command Line Flag", NO_AUTO_WRAP,"","","","");
     else
 #endif
-	options->lang_head = add_language (options->lang_head,"C",
-	    "*.c", "", C_COMPILER, CCOMPILE_ONLY, CCOMPILE_OPTS,
-	    CLINK_OPTS, CSYNTAX_ONLY, DEBUGGER, "",
-	    RUN_PREFIX, ERROR_FORMAT, "\\st", "-o ", 
-	    "Command Line Flag", NO_AUTO_WRAP,"-S",PP_OPTIONS,"",BACKTRACE_CMD);
+        options->lang_head = add_language (options->lang_head,"C",
+            "*.c", "", C_COMPILER, CCOMPILE_ONLY, CCOMPILE_OPTS,
+            CLINK_OPTS, CSYNTAX_ONLY, DEBUGGER, "",
+            RUN_PREFIX, ERROR_FORMAT, "\\st", "-o ", 
+            "Command Line Flag", NO_AUTO_WRAP,"-S",PP_OPTIONS,"",BACKTRACE_CMD);
     add_c_patterns (options->lang_head->patterns);
 
     /* C/C++ header files */
     options->lang_head = add_language (options->lang_head,"CHeaders",
-	"*.h", "", "", "", "",
-	"", "", DEBUGGER, "",
-	"", ERROR_FORMAT, "", "", "", 
-	NO_AUTO_WRAP,"","","","");
+        "*.h", "", "", "", "",
+        "", "", DEBUGGER, "",
+        "", ERROR_FORMAT, "", "", "", 
+        NO_AUTO_WRAP,"","","","");
     add_c_patterns (options->lang_head->patterns);
 }
 
@@ -584,38 +585,49 @@ void    cyan_scheme (opt_t * options)
 }
 
 
-int     install_default_user_config(opt_t *options)
+int     check_missing_user_config(opt_t *options)
 
 {
-    char    cmd[APE_CMD_MAX+1],
-	    config_dir[APE_PATH_MAX+1],
-	    *ok_button[2] = OK_BUTTON,
-	    msg[APE_PATH_MAX + 64], squeezed[128];
+    char        config_dir[APE_PATH_MAX+1];
     struct stat st;
     
     get_config_dir(config_dir,APE_PATH_MAX);
     if ( stat(config_dir,&st) != 0 )
     {
-	xt_rmkdir(config_dir,0755);
-	snprintf(cmd,APE_CMD_MAX,
-	    "cp -R %s/share/APE/Languages %s/share/APE/options.rc %s/share/APE/custom_menu %s",
-	    INSTALL_PREFIX, INSTALL_PREFIX, INSTALL_PREFIX, config_dir);
-	if ( xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"sh","-c",cmd,NULL) != 0 )
-	{
-	    popup_mesg("Can't find default Languages in share directory!",
-			ok_button, options);
-	    xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"rm","-rf",config_dir,NULL);
-	    return 0;
-	}
-	else
-	{
-	    snprintf(msg, APE_PATH_MAX + 63,
-		    "Default options installed in %s.\n", config_dir);
-	    xt_strsqueeze(squeezed, msg, 127);
-	    popup_mesg(squeezed, ok_button, options);
-	    return 1;
-	}
+        xt_rmkdir(config_dir,0755);
+        return install_default_user_config(options);
     }
-    return 0;
+    else
+        return 1;
+}
+
+
+int     install_default_user_config(opt_t *options)
+
+{
+    char    cmd[APE_CMD_MAX+1],
+            *ok_button[2] = OK_BUTTON,
+            msg[APE_PATH_MAX + 64], squeezed[128],
+            config_dir[APE_PATH_MAX+1];
+    
+    get_config_dir(config_dir,APE_PATH_MAX);
+    snprintf(cmd,APE_CMD_MAX,
+        "cp -R %s/share/APE/Languages %s/share/APE/options.rc %s/share/APE/custom_menu %s",
+        INSTALL_PREFIX, INSTALL_PREFIX, INSTALL_PREFIX, config_dir);
+    if ( xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"sh","-c",cmd,NULL) != 0 )
+    {
+        popup_mesg("Can't find default Languages in share directory!",
+                    ok_button, options);
+        xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"rm","-rf",config_dir,NULL);
+        return 0;
+    }
+    else
+    {
+        snprintf(msg, APE_PATH_MAX + 63,
+                "Default options installed in %s.\n", config_dir);
+        xt_strsqueeze(squeezed, msg, 127);
+        popup_mesg(squeezed, ok_button, options);
+        return 1;
+    }
 }
 
