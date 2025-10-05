@@ -10,6 +10,6 @@ New .Main
 .Template class
 E.Xception
 New F.Unction
-Concrete C.Lass
 .Abstract class
 De.Rived class
+.Concrete class
