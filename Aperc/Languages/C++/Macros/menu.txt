@@ -7,7 +7,9 @@ I.Nclude
 .Block comment
 New .Main
 .Enum
-New C.Lass
 .Template class
 E.Xception
 New F.Unction
+Concrete C.Lass
+.Abstract class
+De.Rived class

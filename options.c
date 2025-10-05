@@ -52,8 +52,7 @@ int     options_menu(file_t file[], int af, opt_t *options,buff_t *cut_buff,even
     lang_t   old_lang;
     char    /* *buttons[3] = YES_NO_BUTTONS, */
             config_dir[APE_PATH_MAX+1],
-            filename[APE_PATH_MAX+13],
-            *reset_buttons[3] = YES_NO_BUTTONS;
+            filename[APE_PATH_MAX+13];
             
     struct stat st;
     static char *options_text[] = {
@@ -62,9 +61,9 @@ int     options_menu(file_t file[], int af, opt_t *options,buff_t *cut_buff,even
                                 ".Screen and keyboard",
                                 "Syntax .Highlighting",
                                 ".Miscellaneous",
+                                /*
                                 TWC_HLINE,
                                 ".Reset built-in defaults",
-                                /*
                                 "S.Ave as personal defaults",
                                 "Load .Personal defaults",
                                 */
@@ -142,7 +141,9 @@ int     options_menu(file_t file[], int af, opt_t *options,buff_t *cut_buff,even
             save = 1;
             break;
         */
-        /* Reset hard-coded defaults */
+        /* Doing away with hard-coded defaults altogether in favor
+           of installing default config files */
+        #if 0
         case 'r':
             if ( tolower(popup_mesg("Are you sure you want to reset defaults?",
                     reset_buttons,options)) == 'y' )
@@ -157,6 +158,7 @@ int     options_menu(file_t file[], int af, opt_t *options,buff_t *cut_buff,even
             else
                 save = 0;
             break;
+        #endif
         default:
             save = 0;
             break;

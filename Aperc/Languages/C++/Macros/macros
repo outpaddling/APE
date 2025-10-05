@@ -78,23 +78,6 @@ void    usage(char *argv[])
 }e 1 4 7 0 0 0 0 0 3 10:enum class
 {
 };
-l 1 17 34 0 0 9 10 0 17 61:class replace_me    // Replace replace_me with the class name
-{
-    // Interface functions (a.k.a. methods in some languages)
-    public:
-        // Constructor should establish invariants (assumptions) for the class
-        replace_me() { }
-        // Destructor should free all allocated resources
-        ~replace_me() { }
-        // Other member functions should ensure that the invariants still hold
-    
-    // Accessible by members of derived classes and friend classes
-    protected:
-    
-    // Implementation (mostly data members)
-    // Accessible only by members functions of this class
-    private:
-};
 t 1 35 56 0 0 26 36 0 21 51:// Example template defs, choose one, maybe augment
 template <typename T>
 template <typename T, int N>    // Value argument, must be a constant
@@ -171,4 +154,51 @@ catch(replace_me & err)
 {
     return ;
 }
+l 1 4 21 0 0 0 0 0 17 61:class replace_me    // Replace replace_me with the class name
+{
+    // Interface functions (a.k.a. methods in some languages)
+    public:
+        // Constructor should establish invariants (assumptions) for the class
+        replace_me() { }
+        // Destructor should free all allocated resources
+        ~replace_me() { }
+        // Other member functions should ensure that the invariants still hold
+    
+    // Accessible by members of derived classes and friend classes
+    protected:
+    
+    // Implementation (mostly data members)
+    // Accessible only by members functions of this class
+    private:
+};
+a 1 5 16 0 0 0 0 0 11 61:class replace_me    // Replace replace_me with the class name
+{
+    // Interface functions (a.k.a. methods in some languages)
+    public:
+        // Destructor should free all allocated resources
+        ~replace_me() {}
+        // Might be overridden by derived class
+        virtual type func() {};
+        // Pure virtual: MUST be overridden by derived classes
+        virtual type func() = 0;    
+};
+r 1 4 23 0 0 1 1 0 19 41:// Replace replace_me with the class name
+// Replace abstract-class with the abstract class from which this is derived
+class replace_me : public abstract-class
+{
+    // Interface functions (a.k.a. methods in some languages)
+    public:
+        // Constructor should establish invariants (assumptions) for the class
+        replace_me() { }
+        // Destructor should free all allocated resources
+        ~replace_me() { }
+        // Other member functions should ensure that the invariants still hold
+    
+    // Accessible by members of derived classes and friend classes
+    protected:
+    
+    // Implementation (mostly data members)
+    // Accessible only by members functions of this class
+    private:
+};
 
