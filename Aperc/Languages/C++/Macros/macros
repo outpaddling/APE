@@ -48,41 +48,7 @@ for ( ; ; )
 b 1 7 10 0 0 0 0 0 3 2:/*
  *
  */
-u 0 0 34 0 1 0 8 0 34 0:
-
-/***************************************************************************
- *  Use auto-c2man to generate a man page from this comment
- *
- *  Name:
- *      -
- *
- *  Library:
- *      #include <>
- *      -l
- *
- *  Description:
- *  
- *  Arguments:
- *
- *  Returns:
- *
- *  Examples:
- *
- *  Files:
- *
- *  Environment
- *
- *  See also:
- *
- *  History: 
- *  Date        Name        Modification
- *  \date(12)\gecos(12)Begin
- ***************************************************************************/
-
-()
-
-{
-}m 0 0 27 0 1 0 3 0 27 19:#include <iostream>
+m 0 0 27 0 1 0 3 0 27 19:#include <iostream>
 #include <cstdlib>
 #include <sysexits.h>
 
@@ -109,36 +75,100 @@ void    usage(char *argv[])
 {
     std::cerr << "Usage: " << argv[0] << std::endl;
     exit(EX_USAGE);
-}l 1 0 9 0 0 0 0 0 9 5:class
+}e 1 4 7 0 0 0 0 0 3 10:enum class
 {
-    public:
-        () { }
-        ~() { }
-    
-    private:
-        
 };
-t 1 0 12 0 0 0 0 0 12 21:template <typename T>
+l 1 17 34 0 0 9 10 0 17 61:class replace_me    // Replace replace_me with the class name
+{
+    // Interface functions (a.k.a. methods in some languages)
+    public:
+        // Constructor should establish invariants (assumptions) for the class
+        replace_me() { }
+        // Destructor should free all allocated resources
+        ~replace_me() { }
+        // Other member functions should ensure that the invariants still hold
+    
+    // Accessible by members of derived classes and friend classes
+    protected:
+    
+    // Implementation (mostly data members)
+    // Accessible only by members functions of this class
+    private:
+};
+t 1 35 56 0 0 26 36 0 21 51:// Example template defs, choose one, maybe augment
+template <typename T>
 template <typename T, int N>    // Value argument, must be a constant
 template <element T>            // Constrained template, C++20
-class
+class replace_me    // Replace replace_me with the class name
 {
+    // Interface functions (a.k.a. methods in some languages)
     public:
-        () { }
-        ~() { }
+        // Constructor should establish invariants (assumptions) for the class
+        replace_me() { }
+        // Destructor should free all allocated resources
+        ~replace_me() { }
+        // Other member functions should ensure that the invariants still hold
     
+    // Accessible by members of derived classes and friend classes
+    protected:
+    
+    // Implementation (mostly data members)
+    // Accessible only by members functions of this class
     private:
-        
 };
-x 1 7 15 0 0 0 0 0 8 3:try
+x 1 27 46 0 0 20 22 0 19 51:// try-catch blocks are rare in well-designed code.
+// Use RAII (Resource Allocation Is Initialization) to avoid problems instead.
+// Use simple function return codes where possible.  They are more efficient.
+// Use exceptions where errors are rare, the caller cannot handle the
+// error easily, a return code is not enough information, etc.
+try
 {
-    if ()
-        throw
+    // Any statement that might throw an exception
 }
-catch()
+// Replace replace_me with the exception type
+// See <stdexcept> for common exceptions
+catch(replace_me & err)
 {
+    cerr << err.what() << endl;
+    // Use this if it's impossible to recover from the exception
+    // std::terminate();
+    // Use this to rethrow the exception (pass it up to the caller)
+    // throw;
 }
-e 1 4 7 0 0 0 0 0 3 10:enum class
+u 1 29 65 0 0 16 41 0 36 76:/***************************************************************************
+ *  Use auto-c2man to generate a man page from this comment
+ *
+ *  Name:
+ *      -
+ *
+ *  Library:
+ *      #include <>
+ *      -l
+ *
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  Examples:
+ *
+ *  Files:
+ *
+ *  Environment
+ *
+ *  See also:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  2025-10-05  Jason Bacon Begin
+ ***************************************************************************/
+
+// Use "type var = value" for optional arguments.
+// This is a shorthand for overloading the function.
+()
+
 {
-};
+    return ;
+}
 

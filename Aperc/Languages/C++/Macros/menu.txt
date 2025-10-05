@@ -5,9 +5,9 @@
 .For loop
 I.Nclude
 .Block comment
-New F.Unction
 New .Main
+.Enum
 New C.Lass
 .Template class
 E.Xception
-.Enum
+New F.Unction
