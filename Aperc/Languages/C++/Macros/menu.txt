@@ -1,15 +1,8 @@
-.Switch
 I.Nclude
 .Block comment
 .Enum
 .Template class
-E.Xception
-New F.Unction
-.Do-while loop
-.For loop
-.If-else
-.While loop
-New .Main
 .Concrete class
 De.Rived class
 .Abstract class
+New .Header

@@ -1,17 +1,17 @@
-name                    C++_header
-name_spec               *.hpp
+name                    C++
+name_spec               *.hpp *.h++ *.hh *.hxx
 id_comment              
-compiler                cpp
-compile_flags           -Wall -g
-compile_output_flag     -o
+compiler                c++
+compile_flags           -Wall -g -DDEBUG=1 -I/usr/local/include
+compile_output_flag     -o 
 syntax_check_flag       -fsyntax-only
 compile_only_flag       -c
 compile_to_asm_flag     -S
 preprocess_only_flag    -E -C
-link_flags              
-debugger                gdb
-debugger_backtrace_cmd  where
-run_prefix              
+link_flags              -L/usr/local/lib -lm
+debugger                lldb -c \ex.core \ex
+debugger_backtrace_cmd  bt
+run_prefix              time
 upload_prefix           
 executable_name         \st
 executable_source       Command Line Flag

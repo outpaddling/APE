@@ -3,10 +3,10 @@
 6 -1 8
 ".*["$]|'.*['$]
 2 -1 8
-#pragma|#ifdef|#ifndef|#if|#include|#else|#elif|#endif|#define|defined|#undef|#error|inline|typedef|switch|case|default|break|if|else|while|for|do|continue|goto|return|main|volatile|operator|private|public|protected|class|const|extern|auto|static|enum|struct|void
+class|private|protected|public|#ifdef|#ifndef|#if|#include|#else|#elif|#endif|#define|defined|#undef|#error|inline|typedef|switch|case|default|break|if|else|while|for|do|continue|goto|return|main|struct|enum|static|volatile|extern|const|operator|try|catch|throw|virtual|template|typename|element|override|delete|new
 1 -1 8
 0[Xx][0-9A-Fa-f]+|[0-9]+
 1 -1 16
-char|short|int|long|signed|unsigned|float|double|register|friend
+char|short|int|long|unsigned|float|double|void|register|auto|friend
 -2 0 0
 end
