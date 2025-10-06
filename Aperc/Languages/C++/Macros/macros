@@ -176,13 +176,13 @@ class class_name
 };
 r 1 0 35 0 0 0 11 0 35 16:// Derived class
 // This class implements the representation (data members) and some/all of
-// the concrete // member functions for the base/super class "abstract_class".
-// There should be multiple derived classes for each abstract class,
-// otherwise the abstract class serves no purpose.
+// the concrete member functions for the base/super class "base_class".
+// There should be multiple derived classes for each base class,
+// otherwise the base class serves no purpose.
 
 // Replace class_name with the class name
-// Replace abstract_class with the abstract class from which this is derived
-class class_name : public abstract_class
+// Replace base_class with the base class from which this is derived
+class class_name : public base_class
 {
     // Interface functions (a.k.a. methods in some languages)
     public:
@@ -209,12 +209,12 @@ class class_name : public abstract_class
     // Accessible only by members functions of this class
     private:
 };
-a 1 0 23 0 0 0 0 0 23 79:// Abstract class (virtual/base/super class with at least one virtual function)
+a 1 0 23 0 0 0 0 0 23 71:// Abstract class (base/super class with at least one virtual function)
 // We cannot create objects of this type.  This class is merely a
-// generic interface for multiple derived/sub classes.  It allows
-// us to write a single function that takes multiple similar
-// class objects as arguments, for example, provided that they
-// have identical interfaces.  This also means that this class can
+// generic interface for multiple derived/sub classes.  It allows us to
+// write a single function that takes multiple similar class objects as
+// arguments, for example, provided that they have all the same interface
+// functions as the base.  This also means that this base class can
 // only access such objects via pointers or references.
 
 // Replace class_name with the class name
