@@ -1,4 +1,4 @@
-name                    C++
+name                    C++_header
 name_spec               *.hpp *.h++ *.hh *.hxx
 id_comment              
 compiler                c++

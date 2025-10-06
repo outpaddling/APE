@@ -1,4 +1,15 @@
-n 1 0 1 0 0 0 0 0 1 11:#include <>
+s 1 0 11 0 0 0 0 0 11 2:/*
+ *
+ */
+
+switch()
+{
+    case    :
+        break;
+    default:
+        break;
+}
+n 1 0 1 0 0 0 0 0 1 11:#include <>
 b 1 7 10 0 0 0 0 0 3 2:/*
  *
  */
@@ -26,7 +37,119 @@ class replace_me    // Replace replace_me with the class name
     // Accessible only by members functions of this class
     private:
 };
-c 1 0 41 0 0 0 17 0 41 17:// Concrete class
+x 1 27 46 0 0 20 22 0 19 51:// try-catch blocks are rare in well-designed code.
+// Use RAII (Resource Allocation Is Initialization) to avoid problems instead.
+// Use simple function return codes where possible.  They are more efficient.
+// Use exceptions where errors are rare, the caller cannot handle the
+// error easily, a return code is not enough information, etc.
+try
+{
+    // Any statement that might throw an exception
+}
+// Replace replace_me with the exception type
+// See <stdexcept> for common exceptions
+catch(replace_me & err)
+{
+    cerr << err.what() << endl;
+    // Use this if it's impossible to recover from the exception
+    // std::terminate();
+    // Use this to rethrow the exception (pass it up to the caller)
+    // throw;
+}
+u 1 29 65 0 0 16 41 0 36 76:/***************************************************************************
+ *  Use auto-c2man to generate a man page from this comment
+ *
+ *  Name:
+ *      -
+ *
+ *  Library:
+ *      #include <>
+ *      -l
+ *
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  Examples:
+ *
+ *  Files:
+ *
+ *  Environment
+ *
+ *  See also:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  2025-10-05  Jason Bacon Begin
+ ***************************************************************************/
+
+// Use "type var = value" for optional arguments.
+// This is a shorthand for overloading the function.
+()
+
+{
+    return ;
+}
+d 1 1 8 0 0 0 0 0 7 2:/*
+ *
+ */
+
+do
+{
+}   while ();
+f 1 1 8 0 0 0 0 0 7 2:/*
+ *
+ */
+
+for ( ; ; )
+{
+}
+i 1 1 11 0 0 0 0 0 10 2:/*
+ *
+ */
+
+if ()
+{
+}
+else
+{
+}
+w 1 60 67 0 0 41 41 0 7 2:/*
+ *
+ */
+
+while ()
+{
+}
+m 0 0 26 0 1 0 2 0 26 19:#include <iostream>
+#include <sysexits.h>
+
+int     usage(char *argv[]);
+
+int     main(int argc,char *argv[])
+
+{
+    switch(argc)
+    {
+        case 1:
+            break;
+        
+        default:
+            return usage(argv);
+    }
+    
+    return EX_OK;
+}
+
+
+int     usage(char *argv[])
+
+{
+    std::cerr << "Usage: " << argv[0] << std::endl;
+    return EX_USAGE;
+}c 1 0 41 0 0 0 17 0 41 17:// Concrete class
 // Replace class_name with the class name
 class class_name
 {
@@ -146,8 +269,4 @@ class class_name
     // Accessible by members of derived classes and friend classes
     protected:
 };
-h 2 0 4 0 23 0 0 0 4 12:#ifndef __H_
-#define __H_
-
-
-#endif  // #ifndef __H_
+
