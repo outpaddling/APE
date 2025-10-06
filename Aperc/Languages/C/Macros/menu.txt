@@ -1,6 +1,5 @@
 .Switch
 .Block comment
-New .Main
 Error .Check
 .Enum
 New F.Unction
@@ -11,3 +10,4 @@ I.Nclude
 Open file for .Read
 Open file for wri.Te
 .While loop
+New .Main

@@ -20,47 +20,7 @@ switch()
 else
 {
 }
-m 0 0 40 0 1 0 14 0 40 76:/***************************************************************************
- *  Description:
- *  
- *  Arguments:
- *
- *  Returns:
- *      0 on success, non-zero error codes otherwise
- *
- *  History: 
- *  Date        Name        Modification
- *  \date(12)\gecos(12)Begin
- ***************************************************************************/
-
-#include <stdio.h>
-#include <sysexits.h>
-#include <stdlib.h>
-
-void    usage(char *argv[]);
-
-int     main(int argc,char *argv[])
-
-{
-    switch(argc)
-    {
-        case 1:
-            break;
-        
-        default:
-            usage(argv);
-    }
-    
-    return EX_OK;
-}
-
-
-void    usage(char *argv[])
-
-{
-    fprintf(stderr, "Usage: %s\n", argv[0]);
-    exit(EX_USAGE);
-}c 1 28 35 0 0 18 18 0 7 6:if ( )
+c 1 28 35 0 0 18 18 0 7 6:if ( )
 {
     fprintf(stderr, "Error: %s(): %s\n", __func__, strerror(errno));
 }
@@ -157,4 +117,43 @@ fclose(_stream);
 while ()
 {
 }
-
+m 0 0 39 0 1 0 15 0 39 76:/***************************************************************************
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *      0 on success, non-zero error codes otherwise
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  2025-10-06  Jason Bacon Begin
+ ***************************************************************************/
+
+#include <stdio.h>
+#include <sysexits.h>
+
+int     usage(char *argv[]);
+
+int     main(int argc,char *argv[])
+
+{
+    switch(argc)
+    {
+        case 1:
+            break;
+        
+        default:
+            return usage(argv);
+    }
+    
+    return EX_OK;
+}
+
+
+int     usage(char *argv[])
+
+{
+    fprintf(stderr, "Usage: %s\n", argv[0]);
+    return EX_USAGE;
+}

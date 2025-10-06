@@ -13,34 +13,7 @@ switch()
 b 1 7 10 0 0 0 0 0 3 2:/*
  *
  */
-m 0 0 27 0 1 0 3 0 27 19:#include <iostream>
-#include <cstdlib>
-#include <sysexits.h>
-
-void    usage(char *argv[]);
-
-int     main(int argc,char *argv[])
-
-{
-    switch(argc)
-    {
-        case 1:
-            break;
-        
-        default:
-            usage(argv);
-    }
-    
-    return EX_OK;
-}
-
-
-void    usage(char *argv[])
-
-{
-    std::cerr << "Usage: " << argv[0] << std::endl;
-    exit(EX_USAGE);
-}e 1 4 7 0 0 0 0 0 3 10:enum class
+e 1 4 7 0 0 0 0 0 3 10:enum class
 {
 };
 t 1 35 56 0 0 26 36 0 21 51:// Example template defs, choose one, maybe augment
@@ -202,4 +175,30 @@ else
 while ()
 {
 }
-
+m 0 0 26 0 1 0 2 0 26 19:#include <iostream>
+#include <sysexits.h>
+
+int     usage(char *argv[]);
+
+int     main(int argc,char *argv[])
+
+{
+    switch(argc)
+    {
+        case 1:
+            break;
+        
+        default:
+            return usage(argv);
+    }
+    
+    return EX_OK;
+}
+
+
+int     usage(char *argv[])
+
+{
+    std::cerr << "Usage: " << argv[0] << std::endl;
+    return EX_USAGE;
+}

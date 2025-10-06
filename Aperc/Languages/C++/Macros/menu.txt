@@ -1,7 +1,6 @@
 .Switch
 I.Nclude
 .Block comment
-New .Main
 .Enum
 .Template class
 E.Xception
@@ -13,3 +12,4 @@ De.Rived class
 .For loop
 .If-else
 .While loop
+New .Main
