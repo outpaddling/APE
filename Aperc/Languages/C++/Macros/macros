@@ -92,25 +92,6 @@ catch(replace_me & err)
 {
     return ;
 }
-r 1 18 37 0 0 15 15 0 19 41:// Replace class_name with the class name
-// Replace abstract_class with the abstract class from which this is derived
-class class_name : public abstract_class
-{
-    // Interface functions (a.k.a. methods in some languages)
-    public:
-        // Constructor should establish invariants (assumptions) for the class
-        class_name() { }
-        // Destructor should free all allocated resources
-        ~class_name() { }
-        // Other member functions should ensure that the invariants still hold
-    
-    // Accessible by members of derived classes and friend classes
-    protected:
-    
-    // Implementation (mostly data members)
-    // Accessible only by members functions of this class
-    private:
-};
 a 1 38 53 0 0 27 27 0 15 41:// Replace class_name with the class name
 class class_name
 {
@@ -125,24 +106,6 @@ class class_name
 
     // Accessible by members of derived classes and friend classes
     protected:
-};
-c 1 0 18 0 0 0 0 0 18 41:// Replace class_name with the class name
-class class_name
-{
-    // Interface functions (a.k.a. methods in some languages)
-    public:
-        // Constructor should establish invariants (assumptions) for the class
-        class_name() { }
-        // Destructor should free all allocated resources
-        ~class_name() { }
-        // Other member functions should ensure that the invariants still hold
-    
-    // Accessible by members of derived classes and friend classes
-    protected:
-    
-    // Implementation (mostly data members)
-    // Accessible only by members functions of this class
-    private:
 };
 d 1 1 8 0 0 0 0 0 7 2:/*
  *
@@ -201,4 +164,55 @@ int     usage(char *argv[])
 {
     std::cerr << "Usage: " << argv[0] << std::endl;
     return EX_USAGE;
-}
+}c 1 0 25 0 0 0 1 0 25 41:// Replace class_name with the class name
+class class_name
+{
+    // Interface functions (a.k.a. methods in some languages)
+    public:
+        // Constructor should establish invariants (assumptions) for the class
+        // Other member functions should ensure that the invariants still hold
+        class_name() { }
+        // Destructor should free all allocated resources
+        ~class_name() { }
+        
+        // const indicates that func_name() does not modify members,
+        // so it can be invoked for const objects
+        type func_name const () {};
+        
+        // func_name2() cannot be invoked for const objects
+        type func_name2 () {};
+    
+    // Accessible by members of derived classes and friend classes
+    protected:
+    
+    // Implementation (mostly data members)
+    // Accessible only by members functions of this class
+    private:
+};
+r 1 25 51 0 0 20 27 0 26 41:// Replace class_name with the class name
+// Replace abstract_class with the abstract class from which this is derived
+class class_name : public abstract_class
+{
+    // Interface functions (a.k.a. methods in some languages)
+    public:
+        // Constructor should establish invariants (assumptions) for the class
+        // Other member functions should ensure that the invariants still hold
+        class_name() { }
+        // Destructor should free all allocated resources
+        ~class_name() { }
+        
+        // const indicates that func_name() does not modify members,
+        // so it can be invoked for const objects
+        type func_name const () {};
+        
+        // func_name2() cannot be invoked for const objects
+        type func_name2 () {};
+    
+    // Accessible by members of derived classes and friend classes
+    protected:
+    
+    // Implementation (mostly data members)
+    // Accessible only by members functions of this class
+    private:
+};
+

@@ -5,11 +5,11 @@ I.Nclude
 .Template class
 E.Xception
 New F.Unction
-De.Rived class
 .Abstract class
-.Concrete class
 .Do-while loop
 .For loop
 .If-else
 .While loop
 New .Main
+.Concrete class
+De.Rived class
