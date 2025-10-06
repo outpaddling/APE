@@ -92,21 +92,6 @@ catch(replace_me & err)
 {
     return ;
 }
-a 1 38 53 0 0 27 27 0 15 41:// Replace class_name with the class name
-class class_name
-{
-    // Interface functions (a.k.a. methods in some languages)
-    public:
-        // Destructor should free all allocated resources
-        ~class_name() {}
-        // Might be overridden by derived class
-        virtual type func() {};
-        // Pure virtual: MUST be overridden by derived classes
-        virtual type func() = 0;    
-
-    // Accessible by members of derived classes and friend classes
-    protected:
-};
 d 1 1 8 0 0 0 0 0 7 2:/*
  *
  */
@@ -189,7 +174,13 @@ class class_name
     // Accessible only by members functions of this class
     private:
 };
-r 1 25 51 0 0 20 27 0 26 41:// Replace class_name with the class name
+r 1 0 35 0 0 0 11 0 35 16:// Derived class
+// This class implements the representation (data members) and some/all of
+// the concrete // member functions for the base/super class "abstract_class".
+// There should be multiple derived classes for each abstract class,
+// otherwise the abstract class serves no purpose.
+
+// Replace class_name with the class name
 // Replace abstract_class with the abstract class from which this is derived
 class class_name : public abstract_class
 {
@@ -203,10 +194,13 @@ class class_name : public abstract_class
         
         // const indicates that func_name() does not modify members,
         // so it can be invoked for const objects
-        type func_name const () {};
+        // override tells the compiler to verify that there is a corresponding
+        // virtual function in the base/super class.  Otherwise, a misspelled
+        // function name will be assumed to be intentional and valid.
+        type func_name const () override {};
         
         // func_name2() cannot be invoked for const objects
-        type func_name2 () {};
+        type func_name2 () override {};
     
     // Accessible by members of derived classes and friend classes
     protected:
@@ -214,5 +208,28 @@ class class_name : public abstract_class
     // Implementation (mostly data members)
     // Accessible only by members functions of this class
     private:
+};
+a 1 0 23 0 0 0 0 0 23 79:// Abstract class (virtual/base/super class with at least one virtual function)
+// We cannot create objects of this type.  This class is merely a
+// generic interface for multiple derived/sub classes.  It allows
+// us to write a single function that takes multiple similar
+// class objects as arguments, for example, provided that they
+// have identical interfaces.  This also means that this class can
+// only access such objects via pointers or references.
+
+// Replace class_name with the class name
+class class_name
+{
+    // Interface functions (a.k.a. methods in some languages)
+    public:
+        // Destructor should free all allocated resources
+        ~class_name() {}
+        // Might be overridden by derived class
+        virtual type func() {};
+        // Pure virtual: MUST be overridden by derived classes
+        virtual type func() = 0;    
+
+    // Accessible by members of derived classes and friend classes
+    protected:
 };
 
