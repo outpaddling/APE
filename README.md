@@ -4,6 +4,8 @@ APE
 APE (Another Programmer's Editor) is a terminal-based, menu-driven
 integrated development environment (IDE) for Unix-compatible systems.
 
+![APE](ape-c++.png "APE Editing C++ Code")
+
 Early development predates currently maintained BSD systems and Linux,
 having occurred on a 20MHz 80286 PC running Coherent, a low-cost commercial
 Unix-like system from the Mark Williams Company.  Development shifted
@@ -24,7 +26,8 @@ Support for new languages can be added by the user via dialogs under
 the Options menu.
 
 As a terminal-based editor, APE functions as efficiently in a PuTTY
-terminal as it does on a graphical console.  So, while APE does not have
+terminal or text console as it does on a graphical console.
+So, while APE does not have
 a graphical user interface, it can be used just about anywhere, even over
-the slowest of network connections to headless servers (or cloud instances)
+the slowest of network connections to headless servers or cloud instances
 with no X11 or Wayland installation.
