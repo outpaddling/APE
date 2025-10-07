@@ -149,7 +149,7 @@ int     usage(char *argv[])
 {
     std::cerr << "Usage: " << argv[0] << std::endl;
     return EX_USAGE;
-}c 1 0 41 0 0 0 17 0 41 17:// Concrete class
+}c 1 5 46 0 0 0 24 0 41 17:// Concrete class
 // Replace class_name with the class name
 class class_name
 {
@@ -178,10 +178,10 @@ class class_name
         
         // const indicates that func_name() does not modify members,
         // so it can be invoked for const objects
-        type func_name const () {};
+        void    func_name () const {}
         
         // func_name2() cannot be invoked for const objects
-        type func_name2 () {};
+        void    func_name2 () {}
     
     // Accessible by members of derived classes and friend classes
     protected:
@@ -228,10 +228,10 @@ class class_name : public base_class
         // override tells the compiler to verify that there is a corresponding
         // virtual function in the base/super class.  Otherwise, a misspelled
         // function name will be assumed to be intentional and valid.
-        type func_name const () override {};
+        void    func_name () const override {};
         
         // func_name2() cannot be invoked for const objects
-        type func_name2 () override {};
+        void    func_name2 () override {};
     
     // Accessible by members of derived classes and friend classes
     protected:
@@ -261,10 +261,10 @@ class class_name
         ~class_name() {}
         
         // Might be overridden by derived class
-        virtual type func() {};
+        virtual void func_name() {};
         
         // Pure virtual: MUST be overridden by derived classes
-        virtual type func() = 0;    
+        virtual void func_name2() = 0;    
 
     // Accessible by members of derived classes and friend classes
     protected:
