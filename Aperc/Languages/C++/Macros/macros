@@ -149,54 +149,7 @@ int     usage(char *argv[])
 {
     std::cerr << "Usage: " << argv[0] << std::endl;
     return EX_USAGE;
-}c 1 5 46 0 0 0 24 0 41 17:// Concrete class
-// Replace class_name with the class name
-class class_name
-{
-    // Interface functions (a.k.a. methods in some languages)
-    public:
-        // Constructors should establish invariants (assumptions) for the class
-        // Other member functions should ensure that the invariants still hold
-        // Default versions of these are automatically generated.
-        // However, if the class contains pointers to allocated objects,
-        // the default copy and destructor functions may not be correct.
-        // Make sure they handle allocated objects correctly.
-        // Rule of zero: Define all of these functions or none.
-        
-        // Default constructor
-        // class_name() {}
-        // Copy constructor
-        // class_name(const class_name &) {}
-        // Move constructor
-        // class_name(class_name &&) {}
-        // Copy assignment
-        // class_name & operator=(const class_name &) {}
-        // Move assignment
-        // class_name & operator=(class_name &&) {}
-        // Default destructor
-        // ~class_name() {}
-        
-        // const indicates that func_name() does not modify members,
-        // so it can be invoked for const objects
-        void    func_name () const {}
-        
-        // func_name2() cannot be invoked for const objects
-        void    func_name2 () {}
-    
-    // Accessible by members of derived classes and friend classes
-    protected:
-    
-    // Implementation (mostly data members)
-    // Accessible only by members functions of this class
-    private:
-};
-r 1 0 50 0 0 0 26 0 50 16:// Derived class
-// This class implements the representation (data members) and some/all of
-// the concrete member functions for the base/super class "base_class".
-// There should be multiple derived classes for each base class,
-// otherwise the base class serves no purpose.
-
-// Replace class_name with the class name
+}a 1 57 106 0 0 55 88 0 49 41:// Replace class_name with the class name
 // Replace base_class with the base class from which this is derived
 class class_name : public base_class
 {
@@ -210,6 +163,11 @@ class class_name : public base_class
         // Make sure they handle allocated objects correctly.
         // Rule of zero: Define all of these functions or none.
         
+        // Constructor with a single argument handles conversions:
+        //      class_name object(1);
+        //      class_name object { 1 };
+        //      class_name object = 1;
+        // class_name(int n) {}
         // Default constructor
         // class_name() {}
         // Copy constructor
@@ -240,33 +198,119 @@ class class_name : public base_class
     // Accessible only by members functions of this class
     private:
 };
-a 1 0 29 0 0 0 5 0 29 71:// Abstract class (base/super class with at least one virtual function)
-// We cannot create objects of this type.  This class is merely a
-// generic interface for multiple derived/sub classes.  It allows us to
-// write a single function that takes multiple similar class objects as
-// arguments, for example, provided that they have all the same interface
-// functions as the base.  This also means that this base class can
-// only access such objects via pointers or references.
-
+c 1 3 56 0 0 2 32 0 53 17:// Concrete class
 // Replace class_name with the class name
 class class_name
 {
     // Interface functions (a.k.a. methods in some languages)
     public:
-        // Don't generate copy functions for a base class
-        class_name(const class_name &) = delete;
-        class_name & operator=(const class_name &) = delete;
+        // Constructors should establish invariants (assumptions) for the class
+        // Other member functions should ensure that the invariants still hold
+        // Default constructors and assignments are automatically generated.
+        // However, if the class contains pointers to allocated objects,
+        // the default copy and destructor functions may not be correct.
+        // Make sure they handle allocated objects correctly.
+        // Rule of zero: Define all of these functions or none.
         
-        // Destructor should free all allocated resources
-        ~class_name() {}
+        // Constructor with a single argument handles conversions:
+        //      class_name object(1);
+        //      class_name object { 1 };
+        //      class_name object = 1;
+        //      object = 1;
+        // class_name(int n) {}
+        // Disallow implicit conversions:
+        //      class_name object = 1;
+        //      object = 1;
+        // explicit class_name(int n) {}
+        // Default constructor
+        // class_name() {}
+        // Copy constructor, initialize from a like object
+        // class_name(const class_name &) {}
+        // Copy assignment, assign from a like object
+        // class_name & operator=(const class_name &) {}
+        // Move constructor, for returning large objects by reference
+        // class_name(class_name &&) {}
+        // Move assignment
+        //      // move() converts to rvalue reference
+        //      y = std::move(x);
+        // class_name & operator=(class_name &&) {}
+        // Default destructor
+        // ~class_name() {}
         
-        // Might be overridden by derived class
-        virtual void func_name() {};
+        // const indicates that func_name() does not modify members,
+        // so it can be invoked for const objects
+        void    func_name () const {}
         
-        // Pure virtual: MUST be overridden by derived classes
-        virtual void func_name2() = 0;    
-
+        // func_name2() cannot be invoked for const objects
+        void    func_name2 () {}
+    
     // Accessible by members of derived classes and friend classes
     protected:
+    
+    // Implementation (mostly data members)
+    // Accessible only by members functions of this class
+    private:
+};
+r 1 53 115 0 0 51 91 0 62 16:// Derived class
+// This class implements the representation (data members) and some/all of
+// the concrete member functions for the base/super class "base_class".
+// There should be multiple derived classes for each base class,
+// otherwise the base class serves no purpose.
+
+// Replace class_name with the class name
+// Replace base_class with the base class from which this is derived
+class class_name : public base_class
+{
+    // Interface functions (a.k.a. methods in some languages)
+    public:
+        // Constructors should establish invariants (assumptions) for the class
+        // Other member functions should ensure that the invariants still hold
+        // Default constructors and assignments are automatically generated.
+        // However, if the class contains pointers to allocated objects,
+        // the default copy and destructor functions may not be correct.
+        // Make sure they handle allocated objects correctly.
+        // Rule of zero: Define all of these functions or none.
+        
+        // Constructor with a single argument handles conversions:
+        //      class_name object(1);
+        //      class_name object { 1 };
+        //      class_name object = 1;
+        //      object = 1;
+        // class_name(int n) {}
+        // Disallow implicit conversions:
+        //      class_name object = 1;
+        //      object = 1;
+        // explicit class_name(int n) {}
+        // Default constructor
+        // class_name() {}
+        // Copy constructor, initialize from a like object
+        // class_name(const class_name &) {}
+        // Copy assignment, assign from a like object
+        // class_name & operator=(const class_name &) {}
+        // Move constructor, for returning large objects by reference
+        // class_name(class_name &&) {}
+        // Move assignment
+        //      // move() converts to rvalue reference
+        //      y = std::move(x);
+        // class_name & operator=(class_name &&) {}
+        // Default destructor
+        // ~class_name() {}
+        
+        // const indicates that func_name() does not modify members,
+        // so it can be invoked for const objects
+        // override tells the compiler to verify that there is a corresponding
+        // virtual function in the base/super class.  Otherwise, a misspelled
+        // function name will be assumed to be intentional and valid.
+        void    func_name () const override {};
+        
+        // func_name2() cannot be invoked for const objects
+        void    func_name2 () override {};
+    
+    // Accessible by members of derived classes and friend classes
+    protected:
+    
+    // Implementation (mostly data members)
+    // Accessible only by members functions of this class
+    private:
 };
 

@@ -10,6 +10,6 @@ New F.Unction
 .If-else
 .While loop
 New .Main
+.Abstract class
 .Concrete class
 De.Rived class
-.Abstract class
