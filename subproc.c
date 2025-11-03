@@ -56,7 +56,7 @@ begin_full_screen (void)
     /* Shut off key_mouse reporting for child process */
 #if 0
     if ( Terminal->windowid != -1 )
-	TERMINFO_MOUSE_OFF(Terminal);
+        TERMINFO_MOUSE_OFF(Terminal);
 #endif
 
     /* Hide console mouse cursor during shell-out */
@@ -93,30 +93,30 @@ end_full_screen (int pause)
     if ( Terminal->windowid != -1 )
     {
 #if 0
-	define_cursor(XC_left_ptr);
-	TERMINFO_MOUSE_ON(Terminal,NORMAL_MOUSE);
+        define_cursor(XC_left_ptr);
+        TERMINFO_MOUSE_ON(Terminal,NORMAL_MOUSE);
 #endif
     }
     
     if ( pause )
     {
-	printf("APE: Press return to continue...");
-	fflush(stdout);
-	/* Purge leftover input chars not read by child process */
-	fpurge(stdin);
+        printf("APE: Press return to continue...");
+        fflush(stdout);
+        /* Purge leftover input chars not read by child process */
+        fpurge(stdin);
 
-	tpop_tty(Terminal);
-	/* Ignore button-down repeats */
-	//do
-	while ( tgetevent(Terminal,&event) != KEY_ENTER )
-	    ;
-	//while ( event.repeat > 0 );
+        tpop_tty(Terminal);
+        /* Ignore button-down repeats */
+        //do
+        while ( tgetevent(Terminal,&event) != KEY_ENTER )
+            ;
+        //while ( event.repeat > 0 );
     }
     else
-	tpop_tty(Terminal);
+        tpop_tty(Terminal);
     
     if ( Terminal->windowid == -1 )
-	TMOUSE_POINTER_VISIBLE(Terminal);
+        TMOUSE_POINTER_VISIBLE(Terminal);
 
     /* Restore console mouse */
     tpop_event_mask(Terminal);
@@ -140,13 +140,14 @@ end_full_screen (int pause)
     
     TW_RESTORE_WIN(Swin);
     tmove_to(Terminal,TLINES(Terminal)-1,TCOLS(Terminal)-2);
-    tinsert_ch(Terminal,' ');
+    // Why?? If we really need this, set the FG/BG color first.
+    // tinsert_ch(Terminal,' ');
     TW_RESTORE_WIN(Bar_win);
     TFLUSH_OUT(Terminal);
     
     /* Empty garbage mouse input that occurred during shell-out */
     if ( MOUSE_FD(Terminal->mouse) != -1 )
-	xt_fd_purge(MOUSE_FD(Terminal->mouse));
+        xt_fd_purge(MOUSE_FD(Terminal->mouse));
 }
 
 
@@ -157,8 +158,8 @@ more (char *filename)
     struct stat st;
     
     if ( stat(filename,&st) != -1 )
-	if ( (int)st.st_size )
-	    xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"more",filename,NULL);
+        if ( (int)st.st_size )
+            xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"more",filename,NULL);
 }
 
 
@@ -178,7 +179,7 @@ run_command (int parent_action, int echo, char *cmd, char *shell)
     /* Run the command */
     stat = xt_spawnlp(parent_action,echo,NULL,NULL,NULL,shell,"-c",cmd,NULL);
     if ( parent_action == P_NOWAIT )
-	Pid = stat;     /* For notification when child terminates */
+        Pid = stat;     /* For notification when child terminates */
     check_stat(stat,cmd);
     end_full_screen(EFS_PAUSE);
     return (stat);
@@ -204,25 +205,25 @@ run_command (int parent_action, int echo, char *cmd, char *shell)
 
 
 int     check_stat(
-	    int     stat,   /* Return value from spawn*p() */
-	    char    *cmd    /* Used in error message if stat shows failure */
-	)
+            int     stat,   /* Return value from spawn*p() */
+            char    *cmd    /* Used in error message if stat shows failure */
+        )
 
 {
     if ( P_EXEC_FAILED(stat) )
     {
-	switch( (stat>>8) & 0x7f )  /* Extract errno returned by xt_spawnvp */
-	{
-	    case    EPERM:
-	    case    EACCES:
-		fprintf(stderr,"%s: Permission denied.\n",cmd);
-		break;
-	    case    ENOENT:
-		fprintf(stderr,"%s: Command not found.\n",cmd);
-		break;
-	    default:
-		fprintf(stderr,"Command failed with status %d.\n",stat);
-	}
+        switch( (stat>>8) & 0x7f )  /* Extract errno returned by xt_spawnvp */
+        {
+            case    EPERM:
+            case    EACCES:
+                fprintf(stderr,"%s: Permission denied.\n",cmd);
+                break;
+            case    ENOENT:
+                fprintf(stderr,"%s: Command not found.\n",cmd);
+                break;
+            default:
+                fprintf(stderr,"Command failed with status %d.\n",stat);
+        }
     }
     return stat;
 }
