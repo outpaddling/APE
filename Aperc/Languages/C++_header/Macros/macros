@@ -146,8 +146,8 @@ class class_name
     // Accessible by members of derived classes and friend classes
     protected:
 };
-h 2 0 4 0 23 0 0 0 4 12:#ifndef __H_
-#define __H_
+h 2 0 4 0 25 0 0 0 4 14:#ifndef __HPP_
+#define __HPP_
 
 
-#endif  // #ifndef __H_
+#endif  // #ifndef __HPP_
