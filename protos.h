@@ -208,6 +208,7 @@ int do_args(int argc, char *argv[], file_t files[], opt_t *options);
 int check_makefile(proj_t *project, char *makefile, file_t *file, opt_t *options);
 void check_hostname(void);
 void check_args(char *argv[]);
+void proj_init(proj_t *project);
 int init_xterm(void);
 void register_signal_handlers(void);
 void setup_terminal(void);

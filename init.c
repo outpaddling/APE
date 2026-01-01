@@ -90,8 +90,8 @@ load_keymap (term_t *terminal)
     term_type = getenv("TERM");
     if (term_type == NULL)
     {
-	fprintf(stderr, "Terminal not defined in environment.\n");
-	exit(1);
+        fprintf(stderr, "Terminal not defined in environment.\n");
+        exit(1);
     }
 }
 
@@ -107,28 +107,28 @@ do_args (int argc, char *argv[], file_t files[], opt_t *options)
     extern int  errno;
     int     aw = NO_FILES, arg, a;
     char    startup_dir[APE_PATH_MAX + 1],
-	    *buttons[2] = OK_BUTTON;
+            *buttons[2] = OK_BUTTON;
 
     if (argc > 1)
     {
-	if ( getcwd(startup_dir, APE_PATH_MAX) == NULL )
-	{
-	    popup_mesg(strerror(errno),buttons,options);
-	}
-	for (arg = MIN(argc - 1, options->max_files); arg > 0; --arg)
-	{
-	    if (*argv[arg] != '-')
-	    {
-		chdir(startup_dir);     /* Open file may do a chdir() */
-		if ((a = open_file(files, argv[arg], options, OPEN_FLAG_NORMAL)) != CANT_OPEN)
-		    aw = a;
-	    }
-	}
-	if (aw == NO_FILES)
-	    aw = open_file(files, "untitled", options, OPEN_FLAG_NORMAL);
+        if ( getcwd(startup_dir, APE_PATH_MAX) == NULL )
+        {
+            popup_mesg(strerror(errno),buttons,options);
+        }
+        for (arg = MIN(argc - 1, options->max_files); arg > 0; --arg)
+        {
+            if (*argv[arg] != '-')
+            {
+                chdir(startup_dir);     /* Open file may do a chdir() */
+                if ((a = open_file(files, argv[arg], options, OPEN_FLAG_NORMAL)) != CANT_OPEN)
+                    aw = a;
+            }
+        }
+        if (aw == NO_FILES)
+            aw = open_file(files, "untitled", options, OPEN_FLAG_NORMAL);
     }
     else
-	aw = open_file(files, "untitled", options, OPEN_FLAG_NORMAL);
+        aw = open_file(files, "untitled", options, OPEN_FLAG_NORMAL);
     return aw;
 }
 
@@ -145,21 +145,21 @@ check_makefile (proj_t *project, char *makefile, file_t *file, opt_t *options)
     /* Need msg2 static sized array so message can be modified */
     /* Constant initializers to pointers are in read-only segment */
     char        msg[100],
-		*buttons[3] = YES_NO_BUTTONS;
+                *buttons[3] = YES_NO_BUTTONS;
     int         retcode = 0;
     
     snprintf(msg, 99, "Use \"%s?\"", makefile);
     if ( stat(makefile,&st) == 0 )
     {
-	msg[5] = *makefile;
-	if ( tolower(popup_mesg(msg,buttons,options)) == 'y' )
-	{
-	    init_makefile(project,makefile,file,options);
-	    retcode = 1;
-	}
+        msg[5] = *makefile;
+        if ( tolower(popup_mesg(msg,buttons,options)) == 'y' )
+        {
+            init_makefile(project,makefile,file,options);
+            retcode = 1;
+        }
     }
     else
-	retcode = -1;   /* File does not exist */
+        retcode = -1;   /* File does not exist */
     TW_RESTORE_WIN(file->window);
     return retcode;
 }
@@ -179,11 +179,11 @@ check_hostname (void)
     gethostname(this_host, APE_PATH_MAX);
     if (strcmp(this_host, legal_host) != 0)
     {
-	fprintf(stderr, "Warning: APE is not legally installed on %s.\n",
-		this_host);
-	fputs("Please review the license agreement.\n", stderr);
-	fputs("Press return to continue...\n", stderr);
-	getchar();
+        fprintf(stderr, "Warning: APE is not legally installed on %s.\n",
+                this_host);
+        fputs("Please review the license agreement.\n", stderr);
+        fputs("Press return to continue...\n", stderr);
+        getchar();
     }
 }
 
@@ -196,16 +196,16 @@ check_args (char *argv[])
     
     for (p=argv; *p != NULL; ++p)
     {
-	if ( **p == '-' )
-	{
-	    switch(*(*p+1))
-	    {
-		case    'h':
-		default:
-		    xt_va_usage("%s [-h[elp]] [filespec]\n",*argv);
-		    break;
-	    }
-	}
+        if ( **p == '-' )
+        {
+            switch(*(*p+1))
+            {
+                case    'h':
+                default:
+                    xt_va_usage("%s [-h[elp]] [filespec]\n",*argv);
+                    break;
+            }
+        }
     }
 }
 
@@ -215,30 +215,30 @@ init_xterm (void)
 
 {
     char    *display_name, *window_str, home[APE_PATH_MAX+1],
-	    xdefaults[APE_PATH_MAX+13];
+            xdefaults[APE_PATH_MAX+13];
     struct stat st;
     
     /* Set up .Xdefaults if it doesn't exist */
     xt_get_home_dir(home,APE_PATH_MAX);
     snprintf(xdefaults,APE_PATH_MAX + 12,"%s/.Xdefaults",home);
     if ( stat(xdefaults,&st) == -1 )
-	if ( xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"xapedefaults",NULL) != 0 )
-	{
-	    fprintf(stderr,
-		"Installation problem: Unable to run \"xapedefaults\".\nPress return to continue...\n");
-	    fflush(stderr);
-	    getchar();
-	}
-	
+        if ( xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"xapedefaults",NULL) != 0 )
+        {
+            fprintf(stderr,
+                "Installation problem: Unable to run \"xapedefaults\".\nPress return to continue...\n");
+            fflush(stderr);
+            getchar();
+        }
+        
     /* See if we're in the X11 env */
     if ( (display_name=getenv("DISPLAY")) == NULL )
-	return -1;
+        return -1;
     
     /* Get Window ID from env set by xterm */
     if ( (window_str = getenv("WINDOWID")) == NULL )
-	return -1;
+        return -1;
     else
-	return strtol(window_str,NULL,10);
+        return strtol(window_str,NULL,10);
 }
 
 
@@ -272,21 +272,21 @@ setup_terminal (void)
     extern term_t   *Terminal;
     
     if ((Terminal = init_term(stdin, stdout, stderr,
-			      NULL, MOUSE_ON)) == NULL)
+                              NULL, MOUSE_ON)) == NULL)
     {
-	fprintf(stderr, "APE: Cannot use \"%s\" terminal.\n",
-		Terminal->term_type);
-	exit(1);
+        fprintf(stderr, "APE: Cannot use \"%s\" terminal.\n",
+                Terminal->term_type);
+        exit(1);
     }
     if ((TLINES(Terminal) < 24) || (TCOLS(Terminal) < 80))
     {
-	fprintf(stderr, "APE: Sorry, terminal must have at least 24 lines and 80 columns.\n");
-	exit(1);
+        fprintf(stderr, "APE: Sorry, terminal must have at least 24 lines and 80 columns.\n");
+        exit(1);
     }
 
     /* Set terminal screen attributes */
     if ( Terminal->ena_acs != NULL )
-	raw_print(Terminal,Terminal->ena_acs);
+        raw_print(Terminal,Terminal->ena_acs);
     tset_modes(Terminal, NORMAL_MODE);
     tset_foreground(Terminal, WHITE);
     tset_background(Terminal, BLACK);
@@ -297,7 +297,7 @@ setup_terminal (void)
     /* Initialize xterm mouse if possible */
     if ( (Terminal->windowid = init_xterm()) != -1 )
     {
-	define_cursor(XC_left_ptr);
+        define_cursor(XC_left_ptr);
     }
 #endif
     TFLUSH_OUT(Terminal);
@@ -326,8 +326,30 @@ init_compiler_lines (file_t files[], opt_t *options)
     size_t  c, f;
     
     for (f=0; f<options->max_files; ++f)
-	if ( files[f].window != NULL )
-	    for (c=0; c<files[f].total_lines; ++c)
-		files[f].line[c].compiler_line = c+1;
+        if ( files[f].window != NULL )
+            for (c=0; c<files[f].total_lines; ++c)
+                files[f].line[c].compiler_line = c+1;
 }
 
+
+void    proj_init(proj_t *project)
+
+{
+    long    cpus;
+    
+    project->make_directory[0] = '\0';
+    project->make_cmd[0] = '\0';
+    project->makefile[0] = '\0';
+    project->executable[0] = '\0';
+    project->run_prefix[0] = '\0';
+    project->run_cmd[0] = '\0';
+    if ( (cpus = sysconf(_SC_NPROCESSORS_ONLN)) > 0 )
+        snprintf(project->make_args, OPTION_LEN + 1, "-j %ld", cpus);
+    else
+        project->make_args[0] = '\0';
+    project->run_args[0] = '\0';
+    //project->make_var_names = NULL;
+    //project->make_var_values = NULL;
+    //project->make_targets = NULL;
+    project->make_vars = 0;
+}

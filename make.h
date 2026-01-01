@@ -20,7 +20,6 @@ typedef struct
     int     make_vars;
 }   proj_t;
 
-#define PROJ_INIT   { "", "", "", "" } 
 #define RUN_MODE_LEN    10
 #define MAKE_FIELDS     5
 #define ACTIVE_PROJ(p)  ((p)->makefile[0] != '\0')

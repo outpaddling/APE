@@ -76,7 +76,7 @@ int     main (int argc, char *argv[])
             search_string[SEARCH_STR_LEN + 1] = "",
             help_str[APE_CMD_MAX + 1] = "",
            *curchar;
-    proj_t  project = PROJ_INIT;        /* Makefile, etc. */
+    proj_t  project;            /* Must run proj_init() */
     err_t   errfile;            /* Error file information */
     size_t  curline;            /* For caching files[af].curline */
     extern err_t *Errfile;      /* For kamakaze() signal handler */
@@ -88,6 +88,7 @@ int     main (int argc, char *argv[])
     unsigned long   time_diff;
 
     err_init(&errfile);
+    proj_init(&project);
 
     /* Initialize - don't mess with the order of these calls! */
     setup_terminal();

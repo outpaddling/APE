@@ -1,2 +1,3 @@
 Crashes when opening a file names " "
 
+Handle seg fault when starting in unmounted autofs dir
