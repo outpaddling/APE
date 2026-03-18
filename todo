@@ -1,3 +1,9 @@
+
+Indent sometimes happens after '}' but not after '{'
+    } else
+     ^
+     Press return here
+
 Crashes when opening a file names " "
 
 Handle seg fault when starting in unmounted autofs dir
