@@ -2,7 +2,6 @@
 .Block comment
 Error .Check
 .Enum
-New F.Unction
 .Do-while loop
 .For loop
 .If-else
@@ -11,3 +10,4 @@ Open file for .Read
 Open file for wri.Te
 .While loop
 New .Main
+New F.Unction

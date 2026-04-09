@@ -4,7 +4,6 @@ I.Nclude
 .Enum
 .Template class
 E.Xception
-New F.Unction
 .Do-while loop
 .For loop
 .If-else
@@ -13,3 +12,4 @@ New .Main
 .Abstract class
 .Concrete class
 De.Rived class
+New F.Unction

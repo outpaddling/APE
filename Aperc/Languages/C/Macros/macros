@@ -30,39 +30,6 @@ else
 e 1 25 28 0 0 18 18 0 3 12:typedef enum
 {
 } ;
-u 1 0 33 0 0 0 7 0 33 76:/***************************************************************************
- *  Use auto-c2man to generate a man page from this comment
- *
- *  Name:
- *      -
- *
- *  Library:
- *      #include <>
- *      -l
- *
- *  Description:
- *  
- *  Arguments:
- *
- *  Returns:
- *
- *  Examples:
- *
- *  Files:
- *
- *  Environment
- *
- *  See also:
- *
- *  History: 
- *  Date        Name        Modification
- *  2025-10-05  Jason Bacon Begin
- ***************************************************************************/
-
-()
-
-{
-}
 d 1 11 18 0 0 0 0 0 7 2:/*
  *
  */
@@ -156,4 +123,39 @@ int     usage(char *argv[])
 {
     fprintf(stderr, "Usage: %s\n", argv[0]);
     return EX_USAGE;
-}
+}u 0 0 35 0 0 0 9 0 35 76:/***************************************************************************
+ *  Use auto-c2man to generate a man page from this comment
+ *
+ *  Name:
+ *      -
+ *
+ *  Library:
+ *      #include <>
+ *      -l
+ *
+ *  Synopsis:
+ *
+ *  Description:
+ *  
+ *  Arguments:
+ *
+ *  Returns:
+ *
+ *  Examples:
+ *
+ *  Files:
+ *
+ *  Environment
+ *
+ *  See also:
+ *
+ *  History: 
+ *  Date        Name        Modification
+ *  2025-10-05  Jason Bacon Begin
+ ***************************************************************************/
+
+()
+
+{
+}
+
