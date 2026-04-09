@@ -277,7 +277,7 @@ class class_name : public base_class
     // Accessible only by members functions of this class
     private:
 };
-u 0 0 38 0 0 0 12 0 38 76:/***************************************************************************
+u 0 0 36 0 0 0 10 0 36 76:/***************************************************************************
  *  Use auto-c2man to generate a man page from this comment
  *
  *  Name:
@@ -286,8 +286,6 @@ class class_name : public base_class
  *  Library:
  *      #include <>
  *      -l
- *
- *  Synposis:
  *
  *  Description:
  *  
