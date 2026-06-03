@@ -56,105 +56,105 @@ file_menu (file_t files[], int *af_ptr, opt_t *options, buff_t *cut_buff, event_
     int     ch, af, cancel, start_row = 1;
     win_t  *file_pop;
     static char *file_text[] = {".New",".Open file",//"Open .Encrypted file",
-				".Close", ".Save (Ctrl+s)",
-				"Save .As", //"Save Encr.Ypted",
-				TWC_HLINE,
-				".Toggle file (Ctrl+t)",
-				TWC_HLINE, ".View header file",
-				TWC_HLINE,
-				".Quit", ""};
-		/**reopen_list[MAX_FILENAMES+1] = {".Myfile",""};*/
+                                ".Close", ".Save (Ctrl+s)",
+                                "Save .As", //"Save Encr.Ypted",
+                                TWC_HLINE,
+                                ".Toggle file (Ctrl+t)",
+                                TWC_HLINE, ".View header file",
+                                TWC_HLINE,
+                                ".Quit", ""};
+                /**reopen_list[MAX_FILENAMES+1] = {".Myfile",""};*/
 
     file_pop = tw_menu(Terminal, 1, 0, file_text, &options->border,
-		     options->no_acs, MONO_MODE(options),
-		     options->menu_fg, options->menu_bg,
-		     options->menu_hl_fg, options->menu_hl_bg);
+                     options->no_acs, MONO_MODE(options),
+                     options->menu_fg, options->menu_bg,
+                     options->menu_hl_fg, options->menu_hl_bg);
     tw_set_win_attr(file_pop,REVERSE_MODE,options->menu_fg,options->menu_bg,
-		    BOLD_MODE,options->menu_hl_fg,options->menu_hl_bg);
+                    BOLD_MODE,options->menu_hl_fg,options->menu_hl_bg);
     af = *af_ptr;
     ch = tw_get_item(file_pop, file_text, event, &start_row,
-		    options->reverse_menu, NULL);
+                    options->reverse_menu, NULL);
     switch (ch)
     {
-	case 'n':
-	    new_blank_file(files, af_ptr, options);
-	    break;
-	case 'o':
-	    if ((af = load_new_file('l', files, options, OPEN_FLAG_NORMAL)) != CANT_LOAD)
-		*af_ptr = af;
-	    break;
+        case 'n':
+            new_blank_file(files, af_ptr, options);
+            break;
+        case 'o':
+            if ((af = load_new_file('l', files, options, OPEN_FLAG_NORMAL)) != CANT_LOAD)
+                *af_ptr = af;
+            break;
 #if 0
-	case 'r':   /* Reopen previous file */
-	    reopen_pop = tw_menu(Terminal, 2, 15, reopen_list, &options->border,
-			     options->use_acs, options->use_color,
-			     options->menu_fg, options->menu_bg,
-			     options->menu_hl_fg, options->menu_hl_bg);
-	
-	    ch2 = tw_get_item(reopen_pop, reopen_list, seq, &start_row,
-			    options->use_color, options->reverse_menu,
-			    options->menu_fg, options->menu_bg
-			    options->menu_hl_fg, options->menu_hl_bg);
-	    tw_del_win(&reopen_pop);
-	    break;
+        case 'r':   /* Reopen previous file */
+            reopen_pop = tw_menu(Terminal, 2, 15, reopen_list, &options->border,
+                             options->use_acs, options->use_color,
+                             options->menu_fg, options->menu_bg,
+                             options->menu_hl_fg, options->menu_hl_bg);
+        
+            ch2 = tw_get_item(reopen_pop, reopen_list, seq, &start_row,
+                            options->use_color, options->reverse_menu,
+                            options->menu_fg, options->menu_bg
+                            options->menu_hl_fg, options->menu_hl_bg);
+            tw_del_win(&reopen_pop);
+            break;
 #endif
-	case 'e':
-	    /*if ((af = load_new_file('l', files, options, OPEN_FLAG_CRYPT)) != CANT_LOAD)
-		*af_ptr = af;*/
-	    break;
-	case 'c':
-	    /* Add filename to reopen list */
-	    /* add_reopen(file+af,reopen_list); */
-	    
-	    /* If area started in file, cancel it */
-	    if ( area_started(cut_buff) && (cut_buff->file == files+af) )
-		cancel_area(files+af,cut_buff,options);
-	    
-	    /* Close the file */
-	    close_file(files, af, options, PROMPT_BEFORE_CLOSE);
-	    toggle_file(files, &af, options, cut_buff);
-	    *af_ptr = af;
-	    break;
-	/* FIXME: Causes corruption
-	case 'm':
-	    File_list = panel_win(TLINES(Terminal)-4, TCOLS(Terminal)-1,
-				2,TWC_CENTER_WIN,options);
-	    tw_set_win_attr(File_list,REVERSE_MODE,
-		    TW_CUR_FOREGROUND(File_list),TW_CUR_BACKGROUND(File_list),
-		    NORMAL_MODE,TW_CUR_BACKGROUND(File_list),
-		    TW_CUR_FOREGROUND(File_list));
-	    tw_get_pathname(File_list, path_name, options->file_spec);
-	    tw_del_win(&File_list);
-	    if (*path_name == '\0')
-		break;
-	    merge_file(files + af, path_name, options, cut_buff);
-	    chdir(files[af].cwd);
-	    break;
-	*/
-	case 'y':
-	    //files[af].crypt = 1;
-	case 's':
-	    synhigh_update(files+af,files[af].curline,options,cut_buff);
-	    if (strcmp(files[af].source, "untitled") == 0)
-		save_as(files, af, options);
-	    else
-		save_file(files + af, options);
-	    break;
-	case 'a':
-	    save_as(files, af, options);
-	    break;
-	case 't':
-	    toggle_file(files, af_ptr, options, cut_buff);
-	    break;
-	case 'v':
-	    view_header(files + af, options);
-	    break;
-	case 'q':
-	case 'x':
-	    if ((cancel = prompt_save_all(files, options)) == 'c')
-		ch = cancel;
-	    break;
-	default:
-	    break;
+        case 'e':
+            /*if ((af = load_new_file('l', files, options, OPEN_FLAG_CRYPT)) != CANT_LOAD)
+                *af_ptr = af;*/
+            break;
+        case 'c':
+            /* Add filename to reopen list */
+            /* add_reopen(file+af,reopen_list); */
+            
+            /* If area started in file, cancel it */
+            if ( area_started(cut_buff) && (cut_buff->file == files+af) )
+                cancel_area(files+af,cut_buff,options);
+            
+            /* Close the file */
+            close_file(files, af, options, PROMPT_BEFORE_CLOSE);
+            toggle_file(files, &af, options, cut_buff);
+            *af_ptr = af;
+            break;
+        /* FIXME: Causes corruption
+        case 'm':
+            File_list = panel_win(TLINES(Terminal)-4, TCOLS(Terminal)-1,
+                                2,TWC_CENTER_WIN,options);
+            tw_set_win_attr(File_list,REVERSE_MODE,
+                    TW_CUR_FOREGROUND(File_list),TW_CUR_BACKGROUND(File_list),
+                    NORMAL_MODE,TW_CUR_BACKGROUND(File_list),
+                    TW_CUR_FOREGROUND(File_list));
+            tw_get_pathname(File_list, path_name, options->file_spec);
+            tw_del_win(&File_list);
+            if (*path_name == '\0')
+                break;
+            merge_file(files + af, path_name, options, cut_buff);
+            chdir(files[af].cwd);
+            break;
+        */
+        case 'y':
+            //files[af].crypt = 1;
+        case 's':
+            synhigh_update(files+af,files[af].curline,options,cut_buff);
+            if (strcmp(files[af].source, "untitled") == 0)
+                save_as(files, af, options);
+            else
+                save_file(files + af, options);
+            break;
+        case 'a':
+            save_as(files, af, options);
+            break;
+        case 't':
+            toggle_file(files, af_ptr, options, cut_buff);
+            break;
+        case 'v':
+            view_header(files + af, options);
+            break;
+        case 'q':
+        case 'x':
+            if ((cancel = prompt_save_all(files, options)) == 'c')
+                ch = cancel;
+            break;
+        default:
+            break;
     }
     TW_RESTORE_WIN(files[*af_ptr].window);
     tw_del_win(&file_pop);
@@ -172,36 +172,36 @@ int     load_new_file(int ch, file_t files[], opt_t *options, unsigned int flags
     extern win_t    *File_list;
     extern term_t   *Terminal;
     char    path_name[APE_PATH_MAX + 1] = "", *pn, *button[2] = OK_BUTTON,
-	    *message = "Sorry, can't open any more files.";
+            *message = "Sorry, can't open any more files.";
     int     af;
 
     if ((af = get_free_win(files, "", "", options)) == NO_FREE_WIN)
     {
-	popup_mesg( message, button, options);
-	return CANT_LOAD;
+        popup_mesg( message, button, options);
+        return CANT_LOAD;
     }
 
     File_list = panel_win(TLINES(Terminal)-4,
-			    TCOLS(Terminal)-1,2,TWC_CENTER_WIN,options);
+                            TCOLS(Terminal)-1,2,TWC_CENTER_WIN,options);
     tw_set_win_attr(File_list,REVERSE_MODE,
-		TW_CUR_FOREGROUND(File_list),TW_CUR_BACKGROUND(File_list),
-		NORMAL_MODE,TW_CUR_BACKGROUND(File_list),
-		TW_CUR_FOREGROUND(File_list));
+                TW_CUR_FOREGROUND(File_list),TW_CUR_BACKGROUND(File_list),
+                NORMAL_MODE,TW_CUR_BACKGROUND(File_list),
+                TW_CUR_FOREGROUND(File_list));
     tw_get_pathname(File_list, path_name, options->file_spec);
     tw_del_win(&File_list);
 
     if (*path_name != '\0')
     {
-	pn = strtok(path_name," \t");
-	while ( pn != NULL )
-	{
-	    af = open_file(files, pn, options, flags);
-	    pn = strtok(NULL," \t");
-	}
-	return af;
+        pn = strtok(path_name," \t");
+        while ( pn != NULL )
+        {
+            af = open_file(files, pn, options, flags);
+            pn = strtok(NULL," \t");
+        }
+        return af;
     }
     else
-	return CANT_LOAD;
+        return CANT_LOAD;
 }
 
 
@@ -210,50 +210,50 @@ save_as (file_t files[], int af, opt_t *options)
 
 {
     char    filename[APE_PATH_MAX + 1] = "", temp[APE_PATH_MAX+1] = "",
-	    dir_name[APE_PATH_MAX + 1] = "", base_name[APE_PATH_MAX + 1] = "",
-	    start_dir[APE_PATH_MAX + 1], save_source[APE_PATH_MAX + 1],
-	    save_short[TWC_SHORT_NAME_LEN + 1], msg[APE_PATH_MAX + 64],
-	    squeezed[128], full_path[FULL_PATH_MAX+3],
-	    *buttons[3] = YES_NO_BUTTONS, *ok_button[2] = OK_BUTTON;
+            dir_name[APE_PATH_MAX + 1] = "", base_name[APE_PATH_MAX + 1] = "",
+            start_dir[APE_PATH_MAX + 1], save_source[APE_PATH_MAX + 1],
+            save_short[TWC_SHORT_NAME_LEN + 1], msg[APE_PATH_MAX + 64],
+            squeezed[128], full_path[FULL_PATH_MAX+3],
+            *buttons[3] = YES_NO_BUTTONS, *ok_button[2] = OK_BUTTON;
     struct stat st;
     int     remove;
 
     /* Get new filename */
     panel_get_string(files + af, options, APE_PATH_MAX, "Save as? ", "",
-	TWC_VERBATIM, temp);
+        TWC_VERBATIM, temp);
     if (*temp == '\0')
     {
-	stat_mesg("File not saved.");
-	return CANT_SAVE;
+        stat_mesg("File not saved.");
+        return CANT_SAVE;
     }
     xt_strshellcpy(filename,temp,APE_PATH_MAX);
 
     /* Split filename into base name and directory */
     if (get_dirname(filename, dir_name, base_name) == NO_DIR)
     {
-	popup_mesg("Directory does not exist.  File not saved.",
-		    ok_button, options);
-	TW_RESTORE_WIN(files[af].window);
-	return CANT_SAVE;
+        popup_mesg("Directory does not exist.  File not saved.",
+                    ok_button, options);
+        TW_RESTORE_WIN(files[af].window);
+        return CANT_SAVE;
     }
 
     /* See if selected filename is already open */
     /* FIXME: open_in_aw() takes files[], not *file */
     if ( open_in_aw(files+af, base_name, dir_name, options) != FILE_NOT_OPEN )
     {
-	sprintw(2, TWC_ST_LEN,
-	  "File %s/%s is currently open.  Can't overwrite.", dir_name, filename);
-	return CANT_SAVE;
+        sprintw(2, TWC_ST_LEN,
+          "File %s/%s is currently open.  Can't overwrite.", dir_name, filename);
+        return CANT_SAVE;
     }
 
     /* See if file exists */
     if (stat(filename, &st) == 0)
     {
-	snprintf(msg, APE_PATH_MAX + 63,
-		"File \"%s\" exists.  Overwrite?",base_name);
-	xt_strsqueeze(squeezed, msg, 127);
-	if( tolower(popup_mesg(squeezed,buttons,options)) != 'y' )
-	    return CANT_SAVE;
+        snprintf(msg, APE_PATH_MAX + 63,
+                "File \"%s\" exists.  Overwrite?",base_name);
+        xt_strsqueeze(squeezed, msg, 127);
+        if( tolower(popup_mesg(squeezed,buttons,options)) != 'y' )
+            return CANT_SAVE;
     }
 
     /* Save old name in case new one can't be used */
@@ -264,42 +264,42 @@ save_as (file_t files[], int af, opt_t *options)
     /* Switch to new name */
     if (chdir(dir_name) == -1)
     {
-	sprintw(2, TWC_ST_LEN, "Can't open directory \"%s\".", dir_name);
-	return CANT_SAVE;
+        sprintw(2, TWC_ST_LEN, "Can't open directory \"%s\".", dir_name);
+        return CANT_SAVE;
     }
     strlcpy(files[af].cwd, dir_name, APE_PATH_MAX);
     strlcpy(files[af].source, base_name, APE_PATH_MAX);
     strlcpy(files[af].short_src, files[af].source, TWC_SHORT_NAME_LEN);
     if (save_file(files+af,options) == OK)
     {
-	select_compiler(files+af, options);
-	edit_border(files+af, options);
-	
-	/* Remove old file if it exists */
-	if ( stat(save_source,&st) == 0 )
-	{
-	    snprintf(msg, APE_PATH_MAX + 64, "Remove %s?", save_source);
-	    xt_strsqueeze(squeezed, msg, 127);
-	    remove = popup_mesg(squeezed,buttons,options);
-	    if ( tolower(remove) == 'y' )
-	    {
-		snprintf(full_path, FULL_PATH_MAX + 2, "%s/%s",
-			 start_dir,save_source);
-		unlink(full_path);
-	    }
-	    TW_RESTORE_WIN(files[af].window);
-	}
-	return OK;
+        select_compiler(files+af, options);
+        edit_border(files+af, options);
+        
+        /* Remove old file if it exists */
+        if ( stat(save_source,&st) == 0 )
+        {
+            snprintf(msg, APE_PATH_MAX + 64, "Remove %s?", save_source);
+            xt_strsqueeze(squeezed, msg, 127);
+            remove = popup_mesg(squeezed,buttons,options);
+            if ( tolower(remove) == 'y' )
+            {
+                snprintf(full_path, FULL_PATH_MAX + 2, "%s/%s",
+                         start_dir,save_source);
+                unlink(full_path);
+            }
+            TW_RESTORE_WIN(files[af].window);
+        }
+        return OK;
     }
     else
     {
-	sprintw(2,TWC_ST_LEN,"Unable to save %s: Keeping old name.",
-	    files[af].source);
-	chdir(start_dir);
-	strlcpy(files[af].cwd, start_dir, APE_PATH_MAX);
-	strlcpy(files[af].source, save_source, APE_PATH_MAX);
-	strlcpy(files[af].short_src, save_short, TWC_SHORT_NAME_LEN);
-	return CANT_SAVE;
+        sprintw(2,TWC_ST_LEN,"Unable to save %s: Keeping old name.",
+            files[af].source);
+        chdir(start_dir);
+        strlcpy(files[af].cwd, start_dir, APE_PATH_MAX);
+        strlcpy(files[af].source, save_source, APE_PATH_MAX);
+        strlcpy(files[af].short_src, save_short, TWC_SHORT_NAME_LEN);
+        return CANT_SAVE;
     }
 }
 
@@ -309,36 +309,36 @@ void    view_header(file_t *file, opt_t *options)
 {
     static char path_name[APE_PATH_MAX + 1] = "";
     char    cmd[APE_CMD_MAX + 1] = "",
-	    *expanded_cmd,
-	    *argv[MAX_ARGS],
-	    *x11_include = X11_INCLUDE;
+            *expanded_cmd,
+            *argv[MAX_ARGS],
+            *x11_include = X11_INCLUDE;
 
     panel_get_string(file, options, APE_PATH_MAX, "Header? ", "",
-	TWC_VERBATIM, path_name);
+        TWC_VERBATIM, path_name);
     
     sprintw(2, 50, "path_name = %s", path_name);
     if ( *path_name == '\0' )
-	return;
+        return;
     
     /* Check for no extension, ./base, or ../base */
     /*
     ext = strrchr(path_name, '.');
     if ((ext == NULL) || ((ext <= path_name + 1) && (*path_name == '.')))
-	strlcat(path_name, ".h", APE_PATH_MAX);
+        strlcat(path_name, ".h", APE_PATH_MAX);
     */
     if ((path_name[0] == '/') || (path_name[0] == '.'))
-	snprintf(cmd, APE_CMD_MAX, "more %s", path_name);
+        snprintf(cmd, APE_CMD_MAX, "more %s", path_name);
     else
     {
-	if ( memcmp(x11_include,"/usr/include",12) == 0 )
-	    x11_include = "";
-	snprintf(cmd, APE_CMD_MAX,
-		"find /usr/include %s %s %s -name %s -exec more {} ;",
-		x11_include, LOCAL_INCLUDE, options->include_path, path_name);
+        if ( memcmp(x11_include,"/usr/include",12) == 0 )
+            x11_include = "";
+        snprintf(cmd, APE_CMD_MAX,
+                "find /usr/include %s %s %s -name %s -exec more {} ;",
+                x11_include, LOCAL_INCLUDE, options->include_path, path_name);
     }
     expanded_cmd = xt_parse_cmd(argv, MAX_ARGS, cmd);
     begin_full_screen();
-    xt_spawnvp(P_WAIT, P_NOECHO, argv, NULL, NULL, NULL);
+    xt_spawnvp(P_WAIT, P_NOECHO, (const char **)argv, NULL, NULL, NULL);
     end_full_screen(EFS_PAUSE);
     free(expanded_cmd);
 }
@@ -355,8 +355,8 @@ int     prompt_save_all(file_t files[], opt_t *options)
 
     for (c = 0; (c < options->max_files) && (sv != 'c'); ++c)
     {
-	if (files[c].window != NULL)
-	    sv = prompt_save(files, c, options);
+        if (files[c].window != NULL)
+            sv = prompt_save(files, c, options);
     }
     return (sv);
 }
@@ -372,24 +372,24 @@ prompt_save (file_t files[], int af, opt_t *options)
 {
     int     sv = 'n', status;
     char    *buttons[4] = YES_NO_CANCEL_BUTTONS,
-	    msg[APE_PATH_MAX + 64], squeezed[128],
-	    sfile[102];
+            msg[APE_PATH_MAX + 64], squeezed[128],
+            sfile[102];
 
     xt_strsqueeze(sfile, files[af].source, 102);
     if (files[af].modified)
     {
-	snprintf(msg, APE_PATH_MAX + 63, "File \"%s\" has changed. Save?",sfile);
-	xt_strsqueeze(squeezed, msg, 127);
-	sv = popup_mesg(squeezed,buttons,options);
-	if (sv == 'y')
-	{
-	    if ( strcmp(files[af].source,"untitled") == 0 )
-		status = save_as(files, af, options);
-	    else
-		status = save_file(files+af,options);
-	    if ( status == CANT_SAVE )
-		sv = 'c';   /* Cancel */
-	}
+        snprintf(msg, APE_PATH_MAX + 63, "File \"%s\" has changed. Save?",sfile);
+        xt_strsqueeze(squeezed, msg, 127);
+        sv = popup_mesg(squeezed,buttons,options);
+        if (sv == 'y')
+        {
+            if ( strcmp(files[af].source,"untitled") == 0 )
+                status = save_as(files, af, options);
+            else
+                status = save_file(files+af,options);
+            if ( status == CANT_SAVE )
+                sv = 'c';   /* Cancel */
+        }
     }
     return (sv);
 }
@@ -410,26 +410,26 @@ int     prompt_tabs(file_t *file, opt_t *options)
 {
     int     sv = 'n';
     char    *buttons[] = YES_NO_ASK_BUTTONS,
-	    msg[TABS_WARNING_MAX + 1],
-	    name[TABS_FILENAME_MAX + 1];
+            msg[TABS_WARNING_MAX + 1],
+            name[TABS_FILENAME_MAX + 1];
     extern term_t   *Terminal;
     
     if ( options->prompt_tabs )
     {
-	xt_strsqueeze(name, file->source, TABS_FILENAME_MAX + 1);
-	snprintf(msg, TABS_WARNING_MAX,
-		 "\"%s\" contains non-leading TAB characters.  APE is a\n"
-		 "soft-TABs editor which will replace non-leading TABs with spaces and\n"
-		 "leading groups of 8 spaces with TABs (to reduce file size).\n"
-		 "Open read-only to avoid altering whitespace?", name);
-	sv = popup_mesg(msg,buttons,options);
-	if (sv == 'y')
-	    file->read_only = 1;
-	else if (sv == 'd')
-	{
-	    options->prompt_tabs = FALSE;
-	    save_options(APERC, options);
-	}
+        xt_strsqueeze(name, file->source, TABS_FILENAME_MAX + 1);
+        snprintf(msg, TABS_WARNING_MAX,
+                 "\"%s\" contains non-leading TAB characters.  APE is a\n"
+                 "soft-TABs editor which will replace non-leading TABs with spaces and\n"
+                 "leading groups of 8 spaces with TABs (to reduce file size).\n"
+                 "Open read-only to avoid altering whitespace?", name);
+        sv = popup_mesg(msg,buttons,options);
+        if (sv == 'y')
+            file->read_only = 1;
+        else if (sv == 'd')
+        {
+            options->prompt_tabs = FALSE;
+            save_options(APERC, options);
+        }
     }
     return (sv);
 }
@@ -444,49 +444,49 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
 {
     FILE   *fp;
     int     af,
-	    ftype;
+            ftype;
     char    dir_name[APE_PATH_MAX + 1], base_name[APE_PATH_MAX + 1],
-	    temp[APE_PATH_MAX + 1], home[APE_PATH_MAX + 1],
-	    *button[2] = OK_BUTTON,
-	    cmd[APE_CMD_MAX+1],
-	    key[MCRYPT_KEY_LEN+1];
+            temp[APE_PATH_MAX + 1], home[APE_PATH_MAX + 1],
+            *button[2] = OK_BUTTON,
+            cmd[APE_CMD_MAX+1],
+            key[MCRYPT_KEY_LEN+1];
     
     /* Expand ~ to home dir if necessary */
     if (*path_name == '~')
-	snprintf(temp, APE_PATH_MAX, "%s/%s", xt_get_home_dir(home, APE_PATH_MAX), path_name + 1);
+        snprintf(temp, APE_PATH_MAX, "%s/%s", xt_get_home_dir(home, APE_PATH_MAX), path_name + 1);
     else
-	strlcpy(temp, path_name, APE_PATH_MAX);
+        strlcpy(temp, path_name, APE_PATH_MAX);
 
     /* Check if file is a directory */
     ftype = file_type(temp);
     if ( (ftype != S_IFREG) && (ftype != 0) )
     {
-	popup_mesg("Not a regular file.", button, options);
-	return CANT_OPEN;
+        popup_mesg("Not a regular file.", button, options);
+        return CANT_OPEN;
     }
     
     /* Get directory and base name for file */
     if (get_dirname(temp, dir_name, base_name) == NO_DIR)
-	return CANT_OPEN;
+        return CANT_OPEN;
 
     /* If already open, switch to window */
     if ( (af = open_in_aw(files, base_name, dir_name, options)) != FILE_NOT_OPEN )
-	return af;
+        return af;
     
     /* Find a free window */
     if ((af = get_free_win(files, dir_name, base_name, options)) == NO_FREE_WIN)
-	return CANT_OPEN;
+        return CANT_OPEN;
 
     /* If reusing "untitled" window, free old stuff */
     if (files[af].window != NULL)
     {
-	close_file(files, af, options, PROMPT_BEFORE_CLOSE);
-	if (files[af].window != NULL)    /* Check if user cancelled close */
-	    return af;
+        close_file(files, af, options, PROMPT_BEFORE_CLOSE);
+        if (files[af].window != NULL)    /* Check if user cancelled close */
+            return af;
     }
 
     if (init_file(files + af, options) == NOMEM)         /* Allocate buffer, etc. */
-	return CANT_OPEN;
+        return CANT_OPEN;
 
     /* Set filenames and dir name */
     strlcpy(files[af].source, base_name, APE_PATH_MAX);
@@ -503,44 +503,44 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
     /* Attempt to open file */
     if (chdir(dir_name) == -1)
     {
-	sprintw(2, TWC_ST_LEN, "Cannot open directory \"%s\".", dir_name);
-	return CANT_OPEN;
+        sprintw(2, TWC_ST_LEN, "Cannot open directory \"%s\".", dir_name);
+        return CANT_OPEN;
     }
     
     /* FIXME: Support other encryption programs */
     if ( flags & OPEN_FLAG_CRYPT )
     {
-	// tunset_tty(Terminal,C_LFLAG,ECHO);
-	*key = '\0';
-	panel_get_string(files+af, options, MCRYPT_KEY_LEN,
-			    "Key? ", "", TWC_SECURE, key);
-	snprintf(cmd, APE_CMD_MAX, "mcrypt --flush -q -F -d -k %s < %s",
-	    key, files[af].source);
-	fp = popen(cmd, "r");
-	files[af].crypt = 1;
+        // tunset_tty(Terminal,C_LFLAG,ECHO);
+        *key = '\0';
+        panel_get_string(files+af, options, MCRYPT_KEY_LEN,
+                            "Key? ", "", TWC_SECURE, key);
+        snprintf(cmd, APE_CMD_MAX, "mcrypt --flush -q -F -d -k %s < %s",
+            key, files[af].source);
+        fp = popen(cmd, "r");
+        files[af].crypt = 1;
     }
     else
     {
-	fp = fopen(base_name, "r");
-	files[af].crypt = 0;
+        fp = fopen(base_name, "r");
+        files[af].crypt = 0;
     }
-	
+        
     if (fp != NULL)
     {
-	load_file(files + af, fp,options);
-	if ( files[af].crypt )
-	{
-	    pclose(fp);
-	
-	    /* Erase key from memory for security */
-	    memset(key, 0, MCRYPT_KEY_LEN);
-	    memset(cmd, 0, APE_CMD_MAX);
-	}
-	else
-	    fclose(fp);
+        load_file(files + af, fp,options);
+        if ( files[af].crypt )
+        {
+            pclose(fp);
+        
+            /* Erase key from memory for security */
+            memset(key, 0, MCRYPT_KEY_LEN);
+            memset(cmd, 0, APE_CMD_MAX);
+        }
+        else
+            fclose(fp);
     }
     else if (new_file(files + af) == NOMEM) /* Must come after init_file() */
-	return CANT_OPEN;
+        return CANT_OPEN;
     
     /* Pick compiler based on name */
     select_compiler(files + af, options);
@@ -556,8 +556,8 @@ int     open_file(file_t files[], char *path_name, opt_t *options, unsigned int 
 
     /* Invoke auto-load macro if one exists for this language */
     if (EMPTY_FILE (files + af) &&
-	(strcmp (files[af].source, "untitled") != 0))
-	macro_invoke (files + af, -1, options, MACRO_EXPAND);
+        (strcmp (files[af].source, "untitled") != 0))
+        macro_invoke (files + af, -1, options, MACRO_EXPAND);
 
     return af;
 }
@@ -570,8 +570,8 @@ new_file (file_t *file)
     ALLOC_LINE(file,0,1);
     if (file->line[0].buff == NULL)
     {
-	stat_mesg( "open_file(): Cannot allocate line[0].");
-	return NOMEM;
+        stat_mesg( "open_file(): Cannot allocate line[0].");
+        return NOMEM;
     }
     file->line[0].length = 0;
     file->curchar = file->line[0].buff;
@@ -601,7 +601,7 @@ init_file (file_t *file, opt_t *options)
     file->tabs_flagged = 0;
 
     create_edit_win(file,options);
-	
+        
     /* Create an edit buffer - make sure file->max_lines is set! */
     file->line = MALLOC(file->max_lines,line_t);
     
@@ -620,19 +620,19 @@ create_edit_win (file_t *file, opt_t *options)
     
     /* Create edit window */
     file->window = tw_new_win(Terminal, TLINES(Terminal) - 2, TCOLS(Terminal),
-			   1, 0, NO_AUTO_SCROLL);
+                           1, 0, NO_AUTO_SCROLL);
     if ( options->scroll_bars )
     {
-	file->text = tw_sub_win(file->window, TW_LINES(file->window) - 2,
-			 TW_COLS(file->window)-1, 1, 0, NO_AUTO_SCROLL);
-	file->vscroll_bar = tw_sub_win(file->window, TW_LINES(file->window) - 2,
-			     1, 1, TW_COLS(file->window)-1, NO_AUTO_SCROLL);
-	file->hscroll_bar = tw_sub_win(file->window, 1, TW_COLS(file->window)-1,
-			     TW_LINES(file->window)-1, 0, NO_AUTO_SCROLL);
+        file->text = tw_sub_win(file->window, TW_LINES(file->window) - 2,
+                         TW_COLS(file->window)-1, 1, 0, NO_AUTO_SCROLL);
+        file->vscroll_bar = tw_sub_win(file->window, TW_LINES(file->window) - 2,
+                             1, 1, TW_COLS(file->window)-1, NO_AUTO_SCROLL);
+        file->hscroll_bar = tw_sub_win(file->window, 1, TW_COLS(file->window)-1,
+                             TW_LINES(file->window)-1, 0, NO_AUTO_SCROLL);
     }
     else
-	file->text = tw_sub_win(file->window, TW_LINES(file->window) - 1,
-			 TW_COLS(file->window), 1, 0, NO_AUTO_SCROLL);
+        file->text = tw_sub_win(file->window, TW_LINES(file->window) - 1,
+                         TW_COLS(file->window), 1, 0, NO_AUTO_SCROLL);
 }
 
 
@@ -644,10 +644,10 @@ set_colors (file_t *file, opt_t *options)
     
     if (TCOLOR_TERM(Terminal) && !MONO_MODE(options))
     {
-	tw_set_foreground(file->window, options->title_fg);
-	tw_set_background(file->window, options->title_bg);
-	tw_set_foreground(file->text, options->text_fg);
-	tw_set_background(file->text, options->text_bg);
+        tw_set_foreground(file->window, options->title_fg);
+        tw_set_background(file->window, options->title_bg);
+        tw_set_foreground(file->text, options->text_fg);
+        tw_set_background(file->text, options->text_bg);
     }
     TW_SET_MODES(file->window,NORMAL_MODE);
     TW_SET_MODES(file->text,NORMAL_MODE);
@@ -665,30 +665,30 @@ get_dirname (char full_name[], char dir_name[], char base_name[])
     end_dir = strrchr(temp_path, '/');
     if (end_dir != NULL)        /* Path info present in name */
     {
-	if (end_dir == temp_path)       /* Directory is / */
-	    new_dir = "/";
-	else
-	    new_dir = temp_path;
-	*end_dir = '\0';        /* Cap off directory name */
-	getcwd(start_dir, APE_PATH_MAX);
-	if (chdir(new_dir) == -1)
-	{
-	    sprintw(2, TWC_ST_LEN, "Cannot chdir to \"%s\".", temp_path);
-	    *dir_name = '\0';   /* Blank out return values */
-	    *base_name = '\0';
-	    return NO_DIR;
-	}
-	else
-	{
-	    getcwd(dir_name, APE_PATH_MAX);         /* Get new directory name */
-	    strlcpy(base_name, end_dir + 1, APE_PATH_MAX);
-	    chdir(start_dir);   /* Return to original directory */
-	}
+        if (end_dir == temp_path)       /* Directory is / */
+            new_dir = "/";
+        else
+            new_dir = temp_path;
+        *end_dir = '\0';        /* Cap off directory name */
+        getcwd(start_dir, APE_PATH_MAX);
+        if (chdir(new_dir) == -1)
+        {
+            sprintw(2, TWC_ST_LEN, "Cannot chdir to \"%s\".", temp_path);
+            *dir_name = '\0';   /* Blank out return values */
+            *base_name = '\0';
+            return NO_DIR;
+        }
+        else
+        {
+            getcwd(dir_name, APE_PATH_MAX);         /* Get new directory name */
+            strlcpy(base_name, end_dir + 1, APE_PATH_MAX);
+            chdir(start_dir);   /* Return to original directory */
+        }
     }
     else                        /* Only base name given */
     {
-	getcwd(dir_name, APE_PATH_MAX);
-	strlcpy(base_name, full_name, APE_PATH_MAX);
+        getcwd(dir_name, APE_PATH_MAX);
+        strlcpy(base_name, full_name, APE_PATH_MAX);
     }
     return OK;
 }
@@ -701,8 +701,8 @@ void    close_file(file_t files[],int af,opt_t *options,int prompt)
 
     /* Save file first if necessary */
     if ( prompt != NO_PROMPT_BEFORE_CLOSE )
-	if (prompt_save(files,af,options) == 'c')
-	    return;
+        if (prompt_save(files,af,options) == 'c')
+            return;
 
     /* Free window and file buffer */
     tw_del_win(&files[af].text);
@@ -711,7 +711,7 @@ void    close_file(file_t files[],int af,opt_t *options,int prompt)
 
     /* Free file buffers */
     for (c = 0; c < files[af].total_lines; ++c)
-	free(files[af].line[c].buff);
+        free(files[af].line[c].buff);
     free(files[af].line);
 }
 
@@ -731,58 +731,58 @@ int     load_file(file_t *file, FILE *fp, opt_t *options)
     file->tabs_flagged = 0;
     do
     {
-	if ( (len = read_line(temp, fp, file, options)) != -1)
-	{
-	    ALLOC_LINE(file,line,MAX(len,0));
-	    if (file->line[line].buff == NULL)
-	    {
-		stat_mesg( "Could not allocate line: File is read only.");
-		file->read_only = 1;
-		tgetc(Terminal);
-		break;
-	    }
-	    else
-	    {
-		if (len != -1)
-		{
-		    strlcpy(file->line[line].buff, temp, LINE_BUFF_SIZE(len));
-		    file->line[line++].length = len;
-		    if (line == file->max_lines-2)
-		    {
-			if (more_lines(file) == NOMEM)
-			{
-			    stat_mesg( "Could not allocate more lines: File is read only.");
-			    file->read_only = 1;
-			    tgetc(Terminal);
-			    break;
-			}
-		    }
-		    nbytes += len + 1;
-		}
-	    }
-	}
+        if ( (len = read_line(temp, fp, file, options)) != -1)
+        {
+            ALLOC_LINE(file,line,MAX(len,0));
+            if (file->line[line].buff == NULL)
+            {
+                stat_mesg( "Could not allocate line: File is read only.");
+                file->read_only = 1;
+                tgetc(Terminal);
+                break;
+            }
+            else
+            {
+                if (len != -1)
+                {
+                    strlcpy(file->line[line].buff, temp, LINE_BUFF_SIZE(len));
+                    file->line[line++].length = len;
+                    if (line == file->max_lines-2)
+                    {
+                        if (more_lines(file) == NOMEM)
+                        {
+                            stat_mesg( "Could not allocate more lines: File is read only.");
+                            file->read_only = 1;
+                            tgetc(Terminal);
+                            break;
+                        }
+                    }
+                    nbytes += len + 1;
+                }
+            }
+        }
     }   while (len != -1);
     
     /* If file exists but is empty, allocate one blank line. */
     if ( line == 0 )
-	ALLOC_LINE(file, line, 0);
+        ALLOC_LINE(file, line, 0);
     file->total_lines = line;
     file->curchar = file->line[0].buff;
 
     /* Get last modification time as save time If file doesn't exist, use now
      * as creation time in case it's created before first save. */
     if (stat(file->source, &st) == 0)
-	file->save_time = st.st_mtime;
+        file->save_time = st.st_mtime;
     else
-	time(&file->save_time);
+        time(&file->save_time);
 
     sprintw(2, TWC_ST_LEN, "Loaded %s: %d lines, %d characters",
-	    file->short_src, line, nbytes);
+            file->short_src, line, nbytes);
     if (line == 0)
     {
-	file->line[0].length = 0;
-	*file->curchar = '\0';
-	file->total_lines = 1;
+        file->line[0].length = 0;
+        *file->curchar = '\0';
+        file->total_lines = 1;
     }
     file->line[file->total_lines].buff = NULL;
     return (1);
@@ -799,72 +799,72 @@ int     read_line(char string[], FILE *fp, file_t *file, opt_t *options)
 {
     char   *ptr = string, *end = string + file->max_line_len;
     int     ch = '\0',
-	    non_whitespace_found = 0;
+            non_whitespace_found = 0;
     
     /* Check ptr first */
     while ( (ptr < end) && ((ch = getc(fp)) != '\n') && 
-	    (ch != '\r') && (ch != EOF) )
+            (ch != '\r') && (ch != EOF) )
     {
-	if ( ! isspace(ch) )
-	    non_whitespace_found = 1;
-	switch (ch)
-	{
-	    case '\t':
-		if ( ! (file->read_only || file->tabs_flagged) && \
-		     non_whitespace_found )
-		{
-		    prompt_tabs(file, options);
-		    file->tabs_flagged = 1;
-		}
-		if ( file->expand_tabs )
-		{
-		    /* Expand tabs to spaces */
-		    do
-		    {
-			*ptr++ = ' ';
-		    } while (((ptr - string) % DEFAULT_TAB_STOPS) && (ptr < end));
-		}
-		else
-		{
-		    /* Convert tabs to fillers */
-		    do
-		    {
-			*ptr++ = TAB_FILLER_CHAR;
-		    }   while (((ptr - string + 1) % DEFAULT_TAB_STOPS) && (ptr < end));
-		    *ptr++ = '\t';
-		}
-		break;
-	    
-	    case '\f':
-		/* FF messes up the tty screen. Just remove it. */
-		break;
-	    
-	    default:
-		*ptr++ = ch;
-		break;
-	}
+        if ( ! isspace(ch) )
+            non_whitespace_found = 1;
+        switch (ch)
+        {
+            case '\t':
+                if ( ! (file->read_only || file->tabs_flagged) && \
+                     non_whitespace_found )
+                {
+                    prompt_tabs(file, options);
+                    file->tabs_flagged = 1;
+                }
+                if ( file->expand_tabs )
+                {
+                    /* Expand tabs to spaces */
+                    do
+                    {
+                        *ptr++ = ' ';
+                    } while (((ptr - string) % DEFAULT_TAB_STOPS) && (ptr < end));
+                }
+                else
+                {
+                    /* Convert tabs to fillers */
+                    do
+                    {
+                        *ptr++ = TAB_FILLER_CHAR;
+                    }   while (((ptr - string + 1) % DEFAULT_TAB_STOPS) && (ptr < end));
+                    *ptr++ = '\t';
+                }
+                break;
+            
+            case '\f':
+                /* FF messes up the tty screen. Just remove it. */
+                break;
+            
+            default:
+                *ptr++ = ch;
+                break;
+        }
     }
     *ptr = '\0';                /* Mark end of line */
 
     /* If \r\n sequence, discard \n */
     if ( ch == '\r' )
     {
-	SET_LINE_STYLE(file,LINE_STYLE_CR);
-	
-	/* If not newline, put it back for next line read */
-	if ( (ch = getc(fp)) == '\n' )
-	    SET_LINE_STYLE(file,LINE_STYLE_NL);
-	else
-	    ungetc(ch,fp);
+        SET_LINE_STYLE(file,LINE_STYLE_CR);
+        
+        /* If not newline, put it back for next line read */
+        if ( (ch = getc(fp)) == '\n' )
+            SET_LINE_STYLE(file,LINE_STYLE_NL);
+        else
+            ungetc(ch,fp);
     }
     else if ( ch == '\n' )
-	file->line_style |= LINE_STYLE_NL;
+        file->line_style |= LINE_STYLE_NL;
 
     /* Return length of string or EOF flag */
     if ( feof(fp) && ( ptr == string ) )
-	return EOF;
+        return EOF;
     else
-	return ptr - string;
+        return ptr - string;
 }
 
 
@@ -880,43 +880,43 @@ int     save_file(file_t *file, opt_t   *options)
     int     l = 0, nbytes = 0, lines, status, match;
     FILE   *fp;
     char    pipe[APE_PATH_MAX + 1],
-	    *ok_button[2] = OK_BUTTON,
-	    key[MCRYPT_KEY_LEN+1] = "",
-	    key2[MCRYPT_KEY_LEN+1] = "",
-	    algo[MCRYPT_ALGO_LEN+1],
-	    // FIXME: Update or remove these
-	    *encryption_algorithms[] = { \
-		"cast-128", "gost", "rijndael-128", "twofish", "arcfour",
-		"cast-256", "loki97", "rijndael-192", "saferplus",
-		"wake", "blowfish-compat", "des", "rijndael-256",
-		"serpent", "xtea", "blowfish", "enigma", 
-		"rc2", "tripledes", NULL },
-	    cmd[APE_CMD_MAX+1],
-	    full_path[FULL_PATH_MAX+2],
-	    backup_path[FULL_PATH_MAX+7];
+            *ok_button[2] = OK_BUTTON,
+            key[MCRYPT_KEY_LEN+1] = "",
+            key2[MCRYPT_KEY_LEN+1] = "",
+            algo[MCRYPT_ALGO_LEN+1],
+            // FIXME: Update or remove these
+            *encryption_algorithms[] = { \
+                "cast-128", "gost", "rijndael-128", "twofish", "arcfour",
+                "cast-256", "loki97", "rijndael-192", "saferplus",
+                "wake", "blowfish-compat", "des", "rijndael-256",
+                "serpent", "xtea", "blowfish", "enigma", 
+                "rc2", "tripledes", NULL },
+            cmd[APE_CMD_MAX+1],
+            full_path[FULL_PATH_MAX+2],
+            backup_path[FULL_PATH_MAX+7];
 
     if (file->read_only)
     {
-	popup_mesg( "File is read only.", ok_button, options);
-	TW_RESTORE_WIN(file->window);
-	return CANT_SAVE;
+        popup_mesg( "File is read only.", ok_button, options);
+        TW_RESTORE_WIN(file->window);
+        return CANT_SAVE;
     }
     
     /* Assume Unix line style for new files */
     if ( LINE_STYLE_UNSET(file) )
-	SET_LINE_STYLE(file,LINE_STYLE_NL);
+        SET_LINE_STYLE(file,LINE_STYLE_NL);
 
     /* Check if file has been modified by another process since last save */
     /* If it doesn't exist, okily-dokily */
     /* Too many problems over NFS links with clock skews
     if (stat(file->source, &st) == 0)
-	if (st.st_mtime > file->save_time)
-	{
-	    ch = tolower(popup_mesg(msg,buttons,options));
-	    TW_RESTORE_WIN(file->window);
-	    if ( ch != 'y' )
-		return OK;
-	}
+        if (st.st_mtime > file->save_time)
+        {
+            ch = tolower(popup_mesg(msg,buttons,options));
+            TW_RESTORE_WIN(file->window);
+            if ( ch != 'y' )
+                return OK;
+        }
     */
 
     snprintf(full_path, FULL_PATH_MAX+2, "%s/%s", file->cwd, file->source);
@@ -925,79 +925,79 @@ int     save_file(file_t *file, opt_t   *options)
     /* Back up file before first save */
     if (!file->saved_once)
     {
-	xt_fast_cp(full_path, backup_path);
-	file->saved_once = 1;
+        xt_fast_cp(full_path, backup_path);
+        file->saved_once = 1;
     }
 
     if (file->crypt)
     {
-	for (match = 0; !match; )
-	{
-	    *key = *key2 = '\0';
-	    win = centered_panel_win(10, 65, options);
-	    tw_init_enum(&panel, 2, 3, MCRYPT_ALGO_LEN, encryption_algorithms,
-			"Algorithm?  ",
-			" mcrypt -a algorithm?  Hit <space> to toggle. ",algo);
-	    tw_init_string(&panel, 3, 3, MCRYPT_KEY_LEN, 40, TWC_SECURE,
-			"Key?        "," Encryption Key ", key);
-	    tw_init_string(&panel, 4, 3, MCRYPT_KEY_LEN, 40, TWC_SECURE,
-			"Verify Key: "," Encryption Key ", key2);
-	    status = tw_input_panel(win, &panel, TW_LINES(win) - 3);
-	    match = (strcmp(key, key2) == 0);
-	    if ( ! match )
-		popup_mesg("Keys do not match.  Please try again.",
-		    ok_button,options);
-	    tw_del_win(&win);
-	    TW_RESTORE_WIN(file->window);
-	}
-	
-	if (TW_EXIT_KEY(status) != TWC_INPUT_DONE)
-	    return OK;
-	snprintf(cmd, APE_CMD_MAX, "mcrypt --flush -q -F -a %s -k %s > %s 2> mcrypt.stderr",
-	    algo, key, full_path);
-	fp = popen(cmd, "w");
+        for (match = 0; !match; )
+        {
+            *key = *key2 = '\0';
+            win = centered_panel_win(10, 65, options);
+            tw_init_enum(&panel, 2, 3, MCRYPT_ALGO_LEN, encryption_algorithms,
+                        "Algorithm?  ",
+                        " mcrypt -a algorithm?  Hit <space> to toggle. ",algo);
+            tw_init_string(&panel, 3, 3, MCRYPT_KEY_LEN, 40, TWC_SECURE,
+                        "Key?        "," Encryption Key ", key);
+            tw_init_string(&panel, 4, 3, MCRYPT_KEY_LEN, 40, TWC_SECURE,
+                        "Verify Key: "," Encryption Key ", key2);
+            status = tw_input_panel(win, &panel, TW_LINES(win) - 3);
+            match = (strcmp(key, key2) == 0);
+            if ( ! match )
+                popup_mesg("Keys do not match.  Please try again.",
+                    ok_button,options);
+            tw_del_win(&win);
+            TW_RESTORE_WIN(file->window);
+        }
+        
+        if (TW_EXIT_KEY(status) != TWC_INPUT_DONE)
+            return OK;
+        snprintf(cmd, APE_CMD_MAX, "mcrypt --flush -q -F -a %s -k %s > %s 2> mcrypt.stderr",
+            algo, key, full_path);
+        fp = popen(cmd, "w");
     }
     else
-	fp = fopen(full_path, "w");
-	
+        fp = fopen(full_path, "w");
+        
     if (fp == NULL)
     {
-	popup_mesg("Cannot save file",ok_button,options);
-	TW_RESTORE_WIN(file->window);
-	return CANT_SAVE;
+        popup_mesg("Cannot save file",ok_button,options);
+        TW_RESTORE_WIN(file->window);
+        return CANT_SAVE;
     }
 
     for (l = 0, lines = 0; l < file->total_lines; ++l)
     {
-	write_line(fp,file,l,options);
-	++lines;
-	nbytes += file->line[l].length + 1;
+        write_line(fp,file,l,options);
+        ++lines;
+        nbytes += file->line[l].length + 1;
     }
     fflush(fp);
     if (file->crypt)
     {
-	pclose(fp);
-	
-	/* Erase key from memory for security */
-	memset(key, 0, MCRYPT_KEY_LEN);
-	memset(cmd, 0, APE_CMD_MAX);
+        pclose(fp);
+        
+        /* Erase key from memory for security */
+        memset(key, 0, MCRYPT_KEY_LEN);
+        memset(cmd, 0, APE_CMD_MAX);
     }
     else
     {
-	fsync(fileno(fp));
-	fclose(fp);
+        fsync(fileno(fp));
+        fclose(fp);
     }
     time(&file->save_time);
 
     /* Script or other interpreted language */
     if ((file->lang != NULL) && (*file->lang->compiler_cmd == '\0'))
-	make_exe(full_path);
+        make_exe(full_path);
 
     sprintw(2, TWC_ST_LEN, "Saved %s: %d lines, %d characters.",
-	    file->short_src, lines, nbytes);
+            file->short_src, lines, nbytes);
     file->modified = 0;
     if (file->crypt)
-	unlink(pipe);
+        unlink(pipe);
     return OK;
 }
 
@@ -1019,30 +1019,30 @@ int     write_line(FILE *fp,file_t *file,size_t l,opt_t *options)
     */
     if ( !file->notabs )
     {
-	for (sp=0; isspace(*line_ptr); ++line_ptr)
-	    ++sp;
-	for (c=0; c < sp / DEFAULT_TAB_STOPS; ++c)
-	    putc('\t',fp);
+        for (sp=0; isspace(*line_ptr); ++line_ptr)
+            ++sp;
+        for (c=0; c < sp / DEFAULT_TAB_STOPS; ++c)
+            putc('\t',fp);
     }
     
     /* Write rest of line as is. */
     line_ptr -= sp % DEFAULT_TAB_STOPS;
     while ( *line_ptr != '\0' )
     {
-	if (*line_ptr == TAB_FILLER_CHAR)
-	{
-	    while (*line_ptr == TAB_FILLER_CHAR)
-		++line_ptr;
-	    putc('\t',fp);
-	}
-	else
-	    putc(*line_ptr,fp);
-	++line_ptr;
+        if (*line_ptr == TAB_FILLER_CHAR)
+        {
+            while (*line_ptr == TAB_FILLER_CHAR)
+                ++line_ptr;
+            putc('\t',fp);
+        }
+        else
+            putc(*line_ptr,fp);
+        ++line_ptr;
     }
     if ( FILE_USES_CR(file) )
-	putc('\r',fp);
+        putc('\r',fp);
     if ( FILE_USES_NL(file) )
-	putc('\n',fp);
+        putc('\n',fp);
     return 0;
 }
 
@@ -1067,9 +1067,9 @@ int     file_type(char *filename)
     struct stat st;
     
     if ( stat(filename,&st) == 0 )
-	return st.st_mode & S_IFMT; /* File type (reg, fifo, dir, ...) */
+        return st.st_mode & S_IFMT; /* File type (reg, fifo, dir, ...) */
     else
-	return 0;
+        return 0;
 }
 
 
@@ -1079,7 +1079,7 @@ void    new_blank_file(file_t files[], int *af_ptr, opt_t *options)
     int     af;
     
     if ((af = open_file(files, "untitled", options, OPEN_FLAG_NORMAL)) != CANT_OPEN)
-	*af_ptr = af;
+        *af_ptr = af;
 }
 
 
@@ -1090,24 +1090,24 @@ int     file_undo(file_t *file, opt_t *options, buff_t *cut_buff)
     
     if ( undo_item != UNDO_STACK_EMPTY )
     {
-	switch(UNDO_ITEM_ACTION(undo_item))
-	{
-	    case    UNDO_ITEM_INSERT_CHAR:
-		move_to(file, options, cut_buff, UNDO_ITEM_LINE(undo_item),
-			UNDO_ITEM_COL(undo_item));
-		del_under(file, options, cut_buff);
-		break;
-	}
+        switch(UNDO_ITEM_ACTION(undo_item))
+        {
+            case    UNDO_ITEM_INSERT_CHAR:
+                move_to(file, options, cut_buff, UNDO_ITEM_LINE(undo_item),
+                        UNDO_ITEM_COL(undo_item));
+                del_under(file, options, cut_buff);
+                break;
+        }
     }
     return OK;
 }
 
 
 int     file_save_for_undo(file_t *file, undo_action_t undo_action,
-			    char *deleted_text)
+                            char *deleted_text)
 
 {
     undo_stack_push(&file->undo_record, file->curline, ACTUAL_COL(file),
-	      undo_action, deleted_text);
+              undo_action, deleted_text);
     return OK;
 }

@@ -44,74 +44,74 @@ int     help_menu(file_t *file, opt_t *options, event_t *event)
     int     ch, start_row = 1;
     win_t *help_pop;
     static char cmd[APE_CMD_MAX + 1] = "",
-		topic[APE_CMD_MAX + 1];
+                topic[APE_CMD_MAX + 1];
     static char *help_text[] = {
-				"A.Bout APE",
-				TWC_HLINE,
-				".Help on APE",
-				".Keyboard",
-				".ASCII table",
-				TWC_HLINE,
-				".Unix command or function",
-				".Word at cursor (F1 or Esc-?)",
-				".Search manuals for topic",
-				"GNU .Info",
-				""};
+                                "A.Bout APE",
+                                TWC_HLINE,
+                                ".Help on APE",
+                                ".Keyboard",
+                                ".ASCII table",
+                                TWC_HLINE,
+                                ".Unix command or function",
+                                ".Word at cursor (F1 or Esc-?)",
+                                ".Search manuals for topic",
+                                "GNU .Info",
+                                ""};
 
     help_pop = tw_menu(Terminal, 1, -33, help_text, &options->border,
-		     options->no_acs, MONO_MODE(options),
-		     options->menu_fg, options->menu_bg,
-		     options->menu_hl_fg, options->menu_hl_bg);
+                     options->no_acs, MONO_MODE(options),
+                     options->menu_fg, options->menu_bg,
+                     options->menu_hl_fg, options->menu_hl_bg);
     tw_set_win_attr(help_pop,REVERSE_MODE,options->menu_fg,options->menu_bg,
-		    BOLD_MODE,options->menu_hl_fg,options->menu_hl_bg);
+                    BOLD_MODE,options->menu_hl_fg,options->menu_hl_bg);
     ch = tw_get_item(help_pop, help_text, event, &start_row,
-		    options->reverse_menu,NULL);
+                    options->reverse_menu,NULL);
     
     switch(ch)
     {
-	case 'k':
-	    if ( options->use_html )
-		browse("apekeys.html",options);
-	    else
-		man("apekeys",INSTALL_PREFIX);
-	    break;
-	case 'w':
-	    get_word_at_cursor(file, cmd);
-	    man(cmd, NULL);
-	    break;
-	case 'u':
-	    panel_get_string(file, options, APE_CMD_MAX, 
-			    "Command or function? ", "", TWC_VERBATIM, cmd);
-	    man(cmd, NULL);
-	    break;
-	case 's':
-	    panel_get_string(file, options, APE_CMD_MAX, 
-			    "Topic? ", "", TWC_VERBATIM, topic);
-	    apropos(topic);
-	    break;
-	case 'b':
-	    _reg(options);
-	    break;
-	case 'h':
-	    if ( options->use_html )
-		browse("ape.html",options);
-	    else
-		man("ape",INSTALL_PREFIX);
-	    break;
-	case 'a':
-	    begin_full_screen();
-	    /* Don't use man() here.  We need to stay shelled out for the ascii command. */
-	    xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"man","-M",INSTALL_PREFIX"/man","apeascii",NULL);
-	    xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"ascii",NULL);
-	    end_full_screen(EFS_PAUSE);
-	    break;
-	case 'i':
-	    begin_full_screen();
-	    xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"info",NULL);
-	    end_full_screen(EFS_PAUSE);
-	    break;
-	default:
-	    break;
+        case 'k':
+            if ( options->use_html )
+                browse("apekeys.html",options);
+            else
+                man("apekeys",INSTALL_PREFIX);
+            break;
+        case 'w':
+            get_word_at_cursor(file, cmd);
+            man(cmd, NULL);
+            break;
+        case 'u':
+            panel_get_string(file, options, APE_CMD_MAX, 
+                            "Command or function? ", "", TWC_VERBATIM, cmd);
+            man(cmd, NULL);
+            break;
+        case 's':
+            panel_get_string(file, options, APE_CMD_MAX, 
+                            "Topic? ", "", TWC_VERBATIM, topic);
+            apropos(topic);
+            break;
+        case 'b':
+            _reg(options);
+            break;
+        case 'h':
+            if ( options->use_html )
+                browse("ape.html",options);
+            else
+                man("ape",INSTALL_PREFIX);
+            break;
+        case 'a':
+            begin_full_screen();
+            /* Don't use man() here.  We need to stay shelled out for the ascii command. */
+            xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"man","-M",INSTALL_PREFIX"/man","apeascii",NULL);
+            xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"ascii",NULL);
+            end_full_screen(EFS_PAUSE);
+            break;
+        case 'i':
+            begin_full_screen();
+            xt_spawnlp(P_WAIT,P_NOECHO,NULL,NULL,NULL,"info",NULL);
+            end_full_screen(EFS_PAUSE);
+            break;
+        default:
+            break;
     }
     tw_del_win(&help_pop);
     TW_RESTORE_WIN(file->window);
@@ -123,20 +123,20 @@ void    man(char *str, char *prefix)
 
 {
     char    cmd[APE_CMD_MAX+1],
-	    *expanded_cmd,
-	    *argv[MAX_ARGS];
+            *expanded_cmd,
+            *argv[MAX_ARGS];
     
     if ( *str != '\0' )
     {
-	if ( prefix == NULL )
-	    snprintf(cmd,APE_CMD_MAX,"%s %s",MAN,str);
-	else
-	    snprintf(cmd,APE_CMD_MAX,"%s -M %s/man %s",MAN,prefix,str);
-	expanded_cmd = xt_parse_cmd(argv, MAX_ARGS, cmd);
-	begin_full_screen();
-	xt_spawnvp(P_WAIT,P_NOECHO,argv,NULL,NULL,NULL);
-	end_full_screen(EFS_PAUSE);
-	free(expanded_cmd);
+        if ( prefix == NULL )
+            snprintf(cmd,APE_CMD_MAX,"%s %s",MAN,str);
+        else
+            snprintf(cmd,APE_CMD_MAX,"%s -M %s/man %s",MAN,prefix,str);
+        expanded_cmd = xt_parse_cmd(argv, MAX_ARGS, cmd);
+        begin_full_screen();
+        xt_spawnvp(P_WAIT,P_NOECHO,(const char **)argv,NULL,NULL,NULL);
+        end_full_screen(EFS_PAUSE);
+        free(expanded_cmd);
     }
 }
 
@@ -148,10 +148,10 @@ get_word_at_cursor (file_t *file, char *word)
     char    *ptr = file->curchar, *start = file->line[file->curline].buff;
     
     while ( ISIDENT(*ptr) && (ptr>=start) )
-	--ptr;
+        --ptr;
     ++ptr;
     while ( ISIDENT(*ptr) )
-	*word++ = *ptr++;
+        *word++ = *ptr++;
     *word = '\0';
 }
 
@@ -162,9 +162,9 @@ apropos (char *topic)
 {
     if ( *topic != '\0' )
     {
-	begin_full_screen();
-	xt_spawnlp(P_WAIT,P_ECHO,NULL,NULL,NULL,"apropos",topic,NULL);
-	end_full_screen(EFS_PAUSE);
+        begin_full_screen();
+        xt_spawnlp(P_WAIT,P_ECHO,NULL,NULL,NULL,"apropos",topic,NULL);
+        end_full_screen(EFS_PAUSE);
     }
 }
 
@@ -174,17 +174,17 @@ browse (char *file, opt_t *options)
 
 {
     int     stat,
-	    fd;
+            fd;
     char    full_path[FULL_PATH_MAX+1],
-	    errors[APE_PATH_MAX+1];
+            errors[APE_PATH_MAX+1];
     
     strlcpy(errors,".ape_browser_errors.XXXXX",APE_PATH_MAX);
     if ( (fd=mkstemp(errors)) != -1 )
-	close(fd);
+        close(fd);
     snprintf(full_path,FULL_PATH_MAX,"%s/share/doc/ape/%s",
-	    options->install_prefix, file);
+            options->install_prefix, file);
     stat = xt_spawnlp(P_NOWAIT,P_NOECHO,NULL,errors,errors,
-		    options->browser,full_path,NULL);
+                    options->browser,full_path,NULL);
     check_stat(stat,options->browser);
     unlink(errors);
 }
